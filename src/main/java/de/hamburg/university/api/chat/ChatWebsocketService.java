@@ -6,6 +6,7 @@ import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.*;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.inject.Inject;
 
 @WebSocket(path = "/ws/{clientId}")
@@ -34,6 +35,19 @@ public class ChatWebsocketService {
 
     @OnTextMessage
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
-        return agent.answer(request);
+        ChatResponseDTO start = ChatResponseDTO.createAPIResponse(request, "Start");
+        ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
+
+        Multi<ChatResponseDTO> core = agent.answer(request)
+                .onFailure().recoverWithItem(t -> {
+                    Log.error("answer() failed", t);
+                    return ChatResponseDTO.createErrorResponse(request, t.getMessage());
+                });
+
+        return Multi.createBy().concatenating().streams(
+                Multi.createFrom().item(start),
+                core,
+                Multi.createFrom().item(stop)
+        ).runSubscriptionOn(Infrastructure.getDefaultExecutor());
     }
 }

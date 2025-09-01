@@ -1,9 +1,9 @@
 package de.hamburg.university.agent.workflow;
 
 import de.hamburg.university.agent.workflow.bots.HelpBot;
+import de.hamburg.university.api.chat.messages.ChatMessageType;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
-import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
@@ -22,18 +22,15 @@ public class ChatDrexAgent {
     @ActivateRequestContext
     public Multi<ChatResponseDTO> answer(ChatRequestDTO content) {
         return Multi.createFrom().emitter(em -> {
-            try {
-                // String classy = requestClassifierBot.classify(request);
-                //RequestRoute route = RequestRoute.from(classy);
-                // Log.infof("Classified %s request as: %s", content, route);
-                AgentResult result = answer(content.getMessage(), RequestRoute.UNKNOWN, 1L);
+            // String classy = requestClassifierBot.classify(request);
+            //RequestRoute route = RequestRoute.from(classy);
+            // Log.infof("Classified %s request as: %s", content, route);
+            AgentResult result = answer(content.getMessage(), RequestRoute.UNKNOWN, 1L);
 
+            em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
-                em.complete();
-            } catch (Throwable t) {
-                Log.error("answer() failed", t);
-                em.complete();
-            }
+            em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
+            em.complete();
         });
     }
 
