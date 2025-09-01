@@ -1,5 +1,6 @@
 package de.hamburg.university.api.chat;
 
+import de.hamburg.university.agent.workflow.ChatDrexAgent;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
@@ -11,8 +12,10 @@ import jakarta.inject.Inject;
 public class ChatWebsocketService {
 
     @Inject
-
     WebSocketConnection connection;
+
+    @Inject
+    ChatDrexAgent agent;
 
     @OnOpen
     public void onOpen() {
@@ -31,7 +34,6 @@ public class ChatWebsocketService {
 
     @OnTextMessage
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
-
-        return Multi.createFrom().empty();
+        return agent.answer(request);
     }
 }
