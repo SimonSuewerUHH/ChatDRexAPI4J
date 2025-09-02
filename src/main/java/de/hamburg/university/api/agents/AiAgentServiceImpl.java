@@ -4,13 +4,39 @@ import de.hamburg.university.agent.bot.NetdrexBot;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.List;
+
 @ApplicationScoped
 public class AiAgentServiceImpl implements AIAgentService {
     @Inject
     NetdrexBot netdrexBot;
 
     @Override
-    public String ask(String question) {
+    public String askNetdrex(String question) {
         return netdrexBot.answer(question);
+    }
+
+    @Override
+    public List<String> getNetdrexExamples() {
+        return List.of(
+                "Get info for these IDs: uniprot.P04637, uniprot.Q9UBT6, drugbank.DB00001, entrez.7157",
+                "From UniProt entry uniprot.P04637, list the gene names and the primary gene symbol.",
+                "Return the protein names for uniprot.P31749 and uniprot.Q9Y6K9.",
+                "Given IDs drugbank.DB00316 and drugbank.DB01050, return display names and any linked proteins.",
+                "Given entrez.7157 and entrez.1956, return their UniProt accessions.",
+                "Map these Entrez IDs to UniProt accessions: 23616, 9912, 55114, 30011, 23109, 7827, 4868, 6654, 25, 3055",
+                "Only return the list of Entrez IDs from the previous mapping as a plain JSON list.",
+                "Only return the list of UniProt accessions as a plain JSON list.",
+                "Run TrustRank with seeds (UniProt): uniprot.P04637, uniprot.P31749, uniprot.Q9Y243. Return top 15 candidate drugs with scores.",
+                "Run TrustRank for seeds uniprot.Q9UBT6 and uniprot.P38398. Return seed genes, seed proteins, and top 10 drugs (names resolved).",
+                "TrustRank on seeds uniprot.P01308, uniprot.P01375; provide a short rationale per top-5 drug.",
+                "Using DIAMOND, expand seeds TP53, BRCA1 for 25 closest proteins and include edges.",
+                "DIAMOND on seeds uniprot.P04637, uniprot.P38398; return a “drugstone-like” network JSON (nodes/edges).",
+                "Take Entrez IDs (23616, 9912, 55114). Map to UniProt, run DIAMOND for 20 proteins, then run TrustRank; summarize top 5 drugs.",
+                "Given uniprot.P04637 and uniprot.P31749, fetch protein info, expand with DIAMOND, translate drugbank IDs to names, and produce a Markdown summary.",
+                "Build a minimal protein–drug network for type-2 diabetes (seeds: uniprot.P01308, uniprot.P01375).",
+                "Try resolving info for malformed IDs: uniprotP04637, drugbank-DB00001, entrez7157. Return which ones failed and why.",
+                "Call getInfo with mixed valid/invalid IDs and return per-ID status."
+        );
     }
 }
