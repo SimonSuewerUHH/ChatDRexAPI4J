@@ -41,4 +41,34 @@ public interface AIAgentService {
     )
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getNetdrexExamples();
+
+
+    @POST
+    @Path("research")
+    @Operation(
+            summary = "Query the Research AI agent",
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "The AI agent's response",
+            content = @Content(mediaType = MediaType.TEXT_PLAIN)
+    )
+    public String askResearch(
+            String question
+    );
+
+    @GET
+    @Path("research")
+    @Operation(
+            summary = "Get example questions for the Research AI agent",
+            description = "Returns a list of example questions that can be asked to the AI agent about drug, protein and gene relationships"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Example Questions to ask the ai",
+            content = @Content(mediaType = MediaType.APPLICATION_JSON)
+    )
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getResearchExamples();
 }

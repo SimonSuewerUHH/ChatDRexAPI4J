@@ -1,6 +1,7 @@
 package de.hamburg.university.api.agents;
 
 import de.hamburg.university.agent.bot.NetdrexBot;
+import de.hamburg.university.agent.bot.ResearchBot;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -10,6 +11,9 @@ import java.util.List;
 public class AiAgentServiceImpl implements AIAgentService {
     @Inject
     NetdrexBot netdrexBot;
+
+    @Inject
+    ResearchBot researchBot;
 
     @Override
     public String askNetdrex(String question) {
@@ -37,6 +41,22 @@ public class AiAgentServiceImpl implements AIAgentService {
                 "Build a minimal protein–drug network for type-2 diabetes (seeds: uniprot.P01308, uniprot.P01375).",
                 "Try resolving info for malformed IDs: uniprotP04637, drugbank-DB00001, entrez7157. Return which ones failed and why.",
                 "Call getInfo with mixed valid/invalid IDs and return per-ID status."
+        );
+    }
+
+    @Override
+    public String askResearch(String question) {
+        return researchBot.answer(question);
+    }
+
+    @Override
+    public List<String> getResearchExamples() {
+        return List.of(
+                "Recent advances (2022–2025) in federated learning for biomedicine focusing on privacy and utility trade-offs",
+                "Key graph neural network methods for blood–brain barrier permeability prediction",
+                "Best datasets and benchmarks for Type 2 diabetes risk prediction from EHR/omics",
+                "Contrastive learning for multimodal patient digital twins: state of the art",
+                "Bias detection & mitigation techniques in clinical ML models (survey + practice)"
         );
     }
 }
