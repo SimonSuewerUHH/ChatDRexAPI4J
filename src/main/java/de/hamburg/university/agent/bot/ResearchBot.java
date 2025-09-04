@@ -9,8 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 @RegisterAiService(
-        tools = {ResearchTools.class} // uses your provided tool
-)
+        tools = {ResearchTools.class})
 public interface ResearchBot {
 
     @SystemMessage("""

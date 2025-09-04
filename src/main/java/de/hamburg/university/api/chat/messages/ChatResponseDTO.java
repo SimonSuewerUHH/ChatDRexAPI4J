@@ -26,6 +26,13 @@ public class ChatResponseDTO {
     public static ChatResponseDTO createAPIResponse(ChatRequestDTO request, Object result) {
         return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.API);
     }
+    public static ChatResponseDTO createToolResponse(ChatRequestDTO request, Object result) {
+        return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.AI_TOOL);
+    }
+
+    public static ChatResponseDTO createReasoningResponse(ChatRequestDTO request, Object result) {
+        return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.REASONING);
+    }
 
     public static ChatResponseDTO createErrorResponse(ChatRequestDTO request, Object result) {
         return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.ERROR);
@@ -37,6 +44,6 @@ public class ChatResponseDTO {
 
 
     public static ChatResponseDTO createSingleResponse(ChatRequestDTO request, Object result, ChatMessageType chatMessageType) {
-        return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.SYSTEM);
+        return create(MessageType.RECEIVING_SINGLE, request, result, chatMessageType);
     }
 }

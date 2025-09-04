@@ -18,6 +18,9 @@ public class ChatWebsocketService {
     @Inject
     ChatDrexAgent agent;
 
+    @Inject
+    ChatWebsocketSender sender;
+
     @OnOpen
     public void onOpen() {
         Log.info("Connection opened: " + connection.id());
@@ -26,15 +29,18 @@ public class ChatWebsocketService {
     @OnClose
     public void onClose() {
         Log.info("Connection closed: " + connection.id());
+        sender.removeClient(connection.id());
     }
 
     @OnError
     public void onError(Throwable throwable) {
         Log.error("Error in WebsocketClient: " + throwable.getMessage());
+        sender.removeClient(connection.id());
     }
 
     @OnTextMessage
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
+        sender.addClient(connection.id(), request);
         ChatResponseDTO start = ChatResponseDTO.createAPIResponse(request, "Start");
         ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
 

@@ -1,7 +1,9 @@
 package de.hamburg.university.agent.tool.research;
 
+import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.research.semanticscholar.SemanticScholarServiceImpl;
 import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.service.MemoryId;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -16,10 +18,14 @@ public class ResearchTools {
     @Inject
     SemanticScholarServiceImpl semanticScholarService;
 
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
+
     @Tool("Useful for searching academic papers and articles on Semantic Scholar. "
             + "Provide a concise summary of the most relevant papers including title, authors, year, abstract, URL, and DOI. "
             + "If no results are found, respond with 'No results found.'")
-    public String querySemanticScholar(String query) {
+    public String querySemanticScholar(String query, @MemoryId String sessionId) {
+        chatWebsocketSender.sendToolStartResponse(query, sessionId);
         try {
             var response = semanticScholarService.executeQuery(query);
             if (response != null && response.getData() != null) {

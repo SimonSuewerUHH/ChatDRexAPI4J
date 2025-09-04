@@ -5,6 +5,7 @@ import de.hamburg.university.api.chat.messages.ChatMessageType;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
@@ -25,7 +26,7 @@ public class ChatDrexAgent {
             // String classy = requestClassifierBot.classify(request);
             //RequestRoute route = RequestRoute.from(classy);
             // Log.infof("Classified %s request as: %s", content, route);
-            AgentResult result = answer(content.getMessage(), RequestRoute.UNKNOWN, 1L);
+            AgentResult result = answer(content, RequestRoute.UNKNOWN, em);
 
             em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
@@ -34,10 +35,10 @@ public class ChatDrexAgent {
         });
     }
 
-    private AgentResult answer(String content, RequestRoute route, Long workflowId) {
+    private AgentResult answer(ChatRequestDTO content, RequestRoute route, MultiEmitter<? super ChatResponseDTO> emitter) {
         return switch (route) {
-            case HELP -> new AgentResult(helpBot.answer(content));
-            default -> planningAgent.planAnswer(workflowId, content);
+            case HELP -> new AgentResult(helpBot.answer(content.getMessage()));
+            default -> planningAgent.planAnswer(content, emitter);
         };
     }
 }

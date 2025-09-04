@@ -11,7 +11,7 @@ public class PlanState {
 
     private Long workflowId;
 
-    private List<String> models = new ArrayList<>();
+    private List<String> research = new ArrayList<>();
     private List<String> dataProfiles = new ArrayList<>();
     private List<String> notes = new ArrayList<>();
 }
