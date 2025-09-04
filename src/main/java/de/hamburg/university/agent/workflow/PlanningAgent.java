@@ -34,7 +34,7 @@ public class PlanningAgent {
         emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planing ..."));
         for (int step = 1; step <= MAX_STEPS; step++) {
             PlanStep decision = planner.decide(state);
-            emitter.emit(ChatResponseDTO.createReasoningResponse(content, decision.getAction() + "->" +decision.getReason()));
+            emitter.emit(ChatResponseDTO.createReasoningResponse(content, decision.getAction() + "->" + decision.getReason()));
 
             Log.debugf("Planning step %d: %s", step, safeToString(decision));
 
@@ -85,7 +85,18 @@ public class PlanningAgent {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
                         decision.setMessageMarkdown("No summary produced.");
                     }
-                    String result = finalizeBot.answer(content.getMessage(), state);
+                    // Stream all chunks from the finalize bot and emit each part
+                    String result = finalizeBot.answer(content.getMessage(), state)
+                            .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
+                            .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
+                            .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "Finalized plan.")))
+                            .collect()
+                            .asList()
+                            .map(list -> String.join("", list))
+                            .await()
+                            .indefinitely();
+
+
                     return new AgentResult(result);
                 }
             }

@@ -42,6 +42,10 @@ public class ChatResponseDTO {
         return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.AI);
     }
 
+    public static ChatResponseDTO createAIChunkResponse(ChatRequestDTO request, Object result) {
+        return create(MessageType.RECEIVING_SINGLE, request, result, ChatMessageType.AI_CHUNK);
+    }
+
 
     public static ChatResponseDTO createSingleResponse(ChatRequestDTO request, Object result, ChatMessageType chatMessageType) {
         return create(MessageType.RECEIVING_SINGLE, request, result, chatMessageType);

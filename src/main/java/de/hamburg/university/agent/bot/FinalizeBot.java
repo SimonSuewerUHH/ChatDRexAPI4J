@@ -5,6 +5,7 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
+import io.smallrye.mutiny.Multi;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -75,5 +76,5 @@ public interface FinalizeBot {
             This is my context
             {state}
             """)
-    String answer(@V("userMessage") String userMessage, PlanState state);
+    Multi<String> answer(@V("userMessage") String userMessage, PlanState state);
 }
