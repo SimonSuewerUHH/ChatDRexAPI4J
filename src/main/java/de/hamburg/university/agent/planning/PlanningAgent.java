@@ -1,9 +1,9 @@
-package de.hamburg.university.agent.workflow;
+package de.hamburg.university.agent.planning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.bot.FinalizeBot;
 import de.hamburg.university.agent.bot.ResearchBot;
-import de.hamburg.university.agent.workflow.bots.DecisionPlannerBot;
+import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;

@@ -1,4 +1,4 @@
-package de.hamburg.university.agent.workflow;
+package de.hamburg.university.agent.planning;
 
 import lombok.Data;
 

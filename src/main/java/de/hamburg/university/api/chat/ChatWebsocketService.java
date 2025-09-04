@@ -1,6 +1,6 @@
 package de.hamburg.university.api.chat;
 
-import de.hamburg.university.agent.workflow.ChatDrexAgent;
+import de.hamburg.university.agent.planning.ChatDrexAgent;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;

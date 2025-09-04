@@ -1,6 +1,6 @@
-package de.hamburg.university.agent.workflow;
+package de.hamburg.university.agent.planning;
 
-import de.hamburg.university.agent.workflow.bots.HelpBot;
+import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.api.chat.messages.ChatMessageType;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;

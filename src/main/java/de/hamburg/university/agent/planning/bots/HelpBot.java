@@ -1,4 +1,4 @@
-package de.hamburg.university.agent.workflow.bots;
+package de.hamburg.university.agent.planning.bots;
 
 
 import dev.langchain4j.service.SystemMessage;

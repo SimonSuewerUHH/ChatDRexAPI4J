@@ -1,6 +1,6 @@
 package de.hamburg.university.agent.bot;
 
-import de.hamburg.university.agent.workflow.PlanState;
+import de.hamburg.university.agent.planning.PlanState;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;

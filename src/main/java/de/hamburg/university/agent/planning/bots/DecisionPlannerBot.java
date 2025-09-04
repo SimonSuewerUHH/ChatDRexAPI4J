@@ -1,7 +1,7 @@
-package de.hamburg.university.agent.workflow.bots;
+package de.hamburg.university.agent.planning.bots;
 
-import de.hamburg.university.agent.workflow.PlanState;
-import de.hamburg.university.agent.workflow.PlanStep;
+import de.hamburg.university.agent.planning.PlanState;
+import de.hamburg.university.agent.planning.PlanStep;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
