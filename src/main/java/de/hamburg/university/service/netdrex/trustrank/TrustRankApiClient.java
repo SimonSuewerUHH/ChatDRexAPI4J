@@ -2,6 +2,7 @@ package de.hamburg.university.service.netdrex.trustrank;
 
 
 import de.hamburg.university.service.netdrex.NetdrexJobApi;
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -16,7 +17,7 @@ public interface TrustRankApiClient extends NetdrexJobApi<TrustRankSeedPayloadDT
     @Path("submit")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    String submit(TrustRankSeedPayloadDTO payload);
+    Uni<String> submit(TrustRankSeedPayloadDTO payload);
 
     @GET
     @Path("status")

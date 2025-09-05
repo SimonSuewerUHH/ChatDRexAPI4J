@@ -2,6 +2,7 @@ package de.hamburg.university.service.netdrex.diamond;
 
 
 import de.hamburg.university.service.netdrex.NetdrexJobApi;
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -17,7 +18,7 @@ public interface DiamondApiClient extends NetdrexJobApi<SeedPayloadDTO, DiamondS
     @Path("submit")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    String submit(SeedPayloadDTO payload);
+    Uni<String> submit(SeedPayloadDTO payload);
 
     @GET
     @Path("status")

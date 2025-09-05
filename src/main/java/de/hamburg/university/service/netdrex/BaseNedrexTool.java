@@ -34,19 +34,15 @@ public abstract class BaseNedrexTool<A extends NetdrexJobApi<P, S>, P, S extends
     }
 
 
-    public String submit(P payload) {
+    public Uni<String> submit(P payload) {
         Objects.requireNonNull(payload, "payload");
-        try {
-            String rawUid = api.submit(payload);
-            String uid = sanitizeUid(rawUid);
-            if (uid == null || uid.isBlank()) {
-                throw new RuntimeException("No UID returned from submit().");
-            }
-            return uid;
-        } catch (Exception e) {
-            Log.error("Submit failed", e);
-            throw new RuntimeException("Submit failed: " + e.getMessage(), e);
-        }
+        return api.submit(payload)
+                .onItem().transform(this::sanitizeUid)
+                .onItem().invoke(uid -> {
+                    if (uid == null || uid.isBlank()) {
+                        throw new RuntimeException("No UID returned from submit().");
+                    }
+                });
     }
 
     //@Timeout(value = 30, unit = ChronoUnit.SECONDS)
@@ -74,7 +70,7 @@ public abstract class BaseNedrexTool<A extends NetdrexJobApi<P, S>, P, S extends
 
 
     public Uni<R> run(P payload) {
-        String uid = submit(payload);
-        return retrieveResults(uid);
+        return submit(payload)
+                .flatMap(this::retrieveResults);
     }
 }

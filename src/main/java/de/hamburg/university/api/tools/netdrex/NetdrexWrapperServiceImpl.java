@@ -7,6 +7,7 @@ import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankSeedPayloadDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankToolClientService;
 import io.quarkus.logging.Log;
+import io.smallrye.common.annotation.RunOnVirtualThread;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.inject.Inject;

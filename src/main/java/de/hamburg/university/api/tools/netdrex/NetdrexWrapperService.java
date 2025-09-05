@@ -15,6 +15,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -31,20 +32,29 @@ public interface NetdrexWrapperService {
             summary = "Run Diamond tool",
             description = "Submits seeds to Diamond and returns the final Diamond results."
     )
-    @APIResponse(
-            responseCode = "200",
-            description = "Diamond results.",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON,
-                    schema = @Schema(implementation = DiamondResultsDTO.class),
-                    examples = @ExampleObject(name = "request", value = """
-                            { "seeds": ["TP53","EGFR","BRCA1"] }
-                            """)
-            )
-    )
     @APIResponse(responseCode = "400", description = "Invalid payload")
     @APIResponse(responseCode = "500", description = "Server error")
-    Uni<DiamondResultsDTO> runDiamond(@Valid SeedPayloadDTO payload);
+    Uni<DiamondResultsDTO> runDiamond(
+            @RequestBody(
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = SeedPayloadDTO.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "default",
+                                            value = "{\n" +
+                                                    "  \"seeds\": [\"Q9Y5Y6\", \"Q9Y2D0\", \"Q96MZ4\"],\n" +
+                                                    "  \"n\": 50,\n" +
+                                                    "  \"alpha\": 1,\n" +
+                                                    "  \"network\": \"DEFAULT\",\n" +
+                                                    "  \"edges\": \"all\"\n" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            )
+            @Valid SeedPayloadDTO payload
+    );
 
     @POST
     @Path("/trustrank/run")
@@ -52,18 +62,31 @@ public interface NetdrexWrapperService {
             summary = "Run TrustRank tool",
             description = "Submits seeds to TrustRank and returns the final TrustRank results."
     )
-    @APIResponse(
-            responseCode = "200",
-            description = "TrustRank results.",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON,
-                    schema = @Schema(implementation = TrustRankResultDTO.class),
-                    examples = @ExampleObject(name = "request", value = """
-                            { "seedProteins": ["uniprot.Q9UBT6","uniprot.P04637"], "alpha": 0.85 }
-                            """)
-            )
-    )
     @APIResponse(responseCode = "400", description = "Invalid payload")
     @APIResponse(responseCode = "500", description = "Server error")
-    Uni<TrustRankResultDTO> runTrustRank(@Valid TrustRankSeedPayloadDTO payload);
+    Uni<TrustRankResultDTO> runTrustRank(
+            @RequestBody(
+                    required = true,
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = TrustRankSeedPayloadDTO.class),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "default",
+                                            value = "{\n" +
+                                                    "  \"seeds\": [\n" +
+                                                    "    \"Q9Y5Y6\", \"Q9Y2D0\", \"Q96MZ4\", \"Q96T92\", \"Q9Y4K3\",\n" +
+                                                    "    \"Q15375\", \"P35268\", \"P35555\", \"P00441\", \"P22301\"\n" +
+                                                    "  ],\n" +
+                                                    "  \"damping_factor\": 0.85,\n" +
+                                                    "  \"only_direct_drugs\": false,\n" +
+                                                    "  \"only_approved_drugs\": false,\n" +
+                                                    "  \"N\": 10\n" +
+                                                    "}"
+                                    )
+                            }
+                    )
+            )
+            @Valid TrustRankSeedPayloadDTO payload
+    );
 }
