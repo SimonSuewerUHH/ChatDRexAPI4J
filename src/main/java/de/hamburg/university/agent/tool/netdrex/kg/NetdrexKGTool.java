@@ -8,6 +8,7 @@ import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingsNodeDTO;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class NetdrexKGTool {
         NetdrexKGGraph questionGraph = decomposeToNodes(question);
         List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
-        String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString);
+        String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, "");
         return query;
     }
 
@@ -38,10 +39,17 @@ public class NetdrexKGTool {
         List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
 
+        String oldQuery = "";
         for (int i = 0; i < 3; i++) {
             try {
-                String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString);
+                String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
+                oldQuery += "\n " + i + ". " + query;
                 String result = netdrexKgQueryService.fireNeo4jQuery(query);
+                Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
+                if (StringUtils.isEmpty(result)) {
+                    Log.infof("Empty result for query: %s", query);
+                    continue;
+                }
                 return netdrexKGBot.answerQuestion(question, result);
             } catch (Exception e) {
                 Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);

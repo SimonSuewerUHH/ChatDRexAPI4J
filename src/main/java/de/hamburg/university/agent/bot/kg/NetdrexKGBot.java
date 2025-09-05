@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 //@RegisterAiService(modelName = "json")
-@RegisterAiService
+@RegisterAiService(chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class)
 public interface NetdrexKGBot {
     @SystemMessage("""
             You are a decomposition assistant for a biomedical Knowledge Graph.
@@ -232,6 +232,11 @@ public interface NetdrexKGBot {
             RELEVANT_NODES_JSON_STRING (may be empty; parse if non-empty):
             {relevantNodes}
             
+            {#if oldQuery != ""}
+            Previous query returned no results. Generate a simpler Cypher that still answers the question—favor minimal patterns, prefer primaryDomainId when available, otherwise use case-insensitive displayName. Previous query:
+            {oldQuery}
+            {/if}
+            
             INSTRUCTIONS:
             - Use the fixed schema in the system prompt.
             - Use the relevant nodes only if they clearly help bind entities for this question.
@@ -240,7 +245,7 @@ public interface NetdrexKGBot {
             - Output ONLY the Cypher string.
             - You dont need to order and limit
             """)
-    String generateCypherQuery(String question, String relevantNodes);
+    String generateCypherQuery(String question, String relevantNodes, String oldQuery);
 
     @SystemMessage("""
             You are a senior biomedical knowledge-graph analyst. Your task is to produce a precise, self-contained natural-language answer to the user’s biomedical question using only the contents of a Neo4j query result. You must not invent facts that are not supported by the provided Neo4j answer.
