@@ -1,9 +1,12 @@
 package de.hamburg.university.api.agents;
 
+import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import java.util.List;
@@ -55,6 +58,46 @@ public interface AIAgentService {
             content = @Content(mediaType = MediaType.TEXT_PLAIN)
     )
     public String askResearch(
+            String question
+    );
+
+    @POST
+    @Path("kg/split")
+    @Operation(
+            summary = "Query the Research AI agent",
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+    )
+    @RequestBody(
+            required = true,
+            description = "Biomedical research question to decompose",
+            content = @Content(
+                    mediaType = MediaType.TEXT_PLAIN,
+                    examples = {
+                            @ExampleObject(
+                                    name = "Drugs for breast cancer",
+                                    value = "What drugs are approved for treating breast cancer?"
+                            ),
+                            @ExampleObject(
+                                    name = "Genes with insulin receptors",
+                                    value = "Which genes interact with insulin receptors in diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Pathways in Parkinson's",
+                                    value = "Show pathways involved in Parkinson's disease phenotypes in brain tissue"
+                            ),
+                            @ExampleObject(
+                                    name = "Side effects of metformin",
+                                    value = "What are the side effects of metformin in type 2 diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Proteins linked to Alzheimer's",
+                                    value = "Which proteins are linked to Alzheimer's disease progression?"
+                            )
+                    }
+            )
+    )
+    @Produces(MediaType.APPLICATION_JSON)
+    public NetdrexKGGraph splitKGQuestions(
             String question
     );
 

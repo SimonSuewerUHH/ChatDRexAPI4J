@@ -2,6 +2,9 @@ package de.hamburg.university.api.agents;
 
 import de.hamburg.university.agent.bot.NetdrexBot;
 import de.hamburg.university.agent.bot.ResearchBot;
+import de.hamburg.university.agent.bot.kg.NetdrexKGBot;
+import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
+import de.hamburg.university.agent.bot.kg.NetdrexKGNode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -14,6 +17,9 @@ public class AiAgentServiceImpl implements AIAgentService {
 
     @Inject
     ResearchBot researchBot;
+
+    @Inject
+    NetdrexKGBot netdrexKGBot;
 
     @Override
     public String askNetdrex(String question) {
@@ -47,6 +53,11 @@ public class AiAgentServiceImpl implements AIAgentService {
     @Override
     public String askResearch(String question) {
         return researchBot.answer(question);
+    }
+
+    @Override
+    public NetdrexKGGraph splitKGQuestions(String question) {
+        return netdrexKGBot.decomposeToNodes(question);
     }
 
     @Override
