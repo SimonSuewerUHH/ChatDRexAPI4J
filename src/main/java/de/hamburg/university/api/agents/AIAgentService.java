@@ -101,6 +101,84 @@ public interface AIAgentService {
             String question
     );
 
+    @POST
+    @Path("kg/cypher")
+    @Operation(
+            summary = "Query the Research AI agent",
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+    )
+    @RequestBody(
+            required = true,
+            description = "Biomedical research question to decompose",
+            content = @Content(
+                    mediaType = MediaType.TEXT_PLAIN,
+                    examples = {
+                            @ExampleObject(
+                                    name = "Drugs for breast cancer",
+                                    value = "What drugs are approved for treating breast cancer?"
+                            ),
+                            @ExampleObject(
+                                    name = "Genes with insulin receptors",
+                                    value = "Which genes interact with insulin receptors in diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Pathways in Parkinson's",
+                                    value = "Show pathways involved in Parkinson's disease phenotypes in brain tissue"
+                            ),
+                            @ExampleObject(
+                                    name = "Side effects of metformin",
+                                    value = "What are the side effects of metformin in type 2 diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Proteins linked to Alzheimer's",
+                                    value = "Which proteins are linked to Alzheimer's disease progression?"
+                            )
+                    }
+            )
+    )
+    public String generateCypher(
+            String question
+    );
+
+    @POST
+    @Path("kg/answer")
+    @Operation(
+            summary = "Query the Research AI agent",
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+    )
+    @RequestBody(
+            required = true,
+            description = "Biomedical research question to decompose",
+            content = @Content(
+                    mediaType = MediaType.TEXT_PLAIN,
+                    examples = {
+                            @ExampleObject(
+                                    name = "Drugs for breast cancer",
+                                    value = "What drugs are approved for treating breast cancer?"
+                            ),
+                            @ExampleObject(
+                                    name = "Genes with insulin receptors",
+                                    value = "Which genes interact with insulin receptors in diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Pathways in Parkinson's",
+                                    value = "Show pathways involved in Parkinson's disease phenotypes in brain tissue"
+                            ),
+                            @ExampleObject(
+                                    name = "Side effects of metformin",
+                                    value = "What are the side effects of metformin in type 2 diabetes?"
+                            ),
+                            @ExampleObject(
+                                    name = "Proteins linked to Alzheimer's",
+                                    value = "Which proteins are linked to Alzheimer's disease progression?"
+                            )
+                    }
+            )
+    )
+    public String answerKG(
+            String question
+    );
+
     @GET
     @Path("research")
     @Operation(
