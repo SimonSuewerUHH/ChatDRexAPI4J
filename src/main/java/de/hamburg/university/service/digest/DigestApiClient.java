@@ -1,6 +1,7 @@
 package de.hamburg.university.service.digest;
 
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -15,11 +16,11 @@ public interface DigestApiClient {
 
     @POST
     @Path("/set")
-    DigestTaskResponseDTO submitSet(DigestSubmitRequestDTO payload);
+    Uni<DigestTaskResponseDTO> submitSet(DigestSubmitRequestDTO payload);
 
     @POST
     @Path("/subnetwork")
-    DigestTaskResponseDTO submitSubnetwork(DigestSubmitRequestDTO payload);
+    Uni<DigestTaskResponseDTO> submitSubnetwork(DigestSubmitRequestDTO payload);
 
     @GET
     @Path("/status")
@@ -27,5 +28,5 @@ public interface DigestApiClient {
 
     @GET
     @Path("/result")
-    DigestResultResponseDTO result(@QueryParam("task") String taskId);
+    Uni<DigestResultResponseDTO> result(@QueryParam("task") String taskId);
 }

@@ -13,6 +13,15 @@ public interface MyGeneClient {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     MyGeneResponseDTO query(@QueryParam("q") String query,
-                         @QueryParam("fields") String fields,
-                         @QueryParam("species") String species);
+                            @QueryParam("fields") String fields,
+                            @QueryParam("species") String species);
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    MyGeneGoHitDTO query(
+            @QueryParam("q") String query,
+            @QueryParam("fields") String fields,
+            @QueryParam("scopes") String scopes,
+            @QueryParam("size") Integer size
+    );
 }
