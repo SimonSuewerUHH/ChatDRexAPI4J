@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.tool.research;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.research.semanticscholar.SemanticScholarServiceImpl;
@@ -29,26 +30,18 @@ public class ResearchTools {
     public String querySemanticScholar(@P(value = "query") String query, @ToolMemoryId String sessionId) {
         chatWebsocketSender.sendToolStartResponse(Tools.RESEARCH.name(), sessionId);
         chatWebsocketSender.sendToolResponse("Query:" + query, sessionId);
+
+        List<ToolSourceDTO> searchResults = new ArrayList<>();
         String result;
         try {
             var response = semanticScholarService.executeQuery(query);
             if (response != null && response.getData() != null) {
                 StringBuilder sb = new StringBuilder();
                 for (var paper : response.getData()) {
+                    searchResults.add(new ToolSourceDTO(paper));
                     sb.append("Title: ").append(paper.getTitle()).append("\n");
-                    sb.append("Authors: ");
-                    if (paper.getAuthors() != null) {
-                        List<String> authorNames = new ArrayList<>();
-                        for (var author : paper.getAuthors()) {
-                            authorNames.add(author.getName());
-                        }
-                        sb.append(String.join(", ", authorNames));
-                    }
-                    sb.append("\n");
                     sb.append("Year: ").append(paper.getYear()).append("\n");
                     sb.append("Abstract: ").append(paper.getAbstractText()).append("\n");
-                    sb.append("URL: ").append(paper.getUrl()).append("\n");
-                    //  sb.append("DOI: ").append(paper.getExternalIds().getDoi()).append("\n");
                     sb.append("-----\n");
                 }
                 result = sb.toString();
@@ -59,9 +52,18 @@ public class ResearchTools {
             LOG.error("Error querying Semantic Scholar", e);
             return "Error querying Semantic Scholar: " + e.getMessage();
         }
+        chatWebsocketSender.sendToolResponse(toJson(searchResults), sessionId);
         chatWebsocketSender.sendToolResponse(result, sessionId);
         chatWebsocketSender.sendToolStopResponse(Tools.RESEARCH.name(), sessionId);
         return result;
     }
 
+    private String toJson(List<ToolSourceDTO> searchResults) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(searchResults);
+        } catch (Exception e) {
+            return "[]";
+        }
+    }
 }
