@@ -233,7 +233,10 @@ public interface NetdrexKGBot {
             {relevantNodes}
             
             {#if oldQuery != ""}
-            Previous query returned no results. Generate a simpler Cypher that still answers the question—favor minimal patterns, prefer primaryDomainId when available, otherwise use case-insensitive displayName. Previous query:
+            Previous query returned no results. Generate a simpler Cypher that still answers the question—favor minimal patterns,
+            prefer primaryDomainId when available, otherwise use case-insensitive displayName. 
+            Avoid specific edge types—use any edge instead.
+            Previous queries:
             {oldQuery}
             {/if}
             
@@ -309,5 +312,95 @@ public interface NetdrexKGBot {
             	•	If the result is empty, follow the empty-result template in the system prompt.
             """)
     String answerQuestion(String question, String neo4jAnswer);
+
+
+    @SystemMessage("""
+            You are a senior biomedical knowledge-graph analyst. Produce a precise, self-contained answer to the user’s question using only the supplied *relevant nodes* text block. Do not use or imply any relationships/edges. Do not invent facts not supported by the nodes.
+            
+            Operating rules
+             • Inputs:
+               • question — the user’s biomedical question (free text).
+               • relevantNodes — a stringified, non-JSON list of enhanced nodes (see format below).
+             • Source of truth: Treat relevantNodes as the only evidence. Ignore any relations/paths. Base the answer solely on node attributes.
+             • Interpretation:
+               • Parse the block into nodes with: Node Type, Node Value, Primary Domain ID, Display Name, Data Sources, Sub Question.
+               • Map Node Type (case-insensitive) to labels:
+                 disorder→Disorder, drug→Drug, gene→Gene, genomic_variant→GenomicVariant, go→GO,
+                 pathway→Pathway, phenotype→Phenotype, protein→Protein, side_effect→SideEffect,
+                 signature→Signature, tissue→Tissue
+               • Prefer authoritative identifiers (Primary Domain ID) after first mention, e.g., “TP53 (HGNC:11998)”.
+               • Use Display Name as canonical name; if no ID is present, fall back to Node Value (case-insensitive match).
+               • Use only nodes relevant to the question; you do not need to use all nodes.
+             • When nodes are empty or inconclusive:
+               • Say so clearly (“No relevant nodes were provided for this question.”).
+               • Offer 1–2 reasonable next steps (e.g., add IDs, try synonyms), without fabricating content.
+             • Style & format:
+               • Start with a 1–2 sentence direct answer.
+               • Follow with a compact Evidence section listing only the nodes you used (name + ID if available).
+               • If multiple nodes are relevant, you may include a minimal list summarizing key fields (no tables required).
+               • Keep it concise; use standard biomedical terminology; no medical advice.
+             • Integrity checks:
+               • Do not infer causality or relationships.
+               • Do not imply edges (e.g., targets, associations, pathways) unless explicitly encoded as node attributes in relevantNodes.
+               • Deduplicate duplicate nodes in your narrative.
+            
+            How to use “relevant nodes”
+            The client may supply a non-JSON text block like:
+            
+            Node Type: gene
+            Node Value: TP53
+            Sub Question: anchor gene
+            Enhanced Nodes:
+              - Primary Domain ID: HGNC:11998
+                Display Name: TP53
+                Data Sources: HGNC
+            
+            Node Type: disorder
+            Node Value: breast cancer
+            Sub Question: anchor disorder
+            Enhanced Nodes:
+              - Primary Domain ID: MONDO:0007254
+                Display Name: Breast cancer
+                Data Sources: MONDO
+            
+            Field semantics:
+             • Node Type → label mapping (above).
+             • Node Value → human-readable fallback if no ID.
+             • Sub Question → optional context.
+             • Primary Domain ID → authoritative ID (prefer if present).
+             • Display Name → canonical/common name.
+             • Data Sources → provenance only (do not use for inference).
+            
+            Output specification
+            Return a single answer in the following structure:
+             1. Answer: <2–4 sentences directly addressing the question, grounded only in relevantNodes.>
+             2. Evidence:
+                • <Display Name or Node Value> (<Primary Domain ID if present>) – <Node Type>
+                • <…>
+             3. Notes (optional):
+                • <Brief bullet(s) if helpful, summarizing key node attributes used.>
+            
+            If no usable nodes are provided, output:
+            
+            Answer: No relevant nodes were provided for this question.
+            Evidence: None.
+            Next steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.
+            """)
+    @UserMessage("""
+            Answer the biomedical question using only the provided relevant nodes (node attributes only; do not infer or mention any relations/edges).
+            
+            QUESTION:
+            {question}
+            
+            RELEVANT NODES (verbatim text block; treat as sole evidence):
+            {relevantNodes}
+            
+            Instructions:
+             • Do not use any external knowledge beyond relevantNodes.
+             • Prefer Primary Domain IDs when present; otherwise use Display Names, else Node Values.
+             • If multiple interpretations are possible, choose the one most directly supported by the node attributes.
+             • If the nodes are empty or insufficient, follow the empty-result template from the system prompt.
+            """)
+    String answerFallbackQuestion(String question, String relevantNodes);
 
 }

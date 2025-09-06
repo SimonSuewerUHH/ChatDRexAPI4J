@@ -40,7 +40,8 @@ public class NetdrexKGTool {
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
 
         String oldQuery = "";
-        for (int i = 0; i < 3; i++) {
+        final int maxAttempts = 3;
+        for (int i = 0; i < maxAttempts; i++) {
             try {
                 String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
                 oldQuery += "\n " + i + ". " + query;
@@ -50,13 +51,17 @@ public class NetdrexKGTool {
                     Log.infof("Empty result for query: %s", query);
                     continue;
                 }
+                if (i == maxAttempts - 1) {
+                    Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
+                    break;
+                }
                 return netdrexKGBot.answerQuestion(question, result);
             } catch (Exception e) {
                 Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
             }
 
         }
-        return "Failed to generate answer.";
+        return netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
     }
 
     private String stringifyEnhancedNodes(List<NetdrexKGNodeEnhanced> enhancedNodes) {
