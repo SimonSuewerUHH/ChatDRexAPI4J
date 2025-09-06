@@ -30,4 +30,7 @@ public class ChatRequestDTO {
     @NotNull
     @PositiveOrZero
     private Long timestamp;
+
+    //Will be set internally when using WebSocket connections
+    private String connectionId;
 }

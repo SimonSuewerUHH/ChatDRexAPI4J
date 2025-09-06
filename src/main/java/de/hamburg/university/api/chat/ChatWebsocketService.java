@@ -9,8 +9,10 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.inject.Inject;
 
+import java.io.Serializable;
+
 @WebSocket(path = "/ws/{clientId}")
-public class ChatWebsocketService {
+public class ChatWebsocketService implements Serializable {
 
     @Inject
     WebSocketConnection connection;
@@ -23,24 +25,29 @@ public class ChatWebsocketService {
 
     @OnOpen
     public void onOpen() {
-        Log.info("Connection opened: " + connection.id());
+        String clientId = getClientId();
+        Log.info("Connection opened: " + clientId);
     }
 
     @OnClose
     public void onClose() {
-        Log.info("Connection closed: " + connection.id());
+        String clientId = getClientId();
+        Log.info("Connection closed: " + clientId);
         sender.removeClient(connection.id());
     }
 
     @OnError
     public void onError(Throwable throwable) {
+        String clientId = getClientId();
         Log.error("Error in WebsocketClient: " + throwable.getMessage());
-        sender.removeClient(connection.id());
+        sender.removeClient(clientId);
     }
 
     @OnTextMessage
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
-        sender.addClient(connection.id(), request);
+        String clientId = getClientId();
+        request.setConnectionId(clientId);
+        sender.addClient(clientId, request);
         ChatResponseDTO start = ChatResponseDTO.createAPIResponse(request, "Start");
         ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
 
@@ -55,5 +62,9 @@ public class ChatWebsocketService {
                 core,
                 Multi.createFrom().item(stop)
         ).runSubscriptionOn(Infrastructure.getDefaultExecutor());
+    }
+
+    private String getClientId() {
+        return connection.pathParam("clientId");
     }
 }

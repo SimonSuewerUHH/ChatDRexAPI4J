@@ -34,7 +34,7 @@ public class ChatWebsocketSender {
         }
         ChatRequestDTO request = currentClients.get(memoryId);
         ChatResponseDTO start = ChatResponseDTO.createToolResponse(request, prefix + message);
-        sendMessageToClient(start, memoryId.toString());
+        sendMessageToClient(start, request.getConnectionId());
     }
 
     public void sendToolStartResponse(String message, Object memoryId) {

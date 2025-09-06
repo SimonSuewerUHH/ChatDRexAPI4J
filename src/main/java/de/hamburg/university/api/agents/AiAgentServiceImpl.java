@@ -8,6 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class AiAgentServiceImpl implements AIAgentService {
@@ -51,7 +52,8 @@ public class AiAgentServiceImpl implements AIAgentService {
 
     @Override
     public String askResearch(String question) {
-        return researchBot.answer(question);
+        String id = UUID.randomUUID().toString();
+        return researchBot.answer(id, question);
     }
 
     @Override

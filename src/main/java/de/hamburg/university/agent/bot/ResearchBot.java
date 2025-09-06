@@ -1,6 +1,8 @@
 package de.hamburg.university.agent.bot;
 
+import de.hamburg.university.agent.memory.ServiceLocalMemoryProvider;
 import de.hamburg.university.agent.tool.research.ResearchTools;
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
@@ -9,7 +11,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 @RegisterAiService(
-        tools = {ResearchTools.class})
+        tools = {ResearchTools.class}
+)
 public interface ResearchBot {
 
     @SystemMessage("""
@@ -43,5 +46,5 @@ public interface ResearchBot {
     @UserMessage("""
             {input}
             """)
-    String answer(@V("input") String userMessage);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage);
 }

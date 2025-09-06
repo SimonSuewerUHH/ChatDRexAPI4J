@@ -60,10 +60,7 @@ public class NetdrexKgQueryServiceImpl {
     }
 
     public String fireNeo4jQuery(String cypher) {
-        return netdrexApiClient.streamQuery(cypher)
-                .collect().asList()
-                .map(list -> String.join("\n", list))
-                .await().indefinitely();
+        return netdrexApiClient.runQuery(cypher);
     }
 
     private List<List<NetdrexSearchEmbeddingsNodeResponseDTO>> queryEmbeddings(NetdrexSearchEmbeddingRequestDTO dto) {

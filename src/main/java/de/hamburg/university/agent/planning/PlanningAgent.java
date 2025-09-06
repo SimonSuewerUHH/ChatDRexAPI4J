@@ -56,6 +56,7 @@ public class PlanningAgent {
 
         List<PlanStep> history = new ArrayList<>();
         emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planing ..."));
+        String connectionId = content.getConnectionId();
         for (int step = 1; step <= MAX_STEPS; step++) {
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
@@ -80,7 +81,7 @@ public class PlanningAgent {
                         decision.setMessageMarkdown("Fetched research results.");
                     }
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getMessageMarkdown());
-                    state.getResearch().add(research.answer(state.getUserGoal()));
+                    state.getResearch().add(research.answer(connectionId, state.getUserGoal()));
                 }
                 case FETCH_KG -> {
                     chatWebsocketSender.sendToolStartResponse("Fetching Netdrex knowledge Graph context.", content, emitter);

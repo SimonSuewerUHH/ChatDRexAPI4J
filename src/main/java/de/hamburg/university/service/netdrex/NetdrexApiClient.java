@@ -3,6 +3,7 @@ package de.hamburg.university.service.netdrex;
 
 import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingRequestDTO;
 import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingsNodeResponseDTO;
+import io.quarkus.rest.client.reactive.ClientQueryParam;
 import io.smallrye.mutiny.Multi;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -29,9 +30,14 @@ public interface NetdrexApiClient {
 
     @GET
     @Path("open/neo4j/query")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @RestStreamElementType(MediaType.TEXT_PLAIN)
     Multi<String> streamQuery(@QueryParam("query") String cypher);
 
+    @GET
+    @Path("open/neo4j/query")
+    @Produces(MediaType.TEXT_PLAIN)
+    @ClientQueryParam(name = "stream", value = "false")
+    String runQuery(@QueryParam("query") String cypher);
 
 }
