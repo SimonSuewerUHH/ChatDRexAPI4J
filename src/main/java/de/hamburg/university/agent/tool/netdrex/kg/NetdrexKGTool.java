@@ -3,6 +3,8 @@ package de.hamburg.university.agent.tool.netdrex.kg;
 import de.hamburg.university.agent.bot.kg.NetdrexKGBot;
 import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
 import de.hamburg.university.agent.bot.kg.NetdrexKGNode;
+import de.hamburg.university.agent.tool.ToolDTO;
+import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
@@ -42,13 +44,19 @@ public class NetdrexKGTool {
     }
 
     public String answer(String question, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+        ToolDTO toolDTO = new ToolDTO(Tools.RESEARCH.name());
+        toolDTO.setInput(question);
+
         try {
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
             NetdrexKGGraph questionGraph = decomposeToNodes(question);
-            chatWebsocketSender.sendToolResponse(stringifyNodes(questionGraph.getNodes()), content, emitter);
+            toolDTO.addContent(stringifyNodes(questionGraph.getNodes()));
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
             List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
             String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
-            chatWebsocketSender.sendToolResponse(enhancedNodesString, content, emitter);
+            toolDTO.addContent(enhancedNodesString);
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
             String oldQuery = "";
             final int maxAttempts = 3;
@@ -56,9 +64,13 @@ public class NetdrexKGTool {
                 try {
                     String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
                     oldQuery += "\n " + i + ". " + query;
-                    chatWebsocketSender.sendToolResponse(query, content, emitter);
+                    toolDTO.addContent(query);
+                    chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
                     String result = netdrexKgQueryService.fireNeo4jQuery(query);
-                    chatWebsocketSender.sendToolResponse(result, content, emitter);
+                    toolDTO.addContent(result);
+                    chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
                     Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
                     if (StringUtils.isEmpty(result)) {
                         Log.infof("Empty result for query: %s", query);
@@ -69,7 +81,10 @@ public class NetdrexKGTool {
                         break;
                     }
                     String answer = netdrexKGBot.answerQuestion(question, result);
-                    chatWebsocketSender.sendToolResponse(answer, content, emitter);
+                    toolDTO.addContent(answer);
+                    toolDTO.setStop();
+                    chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
                     return answer;
                 } catch (Exception e) {
                     Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
@@ -77,12 +92,17 @@ public class NetdrexKGTool {
 
             }
             String answer = netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
-            chatWebsocketSender.sendToolResponse(answer, content, emitter);
+            toolDTO.addContent(answer);
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
             return answer;
         } catch (Exception e) {
             Log.errorf(e, "Failed to answer question: %s", question);
             String answer = "I'm sorry, I encountered an error while trying to answer your question.";
-            chatWebsocketSender.sendToolResponse(answer, content, emitter);
+            toolDTO.addContent(answer);
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
             return answer;
         }
     }

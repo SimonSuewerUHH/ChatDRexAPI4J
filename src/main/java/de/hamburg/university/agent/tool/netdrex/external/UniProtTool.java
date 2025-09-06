@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.tool.netdrex.external;
 
+import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.uniprotkb.GeneSimpleDTO;
@@ -27,8 +28,10 @@ public class UniProtTool {
 
     @Tool("Fetch gene names for a single UniProt accession ID")
     public List<String> getUniProtEntry(String uniProdId, @ToolMemoryId String sessionId) {
-        chatWebsocketSender.sendToolStartResponse(Tools.UNIPROD.name(), sessionId);
-        chatWebsocketSender.sendToolResponse("Query:" + uniProdId, sessionId);
+        ToolDTO toolDTO = new ToolDTO(Tools.UNIPROD.name());
+        toolDTO.setInput(uniProdId);
+
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
 
         UniProtEntryDTO response = uniProtApiClient.getEntry(uniProdId);
         List<String> geneNames = new ArrayList<>();
@@ -44,9 +47,10 @@ public class UniProtTool {
                 }
             }
         }
-        chatWebsocketSender.sendToolResponse(String.join(", ", geneNames), sessionId);
-        chatWebsocketSender.sendToolStopResponse(Tools.UNIPROD.name(), sessionId);
 
+        toolDTO.setStop();
+        toolDTO.addContent(String.join(", ", geneNames));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
         return geneNames;
     }
 

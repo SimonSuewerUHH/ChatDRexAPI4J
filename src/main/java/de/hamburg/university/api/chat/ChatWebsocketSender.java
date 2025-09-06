@@ -1,5 +1,6 @@
 package de.hamburg.university.api.chat;
 
+import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
@@ -27,50 +28,26 @@ public class ChatWebsocketSender {
         currentClients.remove(clientId);
     }
 
-    private void sendToolResponse(String message, Object memoryId, String prefix) {
+
+    public void sendTool(ToolDTO tool, Object memoryId) {
         if (!currentClients.containsKey(memoryId)) {
             Log.warnf("No client found with id %s", memoryId);
             return;
         }
         ChatRequestDTO request = currentClients.get(memoryId);
-        ChatResponseDTO start = ChatResponseDTO.createToolResponse(request, prefix + message);
+        ChatResponseDTO start = ChatResponseDTO.createToolResponse(request, tool);
         sendMessageToClient(start, request.getConnectionId());
     }
 
-    public void sendToolStartResponse(String message, Object memoryId) {
-        sendToolResponse(message, memoryId, "START");
-    }
 
-    public void sendToolResponse(String message, Object memoryId) {
-        sendToolResponse(message, memoryId, "CONTENT");
-    }
-
-    public void sendToolStopResponse(String message, Object memoryId) {
-        sendToolResponse(message, memoryId, "END");
-    }
-
-    private void sendToolResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter, String prefix) {
+    public void sendTool(ToolDTO tool, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         if (emitter == null) {
-            Log.warnf("No emitter found for message %s", message);
+            Log.warnf("No emitter found for message %s", tool.getId());
             return;
         }
-        ChatResponseDTO start = ChatResponseDTO.createToolResponse(content, prefix + message);
+        ChatResponseDTO start = ChatResponseDTO.createToolResponse(content, tool);
         emitter.emit(start);
     }
-
-
-    public void sendToolStartResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
-        sendToolResponse(message, content, emitter, "START");
-    }
-
-    public void sendToolResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
-        sendToolResponse(message, content, emitter, "CONTENT");
-    }
-
-    public void sendToolStopResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
-        sendToolResponse(message, content, emitter, "END");
-    }
-
 
     private void sendMessageToClient(ChatResponseDTO message, String clientId) {
         connections.findByEndpointId(ENDPOINT_ID)

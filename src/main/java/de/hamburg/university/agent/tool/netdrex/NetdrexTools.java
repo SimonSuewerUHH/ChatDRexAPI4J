@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.tool.netdrex;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.netdrex.NetdrexAPIInfoDTO;
@@ -22,11 +23,15 @@ public class NetdrexTools {
 
     @Tool("Given a list of prefixed IDs, retrieves matching entity information (drug, protein, or gene). IDs must be of the form {database}.{accession}, e.g. uniprot.Q9UBT6, drugbank.DB00001, entrez.1234. Returns an array of items with one or more matches from the appropriate collection.")
     public List<NetdrexAPIInfoDTO> getInfo(List<String> ids, @ToolMemoryId String sessionId) {
-        chatWebsocketSender.sendToolStartResponse(Tools.NETDREX.name(), sessionId);
+        ToolDTO toolDTO = new ToolDTO(Tools.NETDREX.name());
+        toolDTO.setInput(String.join(", ", ids));
+
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
 
         List<NetdrexAPIInfoDTO> info = netdrexService.fetchInfo(ids);
-        chatWebsocketSender.sendToolResponse(toJson(info), sessionId);
-        chatWebsocketSender.sendToolStopResponse(Tools.NETDREX.name(), sessionId);
+        toolDTO.setStop();
+        toolDTO.addContent(toJson(info));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
         return info;
     }
 

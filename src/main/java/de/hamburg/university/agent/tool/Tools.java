@@ -4,6 +4,7 @@ public enum Tools {
     RESEARCH,
     UNIPROD,
     MYGENE,
-    NETDREX
+    NETDREX,
+    DIGEST
 
 }

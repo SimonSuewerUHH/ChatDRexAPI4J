@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.tool.netdrex.external;
 
+import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.mygene.MyGeneClient;
@@ -31,17 +32,21 @@ public class EntrezIdTool {
     @Tool("Given a list of gene symbols, retrieves the corresponding unique Entrez Gene IDs (human only).")
     public List<Integer> getEntrezIds(List<String> genes, @ToolMemoryId String sessionId) {
         Set<Integer> entrezIds = new HashSet<>();
-        chatWebsocketSender.sendToolStartResponse(Tools.MYGENE.name(), sessionId);
+        ToolDTO toolDTO = new ToolDTO(Tools.NETDREX.name());
+        toolDTO.setInput(String.join(", ", genes));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
 
         for (String gene : genes) {
             try {
-                chatWebsocketSender.sendToolResponse("Query:" + gene, sessionId);
+                toolDTO.addContent("Query:" + gene);
+                chatWebsocketSender.sendTool(toolDTO, sessionId);
                 MyGeneResponseDTO response = myGeneClient.query(gene, "entrezgene", "human");
                 if (response != null && response.getHits() != null && !response.getHits().isEmpty()) {
                     for (MyGeneHit hit : response.getHits()) {
                         if (hit.getEntrezgene() != null) {
                             entrezIds.add(hit.getEntrezgene());
-                            chatWebsocketSender.sendToolResponse("Hit:" + hit.getEntrezgene(), sessionId);
+                            toolDTO.addContent("Hit:" + hit.getEntrezgene());
+                            chatWebsocketSender.sendTool(toolDTO, sessionId);
                         }
                     }
                 }
@@ -49,7 +54,8 @@ public class EntrezIdTool {
                 LOG.errorf(e, "Error at calling Entrez-ID by gene '%s'", gene);
             }
         }
-        chatWebsocketSender.sendToolStopResponse(Tools.MYGENE.name(), sessionId);
+        toolDTO.setStop();
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
         return new ArrayList<>(entrezIds);
     }
 }

@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.tool.research;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.research.semanticscholar.SemanticScholarServiceImpl;
@@ -11,6 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static io.quarkus.arc.ComponentsProvider.LOG;
@@ -28,8 +30,9 @@ public class ResearchTools {
             + "Provide a concise summary of the most relevant papers including title, authors, year, abstract, URL, and DOI. "
             + "If no results are found, respond with 'No results found.'")
     public String querySemanticScholar(@P(value = "query") String query, @ToolMemoryId String sessionId) {
-        chatWebsocketSender.sendToolStartResponse(Tools.RESEARCH.name(), sessionId);
-        chatWebsocketSender.sendToolResponse("Query:" + query, sessionId);
+        ToolDTO toolDTO = new ToolDTO(Tools.RESEARCH.name());
+        toolDTO.setInput(query);
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
 
         List<ToolSourceDTO> searchResults = new ArrayList<>();
         String result;
@@ -52,18 +55,10 @@ public class ResearchTools {
             LOG.error("Error querying Semantic Scholar", e);
             return "Error querying Semantic Scholar: " + e.getMessage();
         }
-        chatWebsocketSender.sendToolResponse(toJson(searchResults), sessionId);
-        chatWebsocketSender.sendToolResponse(result, sessionId);
-        chatWebsocketSender.sendToolStopResponse(Tools.RESEARCH.name(), sessionId);
+        toolDTO.addContent(result);
+        toolDTO.setStructuredContent(Collections.singletonList(searchResults));
+        toolDTO.setStop();
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
         return result;
-    }
-
-    private String toJson(List<ToolSourceDTO> searchResults) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(searchResults);
-        } catch (Exception e) {
-            return "[]";
-        }
     }
 }
