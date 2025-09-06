@@ -1,8 +1,12 @@
 package de.hamburg.university.agent.tool.netdrex;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.agent.tool.Tools;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.netdrex.NetdrexAPIInfoDTO;
 import de.hamburg.university.service.netdrex.NetdrexService;
 import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.agent.tool.ToolMemoryId;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -13,8 +17,25 @@ public class NetdrexTools {
     @Inject
     NetdrexService netdrexService;
 
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
+
     @Tool("Given a list of prefixed IDs, retrieves matching entity information (drug, protein, or gene). IDs must be of the form {database}.{accession}, e.g. uniprot.Q9UBT6, drugbank.DB00001, entrez.1234. Returns an array of items with one or more matches from the appropriate collection.")
-    public List<NetdrexAPIInfoDTO> getInfo(List<String> ids) {
-        return netdrexService.fetchInfo(ids);
+    public List<NetdrexAPIInfoDTO> getInfo(List<String> ids, @ToolMemoryId String sessionId) {
+        chatWebsocketSender.sendToolStartResponse(Tools.NETDREX.name(), sessionId);
+
+        List<NetdrexAPIInfoDTO> info = netdrexService.fetchInfo(ids);
+        chatWebsocketSender.sendToolResponse(toJson(info), sessionId);
+        chatWebsocketSender.sendToolStopResponse(Tools.NETDREX.name(), sessionId);
+        return info;
+    }
+
+    private String toJson(List<NetdrexAPIInfoDTO> searchResults) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(searchResults);
+        } catch (Exception e) {
+            return "[]";
+        }
     }
 }

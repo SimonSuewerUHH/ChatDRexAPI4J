@@ -1,9 +1,12 @@
 package de.hamburg.university.agent.tool.netdrex.external;
 
+import de.hamburg.university.agent.tool.Tools;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.uniprotkb.GeneSimpleDTO;
 import de.hamburg.university.service.uniprotkb.UniProtApiClient;
 import de.hamburg.university.service.uniprotkb.UniProtEntryDTO;
 import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.agent.tool.ToolMemoryId;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,8 +22,14 @@ public class UniProtTool {
     @RestClient
     UniProtApiClient uniProtApiClient;
 
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
+
     @Tool("Fetch gene names for a single UniProt accession ID")
-    public List<String> getUniProtEntry(String uniProdId) {
+    public List<String> getUniProtEntry(String uniProdId, @ToolMemoryId String sessionId) {
+        chatWebsocketSender.sendToolStartResponse(Tools.UNIPROD.name(), sessionId);
+        chatWebsocketSender.sendToolResponse("Query:" + uniProdId, sessionId);
+
         UniProtEntryDTO response = uniProtApiClient.getEntry(uniProdId);
         List<String> geneNames = new ArrayList<>();
 
@@ -35,13 +44,16 @@ public class UniProtTool {
                 }
             }
         }
+        chatWebsocketSender.sendToolResponse(String.join(", ", geneNames), sessionId);
+        chatWebsocketSender.sendToolStopResponse(Tools.UNIPROD.name(), sessionId);
+
         return geneNames;
     }
 
     @Tool("Fetch gene names for multiple UniProt accession IDs")
-    public List<String> getUniProtEntries(List<String> uniProdIds) {
+    public List<String> getUniProtEntries(List<String> uniProdIds, @ToolMemoryId String sessionId) {
         return uniProdIds.stream()
-                .flatMap(id -> getUniProtEntry(id).stream())
+                .flatMap(id -> getUniProtEntry(id, sessionId).stream())
                 .toList();
     }
 }

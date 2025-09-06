@@ -23,7 +23,8 @@ public class AiAgentServiceImpl implements AIAgentService {
 
     @Override
     public String askNetdrex(String question) {
-        return netdrexBot.answer(question);
+        String id = UUID.randomUUID().toString();
+        return netdrexBot.answer(id, question);
     }
 
     @Override

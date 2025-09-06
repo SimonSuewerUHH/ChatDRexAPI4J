@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.bot;
 
 import de.hamburg.university.agent.planning.PlanState;
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
@@ -76,5 +77,5 @@ public interface FinalizeBot {
             This is my context
             {state}
             """)
-    Multi<String> answer(@V("userMessage") String userMessage, PlanState state);
+    Multi<String> answer(@MemoryId String sessionId, @V("userMessage") String userMessage, PlanState state);
 }

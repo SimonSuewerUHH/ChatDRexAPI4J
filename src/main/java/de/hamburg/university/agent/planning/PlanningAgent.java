@@ -93,7 +93,7 @@ public class PlanningAgent {
                     chatWebsocketSender.sendToolStopResponse("Fetched Netdrex knowledge Graph context.", content, emitter);
                 }
                 case FETCH_BIO_INFO -> {
-                    setEnhancedQueryBioInfo(state, decision);
+                    setEnhancedQueryBioInfo(state, decision, connectionId);
                 }
                 case CALL_NETDREX_TOOL -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
@@ -101,7 +101,7 @@ public class PlanningAgent {
                     }
                     Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getMessageMarkdown());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision);
+                        setEnhancedQueryBioInfo(state, decision, connectionId);
                     }
                     state = netdrexTool.answer(state);
                 }
@@ -111,16 +111,16 @@ public class PlanningAgent {
                     }
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getMessageMarkdown());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision);
+                        setEnhancedQueryBioInfo(state, decision, connectionId);
                     }
-                    state.setDigestResult(digestBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo()));
+                    state.setDigestResult(digestBot.answer(connectionId, state.getUserGoal(), state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
                         decision.setMessageMarkdown("No summary produced.");
                     }
                     // Stream all chunks from the finalize bot and emit each part
-                    String result = finalizeBot.answer(content.getMessage(), state)
+                    String result = finalizeBot.answer(connectionId, content.getMessage(), state)
                             .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
                             .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
                             .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "Finalized plan.")))
@@ -139,12 +139,12 @@ public class PlanningAgent {
     }
 
 
-    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision) {
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
         if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
             decision.setMessageMarkdown("Fetched external bio info context.");
         }
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getMessageMarkdown());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(state.getUserGoal()));
+        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal()));
     }
 
     private String safeToString(PlanStep d) {

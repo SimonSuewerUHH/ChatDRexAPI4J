@@ -13,7 +13,7 @@ public class ToolSourceDTO {
     private String paperId;
     private String doi;
     private String title;
-    private int publishedYear;
+    private Integer publishedYear;
     private String authors;
     private String journal;
     @JsonProperty("abstract")

@@ -3,6 +3,7 @@ package de.hamburg.university.agent.bot;
 import de.hamburg.university.agent.tool.netdrex.NetdrexTools;
 import de.hamburg.university.agent.tool.netdrex.external.EntrezIdTool;
 import de.hamburg.university.agent.tool.netdrex.external.UniProtTool;
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
@@ -55,5 +56,5 @@ public interface NetdrexBot {
     @UserMessage("""
             {input}
             """)
-    String answer(@V("input") String userMessage);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage);
 }

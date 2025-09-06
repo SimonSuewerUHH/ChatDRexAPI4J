@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.bot;
 
 import de.hamburg.university.agent.tool.digest.DigestTools;
+import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
@@ -64,5 +65,5 @@ public interface DigestBot {
             Additional input context
             {context}
             """)
-    String answer(@V("input") String userMessage, @V("context") String context);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage, @V("context") String context);
 }
