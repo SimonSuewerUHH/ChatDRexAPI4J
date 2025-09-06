@@ -4,6 +4,7 @@ import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.OpenConnections;
+import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -46,6 +47,28 @@ public class ChatWebsocketSender {
 
     public void sendToolStopResponse(String message, Object memoryId) {
         sendToolResponse(message, memoryId, "END");
+    }
+
+    private void sendToolResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter, String prefix) {
+        if (emitter == null) {
+            Log.warnf("No emitter found for message %s", message);
+            return;
+        }
+        ChatResponseDTO start = ChatResponseDTO.createToolResponse(content, prefix + message);
+        emitter.emit(start);
+    }
+
+
+    public void sendToolStartResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+        sendToolResponse(message, content, emitter, "START");
+    }
+
+    public void sendToolResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+        sendToolResponse(message, content, emitter, "CONTENT");
+    }
+
+    public void sendToolStopResponse(String message, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+        sendToolResponse(message, content, emitter, "END");
     }
 
 

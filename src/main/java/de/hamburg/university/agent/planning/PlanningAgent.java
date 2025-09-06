@@ -8,6 +8,7 @@ import de.hamburg.university.agent.bot.ResearchBot;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
 import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
 import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
@@ -22,6 +23,9 @@ import java.util.List;
 @ApplicationScoped
 public class PlanningAgent {
     private static final int MAX_STEPS = 6;
+
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
 
     @Inject
     DecisionPlannerBot planner;
@@ -79,11 +83,13 @@ public class PlanningAgent {
                     state.getResearch().add(research.answer(state.getUserGoal()));
                 }
                 case FETCH_KG -> {
+                    chatWebsocketSender.sendToolStartResponse("Fetching Netdrex knowledge Graph context.", content, emitter);
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
                         decision.setMessageMarkdown("Fetched Netdrex knowladge Graph context.");
                     }
                     Log.debugf("Action FETCH_KG: %s", decision.getMessageMarkdown());
-                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal()));
+                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), content, emitter));
+                    chatWebsocketSender.sendToolStopResponse("Fetched Netdrex knowledge Graph context.", content, emitter);
                 }
                 case FETCH_BIO_INFO -> {
                     setEnhancedQueryBioInfo(state, decision);

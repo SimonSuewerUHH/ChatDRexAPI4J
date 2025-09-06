@@ -2,10 +2,15 @@ package de.hamburg.university.agent.tool.netdrex.kg;
 
 import de.hamburg.university.agent.bot.kg.NetdrexKGBot;
 import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
+import de.hamburg.university.agent.bot.kg.NetdrexKGNode;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
+import de.hamburg.university.api.chat.messages.ChatRequestDTO;
+import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import de.hamburg.university.service.netdrex.kg.NetdrexKGNodeEnhanced;
 import de.hamburg.university.service.netdrex.kg.NetdrexKgQueryServiceImpl;
 import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingsNodeDTO;
 import io.quarkus.logging.Log;
+import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +20,8 @@ import java.util.List;
 @ApplicationScoped
 public class NetdrexKGTool {
 
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
 
     @Inject
     NetdrexKGBot netdrexKGBot;
@@ -34,12 +41,14 @@ public class NetdrexKGTool {
         return query;
     }
 
-    public String answer(String question) {
+    public String answer(String question, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         try {
 
             NetdrexKGGraph questionGraph = decomposeToNodes(question);
+            chatWebsocketSender.sendToolResponse(stringifyNodes(questionGraph.getNodes()), content, emitter);
             List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
             String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
+            chatWebsocketSender.sendToolResponse(enhancedNodesString, content, emitter);
 
             String oldQuery = "";
             final int maxAttempts = 3;
@@ -47,7 +56,9 @@ public class NetdrexKGTool {
                 try {
                     String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
                     oldQuery += "\n " + i + ". " + query;
+                    chatWebsocketSender.sendToolResponse(query, content, emitter);
                     String result = netdrexKgQueryService.fireNeo4jQuery(query);
+                    chatWebsocketSender.sendToolResponse(result, content, emitter);
                     Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
                     if (StringUtils.isEmpty(result)) {
                         Log.infof("Empty result for query: %s", query);
@@ -57,17 +68,38 @@ public class NetdrexKGTool {
                         Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
                         break;
                     }
-                    return netdrexKGBot.answerQuestion(question, result);
+                    String answer = netdrexKGBot.answerQuestion(question, result);
+                    chatWebsocketSender.sendToolResponse(answer, content, emitter);
+                    return answer;
                 } catch (Exception e) {
                     Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
                 }
 
             }
-            return netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
+            String answer = netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
+            chatWebsocketSender.sendToolResponse(answer, content, emitter);
+            return answer;
         } catch (Exception e) {
             Log.errorf(e, "Failed to answer question: %s", question);
-            return "I'm sorry, I encountered an error while trying to answer your question.";
+            String answer = "I'm sorry, I encountered an error while trying to answer your question.";
+            chatWebsocketSender.sendToolResponse(answer, content, emitter);
+            return answer;
         }
+    }
+
+    public String answer(String question) {
+        return answer(question, null, null);
+    }
+
+    private String stringifyNodes(List<NetdrexKGNode> enhancedNodes) {
+        StringBuilder sb = new StringBuilder();
+        for (NetdrexKGNode node : enhancedNodes) {
+            sb.append("Node Type: ").append(node.getNodeType()).append("\n");
+            sb.append("Node Value: ").append(node.getNodeValue()).append("\n");
+            sb.append("Sub Question: ").append(node.getSubQuestion()).append("\n");
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     private String stringifyEnhancedNodes(List<NetdrexKGNodeEnhanced> enhancedNodes) {
