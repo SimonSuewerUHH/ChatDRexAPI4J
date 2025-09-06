@@ -35,33 +35,39 @@ public class NetdrexKGTool {
     }
 
     public String answer(String question) {
-        NetdrexKGGraph questionGraph = decomposeToNodes(question);
-        List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
-        String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
+        try {
 
-        String oldQuery = "";
-        final int maxAttempts = 3;
-        for (int i = 0; i < maxAttempts; i++) {
-            try {
-                String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
-                oldQuery += "\n " + i + ". " + query;
-                String result = netdrexKgQueryService.fireNeo4jQuery(query);
-                Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
-                if (StringUtils.isEmpty(result)) {
-                    Log.infof("Empty result for query: %s", query);
-                    continue;
+            NetdrexKGGraph questionGraph = decomposeToNodes(question);
+            List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
+            String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
+
+            String oldQuery = "";
+            final int maxAttempts = 3;
+            for (int i = 0; i < maxAttempts; i++) {
+                try {
+                    String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
+                    oldQuery += "\n " + i + ". " + query;
+                    String result = netdrexKgQueryService.fireNeo4jQuery(query);
+                    Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
+                    if (StringUtils.isEmpty(result)) {
+                        Log.infof("Empty result for query: %s", query);
+                        continue;
+                    }
+                    if (i == maxAttempts - 1) {
+                        Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
+                        break;
+                    }
+                    return netdrexKGBot.answerQuestion(question, result);
+                } catch (Exception e) {
+                    Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
                 }
-                if (i == maxAttempts - 1) {
-                    Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
-                    break;
-                }
-                return netdrexKGBot.answerQuestion(question, result);
-            } catch (Exception e) {
-                Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
+
             }
-
+            return netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to answer question: %s", question);
+            return "I'm sorry, I encountered an error while trying to answer your question.";
         }
-        return netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
     }
 
     private String stringifyEnhancedNodes(List<NetdrexKGNodeEnhanced> enhancedNodes) {

@@ -16,6 +16,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ApplicationScoped
 public class PlanningAgent {
     private static final int MAX_STEPS = 6;
@@ -47,9 +50,12 @@ public class PlanningAgent {
         PlanState state = new PlanState();
         state.setUserGoal(content.getMessage());
 
+        List<PlanStep> history = new ArrayList<>();
         emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planing ..."));
         for (int step = 1; step <= MAX_STEPS; step++) {
-            PlanStep decision = planner.decide(state);
+            int stepLeft = MAX_STEPS - step;
+            PlanStep decision = planner.decide(state, history, stepLeft);
+            history.add(decision);
             emitter.emit(ChatResponseDTO.createReasoningResponse(content, decision.getAction() + "->" + decision.getReason()));
 
             Log.debugf("Planning step %d: %s", step, safeToString(decision));
@@ -133,6 +139,7 @@ public class PlanningAgent {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getMessageMarkdown());
         state.setEnhancedQueryBioInfo(netdrexBot.answer(state.getUserGoal()));
     }
+
     private String safeToString(PlanStep d) {
         try {
             return om.writeValueAsString(d);

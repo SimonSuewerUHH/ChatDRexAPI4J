@@ -11,9 +11,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 @RegisterAiService(
         tools = {
                 DigestTools.class
-        },
-        chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class
-)
+        }
+        )
 public interface DigestBot {
 
     @SystemMessage("""

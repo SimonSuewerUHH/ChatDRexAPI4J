@@ -7,6 +7,8 @@ import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
+
 @RegisterAiService
 @ApplicationScoped
 public interface DecisionPlannerBot {
@@ -31,9 +33,7 @@ public interface DecisionPlannerBot {
             Decide EXACTLY ONE next action as a JSON object matching PlanStep:
             
             {
-              "action": "FETCH_NETWORK" | "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_CHATDREX" |
-                         "FETCH_KG" | "FETCH_BIO_INFO" |
-                         "CALL_CHATDREX_TOOL" | "CALL_NETDREX_TOOL" | "CALL_DIGEST_TOOL" |
+              "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" |  "CALL_NETDREX_TOOL" | "CALL_DIGEST_TOOL" |
                          "FINALIZE",
               "reason": "short rationale",
               "messageMarkdown": "..."   // ONLY set on FINALIZE
@@ -42,14 +42,11 @@ public interface DecisionPlannerBot {
             ---
             
             Available actions:
-            - **FETCH_NETWORK** → when network is missing/outdated.
-            - **UPDATE_NETWORK** → when network exists but needs new seeds/params.
-            - **FETCH_RESEARCH** → when user asks for background, validation, or seeds are insufficient.
-            - **FETCH_CHATDREX** → when Diamond/TrustRank is requested but ChatDrex context is absent.
-            - **FETCH_KG** → when knowledge-graph context is required.
+            - **UPDATE_NETWORK** → when network asks for highlight specific parts of it.
+            - **FETCH_RESEARCH** → When the user asks for background information or the current answer could use more information.
+            - **FETCH_KG** → when knowledge-graph context is required. This should be preferred for any question if the question is aimed at obtaining information that could be included in a knowledge graph.
             - **FETCH_BIO_INFO** → when biological enrichment of the query is needed.
-            - **CALL_CHATDREX_TOOL** → when running Diamond/TrustRank with context ready.
-            - **CALL_NETDREX_TOOL** → when running a Netdrex algorithm with KG context.
+            - **CALL_NETDREX_TOOL** → when a user asks for diamond trustrank or just drug repurposing.
             - **CALL_DIGEST_TOOL** → when enrichment analysis is needed.
             - **FINALIZE** → when you can summarize and recommend next steps. \s
               *Provide concise markdown with 3–5 bullets and, if helpful, a small table.* \s
@@ -66,17 +63,10 @@ public interface DecisionPlannerBot {
             
             ### Examples
             
-            1. Missing network:
-            {
-              "action": "FETCH_NETWORK",
-              "reason": "No network available for this workflow",
-              "messageMarkdown": null
-            }
-            
-            2. Need to update network with new seeds:
+            1. Need to update network with new seeds:
             {
               "action": "UPDATE_NETWORK",
-              "reason": "User provided new genes for network update",
+              "reason": "User wanna have drugs red",
               "messageMarkdown": null
             }
             
@@ -86,50 +76,36 @@ public interface DecisionPlannerBot {
               "reason": "User asked for supporting literature on TP53",
               "messageMarkdown": null
             }
-            
-            4. Fetch ChatDrex context:
-            {
-              "action": "FETCH_CHATDREX",
-              "reason": "Diamond requested but ChatDrex context is missing",
-              "messageMarkdown": null
-            }
-            
-            5. Fetch KG context:
+           
+            4. Fetch KG context:
             {
               "action": "FETCH_KG",
               "reason": "Need Netdrex KG context before algorithm run",
               "messageMarkdown": null
             }
             
-            6. Fetch biological info:
+            5. Fetch biological info:
             {
               "action": "FETCH_BIO_INFO",
               "reason": "Query ambiguous, need enhanced bio info",
               "messageMarkdown": null
             }
             
-            7. Call Netdrex tool:
+            6. Call Netdrex tool:
             {
               "action": "CALL_NETDREX_TOOL",
               "reason": "Netdrex algorithm requested with KG context available",
               "messageMarkdown": null
             }
             
-            8. Call Digest tool:
+            7. Call Digest tool:
             {
               "action": "CALL_DIGEST_TOOL",
               "reason": "Perform enrichment analysis on provided seed set",
               "messageMarkdown": null
             }
-            
-            9. Call ChatDrex tool:
-            {
-              "action": "CALL_CHATDREX_TOOL",
-              "reason": "Diamond requested with network + seeds ready",
-              "messageMarkdown": null
-            }
-            
-            10. Finalize with recommendation:
+           
+            8. Finalize with recommendation:
             {
               "action": "FINALIZE",
               "reason": "All context gathered; providing summary",
@@ -139,10 +115,38 @@ public interface DecisionPlannerBot {
             ---
             """)
     @UserMessage("""
-            # Current state:
+            # Planning context
+            
+            ## Current state
             {{state}}
             
-            Please take the overall goal from this state
+            ## User goal
+            Please extract the overall intent from `state.userGoal` and use it to guide your decision.
+            
+            ## Previous decisions
+            Do NOT repeat any of these actions. Each action may only be taken once.
+            Never go back to a previous action.
+            {#for h in history}
+            - Action: {h.getAction()} | Reason: {h.getReason()}
+            {/for}
+            
+            ## Steps left
+            You have {stepsLeft} planning steps remaining.
+            Try to minimize the number of steps used. You dont need to take all of them
+            Be strategic: prioritize essential missing actions first, and finalize early if all required actions are already completed.
+            Try to finalize as soon as possible.
+            If you have 1 step left, you must finalize.
+            ---
+            
+            ### Instructions
+            - Choose **exactly one** next action.
+            - Always output a single JSON object with fields:
+              - `action`: the next PlanAction
+              - `reason`: short, clear explanation
+            - Never output extra text or properties.
+            - If every required action is already in history, immediately return a `FINALIZE` step with a markdown summary of recommendations.
+            
+            Please decide the next step now.
             """)
-    PlanStep decide(PlanState state);
+    PlanStep decide(PlanState state, List<PlanStep> history, int stepsLeft);
 }
