@@ -1,9 +1,13 @@
 package de.hamburg.university.agent.planning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.agent.bot.DigestBot;
 import de.hamburg.university.agent.bot.FinalizeBot;
+import de.hamburg.university.agent.bot.NetdrexBot;
 import de.hamburg.university.agent.bot.ResearchBot;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
+import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
+import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
@@ -25,6 +29,18 @@ public class PlanningAgent {
     @Inject
     FinalizeBot finalizeBot;
 
+    @Inject
+    NetdrexKGTool netdrexKGTool;
+
+    @Inject
+    NetdrexBot netdrexBot;
+
+    @Inject
+    DigestBot digestBot;
+
+    @Inject
+    NetdrexTool netdrexTool;
+
     private final ObjectMapper om = new ObjectMapper();
 
     public AgentResult planAnswer(ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
@@ -41,20 +57,12 @@ public class PlanningAgent {
             if (decision == null || decision.getAction() == null) break;
 
             switch (decision.getAction()) {
-                case FETCH_NETWORK -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Fetched network.");
-                    }
-                    Log.debugf("Action FETCH_NETWORK: %s", decision.getMessageMarkdown());
-                    // let the planner decide the next step after fetching
-                    continue;
-                }
                 case UPDATE_NETWORK -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
                         decision.setMessageMarkdown("Updated network.");
                     }
                     Log.debugf("Action UPDATE_NETWORK: %s", decision.getMessageMarkdown());
-                    // proceed to the next planning step after update
+                    // FUTURE NOT YET IMPLEMENTED
                     continue;
                 }
                 case FETCH_RESEARCH -> {
@@ -63,23 +71,36 @@ public class PlanningAgent {
                     }
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getMessageMarkdown());
                     state.getResearch().add(research.answer(state.getUserGoal()));
-                    continue;
                 }
-                case FETCH_CHATDREX -> {
+                case FETCH_KG -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Fetched ChatDrex context.");
+                        decision.setMessageMarkdown("Fetched Netdrex knowladge Graph context.");
                     }
-                    Log.debugf("Action FETCH_CHATDREX: %s", decision.getMessageMarkdown());
-                    // proceed to the next planning step after fetching ChatDrex data
-                    continue;
+                    Log.debugf("Action FETCH_KG: %s", decision.getMessageMarkdown());
+                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal()));
                 }
-                case CALL_CHATDREX_TOOL -> {
+                case FETCH_BIO_INFO -> {
+                    setEnhancedQueryBioInfo(state, decision);
+                }
+                case CALL_NETDREX_TOOL -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Called ChatDrex tool.");
+                        decision.setMessageMarkdown("Called Netdrex tool.");
                     }
-                    Log.debugf("Action CALL_CHATDREX_TOOL: %s", decision.getMessageMarkdown());
-                    // proceed to the next planning step after tool call
-                    continue;
+                    Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getMessageMarkdown());
+                    if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
+                        setEnhancedQueryBioInfo(state, decision);
+                    }
+                    state = netdrexTool.answer(state);
+                }
+                case CALL_DIGEST_TOOL -> {
+                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
+                        decision.setMessageMarkdown("Called Digest tool.");
+                    }
+                    Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getMessageMarkdown());
+                    if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
+                        setEnhancedQueryBioInfo(state, decision);
+                    }
+                    state.setDigestResult(digestBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
@@ -105,6 +126,13 @@ public class PlanningAgent {
     }
 
 
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision) {
+        if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
+            decision.setMessageMarkdown("Fetched external bio info context.");
+        }
+        Log.debugf("Action FETCH_BIO_INFO: %s", decision.getMessageMarkdown());
+        state.setEnhancedQueryBioInfo(netdrexBot.answer(state.getUserGoal()));
+    }
     private String safeToString(PlanStep d) {
         try {
             return om.writeValueAsString(d);
