@@ -2,6 +2,13 @@ package de.hamburg.university.agent.tool.netdrex;
 
 import de.hamburg.university.agent.bot.NetDrexToolDecisionBot;
 import de.hamburg.university.agent.planning.PlanState;
+import de.hamburg.university.agent.tool.ToolDTO;
+import de.hamburg.university.agent.tool.Tools;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
+import de.hamburg.university.api.chat.messages.ChatRequestDTO;
+import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
+import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
 import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
 import de.hamburg.university.service.netdrex.diamond.DiamondToolClientService;
 import de.hamburg.university.service.netdrex.diamond.SeedPayloadDTO;
@@ -11,6 +18,7 @@ import de.hamburg.university.service.netdrex.trustrank.TrustRankToolClientServic
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
+import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -30,20 +38,39 @@ public class NetdrexTool {
     @Inject
     NetDrexToolDecisionBot netDrexToolDecisionBot;
 
-    public PlanState answer(PlanState state) {
-        NetdrexToolDecisionResult result = netDrexToolDecisionBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo());
+    @Inject
+    DrugstOneGraphHelper drugstOneGraphHelper;
 
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
+
+    public PlanState answer(PlanState state, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+        ToolDTO toolDTO = new ToolDTO(Tools.NETDREX_TOOL.name());
+        NetdrexToolDecisionResult result = netDrexToolDecisionBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo());
+        toolDTO.setInput(result.getToolName() + " with " + result.getEntrezIds().size() + " entrezIds");
+
+        chatWebsocketSender.sendTool(toolDTO, content, emitter);
         if (result.getEntrezIds().isEmpty()) {
             Log.errorf("No enhanced query bio info found for user %s", state.getUserGoal());
+            toolDTO.setStop();
+            toolDTO.addContent("No entrezIds found");
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
             return state;
         }
         if (result.getToolName().equalsIgnoreCase("diamond")) {
             Uni<DiamondResultsDTO> diamondResult = runDiamond(result.getEntrezIds());
-            state.setDiamondResult(diamondResult.await().indefinitely());
+            DrugstOneNetworkDTO network = drugstOneGraphHelper.diamondToNetwork(diamondResult.await().indefinitely());
+            state.setDrugstOneNetwork(network);
+            toolDTO.addStructuredContent(network);
         } else if (result.getToolName().equalsIgnoreCase("trustrank")) {
             Uni<TrustRankResultDTO> trustRankResult = runTrustrank(result.getEntrezIds());
-            state.setTrustRankResult(trustRankResult.await().indefinitely());
+           // TrustRankResultDTO result = trustRankResult.await().indefinitely();
+            //state.setTrustRankResult(trustRankResult.await().indefinitely());
+            //toolDTO.addStructuredContent(state.getTrustRankResult());
         }
+        toolDTO.addContent("Tool " + result.getToolName() + " executed with " + result.getEntrezIds().size() + " entrezIds");
+        toolDTO.setStop();
+        chatWebsocketSender.sendTool(toolDTO, content, emitter);
         return state;
     }
 

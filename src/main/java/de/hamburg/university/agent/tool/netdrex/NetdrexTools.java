@@ -8,9 +8,11 @@ import de.hamburg.university.service.netdrex.NetdrexAPIInfoDTO;
 import de.hamburg.university.service.netdrex.NetdrexService;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolMemoryId;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -27,8 +29,12 @@ public class NetdrexTools {
         toolDTO.setInput(String.join(", ", ids));
 
         chatWebsocketSender.sendTool(toolDTO, sessionId);
-
-        List<NetdrexAPIInfoDTO> info = netdrexService.fetchInfo(ids);
+        List<NetdrexAPIInfoDTO> info = new ArrayList<>();
+        try {
+            info = netdrexService.fetchInfo(ids);
+        } catch (Exception e) {
+            Log.errorf("Error at NetdrexTool fetch", e);
+        }
         toolDTO.setStop();
         toolDTO.addContent(toJson(info));
         chatWebsocketSender.sendTool(toolDTO, sessionId);

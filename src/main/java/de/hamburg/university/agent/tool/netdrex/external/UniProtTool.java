@@ -6,11 +6,13 @@ import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.uniprotkb.GeneSimpleDTO;
 import de.hamburg.university.service.uniprotkb.UniProtApiClient;
 import de.hamburg.university.service.uniprotkb.UniProtEntryDTO;
+import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolMemoryId;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.ArrayList;
@@ -26,10 +28,25 @@ public class UniProtTool {
     @Inject
     ChatWebsocketSender chatWebsocketSender;
 
+
+    @Tool("Fetch gene names for multiple UniProt accession IDs")
+    public List<String> getUniProtEntries(@P("UniProt ids (Multiple)") List<String> uniProdIds, @ToolMemoryId String sessionId) {
+        return uniProdIds.stream()
+                .flatMap(id -> getUniProtEntry(id, sessionId).stream())
+                .toList();
+    }
+    
     @Tool("Fetch gene names for a single UniProt accession ID")
-    public List<String> getUniProtEntry(String uniProdId, @ToolMemoryId String sessionId) {
+    public List<String> getUniProtEntry(@P("UniProt id (Singular)") String uniProdId, @ToolMemoryId String sessionId) {
         ToolDTO toolDTO = new ToolDTO(Tools.UNIPROD.name());
         toolDTO.setInput(uniProdId);
+
+        if (StringUtils.isEmpty(uniProdId)) {
+            toolDTO.addContent("No UniProt ID provided.");
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return List.of();
+        }
 
         chatWebsocketSender.sendTool(toolDTO, sessionId);
         UniProtEntryDTO response;
@@ -62,10 +79,4 @@ public class UniProtTool {
         return geneNames;
     }
 
-    @Tool("Fetch gene names for multiple UniProt accession IDs")
-    public List<String> getUniProtEntries(List<String> uniProdIds, @ToolMemoryId String sessionId) {
-        return uniProdIds.stream()
-                .flatMap(id -> getUniProtEntry(id, sessionId).stream())
-                .toList();
-    }
 }

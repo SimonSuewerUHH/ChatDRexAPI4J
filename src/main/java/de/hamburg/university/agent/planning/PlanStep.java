@@ -12,6 +12,4 @@ public class PlanStep {
     private PlanAction action;
 
     private String reason;
-
-    private String messageMarkdown;
 }

@@ -6,6 +6,7 @@ public enum Tools {
     MYGENE,
     NETDREX,
     DIGEST,
-    NETDREX_KG
+    NETDREX_KG,
+    NETDREX_TOOL
 
 }

@@ -69,54 +69,36 @@ public class PlanningAgent {
 
             switch (decision.getAction()) {
                 case UPDATE_NETWORK -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Updated network.");
-                    }
-                    Log.debugf("Action UPDATE_NETWORK: %s", decision.getMessageMarkdown());
+                    Log.debugf("Action UPDATE_NETWORK: %s", decision.getReason());
                     // FUTURE NOT YET IMPLEMENTED
                     continue;
                 }
                 case FETCH_RESEARCH -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Fetched research results.");
-                    }
-                    Log.debugf("Action FETCH_RESEARCH: %s", decision.getMessageMarkdown());
+                    Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());
                     state.getResearch().add(research.answer(connectionId, state.getUserGoal()));
                 }
                 case FETCH_KG -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Fetched Netdrex knowladge Graph context.");
-                    }
-                    Log.debugf("Action FETCH_KG: %s", decision.getMessageMarkdown());
+                    Log.debugf("Action FETCH_KG: %s", decision.getReason());
                     state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
-                    setEnhancedQueryBioInfo(state, decision, connectionId, "");
+                    setEnhancedQueryBioInfo(state, decision, connectionId);
                 }
                 case CALL_NETDREX_TOOL -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Called Netdrex tool.");
-                    }
-                    Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getMessageMarkdown());
+                    Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision, connectionId, "Please fetch relevant Entrez Gene IDs.");
+                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
                     }
-                    state = netdrexTool.answer(state);
+                    state = netdrexTool.answer(state, content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("Called Digest tool.");
-                    }
-                    Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getMessageMarkdown());
+                    Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision, connectionId, "Please fetch relevant Entrez Gene IDs.");
+                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
                     }
                     state.setDigestResult(digestBot.answer(connectionId, state.getUserGoal(), state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
-                    if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-                        decision.setMessageMarkdown("No summary produced.");
-                    }
                     // Stream all chunks from the finalize bot and emit each part
                     String result = finalizeBot.answer(connectionId, content.getMessage(), state)
                             .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
@@ -137,13 +119,16 @@ public class PlanningAgent {
     }
 
 
-    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId, String info) {
-        if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
-            decision.setMessageMarkdown("Fetched external bio info context.");
-        }
-        Log.debugf("Action FETCH_BIO_INFO: %s", decision.getMessageMarkdown());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal() + " - " + info));
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
+        Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
+        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal()));
     }
+
+    private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
+        Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
+        state.setEnhancedQueryBioInfo(netdrexBot.answerEntrezId(connectionId, state.getUserGoal()));
+    }
+
 
     private String safeToString(PlanStep d) {
         try {

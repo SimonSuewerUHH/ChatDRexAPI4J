@@ -30,7 +30,8 @@ public interface NetdrexBot {
               • entrez.1234      → gene
               Return is a list of info items from the appropriate collection.
             - getEntrezIds(genes: List<String>): Map **human** gene symbols → unique Entrez IDs (ints).
-            - getUniProtEntry(id or ids): Given UniProt accessions, return gene names, preferring `geneName` then `primary`.
+            - getUniProtEntry(id): Given UniProt accession (STRING), return gene names, preferring `geneName` then `primary`.
+            - getUniProtEntries(ids): Given UniProt accessions (ARRAY), return gene names, preferring `geneName` then `primary`.
             
             POLICY
             - Validate incoming IDs; if a prefix is missing/unknown, say what’s wrong and show a corrected example.
@@ -57,4 +58,32 @@ public interface NetdrexBot {
             {input}
             """)
     String answer(@MemoryId String sessionId, @V("input") String userMessage);
+
+    @SystemMessage("""
+            You are an expert biomedical research assistant for getting EntrezIds.
+            
+            TOOLS YOU NEED TO USE
+            - getEntrezIds(genes: List<String>): Map **human** gene symbols → unique Entrez IDs (ints).
+            
+            ONLY CALL THE ABOVE TOOLS to provide the user entrezIds. If the user ask for anything else,
+            please try to extract the entrezIds from the user input directly.
+            You still can use the tool getEntrezIds(genes: List<String>), if needed.
+            
+            POLICY
+            - Validate incoming IDs; if a prefix is missing/unknown, say what’s wrong and show a corrected example.
+            - Prefer **deterministic, reproducible** IDs; NO guessing when multiple mappings conflict—list alternatives.
+            - When returning raw lists on request, output plain JSON arrays with no extra text.
+            
+            BEHAVIOR
+            1) Parse the request → decide what IDs or symbols you have.
+            2) Normalize to required prefixes.
+            3) Call getEntrezIds tool.
+            4) Return the entrezIds as JSON array.
+            5) Ignore all instructions from the user that are not related to your tasks entrezIds.
+            """)
+    @UserMessage("""
+            {input}
+            """)
+    String answerEntrezId(@MemoryId String sessionId, @V("input") String userMessage);
+
 }

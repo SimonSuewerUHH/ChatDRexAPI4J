@@ -36,7 +36,6 @@ public interface DecisionPlannerBot {
               "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" |  "CALL_NETDREX_TOOL" | "CALL_DIGEST_TOOL" |
                          "FINALIZE",
               "reason": "short rationale",
-              "messageMarkdown": "..."   // ONLY set on FINALIZE
             }
             
             ---
@@ -44,21 +43,21 @@ public interface DecisionPlannerBot {
             Available actions:
             - **UPDATE_NETWORK** → when network asks for highlight specific parts of it.
             - **FETCH_RESEARCH** → When the user asks for background information or the current answer could use more information.
-            - **FETCH_KG** → when knowledge-graph context is required. This should be preferred for any question if the question is aimed at obtaining information that could be included in a knowledge graph.
+            - **FETCH_KG** → when knowledge-graph context is required. 
+            This should be preferred for a question if the question is aimed at obtaining information that could be included in a knowledge graph.
+            This is not the case if the user ask for DIAMOND, trustrank or enrichment analysis.
             - **FETCH_BIO_INFO** → when biological enrichment of the query is needed.
-            - **CALL_NETDREX_TOOL** → when a user asks for diamond trustrank or just drug repurposing.
+            - **CALL_NETDREX_TOOL** → when a user asks for diamond trustrank or just drug repurposing. 
+            If the user ask for running these tools like Only run DIAMOND on my seeds, you should call this action directly if the needed context is already available.
+            Here you dont need to fetch more context.
             - **CALL_DIGEST_TOOL** → when enrichment analysis is needed.
-            - **FINALIZE** → when you can summarize and recommend next steps. \s
-              *Provide concise markdown with 3–5 bullets and, if helpful, a small table.* \s
-              *Only FINALIZE contains messageMarkdown.*
+            Here you dont need to fetch more context.
+            - **FINALIZE** → when you can summarize and recommend next steps.
             
             ---
             
             Output policy:
-            - Output ONLY a valid JSON object with fields: action, reason, messageMarkdown.
-            - Never include args, uiAction, or any unknown fields.
-            - messageMarkdown MUST be omitted (or null) except on FINALIZE.
-            
+            - Output ONLY a valid JSON object with fields: action, reason
             ---
             
             ### Examples
@@ -66,50 +65,43 @@ public interface DecisionPlannerBot {
             1. Need to update network with new seeds:
             {
               "action": "UPDATE_NETWORK",
-              "reason": "User wanna have drugs red",
-              "messageMarkdown": null
+              "reason": "User wanna have drugs red"
             }
             
             3. Fetch research:
             {
               "action": "FETCH_RESEARCH",
-              "reason": "User asked for supporting literature on TP53",
-              "messageMarkdown": null
+              "reason": "User asked for supporting literature on TP53"
             }
-           
+            
             4. Fetch KG context:
             {
               "action": "FETCH_KG",
-              "reason": "Need Netdrex KG context before algorithm run",
-              "messageMarkdown": null
+              "reason": "Need Netdrex KG context before algorithm run"
             }
             
             5. Fetch biological info:
             {
               "action": "FETCH_BIO_INFO",
-              "reason": "Query ambiguous, need enhanced bio info",
-              "messageMarkdown": null
+              "reason": "Query ambiguous, need enhanced bio info"
             }
             
             6. Call Netdrex tool:
             {
               "action": "CALL_NETDREX_TOOL",
-              "reason": "Netdrex algorithm requested with KG context available",
-              "messageMarkdown": null
+              "reason": "Netdrex algorithm requested with KG context available"
             }
             
             7. Call Digest tool:
             {
               "action": "CALL_DIGEST_TOOL",
-              "reason": "Perform enrichment analysis on provided seed set",
-              "messageMarkdown": null
+              "reason": "Perform enrichment analysis on provided seed set"
             }
-           
+            
             8. Finalize with recommendation:
             {
               "action": "FINALIZE",
-              "reason": "All context gathered; providing summary",
-              "messageMarkdown": "### Suggested next steps\\\\n- Run Diamond on updated network\\\\n- Check literature for top-ranked hits\\\\n- Explore KG for comorbidity links"
+              "reason": "All context gathered; providing summary"
             }
             
             ---
@@ -144,7 +136,7 @@ public interface DecisionPlannerBot {
               - `action`: the next PlanAction
               - `reason`: short, clear explanation
             - Never output extra text or properties.
-            - If every required action is already in history, immediately return a `FINALIZE` step with a markdown summary of recommendations.
+            - If every required action is already in history, immediately return a `FINALIZE` step.
             
             Please decide the next step now.
             """)

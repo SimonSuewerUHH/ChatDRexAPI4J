@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.planning;
 
+import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
 import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import lombok.Data;
@@ -18,6 +19,5 @@ public class PlanState {
     private String digestResult = "";
     private String enhancedQueryBioInfo = "";
 
-    private DiamondResultsDTO diamondResult;
-    private TrustRankResultDTO trustRankResult;
+    private DrugstOneNetworkDTO drugstOneNetwork;
 }
