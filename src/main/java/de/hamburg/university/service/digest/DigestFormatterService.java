@@ -8,6 +8,7 @@ import de.hamburg.university.service.mygene.MyGeneGoTermDTO;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
@@ -173,7 +174,7 @@ public class DigestFormatterService {
                     .map(MyGeneGoTermDTO::getTerm)
                     .toList();
         } catch (Exception e) {
-            Log.errorf(e, "Failed to query go terms for %s", aspect);
+            Log.errorf(e, "Failed to query go terms for Id: %s and aspect: %s", StringUtils.join(", ", goIds), aspect);
             return Collections.emptyList();
         }
     }

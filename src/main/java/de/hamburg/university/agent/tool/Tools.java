@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.tool;
 
 public enum Tools {
+    CONTEXT,
     RESEARCH,
     UNIPROD,
     MYGENE,

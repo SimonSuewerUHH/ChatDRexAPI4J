@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.tool.netdrex;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.bot.NetDrexToolDecisionBot;
 import de.hamburg.university.agent.planning.PlanState;
 import de.hamburg.university.agent.tool.ToolDTO;
@@ -54,8 +55,6 @@ public class NetdrexTool {
         ToolDTO toolDTO = new ToolDTO(Tools.NETDREX_TOOL.name());
         NetdrexToolDecisionResult result = netDrexToolDecisionBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo());
         toolDTO.setInput(result.getToolName() + " with " + result.getEntrezIds().size() + " entrezIds");
-
-        chatWebsocketSender.sendTool(toolDTO, content, emitter);
         if (result.getEntrezIds().isEmpty()) {
             Log.errorf("No enhanced query bio info found for user %s", state.getUserGoal());
             toolDTO.setStop();
@@ -64,17 +63,29 @@ public class NetdrexTool {
             return state;
         }
         if (result.getToolName().equalsIgnoreCase("diamond")) {
-            Uni<DiamondResultsDTO> diamondResult = runDiamond(result.getEntrezIds());
+            SeedPayloadDTO payload = getDiamondPayload(result.getEntrezIds());
+            toolDTO.addContent("Run with:" + getJson(payload));
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
+            Uni<DiamondResultsDTO> diamondResult = runDiamond(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.diamondToNetwork(diamondResult.await().indefinitely());
             state.setDrugstOneNetwork(network);
             toolDTO.addStructuredContent(network);
         } else if (result.getToolName().equalsIgnoreCase("trustrank")) {
-            Uni<TrustRankResultDTO> trustRankResult = runTrustrank(result.getEntrezIds());
+            TrustRankSeedPayloadDTO payload = getTrustrankPayload(result.getEntrezIds());
+            toolDTO.addContent("Run with:" + getJson(payload));
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
+            Uni<TrustRankResultDTO> trustRankResult = runTrustrank(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(trustRankResult.await().indefinitely());
             state.setDrugstOneNetwork(network);
             toolDTO.addStructuredContent(network);
         } else if (result.getToolName().equalsIgnoreCase("closeness")) {
-            Uni<ClosenessResultDTO> closenessResult = runCloseness(result.getEntrezIds());
+            ClosenessSeedPayloadDTO payload = getClosenessPayload(result.getEntrezIds());
+            toolDTO.addContent("Run with:" + getJson(payload));
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
+            Uni<ClosenessResultDTO> closenessResult = runCloseness(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(closenessResult.await().indefinitely());
             state.setDrugstOneNetwork(network);
             toolDTO.addStructuredContent(network);
@@ -87,52 +98,64 @@ public class NetdrexTool {
         return state;
     }
 
-    public Uni<DiamondResultsDTO> runDiamond(List<String> entrezIds) {
-        return Uni.createFrom().item(() -> entrezIds.stream()
-                        .map(String::valueOf)
-                        .toList()
+
+    public Uni<DiamondResultsDTO> runDiamond(SeedPayloadDTO seedPayloadDTO) {
+        return Uni.createFrom().item(() -> seedPayloadDTO
                 )
                 .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .flatMap(ids -> diamondToolService.run(new SeedPayloadDTO(ids)))
+                .flatMap(payload -> diamondToolService.run(payload))
                 .onFailure().invoke(e -> LOG.error("Error at Diamond-Tool", e))
                 .onFailure().transform(e -> new RuntimeException("Error at Diamond-Tool: " + e.getMessage(), e));
     }
 
-    public Uni<TrustRankResultDTO> runTrustrank(List<String> entrezIds) {
+    public Uni<TrustRankResultDTO> runTrustrank(TrustRankSeedPayloadDTO payload) {
+        return Uni.createFrom().item(() -> payload)
+                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
+                .flatMap(p -> trustRankToolService.run(p))
+                .onFailure().invoke(e -> LOG.error("Error at Trustrank-Tool", e))
+                .onFailure().transform(e -> new RuntimeException("Error at Truntrank-Tool: " + e.getMessage(), e));
+    }
+
+    public Uni<ClosenessResultDTO> runCloseness(ClosenessSeedPayloadDTO payload) {
+
+        return Uni.createFrom().item(() -> payload
+                )
+                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
+                .flatMap(p -> closenessToolClientService.run(p))
+                .onFailure().invoke(e -> LOG.error("Error at Closeness-Tool", e))
+                .onFailure().transform(e -> new RuntimeException("Error at Closeness-Tool: " + e.getMessage(), e));
+    }
+
+    private String getJson(Object object) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            return "{}";
+        }
+    }
+
+
+    private SeedPayloadDTO getDiamondPayload(List<String> entrezIds) {
+        return new SeedPayloadDTO(entrezIds);
+    }
+
+    private ClosenessSeedPayloadDTO getClosenessPayload(List<String> entrezIds) {
+        ClosenessSeedPayloadDTO payload = new ClosenessSeedPayloadDTO();
+        payload.setN(10);
+        payload.setOnlyApprovedDrugs(false);
+        payload.setOnlyDirectDrugs(false);
+        payload.setSeeds(entrezIds);
+        return payload;
+    }
+
+    private TrustRankSeedPayloadDTO getTrustrankPayload(List<String> entrezIds) {
         TrustRankSeedPayloadDTO payload = new TrustRankSeedPayloadDTO();
         payload.setN(10);
         payload.setDampingFactor(0.85);
         payload.setOnlyApprovedDrugs(false);
         payload.setOnlyDirectDrugs(false);
-        return Uni.createFrom().item(() -> entrezIds.stream()
-                        .map(String::valueOf)
-                        .toList()
-                )
-                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .flatMap(ids -> {
-                    payload.setSeeds(ids);
-                    return trustRankToolService.run(payload);
-                })
-                .onFailure().invoke(e -> LOG.error("Error at Trustrank-Tool", e))
-                .onFailure().transform(e -> new RuntimeException("Error at Truntrank-Tool: " + e.getMessage(), e));
+        payload.setSeeds(entrezIds);
+        return payload;
     }
-
-    public Uni<ClosenessResultDTO> runCloseness(List<String> entrezIds) {
-        ClosenessSeedPayloadDTO payload = new ClosenessSeedPayloadDTO();
-        payload.setN(10);
-        payload.setOnlyApprovedDrugs(false);
-        payload.setOnlyDirectDrugs(false);
-        return Uni.createFrom().item(() -> entrezIds.stream()
-                        .map(String::valueOf)
-                        .toList()
-                )
-                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .flatMap(ids -> {
-                    payload.setSeeds(ids);
-                    return closenessToolClientService.run(payload);
-                })
-                .onFailure().invoke(e -> LOG.error("Error at Closeness-Tool", e))
-                .onFailure().transform(e -> new RuntimeException("Error at Closeness-Tool: " + e.getMessage(), e));
-    }
-
 }

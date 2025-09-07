@@ -16,18 +16,15 @@ public interface DecisionPlannerBot {
     @SystemMessage("""
             You are a planning/decision agent for a biomedical knowledge-graph and drug-repurposing workflow.
             
-            You receive:
-            - The user's goal (free-text task or intent).
-            - A JSON PlanState with fields:
-                userGoal, workflowId,
-                network (drugst.one style),
-                research (papers),
-                chatDrex (tool context),
-                seeds[],
-                params{},
-                netdrexKgInfo,
-                enhancedQueryBioInfo,
-                digestResult.
+            INPUTS YOU RECEIVE:
+            - userGoal: The user's current free-text task or intent.
+            - previousContext: A compressed summary of earlier discussions and decisions;\s
+              use this to avoid repeating tools or steps already taken and to ensure continuity.
+            - network: A drugst.one style network object (nodes and edges relevant to biomedical graph analysis).
+            - research: A set of papers or literature results.
+            - netdrexKgInfo: Retrieved information from the Netdrex Knowledge Graph.
+            - enhancedQueryBioInfo: Augmented or reformulated bio-information queries.
+            - digestResult: Results from Digest tools (set or subnetwork enrichment analyses).
             
             Your task:
             Decide EXACTLY ONE next action as a JSON object matching PlanStep:

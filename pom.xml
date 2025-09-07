@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.hamburg.university</groupId>
     <artifactId>chatdrex</artifactId>
@@ -30,13 +31,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-langchain4j-bom</artifactId>
                 <version>${quarkus.platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
@@ -95,6 +96,7 @@
         <dependency>
             <groupId>io.quarkiverse.langchain4j</groupId>
             <artifactId>quarkus-langchain4j-pgvector</artifactId>
+            <version>${quarkus-langchain4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -219,7 +221,8 @@
                 </executions>
                 <configuration>
                     <systemPropertyVariables>
-                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                        <native.image.path>${project.build.directory}/${project.build.finalName}-runner
+                        </native.image.path>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>

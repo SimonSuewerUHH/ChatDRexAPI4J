@@ -50,8 +50,9 @@ public class PlanningAgent {
 
     private final ObjectMapper om = new ObjectMapper();
 
-    public AgentResult planAnswer(ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+    public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
         PlanState state = new PlanState();
+        state.setPreviousContext(context);
         state.setUserGoal(content.getMessage());
 
         List<PlanStep> history = new ArrayList<>();

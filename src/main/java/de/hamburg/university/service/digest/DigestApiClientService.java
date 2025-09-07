@@ -7,7 +7,9 @@ import jakarta.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 public class DigestApiClientService {
@@ -26,10 +28,6 @@ public class DigestApiClientService {
 
     protected long pollIntervalMillis() {
         return 1000L;
-    }
-
-    protected int timeoutSeconds() {
-        return 30;
     }
 
     public Uni<DigestToolResultDTO> callSubnetwork(List<String> target) {
@@ -121,5 +119,49 @@ public class DigestApiClientService {
                 vertx.cancelTimer(timerId);
             });
         });
+    }
+
+    public DigestToolPlotDTO createPlot(DigestToolResultDTO result) {
+        List<DigestToolPlotEntryDTO> entries = new ArrayList<>();
+
+        if (result != null && result.getRows() != null) {
+            for (DigestToolResultDTO.Row row : result.getRows()) {
+                List<String> genes = row.getGene() != null ? row.getGene() : List.of();
+                List<String> descriptions = row.getDescription() != null ? row.getDescription() : List.of();
+
+                String desc = descriptions.isEmpty() ? "" : String.join("; ", descriptions);
+
+                if (row.getDbTerms() != null) {
+                    for (Map.Entry<String, Integer> termEntry : row.getDbTerms().entrySet()) {
+                        String term = termEntry.getKey();
+                        Integer score = termEntry.getValue();
+
+                        if (!genes.isEmpty()) {
+                            for (String gene : genes) {
+                                entries.add(new DigestToolPlotEntryDTO(
+                                        row.getDatabase(),
+                                        term,
+                                        score,
+                                        row.getEmpiricalPValue(),
+                                        desc,
+                                        gene
+                                ));
+                            }
+                        } else {
+                            entries.add(new DigestToolPlotEntryDTO(
+                                    row.getDatabase(),
+                                    term,
+                                    score,
+                                    row.getEmpiricalPValue(),
+                                    desc,
+                                    null
+                            ));
+                        }
+                    }
+                }
+            }
+        }
+
+        return new DigestToolPlotDTO(entries);
     }
 }

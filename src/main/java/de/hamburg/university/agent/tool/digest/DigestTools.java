@@ -7,9 +7,6 @@ import de.hamburg.university.service.digest.DigestApiClientService;
 import de.hamburg.university.service.digest.DigestToolResultDTO;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolMemoryId;
-import io.quarkus.logging.Log;
-import io.smallrye.mutiny.Uni;
-import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -29,21 +26,17 @@ public class DigestTools {
             "Input: List of Entrez IDs as strings, e.g. [\"1636\",\"102\"]. " +
             "Output: DigestToolResultDTO with enrichment results."
     )
-    public Uni<DigestToolResultDTO> submitSet(List<String> entrez, @ToolMemoryId String sessionId) {
+    public DigestToolResultDTO submitSet(List<String> entrez, @ToolMemoryId String sessionId) {
         ToolDTO toolDTO = new ToolDTO(Tools.DIGEST.name());
         toolDTO.setInput(String.join(", ", entrez));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
 
-        return digestService.callSet(entrez)
-                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .onItem()
-                .call(e -> {
-                    toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Set.");
-                    toolDTO.setStop();
-                    chatWebsocketSender.sendTool(toolDTO, sessionId);
-                    return Uni.createFrom().item(e);
-                })
-                .onFailure().invoke(t -> Log.error("DigestSet run failed", t));
+        DigestToolResultDTO e = digestService.callSet(entrez).await().indefinitely();
+        toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Set.");
+        toolDTO.setStop();
+        toolDTO.addStructuredContent(digestService.createPlot(e));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+        return e;
     }
 
     @Tool("Run network-aware enrichment (DIGEST-Subnetwork) for human genes by Entrez ID. " +
@@ -51,20 +44,16 @@ public class DigestTools {
             "Input: List of Entrez IDs as strings, e.g. [\"1636\",\"102\"]. " +
             "Output: DigestToolResultDTO with enrichment results."
     )
-    public Uni<DigestToolResultDTO> submitSubnetwork(List<String> entrez, @ToolMemoryId String sessionId) {
+    public DigestToolResultDTO submitSubnetwork(List<String> entrez, @ToolMemoryId String sessionId) {
         ToolDTO toolDTO = new ToolDTO(Tools.DIGEST.name());
         toolDTO.setInput(String.join(", ", entrez));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
 
-        return digestService.callSubnetwork(entrez)
-                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .onItem()
-                .call(e -> {
-                    toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Subnetwork.");
-                    toolDTO.setStop();
-                    chatWebsocketSender.sendTool(toolDTO, sessionId);
-                    return Uni.createFrom().item(e);
-                })
-                .onFailure().invoke(t -> Log.error("DigestSubnetwork run failed", t));
+        DigestToolResultDTO e = digestService.callSubnetwork(entrez).await().indefinitely();
+        toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Subnetwork.");
+        toolDTO.setStop();
+        toolDTO.addStructuredContent(digestService.createPlot(e));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+        return e;
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class PlanState {
     private String userGoal;
+    private String previousContext;
 
     private Long workflowId;
 
