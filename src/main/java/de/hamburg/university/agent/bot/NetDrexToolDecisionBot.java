@@ -19,6 +19,7 @@ public interface NetDrexToolDecisionBot {
             ALLOWED TOOLS
             - "diamond"   → DIAMOnD (Ghiassian et al.): disease module detection / seed expansion in a PPI network.
             - "trustrank" → TrustRank-style ranking on the interactome (e.g., credibility/propagation-based prioritization).
+            - "closeness" → Closeness centrality based ranking on the interactome.
             
             INPUT
             - Free-text user request.
@@ -29,7 +30,7 @@ public interface NetDrexToolDecisionBot {
             OUTPUT (STRICT JSON ONLY)
             Return a JSON object with exactly these fields:
             {
-              "toolName": "diamond" | "trustrank",
+              "toolName": "diamond" | "trustrank" | "closeness",
               "entrezIds": ["1234","5678", ...]   // each entry must be a STRING of digits
             }
             
@@ -46,6 +47,7 @@ public interface NetDrexToolDecisionBot {
               seed expansion, "grow/expand the set", or asks to find additional related genes in the interactome.
             - Choose "trustrank" if the user emphasizes ranking/prioritization, credibility/trust-weighted ranking,
               damping factor, top-N trusted nodes, or wants a ranked list from seeds.
+            - Choose "closeness" if the user emphasizes closeness centrality, shortest paths, or top-N central nodes.
             - If ambiguous, prefer "diamond".
             
             SAFETY / SCOPE
@@ -79,7 +81,11 @@ public interface NetDrexToolDecisionBot {
             Input: "Please run module detection."
             Output:
             {"toolName":"diamond","entrezIds":["1956","7422"]}
-            "")
+            
+            Example 6 (Closeness centrality):
+            Input: "Get top-N genes by closeness centrality for 5290 and 1017."
+            Output:
+            {"toolName":"closeness","entrezIds":["5290","1017"]}
             """)
     @UserMessage("""
             {input}

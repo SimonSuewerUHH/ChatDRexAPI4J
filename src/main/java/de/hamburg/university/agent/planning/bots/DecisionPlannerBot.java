@@ -43,11 +43,11 @@ public interface DecisionPlannerBot {
             Available actions:
             - **UPDATE_NETWORK** → when network asks for highlight specific parts of it.
             - **FETCH_RESEARCH** → When the user asks for background information or the current answer could use more information.
-            - **FETCH_KG** → when knowledge-graph context is required. 
+            - **FETCH_KG** → when knowledge-graph context is needed. 
             This should be preferred for a question if the question is aimed at obtaining information that could be included in a knowledge graph.
-            This is not the case if the user ask for DIAMOND, trustrank or enrichment analysis.
+            This is NOT the case if the user ask for DIAMOND, trustrank, Closess or enrichment analysis.
             - **FETCH_BIO_INFO** → when biological enrichment of the query is needed.
-            - **CALL_NETDREX_TOOL** → when a user asks for diamond trustrank or just drug repurposing. 
+            - **CALL_NETDREX_TOOL** → when a user asks for diamond, trustrank, closeness or just drug repurposing. 
             If the user ask for running these tools like Only run DIAMOND on my seeds, you should call this action directly if the needed context is already available.
             Here you dont need to fetch more context.
             - **CALL_DIGEST_TOOL** → when enrichment analysis is needed.
@@ -137,6 +137,8 @@ public interface DecisionPlannerBot {
               - `reason`: short, clear explanation
             - Never output extra text or properties.
             - If every required action is already in history, immediately return a `FINALIZE` step.
+            - If the user asked for Netdrex tool (diamond, trustrank, closeness) and you have seeds, call it DIRECTLY WITHOUT using kg information.
+            - If the user asked for enrichment analysis and you have seeds, call it DIRECTLY WITHOUT using kg information.
             
             Please decide the next step now.
             """)

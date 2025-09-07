@@ -9,6 +9,9 @@ import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
 import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
+import de.hamburg.university.service.netdrex.closeness.ClosenessResultDTO;
+import de.hamburg.university.service.netdrex.closeness.ClosenessSeedPayloadDTO;
+import de.hamburg.university.service.netdrex.closeness.ClosenessToolClientService;
 import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
 import de.hamburg.university.service.netdrex.diamond.DiamondToolClientService;
 import de.hamburg.university.service.netdrex.diamond.SeedPayloadDTO;
@@ -34,6 +37,9 @@ public class NetdrexTool {
 
     @Inject
     TrustRankToolClientService trustRankToolService;
+
+    @Inject
+    ClosenessToolClientService closenessToolClientService;
 
     @Inject
     NetDrexToolDecisionBot netDrexToolDecisionBot;
@@ -64,10 +70,17 @@ public class NetdrexTool {
             toolDTO.addStructuredContent(network);
         } else if (result.getToolName().equalsIgnoreCase("trustrank")) {
             Uni<TrustRankResultDTO> trustRankResult = runTrustrank(result.getEntrezIds());
-           // TrustRankResultDTO result = trustRankResult.await().indefinitely();
-            //state.setTrustRankResult(trustRankResult.await().indefinitely());
-            //toolDTO.addStructuredContent(state.getTrustRankResult());
+            DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(trustRankResult.await().indefinitely());
+            state.setDrugstOneNetwork(network);
+            toolDTO.addStructuredContent(network);
+        } else if (result.getToolName().equalsIgnoreCase("closeness")) {
+            Uni<ClosenessResultDTO> closenessResult = runCloseness(result.getEntrezIds());
+            DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(closenessResult.await().indefinitely());
+            state.setDrugstOneNetwork(network);
+            toolDTO.addStructuredContent(network);
         }
+
+
         toolDTO.addContent("Tool " + result.getToolName() + " executed with " + result.getEntrezIds().size() + " entrezIds");
         toolDTO.setStop();
         chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -102,6 +115,24 @@ public class NetdrexTool {
                 })
                 .onFailure().invoke(e -> LOG.error("Error at Trustrank-Tool", e))
                 .onFailure().transform(e -> new RuntimeException("Error at Truntrank-Tool: " + e.getMessage(), e));
+    }
+
+    public Uni<ClosenessResultDTO> runCloseness(List<String> entrezIds) {
+        ClosenessSeedPayloadDTO payload = new ClosenessSeedPayloadDTO();
+        payload.setN(10);
+        payload.setOnlyApprovedDrugs(false);
+        payload.setOnlyDirectDrugs(false);
+        return Uni.createFrom().item(() -> entrezIds.stream()
+                        .map(String::valueOf)
+                        .toList()
+                )
+                .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
+                .flatMap(ids -> {
+                    payload.setSeeds(ids);
+                    return closenessToolClientService.run(payload);
+                })
+                .onFailure().invoke(e -> LOG.error("Error at Closeness-Tool", e))
+                .onFailure().transform(e -> new RuntimeException("Error at Closeness-Tool: " + e.getMessage(), e));
     }
 
 }

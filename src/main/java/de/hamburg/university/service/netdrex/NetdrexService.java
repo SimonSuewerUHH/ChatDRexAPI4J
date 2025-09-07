@@ -26,6 +26,10 @@ public class NetdrexService {
                 .toList();
     }
 
+    public List<NetdrexAPIInfoDTO> fetchInfo(String id) {
+        return fetchInfo(List.of(id));
+    }
+
     private NetdrexNodeCollection detectPrefix(String id) {
         if (id.startsWith("drugbank.")) {
             return NetdrexNodeCollection.DRUG;
