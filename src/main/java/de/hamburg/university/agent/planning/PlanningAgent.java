@@ -84,16 +84,14 @@ public class PlanningAgent {
                     state.getResearch().add(research.answer(connectionId, state.getUserGoal()));
                 }
                 case FETCH_KG -> {
-                    chatWebsocketSender.sendToolStartResponse("Fetching Netdrex knowledge Graph context.", content, emitter);
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
                         decision.setMessageMarkdown("Fetched Netdrex knowladge Graph context.");
                     }
                     Log.debugf("Action FETCH_KG: %s", decision.getMessageMarkdown());
                     state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), content, emitter));
-                    chatWebsocketSender.sendToolStopResponse("Fetched Netdrex knowledge Graph context.", content, emitter);
                 }
                 case FETCH_BIO_INFO -> {
-                    setEnhancedQueryBioInfo(state, decision, connectionId);
+                    setEnhancedQueryBioInfo(state, decision, connectionId, "");
                 }
                 case CALL_NETDREX_TOOL -> {
                     if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
@@ -101,7 +99,7 @@ public class PlanningAgent {
                     }
                     Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getMessageMarkdown());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision, connectionId);
+                        setEnhancedQueryBioInfo(state, decision, connectionId, "Please fetch relevant Entrez Gene IDs.");
                     }
                     state = netdrexTool.answer(state);
                 }
@@ -111,7 +109,7 @@ public class PlanningAgent {
                     }
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getMessageMarkdown());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfo(state, decision, connectionId);
+                        setEnhancedQueryBioInfo(state, decision, connectionId, "Please fetch relevant Entrez Gene IDs.");
                     }
                     state.setDigestResult(digestBot.answer(connectionId, state.getUserGoal(), state.getEnhancedQueryBioInfo()));
                 }
@@ -139,12 +137,12 @@ public class PlanningAgent {
     }
 
 
-    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId, String info) {
         if (StringUtils.isEmpty(decision.getMessageMarkdown())) {
             decision.setMessageMarkdown("Fetched external bio info context.");
         }
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getMessageMarkdown());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal()));
+        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal() + " - " + info));
     }
 
     private String safeToString(PlanStep d) {

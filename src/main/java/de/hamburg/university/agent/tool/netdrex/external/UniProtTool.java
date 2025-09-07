@@ -32,8 +32,16 @@ public class UniProtTool {
         toolDTO.setInput(uniProdId);
 
         chatWebsocketSender.sendTool(toolDTO, sessionId);
-
-        UniProtEntryDTO response = uniProtApiClient.getEntry(uniProdId);
+        UniProtEntryDTO response;
+        try {
+            response = uniProtApiClient.getEntry(uniProdId);
+        } catch (Exception e) {
+            Log.error("Error fetching UniProt entry for ID: " + uniProdId, e);
+            toolDTO.addContent("Error fetching data for UniProt ID: " + uniProdId);
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return List.of();
+        }
         List<String> geneNames = new ArrayList<>();
 
         if (response.getGenes() != null) {

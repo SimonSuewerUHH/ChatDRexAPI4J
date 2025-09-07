@@ -8,6 +8,7 @@ import de.hamburg.university.service.netdrex.diamond.SeedPayloadDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankSeedPayloadDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankToolClientService;
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -32,6 +33,10 @@ public class NetdrexTool {
     public PlanState answer(PlanState state) {
         NetdrexToolDecisionResult result = netDrexToolDecisionBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo());
 
+        if (result.getEntrezIds().isEmpty()) {
+            Log.errorf("No enhanced query bio info found for user %s", state.getUserGoal());
+            return state;
+        }
         if (result.getToolName().equalsIgnoreCase("diamond")) {
             Uni<DiamondResultsDTO> diamondResult = runDiamond(result.getEntrezIds());
             state.setDiamondResult(diamondResult.await().indefinitely());

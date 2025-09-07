@@ -5,6 +5,7 @@ public enum Tools {
     UNIPROD,
     MYGENE,
     NETDREX,
-    DIGEST
+    DIGEST,
+    NETDREX_KG
 
 }

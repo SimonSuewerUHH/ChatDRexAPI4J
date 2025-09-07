@@ -44,7 +44,7 @@ public class NetdrexKGTool {
     }
 
     public String answer(String question, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
-        ToolDTO toolDTO = new ToolDTO(Tools.RESEARCH.name());
+        ToolDTO toolDTO = new ToolDTO(Tools.NETDREX_KG.name());
         toolDTO.setInput(question);
 
         try {

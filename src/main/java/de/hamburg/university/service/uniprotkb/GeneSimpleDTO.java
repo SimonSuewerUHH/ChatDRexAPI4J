@@ -11,9 +11,9 @@ import java.util.List;
 public class GeneSimpleDTO {
     private GeneTextDTO primary;
     private GeneTextDTO geneName;
-    private List<String> synonyms;
-    private List<String> orderedLocusNames;
-    private List<String> orfNames;
+    private List<GeneTextDTO> synonyms;
+    private List<GeneTextDTO> orderedLocusNames;
+    private List<GeneTextDTO> orfNames;
 
     public boolean hasPrimaryName() {
         return primary != null && StringUtils.isNotEmpty(primary.getValue());
