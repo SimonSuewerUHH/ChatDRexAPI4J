@@ -57,6 +57,9 @@ public interface NetdrexKGBot {
             • Signatures: signature (e.g., "IFN-γ response signature")
             • Tissues: tissue ("pancreas", "breast tissue")
             
+            The User might have already provided some context:
+            {context}
+            
             EXAMPLES
             --------
             Q: What drugs are approved for treating breast cancer?
@@ -83,7 +86,7 @@ public interface NetdrexKGBot {
               {"nodeType":"tissue","nodeValue":"brain","subQuestion":"tissue context","needsFilter":true}
             ]}
             """)
-    NetdrexKGGraph decomposeToNodes(@UserMessage String question);
+    NetdrexKGGraph decomposeToNodes(@UserMessage String question, String context);
 
     @SystemMessage("""
             You are a senior Neo4j Cypher engineer. Your task is to generate ONE best Cypher query that answers a biomedical question against a FIXED knowledge-graph schema. You may optionally use a set of “relevant nodes” provided by the client (an enhanced subgraph) to bind or disambiguate entities. Output ONLY the Cypher query—no code fences, no commentary.

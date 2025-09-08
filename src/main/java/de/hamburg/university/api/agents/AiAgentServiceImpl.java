@@ -24,7 +24,7 @@ public class AiAgentServiceImpl implements AIAgentService {
     @Override
     public String askNetdrex(String question) {
         String id = UUID.randomUUID().toString();
-        return netdrexBot.answer(id, question);
+        return netdrexBot.answer(id, question, "");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AiAgentServiceImpl implements AIAgentService {
     @Override
     public String askResearch(String question) {
         String id = UUID.randomUUID().toString();
-        return researchBot.answer(id, question);
+        return researchBot.answer(id, question, "");
     }
 
     @Override

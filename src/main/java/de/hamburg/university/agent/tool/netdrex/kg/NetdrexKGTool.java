@@ -32,7 +32,11 @@ public class NetdrexKGTool {
     NetdrexKgQueryServiceImpl netdrexKgQueryService;
 
     public NetdrexKGGraph decomposeToNodes(String question) {
-        return netdrexKGBot.decomposeToNodes(question);
+        return decomposeToNodes(question, "");
+    }
+
+    public NetdrexKGGraph decomposeToNodes(String question, String context) {
+        return netdrexKGBot.decomposeToNodes(question, context);
     }
 
     public String generateCypher(String question) {
@@ -43,14 +47,14 @@ public class NetdrexKGTool {
         return query;
     }
 
-    public String answer(String question, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+    public String answer(String question, String context, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         ToolDTO toolDTO = new ToolDTO(Tools.NETDREX_KG.name());
         toolDTO.setInput(question);
 
         try {
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-            NetdrexKGGraph questionGraph = decomposeToNodes(question);
+            NetdrexKGGraph questionGraph = decomposeToNodes(question, context);
             toolDTO.addContent("<h3>Decomposed Nodes:</h3>");
             toolDTO.addContent(stringifyNodesToHtml(questionGraph.getNodes()));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -119,7 +123,7 @@ public class NetdrexKGTool {
     }
 
     public String answer(String question) {
-        return answer(question, null, null);
+        return answer(question, "", null, null);
     }
 
     private String stringifyNodesToHtml(List<NetdrexKGNode> enhancedNodes) {

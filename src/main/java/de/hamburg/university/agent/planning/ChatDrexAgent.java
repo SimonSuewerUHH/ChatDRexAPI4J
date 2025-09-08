@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.planning;
 
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
+import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.planning.bots.RequestClassifierBot;
 import de.hamburg.university.agent.tool.ToolDTO;
@@ -14,6 +15,8 @@ import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+
+import java.util.List;
 
 @ApplicationScoped
 public class ChatDrexAgent {
@@ -37,7 +40,8 @@ public class ChatDrexAgent {
             ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
             toolDTO.setInput("Your question");
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
-            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), stateHolder.getStates(content.getConnectionId()));
+            List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
+            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
 
             toolDTO.setStop();
             toolDTO.addContent("Context:" + classy.getRelevantDiscussion());

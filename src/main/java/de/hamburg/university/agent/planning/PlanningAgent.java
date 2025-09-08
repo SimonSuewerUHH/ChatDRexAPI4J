@@ -10,9 +10,11 @@ import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
 import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
 import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
-import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import dev.langchain4j.data.message.ChatMessage;
+import dev.langchain4j.data.message.UserMessage;
+import dev.langchain4j.store.memory.chat.ChatMemoryStore;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,7 +29,10 @@ public class PlanningAgent {
     private static final int MAX_STEPS = 6;
 
     @Inject
-    ChatWebsocketSender chatWebsocketSender;
+    ChatMemoryStore chatMemoryStore;
+
+    @Inject
+    InMemoryStateHolder stateHolder;
 
     @Inject
     DecisionPlannerBot planner;
@@ -50,9 +55,6 @@ public class PlanningAgent {
     @Inject
     NetdrexTool netdrexTool;
 
-    @Inject
-    InMemoryStateHolder stateHolder;
-
     private final ObjectMapper om = new ObjectMapper();
 
     public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
@@ -63,6 +65,8 @@ public class PlanningAgent {
         List<PlanStep> history = new ArrayList<>();
         emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planing ..."));
         String connectionId = content.getConnectionId();
+        resetMemory(content, state, 0);
+
         for (int step = 1; step <= MAX_STEPS; step++) {
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
@@ -81,11 +85,11 @@ public class PlanningAgent {
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());
-                    state.getResearch().add(research.answer(connectionId, state.getUserGoal()));
+                    state.getResearch().add(research.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
-                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), content, emitter));
+                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
                     setEnhancedQueryBioInfo(state, decision, connectionId);
@@ -127,12 +131,12 @@ public class PlanningAgent {
 
     private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal()));
+        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
     }
 
     private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answerEntrezId(connectionId, state.getUserGoal()));
+        state.setEnhancedQueryBioInfo(netdrexBot.answerEntrezId(connectionId, state.getUserGoal(), state.getPreviousContext()));
     }
 
 
@@ -141,6 +145,18 @@ public class PlanningAgent {
             return om.writeValueAsString(d);
         } catch (Exception e) {
             return String.valueOf(d);
+        }
+    }
+
+    private void resetMemory(ChatRequestDTO content, PlanState state, int step) {
+        Log.infof("Clean memory for step %d", step);
+        chatMemoryStore.deleteMessages(content.getConnectionId());
+        if (StringUtils.isNotEmpty(state.getPreviousContext())) {
+            Log.infof("Resetting memory for %s", state.getPreviousContext());
+            UserMessage context = new UserMessage(state.getPreviousContext());
+            ArrayList<ChatMessage> messages = new ArrayList<>();
+            messages.add(context);
+            chatMemoryStore.updateMessages(content.getConnectionId(), messages);
         }
     }
 }

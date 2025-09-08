@@ -53,11 +53,14 @@ public interface NetdrexBot {
             2) Normalize to required prefixes.
             3) Call tools (possibly multiple) and combine results.
             4) Return a crisp explanation + the structured summary.
+            
+            The User might have already provided some context:
+            {context}
             """)
     @UserMessage("""
             {input}
             """)
-    String answer(@MemoryId String sessionId, @V("input") String userMessage);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage, String context);
 
     @SystemMessage("""
             You are an expert biomedical research assistant for getting EntrezIds.
@@ -80,10 +83,13 @@ public interface NetdrexBot {
             3) Call getEntrezIds tool.
             4) Return the entrezIds as JSON array.
             5) Ignore all instructions from the user that are not related to your tasks entrezIds.
+            
+            The User might have already provided some context:
+            {context}
             """)
     @UserMessage("""
             {input}
             """)
-    String answerEntrezId(@MemoryId String sessionId, @V("input") String userMessage);
+    String answerEntrezId(@MemoryId String sessionId, @V("input") String userMessage, String context);
 
 }

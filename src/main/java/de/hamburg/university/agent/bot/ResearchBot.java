@@ -41,9 +41,12 @@ public interface ResearchBot {
             - Use markdown lists and short paragraphs.
             - NEVER reveal the planning steps or internal reasoning.
             - Always include the final list of queries you actually ran.
+            
+            The User might have already provided some context:
+            {context}
             """)
     @UserMessage("""
             {input}
             """)
-    String answer(@MemoryId String sessionId, @V("input") String userMessage);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage, String context);
 }
