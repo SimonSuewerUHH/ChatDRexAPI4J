@@ -25,7 +25,8 @@ public interface NetdrexKGBot {
                 ["disorder","drug","gene","genomic_variant","go","pathway","phenotype","protein","side_effect","signature","tissue"]
               - "nodeValue": string, the concrete entity or term (e.g., "breast cancer", "TP53", "insulin receptor", "MAPK pathway")
               - "subQuestion": string, <= 12 words, adds role/context (e.g., "approved treatments", "causal genes", "mechanistic pathway", "interacts with insulin receptor")
-            
+              - "needsFilter": boolean, true if this node should be filtered for relevance in the context of the user's question
+           
             CONSTRAINTS
             -----------
             - 1..5 nodes total.
@@ -38,7 +39,9 @@ public interface NetdrexKGBot {
             - Map high-level clinical conditions to "disorder"; observable traits to "phenotype".
             - If the user asks about side effects, include a "side_effect" node with the specific effect (e.g., "hepatotoxicity").
             - Do NOT invent entities not implied by the question; be precise.
-            - No explanations outside the JSON.
+            - `needsFilter` guidelines:
+              • Set to **true** for nodes that constrain or filter the answer (e.g., disorder/tissue/phenotype context, an anchor entity used only to narrow results, or generic placeholders like "genes"/"pathways" that must be filtered to become relevant).
+              • Set to **false** for nodes that represent the primary answer type when they are already specific enough (e.g., a concrete target entity to be listed/returned). If in doubt and the node is generic, prefer **true**.
             
             MAPPING HINTS
             -------------
@@ -59,25 +62,25 @@ public interface NetdrexKGBot {
             Q: What drugs are approved for treating breast cancer?
             {
             nodes: [
-              {"nodeType":"drug","nodeValue":"breast cancer drugs","subQuestion":"approved treatments"},
-              {"nodeType":"disorder","nodeValue":"breast cancer","subQuestion":"disease focus"}
+              {"nodeType":"drug","nodeValue":"breast cancer drugs","subQuestion":"approved treatments","needsFilter":false},
+              {"nodeType":"disorder","nodeValue":"breast cancer","subQuestion":"disease focus","needsFilter":true}
             ]}
-            
+
             Q: Which genes interact with insulin receptors in diabetes?
             {
             nodes: [
-              {"nodeType":"gene","nodeValue":"genes","subQuestion":"interact with insulin receptors"},
-              {"nodeType":"protein","nodeValue":"insulin receptors","subQuestion":"interaction target"},
-              {"nodeType":"disorder","nodeValue":"diabetes","subQuestion":"disease context"}
+              {"nodeType":"gene","nodeValue":"genes","subQuestion":"interact with insulin receptors","needsFilter":true},
+              {"nodeType":"protein","nodeValue":"insulin receptors","subQuestion":"interaction target","needsFilter":true},
+              {"nodeType":"disorder","nodeValue":"diabetes","subQuestion":"disease context","needsFilter":true}
             ]}
-            
+
             Q: Show pathways involved in Parkinson's disease phenotypes in brain tissue
             {
             nodes: [
-              {"nodeType":"pathway","nodeValue":"pathways","subQuestion":"involved in PD phenotypes"},
-              {"nodeType":"disorder","nodeValue":"Parkinson's disease","subQuestion":"disease focus"},
-              {"nodeType":"phenotype","nodeValue":"phenotypes","subQuestion":"PD-related traits"},
-              {"nodeType":"tissue","nodeValue":"brain","subQuestion":"tissue context"}
+              {"nodeType":"pathway","nodeValue":"pathways","subQuestion":"involved in PD phenotypes","needsFilter":true},
+              {"nodeType":"disorder","nodeValue":"Parkinson's disease","subQuestion":"disease focus","needsFilter":true},
+              {"nodeType":"phenotype","nodeValue":"phenotypes","subQuestion":"PD-related traits","needsFilter":true},
+              {"nodeType":"tissue","nodeValue":"brain","subQuestion":"tissue context","needsFilter":true}
             ]}
             """)
     NetdrexKGGraph decomposeToNodes(@UserMessage String question);
@@ -180,14 +183,17 @@ public interface NetdrexKGBot {
             - Sub Question → short context (can be ignored unless useful).
             - Primary Domain ID → authoritative ID (always prefer this if present).
             - Display Name → canonical/common name (case-insensitive match if no ID).
+            - Needs Filter / needsFilter → boolean; if true, treat the node as a constraint (must be applied as a MATCH/WHERE filter). If false, treat as optional/answer-target context; do not force-match it unless necessary to answer the question.
             - Data Sources → provenance only (ignore for Cypher generation).
             
             If multiple nodes are present, it is OK not to use all of them. Use only those relevant to the user question.
             When a relevant node has a Primary Domain ID, MATCH on that ID; else MATCH on displayName (case-insensitive).
+            Honor `needsFilter=true` nodes as hard filters; `needsFilter=false` nodes are soft hints (prefer to return them but do not over-constrain the pattern).
             
             ## Query style rules
             - OUTPUT: Only a single Cypher query string. No comments, no extraneous text, no markdown.
             - Prefer bound, reproducible matches using primaryDomainId.
+            - Apply nodes with needsFilter=true as explicit MATCH/WHERE constraints; avoid forcing matches for needsFilter=false unless essential.
             - If you must match by name, use case-insensitive equality: toLower(n.displayName)=toLower($name)
             - Use concise variable names by label initial (e.g., d:Drug, g:Gene, p:Protein).
             - Return useful columns with stable identifiers:
@@ -203,6 +209,7 @@ public interface NetdrexKGBot {
             ## Parameterization
             - Use parameters only for free-text matches from the question (e.g., $q, $name1, $name2).
             - For relevant nodes with known IDs, inline the literal ID string to keep the query self-sufficient.
+            - Do not parameterize authoritative filters coming from needsFilter=true nodes with known primaryDomainId; inline those IDs.
             
             ## Typical patterns (use only when appropriate)
             - Drugs indicated for a disorder:
@@ -243,6 +250,7 @@ public interface NetdrexKGBot {
             INSTRUCTIONS:
             - Use the fixed schema in the system prompt.
             - Use the relevant nodes only if they clearly help bind entities for this question.
+            - Treat needsFilter=true nodes as mandatory filters and needsFilter=false nodes as soft context/targets.
             - Prefer primaryDomainId when present; else use case-insensitive displayName matching with parameters.
             - Produce ONE Cypher query that best answers the question.
             - Output ONLY the Cypher string.

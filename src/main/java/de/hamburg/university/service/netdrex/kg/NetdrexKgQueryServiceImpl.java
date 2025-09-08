@@ -9,6 +9,7 @@ import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class NetdrexKgQueryServiceImpl {
     public List<NetdrexKGNodeEnhanced> enhanceGraph(NetdrexKGGraph graph, double minScore) {
         return graph.getNodes().stream()
                 .map(node -> {
+                    if (node.getNeedsFilter() != null && !node.getNeedsFilter()) {
+                        return new NetdrexKGNodeEnhanced(node, new ArrayList<>());
+                    }
                     List<NetdrexSearchEmbeddingsNodeDTO> nodes = query(node, minScore);
                     return new NetdrexKGNodeEnhanced(node, nodes);
                 })
@@ -60,7 +64,11 @@ public class NetdrexKgQueryServiceImpl {
     }
 
     public String fireNeo4jQuery(String cypher) {
-        return netdrexApiClient.runQuery(cypher);
+        String result = netdrexApiClient.runQuery(cypher);
+        if (StringUtils.isNotEmpty(result) && result.length() > 2000) {
+            return result.substring(0, 2000) + "... (truncated)";
+        }
+        return result;
     }
 
     private List<List<NetdrexSearchEmbeddingsNodeResponseDTO>> queryEmbeddings(NetdrexSearchEmbeddingRequestDTO dto) {
@@ -100,5 +108,22 @@ public class NetdrexKgQueryServiceImpl {
             case "tissue" -> "Tissue";
             default -> null; // oder throw new IllegalArgumentException
         };
+    }
+
+    public List<NetdrexKGNodeEnhanced> enhanceFallbackNodes(List<NetdrexKGNodeEnhanced> enhancedNodes) {
+        return enhanceFallbackNodes(enhancedNodes, 0.7);
+
+    }
+
+    public List<NetdrexKGNodeEnhanced> enhanceFallbackNodes(List<NetdrexKGNodeEnhanced> enhancedNodes, double minScore) {
+        return enhancedNodes.stream()
+                .map(node -> {
+                    if (node.getNeedsFilter() != null && node.getNeedsFilter()) {
+                        return node;
+                    }
+                    List<NetdrexSearchEmbeddingsNodeDTO> nodes = query(node, minScore);
+                    return new NetdrexKGNodeEnhanced(node, nodes);
+                })
+                .toList();
     }
 }

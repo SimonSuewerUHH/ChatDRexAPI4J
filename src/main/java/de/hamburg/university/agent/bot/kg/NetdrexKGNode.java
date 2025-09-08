@@ -20,4 +20,7 @@ public class NetdrexKGNode {
 
     @Description("Short context (<= 12 words) clarifying the node's role, e.g. 'approved treatments', 'interacts with insulin receptor'")
     private String subQuestion;
+
+    @Description("Whether this node needs to be filtered for relevance in the context of the user's question")
+    private Boolean needsFilter;
 }

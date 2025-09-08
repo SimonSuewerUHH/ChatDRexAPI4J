@@ -51,10 +51,12 @@ public class NetdrexKGTool {
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
             NetdrexKGGraph questionGraph = decomposeToNodes(question);
-            toolDTO.addContent(stringifyNodes(questionGraph.getNodes()));
+            toolDTO.addContent("<h3>Decomposed Nodes:</h3>");
+            toolDTO.addContent(stringifyNodesToHtml(questionGraph.getNodes()));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
             List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
-            String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
+            String enhancedNodesString = stringifyEnhancedNodesToHTML(enhancedNodes);
+            toolDTO.addContent("<h3>Enhanced Nodes:</h3>");
             toolDTO.addContent(enhancedNodesString);
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
@@ -64,10 +66,12 @@ public class NetdrexKGTool {
                 try {
                     String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
                     oldQuery += "\n " + i + ". " + query;
+                    toolDTO.addContent("<h3>Neo4j Query:</h3>");
                     toolDTO.addContent(query);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
                     String result = netdrexKgQueryService.fireNeo4jQuery(query);
+                    toolDTO.addContent("<h3>Neo4j Result:</h3>");
                     toolDTO.addContent(result);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
@@ -91,7 +95,14 @@ public class NetdrexKGTool {
                 }
 
             }
-            String answer = netdrexKGBot.answerFallbackQuestion(question, enhancedNodesString);
+            List<NetdrexKGNodeEnhanced> enhancedNodesFallback = netdrexKgQueryService.enhanceFallbackNodes(enhancedNodes);
+            String enhancedNodesFallbackString = stringifyEnhancedNodes(enhancedNodesFallback);
+            toolDTO.addContent("<h3>Query Failed => Fallback</h3>");
+            toolDTO.addContent("<h3>Enhanced Nodes Fallback:</h3>");
+            toolDTO.addContent(enhancedNodesString);
+            chatWebsocketSender.sendTool(toolDTO, content, emitter);
+
+            String answer = netdrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
             toolDTO.addContent(answer);
             toolDTO.setStop();
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -111,13 +122,43 @@ public class NetdrexKGTool {
         return answer(question, null, null);
     }
 
-    private String stringifyNodes(List<NetdrexKGNode> enhancedNodes) {
+    private String stringifyNodesToHtml(List<NetdrexKGNode> enhancedNodes) {
         StringBuilder sb = new StringBuilder();
         for (NetdrexKGNode node : enhancedNodes) {
-            sb.append("Node Type: ").append(node.getNodeType()).append("\n");
-            sb.append("Node Value: ").append(node.getNodeValue()).append("\n");
-            sb.append("Sub Question: ").append(node.getSubQuestion()).append("\n");
-            sb.append("\n");
+            sb.append("<b>Node Type:</b> ").append(node.getNodeType()).append("<br>");
+            sb.append("<b>Node Value:</b> ").append(node.getNodeValue()).append("<br>");
+            sb.append("<b>Sub Question:</b> ").append(node.getSubQuestion()).append("<br>");
+            sb.append("<b>Needs Filter:</b> ").append(node.getNeedsFilter()).append("<br>");
+            sb.append("<br>");
+        }
+        return sb.toString();
+    }
+    private String stringifyEnhancedNodesToHTML(List<NetdrexKGNodeEnhanced> enhancedNodes) {
+        StringBuilder sb = new StringBuilder();
+        for (NetdrexKGNodeEnhanced node : enhancedNodes) {
+            sb.append("<b>Node Type:</b> ").append(node.getNodeType()).append("<br>");
+            sb.append("<b>Node Value:</b> ").append(node.getNodeValue()).append("<br>");
+            sb.append("<b>Sub Question:</b> ").append(node.getSubQuestion()).append("<br>");
+            sb.append("<b>Needs Filter:</b> ").append(node.getNeedsFilter()).append("<br>");
+            if (node.getNeedsFilter() != null && !node.getNeedsFilter()) {
+                sb.append("  - No filtering applied.<br><br>");
+                continue;
+            }
+            sb.append("<b>Enhanced Nodes:</b><br>");
+            for (NetdrexSearchEmbeddingsNodeDTO enhancedNode : node.getNodes()) {
+                sb.append("  - <b>Primary Domain ID:</b> ").append(enhancedNode.getPrimaryDomainId()).append("<br>");
+                sb.append("    <b>Display Name:</b> ").append(enhancedNode.getDisplayName()).append("<br>");
+                if (enhancedNode.getDataSources() != null) {
+                    sb.append("    <b>Data Sources:</b> ").append(String.join(", ", enhancedNode.getDataSources())).append("<br>");
+                }
+                if (enhancedNode.getDescription() != null) {
+                    sb.append("    <b>Description:</b> ").append(enhancedNode.getDescription()).append("<br>");
+                }
+                if (enhancedNode.getSynonyms() != null) {
+                    sb.append("    <b>Synonyms:</b> ").append(String.join(", ", enhancedNode.getSynonyms())).append("<br>");
+                }
+            }
+            sb.append("<br>");
         }
         return sb.toString();
     }
@@ -128,6 +169,11 @@ public class NetdrexKGTool {
             sb.append("Node Type: ").append(node.getNodeType()).append("\n");
             sb.append("Node Value: ").append(node.getNodeValue()).append("\n");
             sb.append("Sub Question: ").append(node.getSubQuestion()).append("\n");
+            sb.append("Needs Filter: ").append(node.getNeedsFilter()).append("\n");
+            if (node.getNeedsFilter() != null && !node.getNeedsFilter()) {
+                sb.append("  - No filtering applied.\n\n");
+                continue;
+            }
             sb.append("Enhanced Nodes:\n");
             for (NetdrexSearchEmbeddingsNodeDTO enhancedNode : node.getNodes()) {
                 sb.append("  - Primary Domain ID: ").append(enhancedNode.getPrimaryDomainId()).append("\n");

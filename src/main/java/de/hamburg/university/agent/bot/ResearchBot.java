@@ -1,6 +1,5 @@
 package de.hamburg.university.agent.bot;
 
-import de.hamburg.university.agent.memory.ServiceLocalMemoryProvider;
 import de.hamburg.university.agent.tool.research.ResearchTools;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
