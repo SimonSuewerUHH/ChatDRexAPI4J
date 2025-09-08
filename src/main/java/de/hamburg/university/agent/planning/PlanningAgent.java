@@ -5,6 +5,8 @@ import de.hamburg.university.agent.bot.DigestBot;
 import de.hamburg.university.agent.bot.FinalizeBot;
 import de.hamburg.university.agent.bot.NetdrexBot;
 import de.hamburg.university.agent.bot.ResearchBot;
+import de.hamburg.university.agent.memory.InMemoryStateHolder;
+import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
 import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
 import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
@@ -48,6 +50,9 @@ public class PlanningAgent {
     @Inject
     NetdrexTool netdrexTool;
 
+    @Inject
+    InMemoryStateHolder stateHolder;
+
     private final ObjectMapper om = new ObjectMapper();
 
     public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
@@ -66,7 +71,7 @@ public class PlanningAgent {
 
             Log.debugf("Planning step %d: %s", step, safeToString(decision));
 
-            if (decision == null || decision.getAction() == null) break;
+            if (decision.getAction() == null) break;
 
             switch (decision.getAction()) {
                 case UPDATE_NETWORK -> {
@@ -111,7 +116,7 @@ public class PlanningAgent {
                             .await()
                             .indefinitely();
 
-
+                    stateHolder.addState(connectionId, new PlanStateResult(state, result));
                     return new AgentResult(result);
                 }
             }

@@ -10,6 +10,5 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanStep {
     private PlanAction action;
-
     private String reason;
 }

@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.planning;
 
+import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.planning.bots.RequestClassifierBot;
 import de.hamburg.university.agent.tool.ToolDTO;
@@ -27,13 +28,16 @@ public class ChatDrexAgent {
     @Inject
     HelpBot helpBot;
 
+    @Inject
+    InMemoryStateHolder stateHolder;
+
     @ActivateRequestContext
     public Multi<ChatResponseDTO> answer(ChatRequestDTO content) {
         return Multi.createFrom().emitter(em -> {
             ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
             toolDTO.setInput("Your question");
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
-            RequestClassification classy = requestClassifierBot.classify(content.getMessage());
+            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), stateHolder.getStates(content.getConnectionId()));
 
             toolDTO.setStop();
             toolDTO.addContent("Context:" + classy.getRelevantDiscussion());

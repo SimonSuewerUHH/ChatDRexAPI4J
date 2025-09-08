@@ -1,5 +1,6 @@
 package de.hamburg.university.api.chat;
 
+import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.planning.ChatDrexAgent;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
@@ -23,6 +24,9 @@ public class ChatWebsocketService implements Serializable {
     @Inject
     ChatWebsocketSender sender;
 
+    @Inject
+    InMemoryStateHolder stateHolder;
+
     @OnOpen
     public void onOpen() {
         String clientId = getClientId();
@@ -34,6 +38,7 @@ public class ChatWebsocketService implements Serializable {
         String clientId = getClientId();
         Log.info("Connection closed: " + clientId);
         sender.removeClient(connection.id());
+        stateHolder.removeClient(connection.id());
     }
 
     @OnError
@@ -41,6 +46,7 @@ public class ChatWebsocketService implements Serializable {
         String clientId = getClientId();
         Log.error("Error in WebsocketClient: " + throwable.getMessage());
         sender.removeClient(clientId);
+        stateHolder.removeClient(clientId);
     }
 
     @OnTextMessage
