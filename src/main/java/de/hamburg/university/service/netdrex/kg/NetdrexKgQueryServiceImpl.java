@@ -65,8 +65,8 @@ public class NetdrexKgQueryServiceImpl {
 
     public String fireNeo4jQuery(String cypher) {
         String result = netdrexApiClient.runQuery(cypher);
-        if (StringUtils.isNotEmpty(result) && result.length() > 2000) {
-            return result.substring(0, 2000) + "... (truncated)";
+        if (StringUtils.isNotEmpty(result) && result.length() > 3000) {
+            return result.substring(0, 3000) + "... (truncated)";
         }
         return result;
     }

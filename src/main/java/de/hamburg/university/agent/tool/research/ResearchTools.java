@@ -42,9 +42,14 @@ public class ResearchTools {
                 StringBuilder sb = new StringBuilder();
                 for (var paper : response.getData()) {
                     searchResults.add(new ToolSourceDTO(paper));
+                    sb.append("Paper ID: ").append(paper.getPaperId()).append("\n");
                     sb.append("Title: ").append(paper.getTitle()).append("\n");
-                    sb.append("Year: ").append(paper.getYear()).append("\n");
-                    sb.append("Abstract: ").append(paper.getAbstractText()).append("\n");
+                    if(paper.getYear() != null){
+                        sb.append("Year: ").append(paper.getYear()).append("\n");
+                    }
+                    if(paper.getAbstractText() != null){
+                        sb.append("Abstract: ").append(paper.getAbstractText()).append("\n");
+                    }
                     sb.append("-----\n");
                 }
                 result = sb.toString();
