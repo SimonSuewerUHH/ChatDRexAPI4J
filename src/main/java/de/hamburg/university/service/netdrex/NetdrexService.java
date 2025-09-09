@@ -2,6 +2,7 @@ package de.hamburg.university.service.netdrex;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -22,8 +23,17 @@ public class NetdrexService {
                 .map(this::detectPrefix)
                 .map(e -> e.toString().toLowerCase())
                 .filter(StringUtils::isNotEmpty)
-                .flatMap(e -> api.getById(e, ids).stream())
+                .flatMap(e -> api.getByIds(new NetdrexAPIInfoRequestDTO(e, ids)).stream())
                 .toList();
+    }
+
+    public NetdrexAPIInfoDTO fetchSingleInfo(String id) {
+        String prefix = detectPrefix(id).toString().toLowerCase();
+        List<NetdrexAPIInfoDTO> result = api.getById(prefix, id);
+        if (result == null || result.isEmpty()) {
+            throw new NotFoundException("No Netdrex API found for id: " + id);
+        }
+        return result.getFirst();
     }
 
     public List<NetdrexAPIInfoDTO> fetchInfo(String id) {

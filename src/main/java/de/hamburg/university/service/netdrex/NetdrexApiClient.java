@@ -2,7 +2,6 @@ package de.hamburg.university.service.netdrex;
 
 
 import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingRequestDTO;
-import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingsNodeResponseDTO;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import io.smallrye.mutiny.Multi;
 import jakarta.ws.rs.*;
@@ -18,9 +17,15 @@ import java.util.List;
 @RegisterRestClient(configKey = "netdrex-client")
 public interface NetdrexApiClient {
 
+    @POST
+    @Path("/find_by_ids/")
+    @Produces(MediaType.APPLICATION_JSON)
+    List<NetdrexAPIInfoDTO> getByIds(NetdrexAPIInfoRequestDTO request);
+
     @GET
-    @Path("/get_by_id/{nodeCollection}")
-    List<NetdrexAPIInfoDTO> getById(@PathParam("nodeCollection") String nodeCollection, @QueryParam("q") List<String> ids);
+    @Path("/get_by_id/{nodeCollection}/{q}")
+    List<NetdrexAPIInfoDTO> getById(@PathParam("nodeCollection") String nodeCollection, @PathParam("q") String id);
+
 
     @POST
     @Path("open/embeddings/query")

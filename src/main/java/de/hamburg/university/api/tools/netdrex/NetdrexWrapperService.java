@@ -1,15 +1,13 @@
 package de.hamburg.university.api.tools.netdrex;
 
+import de.hamburg.university.service.netdrex.NetdrexAPIInfoDTO;
 import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
 import de.hamburg.university.service.netdrex.diamond.SeedPayloadDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import de.hamburg.university.service.netdrex.trustrank.TrustRankSeedPayloadDTO;
 import io.smallrye.mutiny.Uni;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -25,6 +23,12 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Produces(MediaType.APPLICATION_JSON)
 @Tag(name = "netdrex Wrapper", description = "Wrapper endpoints for netdrex tools.")
 public interface NetdrexWrapperService {
+
+    @GET
+    @Path("info")
+    @APIResponse(responseCode = "500", description = "Server error")
+    NetdrexAPIInfoDTO query(@QueryParam("q") String query);
+
 
     @POST
     @Path("/diamond/run")
