@@ -10,5 +10,7 @@ public enum NetdrexStatus {
     @JsonProperty(value = "failed")
     FAILED,
     @JsonProperty(value = "completed")
-    COMPLETED
+    COMPLETED,
+    @JsonProperty(value = "running")
+    RUNNING
 }
