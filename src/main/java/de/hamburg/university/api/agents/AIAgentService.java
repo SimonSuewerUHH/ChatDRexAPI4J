@@ -17,7 +17,7 @@ import java.util.List;
 public interface AIAgentService {
 
     @POST
-    @Path("netdrex")
+    @Path("netdex")
     @Operation(
             summary = "Query the Netdrex AI agent",
             description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
@@ -32,7 +32,7 @@ public interface AIAgentService {
     );
 
     @GET
-    @Path("netdrex")
+    @Path("nedrex")
     @Operation(
             summary = "Get example questions for the Netdrex AI agent",
             description = "Returns a list of example questions that can be asked to the AI agent about drug, protein and gene relationships"

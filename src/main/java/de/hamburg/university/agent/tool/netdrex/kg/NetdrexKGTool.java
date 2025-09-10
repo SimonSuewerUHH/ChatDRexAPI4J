@@ -11,6 +11,8 @@ import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import de.hamburg.university.service.netdrex.kg.NetdrexKGNodeEnhanced;
 import de.hamburg.university.service.netdrex.kg.NetdrexKgQueryServiceImpl;
 import de.hamburg.university.service.netdrex.kg.NetdrexSearchEmbeddingsNodeDTO;
+import dev.langchain4j.agent.tool.P;
+import dev.langchain4j.agent.tool.Tool;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -122,9 +124,11 @@ public class NetdrexKGTool {
         }
     }
 
-    public String answer(String question) {
+    @Tool("Answer a question about biomedical nodes such as drugs, proteins and genes using the Netdrex knowledge graph.")
+    public String answer(@P("The question") String question) {
         return answer(question, "", null, null);
     }
+
 
     private String stringifyNodesToHtml(List<NetdrexKGNode> enhancedNodes) {
         StringBuilder sb = new StringBuilder();
