@@ -1,0 +1,198 @@
+image: openjdk:21
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Container-Scanning.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+stages:
+  - check
+  - test
+  - build
+  - security
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .m2/repository
+
+# Helpers
+variables:
+  PROJECT: chatdrex-api
+  CI_IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH
+  CI_IMAGE_STAGING: $CI_IMAGE_BASE/$PROJECT:staging
+  CI_IMAGE_LATEST:  $CI_IMAGE_BASE/$PROJECT:latest
+
+  SAST_JAVA_VERSION: "21"
+  GITLAB_ADVANCED_SAST_ENABLED: "true"
+  GIT_DEPTH: "0"
+  CS_IMAGE: $CI_IMAGE_LATEST
+
+  DOCKER_TLS_CERTDIR: ""
+
+.docker_login: &docker_login
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+.docker_buildx: &docker_buildx
+  - docker context create fedDB-context
+  - docker buildx create --name fedDBBuilder --use fedDB-context
+  - docker buildx inspect --bootstrap
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Build and test
+.check:build:maven:
+  stage: check
+  allow_failure: false
+  artifacts:
+    paths:
+      - target
+    expire_in: 1 hour
+
+check:build:maven:
+  extends: .check:build:maven
+  script:
+    - ./mvnw clean install -DskipTests
+
+
+check:build:maven:prod:
+  extends: .check:build:maven
+  script:
+    - ./mvnw clean install -DskipTests -Dquarkus.profile=prod
+  only:
+    - main
+
+check:build:maven:staging:
+  extends: .check:build:maven
+  script:
+    - ./mvnw clean install -DskipTests -Dquarkus.profile=prod
+
+.check:build:docker:
+  image: docker:24.0.2
+  stage: check
+  services:
+    - name: docker:24.0.2-dind
+      alias: docker
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375"
+  before_script:
+    - *docker_login
+  script:
+    - echo "Building Docker image $CI_IMAGE for $PROJECT/src/main/docker/Dockerfile.jvm"
+    - docker build -t $CI_IMAGE -f $PROJECT/src/main/docker/Dockerfile.jvm $PROJECT
+    - docker save -o $TAR_FILE_NAME $CI_IMAGE
+    - chmod 644 $TAR_FILE_NAME
+    - echo "API image created at $TAR_FILE_NAME"
+  artifacts:
+    paths:
+      - $TAR_FILE_NAME
+    expire_in: 1 hour
+
+check:build:docker:
+  extends: .check:build:docker
+  dependencies:
+    - check:build:maven
+  needs:
+    - check:build:maven
+  variables:
+    CI_IMAGE: image:latest
+    PROJECT: $PROJECT
+    TAR_FILE_NAME: image.tar
+
+# ─────────────────────────────────────────────────────────────────────────────
+# deploy
+.deploy:gitlab_registry:
+  image: docker:24.0.2
+  stage: deploy
+  services:
+    - name: docker:24.0.2-dind
+      alias: docker
+  before_script:
+    - *docker_login
+    - *docker_buildx
+  script:
+    - docker buildx build --platform linux/amd64,linux/arm64/v8 --provenance false -t $CI_IMAGE -f $DOCKERFILE --push .
+
+## prod
+deploy:gitlab_registry:prod:
+  extends: .deploy:gitlab_registry
+  only:
+    - main
+  dependencies:
+    - check:build:maven:prod
+  variables:
+    CI_IMAGE: $CI_IMAGE_LATEST
+    DOCKERFILE: src/main/docker/Dockerfile.jvm
+
+
+## staging
+deploy:gitlab_registry:global:staging:
+  extends: .deploy:gitlab_registry
+  #only:
+  #  - develop
+  dependencies:
+    - check:build:maven:staging
+  needs:
+    - check:build:maven:staging
+  variables:
+    CI_IMAGE: $CI_IMAGE_STAGING
+    DOCKERFILE: src/main/docker/Dockerfile.jvm
+
+
+deploy:gitlab_registry:staging-native:
+  extends: .deploy:gitlab_registry
+  when: manual
+  allow_failure: true
+  timeout: 3 hours 30 minutes
+  dependencies:
+    - check:build:maven:staging
+  variables:
+    CI_IMAGE: $CI_IMAGE_GLOBAL_LATEST-native
+    DOCKERFILE: src/main/docker/Dockerfile.native-build
+# ─────────────────────────────────────────────────────────────────────────────
+# Override all security scanning jobs
+
+spotbugs-sast:
+  dependencies:
+    - check:build:maven
+  variables:
+    COMPILE: "false"
+    SECURE_LOG_LEVEL: debug
+
+gitlab-advanced-sast:
+  dependencies:
+    - check:build:maven
+  artifacts:
+    paths:
+      - '**/trace.ctf'
+    expire_in: 1 week
+    when: always
+  variables:
+    RUNNER_SCRIPT_TIMEOUT: 50m
+  timeout: 1h
+
+container-scanning:
+  extends: container_scanning
+  stage: security
+  needs:
+    - check:build:docker
+  dependencies:
+    - check:build:docker:local
+  variables:
+    CS_IMAGE: "archive://image.tar"
+
+
+secret_detection:
+  dependencies:
+    - check:build:maven
+  stage: security
+  variables:
+    GIT_DEPTH: 100
+
+dependency_scanning:
+  dependencies:
+    - check:build:maven
