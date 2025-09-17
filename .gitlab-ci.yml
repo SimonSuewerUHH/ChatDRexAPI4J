@@ -68,8 +68,8 @@ check:build:maven:
   before_script:
     - *docker_login
   script:
-    - echo "Building Docker image $CI_IMAGE for $PROJECT/src/main/docker/Dockerfile.jvm"
-    - docker build -t $CI_IMAGE -f $PROJECT/src/main/docker/Dockerfile.jvm $PROJECT
+    - echo "Building Docker image $CI_IMAGE for /src/main/docker/Dockerfile.jvm"
+    - docker build -t $CI_IMAGE -f src/main/docker/Dockerfile.jvm .
     - docker save -o $TAR_FILE_NAME $CI_IMAGE
     - chmod 644 $TAR_FILE_NAME
     - echo "API image created at $TAR_FILE_NAME"
