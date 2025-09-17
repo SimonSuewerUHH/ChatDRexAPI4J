@@ -1,0 +1,14 @@
+package de.hamburg.university.agent.planning;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class AgentResult {
+    private String messageMarkdown;
+
+    public AgentResult(String messageMarkdown) {
+        this.messageMarkdown = messageMarkdown;
+    }
+}

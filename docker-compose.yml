@@ -1,0 +1,18 @@
+services:
+  client:
+    container_name: chatdrex-ui
+    image: ghcr.io/simonsueweruhh/chatdrexui:main
+    restart: on-failure
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - '8131:8080'
+
+  api:
+    image: ghcr.io/simonsueweruhh/chatdrexapi:main
+    container_name: chatdrex-api
+    ports:
+      - 8132:8080
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    restart: on-failure
