@@ -44,16 +44,14 @@ variables:
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Build and test
-.check:build:maven:
+
+check:build:maven:
   stage: check
   allow_failure: false
   artifacts:
     paths:
       - target
     expire_in: 1 hour
-
-check:build:maven:
-  extends: .check:build:maven
   script:
     - ./mvnw clean install -DskipTests
 
@@ -111,33 +109,33 @@ deploy:gitlab_registry:prod:
   only:
     - main
   dependencies:
-    - check:build:maven:prod
+    - check:build:maven
   variables:
     CI_IMAGE: $CI_IMAGE_LATEST
     DOCKERFILE: src/main/docker/Dockerfile.jvm
 
 
 ## staging
-deploy:gitlab_registry:global:staging:
+deploy:gitlab_registry:staging:
   extends: .deploy:gitlab_registry
   #only:
   #  - develop
   dependencies:
-    - check:build:maven:staging
+    - check:build:maven
   needs:
-    - check:build:maven:staging
+    - check:build:maven
   variables:
     CI_IMAGE: $CI_IMAGE_STAGING
     DOCKERFILE: src/main/docker/Dockerfile.jvm
 
 
-deploy:gitlab_registry:staging-native:
+deploy:gitlab_registry-native:
   extends: .deploy:gitlab_registry
   when: manual
   allow_failure: true
   timeout: 3 hours 30 minutes
   dependencies:
-    - check:build:maven:staging
+    - check:build:maven
   variables:
     CI_IMAGE: $CI_IMAGE_GLOBAL_LATEST-native
     DOCKERFILE: src/main/docker/Dockerfile.native-build
