@@ -86,7 +86,6 @@ check:build:docker:
     - check:build:maven
   variables:
     CI_IMAGE: image:latest
-    PROJECT: $PROJECT
     TAR_FILE_NAME: image.tar
 
 # ─────────────────────────────────────────────────────────────────────────────
