@@ -19,7 +19,9 @@ import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -73,23 +75,24 @@ public class NeDRexKGTool {
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
             String oldQuery = "";
+            String newQuery = "";
             final int maxAttempts = config.tools().kgQuery().retries();
             for (int i = 0; i < maxAttempts; i++) {
                 try {
-                    String query = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
-                    oldQuery += "\n " + i + ". " + query;
+                    newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
+                    oldQuery += "\n " + i + ". " + newQuery;
                     toolDTO.addContent("<h3>Neo4j Query:</h3>");
-                    toolDTO.addContent(query);
+                    toolDTO.addContent(newQuery);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-                    String result = nedrexKgQueryService.fireNeo4jQuery(query);
+                    String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
                     toolDTO.addContent("<h3>Neo4j Result:</h3>");
                     toolDTO.addContent(result);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-                    Log.infof("Generated Cypher Query: \n%s\nfor question %s", query, question);
+                    Log.infof("Generated Cypher Query: \n%s\nfor question %s", newQuery, question);
                     if (StringUtils.isEmpty(result)) {
-                        Log.infof("Empty result for query: %s", query);
+                        Log.infof("Empty result for query: %s", newQuery);
                         continue;
                     }
                     if (i == maxAttempts - 1) {
@@ -102,6 +105,8 @@ public class NeDRexKGTool {
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
                     return answer;
+                } catch (ClientWebApplicationException e ){
+                    Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
                 } catch (Exception e) {
                     Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
                 }
