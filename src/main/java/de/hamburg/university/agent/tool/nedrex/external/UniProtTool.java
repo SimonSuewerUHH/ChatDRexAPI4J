@@ -1,0 +1,82 @@
+package de.hamburg.university.agent.tool.nedrex.external;
+
+import de.hamburg.university.agent.tool.ToolDTO;
+import de.hamburg.university.agent.tool.Tools;
+import de.hamburg.university.api.chat.ChatWebsocketSender;
+import de.hamburg.university.service.uniprotkb.GeneSimpleDTO;
+import de.hamburg.university.service.uniprotkb.UniProtApiClient;
+import de.hamburg.university.service.uniprotkb.UniProtEntryDTO;
+import dev.langchain4j.agent.tool.P;
+import dev.langchain4j.agent.tool.Tool;
+import dev.langchain4j.agent.tool.ToolMemoryId;
+import io.quarkus.logging.Log;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@ApplicationScoped
+public class UniProtTool {
+
+    @Inject
+    @RestClient
+    UniProtApiClient uniProtApiClient;
+
+    @Inject
+    ChatWebsocketSender chatWebsocketSender;
+
+
+    @Tool("Fetch gene names for multiple UniProt accession IDs")
+    public List<String> getUniProtEntries(@P("UniProt ids (Multiple)") List<String> uniProdIds, @ToolMemoryId String sessionId) {
+        return uniProdIds.stream()
+                .flatMap(id -> getUniProtEntry(id, sessionId).stream())
+                .toList();
+    }
+    
+    @Tool("Fetch gene names for a single UniProt accession ID")
+    public List<String> getUniProtEntry(@P("UniProt id (Singular)") String uniProdId, @ToolMemoryId String sessionId) {
+        ToolDTO toolDTO = new ToolDTO(Tools.UNIPROD.name());
+        toolDTO.setInput(uniProdId);
+
+        if (StringUtils.isEmpty(uniProdId)) {
+            toolDTO.addContent("No UniProt ID provided.");
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return List.of();
+        }
+
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+        UniProtEntryDTO response;
+        try {
+            response = uniProtApiClient.getEntry(uniProdId);
+        } catch (Exception e) {
+            Log.error("Error fetching UniProt entry for ID: " + uniProdId, e);
+            toolDTO.addContent("Error fetching data for UniProt ID: " + uniProdId);
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return List.of();
+        }
+        List<String> geneNames = new ArrayList<>();
+
+        if (response.getGenes() != null) {
+            for (GeneSimpleDTO gene : response.getGenes()) {
+                if (gene.hasGeneName()) {
+                    geneNames.add(gene.getGeneName().getValue());
+                } else if (gene.hasPrimaryName()) {
+                    geneNames.add(gene.getPrimary().getValue());
+                } else {
+                    Log.warnf("Unexpected structure for gene info: {}", gene);
+                }
+            }
+        }
+
+        toolDTO.setStop();
+        toolDTO.addContent(String.join(", ", geneNames));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+        return geneNames;
+    }
+
+}

@@ -1,8 +1,6 @@
 package de.hamburg.university.agent.planning;
 
 import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
-import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
-import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ public class PlanState {
     private Long workflowId;
 
     private List<String> research = new ArrayList<>();
-    private String netdrexKgInfo = "";
+    private String neDRexKgInfo = "";
     private String digestResult = "";
     private String enhancedQueryBioInfo = "";
 

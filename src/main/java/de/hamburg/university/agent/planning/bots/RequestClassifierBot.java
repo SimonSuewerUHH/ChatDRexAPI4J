@@ -43,13 +43,13 @@ public interface RequestClassifierBot {
             - `userGoal`: The user's original goal or task.
             - `resultSummary`: A concise summary of the outcome of that step.
             - `enhancedQueryBioInfo`: Any additional biological context or clarifications added to the user's original query.
-            - `netdrexKgInfo`: Relevant information retrieved from the NetDrex knowledge graph.
+            - `nedrexKgInfo`: Relevant information retrieved from the NeDRex knowledge graph.
             - Use this information to compose `relevantDiscussion` as per the rules below.
             {#for h in history}
             - Goal: {h.userGoal}
             - Result: {h.resultSummary}
             - EnhancedInfo: {h.enhancedQueryBioInfo}
-            - KGInfo: {h.netdrexKgInfo}
+            - KGInfo: {h.nedrexKgInfo}
             {/for}
             - Summarize only facts supported by the conversation; do **not** invent details. If something is uncertain, state the uncertainty.
             

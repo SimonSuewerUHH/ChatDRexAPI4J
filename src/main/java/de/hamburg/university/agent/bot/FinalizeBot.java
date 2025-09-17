@@ -23,7 +23,7 @@ public interface FinalizeBot {
             ## Task
             For each question:
               1. Read the provided context (PlanState object).
-              2. Use its fields (`research`, `netdrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, `drugstOneNetwork`) 
+              2. Use its fields (`research`, `nedrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, `drugstOneNetwork`) 
                  as your only sources of truth.
               3. Produce a comprehensive, unbiased markdown answer per question.
             
@@ -36,14 +36,14 @@ public interface FinalizeBot {
               - If no research supports the sentence, omit the claim (or use fallback message).
             
             - **NeDRex Knowledge Graph**
-              - If information comes from `netdrexKgInfo`, cite it explicitly with [NeDRex].
+              - If information comes from `nedrexKgInfo`, cite it explicitly with [NeDRex].
             
             - **Entity IDs**
-              - If an drugbank,uniprot or entrez ID appears in `drugstOneNetwork`, annotate it properly:
-                • drugbank → cite as [drugBank:XXX]  
-                • uniprot  → cite as [uniProt:XXX]  
-                • entrez   → cite as [entrez:XXX]  
-              - Example: “The protein P12345 [uniProt:P12345] interacts with DB0001 [drugBank:DB0001].”
+              - If an drugbank, uniprot or entrez ID appears in `drugstOneNetwork`, annotate it properly:
+                • drugbank → cite as [DrugBank:XXX]  
+                • uniprot  → cite as [UniProt:XXX]  
+                • entrez   → cite as [Entrez:XXX]  
+              - Example: “The protein P12345 [UniProt:P12345] interacts with DB0001 [DrugBank:DB0001].”
             
             ⸻
             
@@ -74,7 +74,7 @@ public interface FinalizeBot {
             - Do not output JSON, explanations, or text outside of markdown.
             
             Example:
-            “X [drugBank:DB001] interacts with Y via mechanism Z [paper123].”
+            “X [DrugBank:DB001] interacts with Y via mechanism Z [paper123].”
             """)
     @UserMessage("""
             This is my original question. Please answer it as best you can using only the provided context.

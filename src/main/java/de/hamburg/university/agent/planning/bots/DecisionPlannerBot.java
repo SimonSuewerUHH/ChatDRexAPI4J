@@ -22,7 +22,7 @@ public interface DecisionPlannerBot {
               use this to avoid repeating tools or steps already taken and to ensure continuity.
             - network: A drugst.one style network object (nodes and edges relevant to biomedical graph analysis).
             - research: A set of papers or literature results.
-            - netdrexKgInfo: Retrieved information from the Netdrex Knowledge Graph.
+            - nedrexKgInfo: Retrieved information from the NeDRex Knowledge Graph.
             - enhancedQueryBioInfo: Augmented or reformulated bio-information queries.
             - digestResult: Results from Digest tools (set or subnetwork enrichment analyses).
             
@@ -30,7 +30,7 @@ public interface DecisionPlannerBot {
             Decide EXACTLY ONE next action as a JSON object matching PlanStep:
             
             {
-              "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" |  "CALL_NETDREX_TOOL" | "CALL_DIGEST_TOOL" |
+              "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" |  "CALL_NEDREX_TOOL" | "CALL_DIGEST_TOOL" |
                          "FINALIZE",
               "reason": "short rationale",
             }
@@ -42,9 +42,9 @@ public interface DecisionPlannerBot {
             - **FETCH_RESEARCH** → When the user asks for background information or the current answer could use more information.
             - **FETCH_KG** → when knowledge-graph context is needed. 
             This should be preferred for a question if the question is aimed at obtaining information that could be included in a knowledge graph.
-            This is NOT the case if the user ask for DIAMOND, trustrank, Closess or enrichment analysis.
+            This is NOT the case if the user ask for DIAMOmD, TrustRank, Closess Centrality, or enrichment analysis.
             - **FETCH_BIO_INFO** → when biological enrichment of the query is needed.
-            - **CALL_NETDREX_TOOL** → when a user asks for diamond, trustrank, closeness or just drug repurposing. 
+            - **CALL_NEDREX_TOOL** → when a user asks for DIAMOnD, TrustRank, closeness or just drug repurposing. 
             If the user ask for running these tools like Only run DIAMOND on my seeds, you should call this action directly if the needed context is already available.
             Here you dont need to fetch more context.
             - **CALL_DIGEST_TOOL** → when enrichment analysis is needed.
@@ -74,7 +74,7 @@ public interface DecisionPlannerBot {
             4. Fetch KG context:
             {
               "action": "FETCH_KG",
-              "reason": "Need Netdrex KG context before algorithm run"
+              "reason": "Need NeDRex KG context before algorithm run"
             }
             
             5. Fetch biological info:
@@ -83,10 +83,10 @@ public interface DecisionPlannerBot {
               "reason": "Query ambiguous, need enhanced bio info"
             }
             
-            6. Call Netdrex tool:
+            6. Call NeDRex tool:
             {
-              "action": "CALL_NETDREX_TOOL",
-              "reason": "Netdrex algorithm requested with KG context available"
+              "action": "CALL_NEDREX_TOOL",
+              "reason": "NeDRex algorithm requested with KG context available"
             }
             
             7. Call Digest tool:
@@ -134,7 +134,7 @@ public interface DecisionPlannerBot {
               - `reason`: short, clear explanation
             - Never output extra text or properties.
             - If every required action is already in history, immediately return a `FINALIZE` step.
-            - If the user asked for Netdrex tool (diamond, trustrank, closeness) and you have seeds, call it DIRECTLY WITHOUT using kg information.
+            - If the user asked for NeDRex tool (diamond, trustrank, closeness) and you have seeds, call it DIRECTLY WITHOUT using kg information.
             - If the user asked for enrichment analysis and you have seeds, call it DIRECTLY WITHOUT using kg information.
             
             Please decide the next step now.

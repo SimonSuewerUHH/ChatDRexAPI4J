@@ -19,7 +19,7 @@ public interface ParagraphGroundingScorer {
             relative to the provided PlanState and formatting rules:
             
             Grounding rules (use PlanState fields ONLY as sources of truth):
-            - All factual claims must be supported by content from PlanState.research, netdrexKgInfo,
+            - All factual claims must be supported by content from PlanState.research, nedrexKgInfo,
               digestResult, enhancedQueryBioInfo, or drugstOneNetwork.
             - If the paragraph introduces facts/entities not present in PlanState, treat as hallucination.
             

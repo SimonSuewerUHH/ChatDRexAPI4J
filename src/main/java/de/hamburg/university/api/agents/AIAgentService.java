@@ -1,6 +1,6 @@
 package de.hamburg.university.api.agents;
 
-import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
+import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -19,22 +19,22 @@ public interface AIAgentService {
     @POST
     @Path("netdex")
     @Operation(
-            summary = "Query the Netdrex AI agent",
-            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+            summary = "Query the NeDRex AI agent",
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
     )
     @APIResponse(
             responseCode = "200",
             description = "The AI agent's response",
             content = @Content(mediaType = MediaType.TEXT_PLAIN)
     )
-    public String askNetdrex(
+    public String askNeDRex(
             String question
     );
 
     @GET
     @Path("nedrex")
     @Operation(
-            summary = "Get example questions for the Netdrex AI agent",
+            summary = "Get example questions for the NeDRex AI agent",
             description = "Returns a list of example questions that can be asked to the AI agent about drug, protein and gene relationships"
     )
     @APIResponse(
@@ -43,14 +43,14 @@ public interface AIAgentService {
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getNetdrexExamples();
+    public List<String> getNeDRexExamples();
 
 
     @POST
     @Path("research")
     @Operation(
             summary = "Query the Research AI agent",
-            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
     )
     @APIResponse(
             responseCode = "200",
@@ -65,7 +65,7 @@ public interface AIAgentService {
     @Path("kg/split")
     @Operation(
             summary = "Query the Research AI agent",
-            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
     )
     @RequestBody(
             required = true,
@@ -97,7 +97,7 @@ public interface AIAgentService {
             )
     )
     @Produces(MediaType.APPLICATION_JSON)
-    public NetdrexKGGraph splitKGQuestions(
+    public NeDRexKGGraph splitKGQuestions(
             String question
     );
 
@@ -105,7 +105,7 @@ public interface AIAgentService {
     @Path("kg/cypher")
     @Operation(
             summary = "Query the Research AI agent",
-            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
     )
     @RequestBody(
             required = true,
@@ -144,7 +144,7 @@ public interface AIAgentService {
     @Path("kg/answer")
     @Operation(
             summary = "Query the Research AI agent",
-            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using Netdrex data"
+            description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
     )
     @RequestBody(
             required = true,
