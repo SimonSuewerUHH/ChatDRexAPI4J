@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,6 +62,9 @@ public class NetdrexKgQueryServiceImpl {
                     .filter(f -> f.getScore() >= minScore)
                     .map(f -> (NetdrexSearchEmbeddingsNodeDTO) f)
                     .toList();
+        } catch (ClientWebApplicationException e) {
+            Log.errorf("Failed to query embeddings for node %s (%s)", node.getNodeValue());
+            return new ArrayList<>();
         } catch (Exception e) {
             Log.errorf(e, "Failed to query embeddings for node %s", node.getNodeValue());
             return new ArrayList<>();
@@ -88,6 +92,9 @@ public class NetdrexKgQueryServiceImpl {
                     new TypeReference<List<List<NetdrexSearchEmbeddingsNodeResponseDTO>>>() {
                     }
             );
+        } catch (ClientWebApplicationException e) {
+            Log.errorf("Failed to query embeddings: %s (%s)", dto.getQuery(), e.getMessage());
+            throw new ClientWebApplicationException("Failed to queryEmbeddings", e);
         } catch (Exception e) {
             throw new IllegalStateException("Failed to parse embeddings response", e);
         }
