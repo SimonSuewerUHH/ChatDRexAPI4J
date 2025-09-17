@@ -181,7 +181,7 @@ container-scanning:
   needs:
     - check:build:docker
   dependencies:
-    - check:build:docker:local
+    - check:build:docker
   variables:
     CS_IMAGE: "archive://image.tar"
 
