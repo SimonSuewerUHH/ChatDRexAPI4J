@@ -58,18 +58,6 @@ check:build:maven:
     - ./mvnw clean install -DskipTests
 
 
-check:build:maven:prod:
-  extends: .check:build:maven
-  script:
-    - ./mvnw clean install -DskipTests -Dquarkus.profile=prod
-  only:
-    - main
-
-check:build:maven:staging:
-  extends: .check:build:maven
-  script:
-    - ./mvnw clean install -DskipTests -Dquarkus.profile=prod
-
 .check:build:docker:
   image: docker:24.0.2
   stage: check
