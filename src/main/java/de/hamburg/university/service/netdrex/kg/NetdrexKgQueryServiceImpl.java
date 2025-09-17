@@ -63,7 +63,7 @@ public class NetdrexKgQueryServiceImpl {
                     .map(f -> (NetdrexSearchEmbeddingsNodeDTO) f)
                     .toList();
         } catch (ClientWebApplicationException e) {
-            Log.errorf("Failed to query embeddings for node %s (%s)", node.getNodeValue());
+            Log.errorf("Failed to query embeddings for node %s (%s)", node.getNodeValue(), e.getMessage());
             return new ArrayList<>();
         } catch (Exception e) {
             Log.errorf(e, "Failed to query embeddings for node %s", node.getNodeValue());
