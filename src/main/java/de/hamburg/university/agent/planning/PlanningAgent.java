@@ -63,7 +63,7 @@ public class PlanningAgent {
         state.setUserGoal(content.getMessage());
 
         List<PlanStep> history = new ArrayList<>();
-        emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planing ..."));
+        emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planning ..."));
         String connectionId = content.getConnectionId();
         resetMemory(content, state, 0);
 

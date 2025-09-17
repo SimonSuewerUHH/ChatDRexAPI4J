@@ -34,7 +34,7 @@ public class NetdrexWrapperServiceImpl implements NetdrexWrapperService {
     public Uni<DiamondResultsDTO> runDiamond(SeedPayloadDTO payload) {
         return diamondTool.run(payload)
                 .runSubscriptionOn(Infrastructure.getDefaultWorkerPool())
-                .onFailure().invoke(t -> Log.error("Diamond run failed", t));
+                .onFailure().invoke(t -> Log.error("DIAMOnD run failed", t));
 
     }
 
