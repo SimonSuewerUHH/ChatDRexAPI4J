@@ -3,8 +3,11 @@ package de.hamburg.university.service.netdrex;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.Vertx;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public abstract class BaseNedrexTool<A extends NetdrexJobApi<P, S>, P, S extends NetdrexStatusResponseDTO<T>, T, R> {
@@ -37,8 +40,12 @@ public abstract class BaseNedrexTool<A extends NetdrexJobApi<P, S>, P, S extends
                     }
                 });
     }
+    public Uni<R> fallback(String uid) {
+        return Uni.createFrom().failure(new RuntimeException("Operation timed out after 60 seconds (uid=" + uid + ")."));
+    }
 
-    //@Timeout(value = 30, unit = ChronoUnit.SECONDS)
+    @Timeout(value = 60, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "fallback")
     public Uni<R> retrieveResults(String uid) {
         Objects.requireNonNull(uid, "uid");
         return Uni.createFrom().emitter(emitter -> {

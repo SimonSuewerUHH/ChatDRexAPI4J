@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.guardrails;
 
+import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.guardrails.bot.PromptInjectionDetectionBot;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.guardrail.InputGuardrail;
@@ -15,6 +16,9 @@ public class PromptInjectionInputGuardrail implements InputGuardrail {
 
     @Inject
     PromptInjectionDetectionBot service;
+
+    @Inject
+    ChatdrexConfig config;
 
     private static final List<Pattern> BLOCKLIST = List.of(
             // Prompt injection patterns
@@ -32,6 +36,10 @@ public class PromptInjectionInputGuardrail implements InputGuardrail {
 
     @Override
     public InputGuardrailResult validate(UserMessage msg) {
+        if (!config.guardtrails().promptInjection().enabled()) {
+            return success();
+        }
+
         String text = msg != null ? msg.singleText() : null;
         if (text == null || text.isBlank()) {
             return failure("Empty message");
@@ -41,8 +49,12 @@ public class PromptInjectionInputGuardrail implements InputGuardrail {
                 return fatal("Prompt injection detected");
             }
         }
+        if (!config.guardtrails().promptInjection().agent().enabled()) {
+            return success();
+        }
+
         double result = service.isInjection(text);
-        if (result > 0.7) {
+        if (result > config.guardtrails().promptInjection().score().threshold()) {
             return failure("Prompt injection detected");
         }
         return success();

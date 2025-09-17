@@ -1,67 +1,56 @@
 package de.hamburg.university.agent.guardrails;
 
+import de.hamburg.university.ChatdrexConfig;
+import de.hamburg.university.agent.bot.guardrails.ParagraphGroundingScorer;
 import de.hamburg.university.agent.planning.PlanState;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.guardrail.OutputGuardrail;
 import dev.langchain4j.guardrail.OutputGuardrailRequest;
 import dev.langchain4j.guardrail.OutputGuardrailResult;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.regex.Pattern;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class GroundingOutputGuardrail implements OutputGuardrail {
 
-    private static final Pattern BRACKET_CIT = Pattern.compile("\\[[^\\]]+\\]");
+    @Inject
+    ParagraphGroundingScorer scorer;
+
+    @Inject
+    ChatdrexConfig config;
 
     @Override
-    public OutputGuardrailResult validate(OutputGuardrailRequest req) {
-        AiMessage ai = req.responseFromLLM().aiMessage();
-        String out = ai != null ? ai.text() : "";
+    public OutputGuardrailResult validate(AiMessage responseFromLLM) {
+        return OutputGuardrailResult.success();
+    }
 
-        Object stateObj = req.requestParams().variables().get("state");
-        boolean hasResearch = false;
-        boolean expectNeDRex = false;
-        String allowedIds = null;
-
-        if (stateObj instanceof PlanState ps) {
-            hasResearch = ps.getResearch() != null && !ps.getResearch().isEmpty();
-            expectNeDRex = ps.getNetdrexKgInfo() != null && !ps.getNetdrexKgInfo().isBlank();
-            allowedIds = ps.getNetdrexKgInfo();
+    @Override
+    public OutputGuardrailResult validate(OutputGuardrailRequest request) {
+        if (!config.guardtrails().grounding().enabled()) {
+            return OutputGuardrailResult.success();
+        }
+        String paragraph = request.responseFromLLM().aiMessage().text();
+        if (paragraph == null || paragraph.isBlank()) {
+            return OutputGuardrailResult.success();
         }
 
-        if (hasResearch) {
-            String[] sentences = out.split("(?<=[.!?])\\s+");
-            for (String s : sentences) {
-                if (!s.isBlank() && !BRACKET_CIT.matcher(s).find()) {
-                    return reprompt(
-                            "Each sentence must end with at least one [PaperID] from the provided 'research' list. Add missing citations and try again.",
-                            "Please add explicit [PaperID] citations to every sentence, and [NeDRex] when KG info is used."
-                    );
-                }
-            }
+        PlanState stateObj = (PlanState) request.requestParams().variables().get("state");
+
+        double score = scorer.score(paragraph, stateObj);
+
+        if (score < config.guardtrails().grounding().score().threshold()) {
+            return retry(
+                    "Paragraph flagged as likely ungrounded/invalid (score=" + format(score) + "). " +
+                            "Re-write this paragraph to strictly follow the contract: " +
+                            "ground every claim in the given PlanState evidence and fix structure/citations."
+            );
         }
 
-        if (expectNeDRex) {
-            if (!out.contains("[NeDRex]")) {
-                return reprompt(
-                        "NeDRex knowledge was used according to context, but [NeDRex] is missing.",
-                        "Add [NeDRex] for facts derived from the KG."
-                );
-            }
+        return OutputGuardrailResult.success();
+    }
 
-            Pattern idPat = Pattern.compile("\\[(drugBank|uniProt|entrez):([\\w:.-]+)\\]");
-            var m = idPat.matcher(out);
-            while (m.find()) {
-                String id = m.group(2);
-                if (!allowedIds.contains(id)) {
-                    return reprompt(
-                            "Output references an entity id not present in context: " + id,
-                            "Only cite IDs present in 'drugstOneNetwork'. Remove or replace invalid IDs."
-                    );
-                }
-            }
-        }
-        return success();
+
+    private static String format(double d) {
+        return String.format(java.util.Locale.ROOT, "%.2f", d);
     }
 }

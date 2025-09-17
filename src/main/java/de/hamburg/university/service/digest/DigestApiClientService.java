@@ -4,9 +4,12 @@ import io.smallrye.mutiny.Uni;
 import io.vertx.core.Vertx;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +59,8 @@ public class DigestApiClientService {
                 });
     }
 
+    @Timeout(value = 60, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "fallback")
     public Uni<DigestToolResultDTO> retrieveResults(String uid) {
         return Uni.createFrom().emitter(emitter -> {
             LOG.infof("Starting result polling for taskId=%s", uid);
@@ -163,5 +168,9 @@ public class DigestApiClientService {
         }
 
         return new DigestToolPlotDTO(entries);
+    }
+
+    public Uni<DigestToolResultDTO> fallback(String uid) {
+        return Uni.createFrom().failure(new RuntimeException("Operation timed out after 60 seconds (uid=" + uid + ")."));
     }
 }

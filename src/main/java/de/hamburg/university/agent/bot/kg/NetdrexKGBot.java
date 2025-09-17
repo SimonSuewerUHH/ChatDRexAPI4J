@@ -208,6 +208,15 @@ public interface NetdrexKGBot {
             - If mapping “side effect” to “phenotype” is needed, you may use (:SideEffect)-[:SideEffectSameAsPhenotype]->(:Phenotype).
             - If drugs “for”/“to treat” a disorder are asked, interpret as DrugHasIndication (not Contraindication).
             - If “targets of drug X” or “drugs targeting protein Y”, use DrugHasTarget.
+            - NEVER use Cypher parameters like $name or $disorderName. Always inline values directly as string literals inside the query (e.g., toLower(dis.displayName) = toLower('Breast cancer')).
+            
+            ### STRICT RULE for Gene–Disorder edges
+            Whenever you use the relationship :GeneAssociatedWithDisorder **you MUST**:
+            1) Name the relationship variable (e.g., `[r:GeneAssociatedWithDisorder]`). \s
+            2) Add the filter immediately (using the provided numeric value):
+               `WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > {minGeneDisorderScore}`
+               - If the user provides a minGeneDisorderScore, use that value; otherwise use `{minGeneDisorderScore}` injected by the system.
+               - If multiple such relationships appear, name them `r1`, `r2`, … and apply the same filter to **each** (e.g., `WHERE (r1.scoreOpenTargets IS NULL OR r1.scoreOpenTargets > {minGeneDisorderScore}) AND (r2.scoreOpenTargets IS NULL OR r2.scoreOpenTargets > {minGeneDisorderScore})`).
             
             ## Parameterization
             - Use parameters only for free-text matches from the question (e.g., $q, $name1, $name2).
@@ -259,7 +268,7 @@ public interface NetdrexKGBot {
             - Output ONLY the Cypher string.
             - You dont need to order and limit
             """)
-    String generateCypherQuery(String question, String relevantNodes, String oldQuery);
+    String generateCypherQuery(String question, String relevantNodes, String oldQuery, double minGeneDisorderScore);
 
     @SystemMessage("""
             You are a senior biomedical knowledge-graph analyst. Your task is to produce a precise, self-contained natural-language answer to the user’s biomedical question using only the contents of a Neo4j query result. You must not invent facts that are not supported by the provided Neo4j answer.

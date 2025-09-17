@@ -2,6 +2,7 @@ package de.hamburg.university.service.netdrex.kg;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
 import de.hamburg.university.agent.bot.kg.NetdrexKGNode;
 import de.hamburg.university.service.netdrex.NetdrexApiClient;
@@ -23,8 +24,11 @@ public class NetdrexKgQueryServiceImpl {
     @RestClient
     NetdrexApiClient netdrexApiClient;
 
+    @Inject
+    ChatdrexConfig config;
+
     public List<NetdrexKGNodeEnhanced> enhanceGraph(NetdrexKGGraph graph) {
-        return enhanceGraph(graph, 0.7);
+        return enhanceGraph(graph, config.tools().kgQuery().minNodeScore());
 
     }
 
@@ -48,7 +52,7 @@ public class NetdrexKgQueryServiceImpl {
         String query = node.getNodeValue() + " (" + node.getSubQuestion() + ")";
         NetdrexSearchEmbeddingRequestDTO requestDTO = new NetdrexSearchEmbeddingRequestDTO();
         requestDTO.setQuery(query);
-        requestDTO.setTop(5);
+        requestDTO.setTop(config.tools().kgQuery().queryTopNode());
         requestDTO.setCollection(collection);
         try {
             List<List<NetdrexSearchEmbeddingsNodeResponseDTO>> result = queryEmbeddings(requestDTO);
@@ -65,8 +69,8 @@ public class NetdrexKgQueryServiceImpl {
 
     public String fireNeo4jQuery(String cypher) {
         String result = netdrexApiClient.runQuery(cypher);
-        if (StringUtils.isNotEmpty(result) && result.length() > 3000) {
-            return result.substring(0, 3000) + "... (truncated)";
+        if (StringUtils.isNotEmpty(result) && result.length() > config.tools().kgQuery().maxResultLength()) {
+            return result.substring(0, config.tools().kgQuery().maxResultLength()) + "... (truncated)";
         }
         return result;
     }
@@ -111,7 +115,7 @@ public class NetdrexKgQueryServiceImpl {
     }
 
     public List<NetdrexKGNodeEnhanced> enhanceFallbackNodes(List<NetdrexKGNodeEnhanced> enhancedNodes) {
-        return enhanceFallbackNodes(enhancedNodes, 0.7);
+        return enhanceFallbackNodes(enhancedNodes, config.tools().kgQuery().minNodeScore());
 
     }
 

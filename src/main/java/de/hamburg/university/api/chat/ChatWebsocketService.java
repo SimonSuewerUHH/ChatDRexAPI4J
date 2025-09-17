@@ -29,24 +29,36 @@ public class ChatWebsocketService implements Serializable {
 
     @OnOpen
     public void onOpen() {
-        String clientId = getClientId();
-        Log.info("Connection opened: " + clientId);
+        try {
+            String clientId = getClientId();
+            Log.info("Connection opened: " + clientId);
+        } catch (Exception e) {
+            Log.error("Error in onOpen: " + e.getMessage());
+        }
     }
 
     @OnClose
     public void onClose() {
-        String clientId = getClientId();
-        Log.info("Connection closed: " + clientId);
-        sender.removeClient(connection.id());
-        stateHolder.removeClient(connection.id());
+        try {
+            String clientId = getClientId();
+            Log.info("Connection closed: " + clientId);
+            sender.removeClient(connection.id());
+            stateHolder.removeClient(connection.id());
+        } catch (Exception e) {
+            Log.error("Error in onClose: " + e.getMessage());
+        }
     }
 
     @OnError
     public void onError(Throwable throwable) {
-        String clientId = getClientId();
-        Log.error("Error in WebsocketClient: " + throwable.getMessage());
-        sender.removeClient(clientId);
-        stateHolder.removeClient(clientId);
+        try {
+            String clientId = getClientId();
+            Log.error("Error in WebsocketClient: " + throwable.getMessage());
+            sender.removeClient(clientId);
+            stateHolder.removeClient(clientId);
+        } catch (Exception e) {
+            Log.error("Error in onError: " + e.getMessage());
+        }
     }
 
     @OnTextMessage

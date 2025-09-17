@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.tool.netdrex.kg;
 
+import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NetdrexKGBot;
 import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
 import de.hamburg.university.agent.bot.kg.NetdrexKGNode;
@@ -33,6 +34,9 @@ public class NetdrexKGTool {
     @Inject
     NetdrexKgQueryServiceImpl netdrexKgQueryService;
 
+    @Inject
+    ChatdrexConfig config;
+
     public NetdrexKGGraph decomposeToNodes(String question) {
         return decomposeToNodes(question, "");
     }
@@ -45,13 +49,15 @@ public class NetdrexKGTool {
         NetdrexKGGraph questionGraph = decomposeToNodes(question);
         List<NetdrexKGNodeEnhanced> enhancedNodes = netdrexKgQueryService.enhanceGraph(questionGraph);
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
-        String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, "");
+        double minScore = config.tools().kgQuery().minGeneDisorderScore();
+        String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, "", minScore);
         return query;
     }
 
     public String answer(String question, String context, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         ToolDTO toolDTO = new ToolDTO(Tools.NETDREX_KG.name());
         toolDTO.setInput(question);
+        double minScore = config.tools().kgQuery().minGeneDisorderScore();
 
         try {
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -67,10 +73,10 @@ public class NetdrexKGTool {
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
             String oldQuery = "";
-            final int maxAttempts = 3;
+            final int maxAttempts = config.tools().kgQuery().retries();
             for (int i = 0; i < maxAttempts; i++) {
                 try {
-                    String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery);
+                    String query = netdrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                     oldQuery += "\n " + i + ". " + query;
                     toolDTO.addContent("<h3>Neo4j Query:</h3>");
                     toolDTO.addContent(query);
