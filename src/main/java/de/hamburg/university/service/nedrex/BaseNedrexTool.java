@@ -44,7 +44,7 @@ public abstract class BaseNedrexTool<A extends NeDRexJobApi<P, S>, P, S extends 
         return Uni.createFrom().failure(new RuntimeException("Operation timed out after 60 seconds (uid=" + uid + ")."));
     }
 
-    @Timeout(value = 60, unit = ChronoUnit.SECONDS)
+    @Timeout(value = 180, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "fallback")
     public Uni<R> retrieveResults(String uid) {
         Objects.requireNonNull(uid, "uid");

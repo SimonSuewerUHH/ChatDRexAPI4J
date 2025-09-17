@@ -1,8 +1,7 @@
 # chatdrex
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
-
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+ChatDRex is a Quarkus-based backend platform that provides AI-powered workflows for drug repurposing, network-based analysis, and knowledge graph queries.
+This project uses Quarkus, please visit its website: <https://quarkus.io/>.
 
 ## Running the application in dev mode
 
@@ -11,90 +10,69 @@ You can run your application in dev mode that enables live coding using:
 ```shell script
 ./mvnw quarkus:dev
 ```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
+Or Run if you have Docker installed:
 ```shell script
-./mvnw package
+docker compose up
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Configuration (application.properties)
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+All main configuration is done in src/main/resources/application.properties.
 
-If you want to build an _über-jar_, execute the following command:
+### LLM Configuration
+ Please change the following properties to match your LLM provider and API key.
+```
+quarkus.langchain4j.openai.base-url=https://chat.cosy.bio/api
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+quarkus.langchain4j.openai.chat-model.model-name=gpt-oss:latest
+quarkus.langchain4j.openai.api-key=<KEY>
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+### Guardrails (Prompt Injection & Grounding)
 
-## Creating a native executable
+```
+chatdrex.guardtrails.prompt-injection.score.threshold=0.7
+chatdrex.guardtrails.prompt-injection.agent.enabled=true
+chatdrex.guardtrails.prompt-injection.enabled=true
 
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+chatdrex.guardtrails.grounding.score.threshold=0.7
+chatdrex.guardtrails.grounding.agent.enabled=true
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
+##  API Documentation
 
-You can then execute your native executable with: `./target/chatdrex-1.0.0-SNAPSHOT-runner`
+ChatDRex provides two main interfaces for exploring the API:
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+### 1. **Swagger UI**
+- Available at: [http://localhost:8080/q/swagger-ui](http://localhost:8080/q/swagger-ui)
+- Explore and test all REST endpoints directly in the browser.
 
-## Related Guides
+### 2. **Model Context Protocol (MCP)**
+- MCP endpoints provide structured API access for **AI agents**.
+- Endpoint base path:
+  ```
+  http://localhost:8080/mcp/
+  ```
+- Example:
+    - `/mcp/tools` → list available AI tools (Cypher, DIAMOnD, DIGEST, TrustRank)
+    - `/mcp/chat` → AI-driven chat interface
 
-- Messaging ([guide](https://quarkus.io/guides/messaging)): Produce and consume messages and implement event driven and data streaming applications
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Client ([guide](https://quarkus.io/guides/rest-client)): Call REST services
-- YAML Configuration ([guide](https://quarkus.io/guides/config-yaml)): Use YAML to configure your Quarkus application
-- Logging JSON ([guide](https://quarkus.io/guides/logging#json-logging)): Add JSON formatter for console logging
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-- LangChain4j Core ([guide](https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html)): Provides the basic integration with LangChain4j
-- WebSockets Next ([guide](https://quarkus.io/guides/websockets-next-reference)): Implementation of the WebSocket API with enhanced efficiency and usability
-- LangChain4j OpenAI ([guide](https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html)): Provides the basic integration with LangChain4j
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- LangChain4j pgvector embedding store ([guide](https://docs.quarkiverse.io/quarkus-langchain4j/dev/index.html)): Provides the pgvector Embedding store for Quarkus LangChain4j
+---
 
-## Provided Code
+## 🧩 Features
 
-### YAML Config
+- **Knowledge Graph Queries** (Neo4j, schema-constrained Cypher)
+- **Disease Module Detection** (DIAMOnD algorithm)
+- **Functional Enrichment** (DIGEST)
+- **Trust-Based Ranking** (TrustRank for drugs & proteins)
+- **LLM Guardrails** (prompt-injection detection, grounding validation)
+- **Auth Integration** (Keycloak for secure endpoints)
+- **API-first** design with Swagger + MCP
 
-Configure your application with YAML
+---
 
-[Related guide section...](https://quarkus.io/guides/config-reference#configuration-examples)
+## 🛠️ Tech Stack
 
-The Quarkus application configuration is located in `src/main/resources/application.yml`.
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
-
-
-### REST Client
-
-Invoke different services through REST with JSON
-
-[Related guide section...](https://quarkus.io/guides/rest-client)
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+- [Quarkus](https://quarkus.io/) – Supersonic Subatomic Java
+- LangChain4j – LLM integration and guardrails
