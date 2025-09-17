@@ -17,7 +17,7 @@ import java.util.List;
 public interface AIAgentService {
 
     @POST
-    @Path("netdex")
+    @Path("nedrex")
     @Operation(
             summary = "Query the NeDRex AI agent",
             description = "Sends a question to the AI agent which can analyze drug, protein and gene relationships using NeDRex data"
