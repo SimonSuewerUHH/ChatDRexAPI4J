@@ -1,15 +1,15 @@
 package de.hamburg.university.agent.planning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hamburg.university.agent.bot.DigestBot;
+import de.hamburg.university.agent.bot.DIGESTBot;
 import de.hamburg.university.agent.bot.FinalizeBot;
-import de.hamburg.university.agent.bot.NetdrexBot;
+import de.hamburg.university.agent.bot.NeDRexBot;
 import de.hamburg.university.agent.bot.ResearchBot;
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
-import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
-import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
+import de.hamburg.university.agent.tool.nedrex.NeDRexTool;
+import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import dev.langchain4j.data.message.ChatMessage;
@@ -44,16 +44,16 @@ public class PlanningAgent {
     FinalizeBot finalizeBot;
 
     @Inject
-    NetdrexKGTool netdrexKGTool;
+    NeDRexKGTool nedrexKGTool;
 
     @Inject
-    NetdrexBot netdrexBot;
+    NeDRexBot neDRexBot;
 
     @Inject
-    DigestBot digestBot;
+    DIGESTBot digestBot;
 
     @Inject
-    NetdrexTool netdrexTool;
+    NeDRexTool neDRexTool;
 
     private final ObjectMapper om = new ObjectMapper();
 
@@ -89,17 +89,17 @@ public class PlanningAgent {
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
-                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
+                    state.setNeDRexKgInfo(nedrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
                     setEnhancedQueryBioInfo(state, decision, connectionId);
                 }
-                case CALL_NETDREX_TOOL -> {
-                    Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getReason());
+                case CALL_NEDREX_TOOL -> {
+                    Log.debugf("Action CALL_NEDREX_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
                         setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
                     }
-                    state = netdrexTool.answer(state, content, emitter);
+                    state = neDRexTool.answer(state, content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());
@@ -131,12 +131,12 @@ public class PlanningAgent {
 
     private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
+        state.setEnhancedQueryBioInfo(neDRexBot.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
     }
 
     private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answerEntrezId(connectionId, state.getUserGoal(), state.getPreviousContext()));
+        state.setEnhancedQueryBioInfo(neDRexBot.answerEntrezId(connectionId, state.getUserGoal(), state.getPreviousContext()));
     }
 
 

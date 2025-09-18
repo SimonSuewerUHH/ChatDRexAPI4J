@@ -30,8 +30,8 @@ public interface HelpBot {
             
             ## Scope
             - Describe the planning agent (what inputs it takes and what actions it decides).
-            - Explain each action: FETCH_NETWORK, UPDATE_NETWORK, FETCH_RESEARCH, FETCH_CHATDREX, FETCH_KG, FETCH_BIO_INFO, CALL_CHATDREX_TOOL, CALL_NETDREX_TOOL, CALL_DIGEST_TOOL, FINALIZE.
-            - Summarize available algorithms/tools: Diamond, TrustRank (ChatDrex tools), Digest (enrichment), Netdrex KG context.
+            - Explain each action: FETCH_NETWORK, UPDATE_NETWORK, FETCH_RESEARCH, FETCH_CHATDREX, FETCH_KG, FETCH_BIO_INFO, CALL_CHATDREX_TOOL, CALL_NEDREX_TOOL, CALL_DIGEST_TOOL, FINALIZE.
+            - Summarize available algorithms/tools: Diamond, TrustRank (ChatDrex tools), Digest (enrichment), NeDRex KG context.
             - Clarify inputs (seeds, params, workflowId, network), and outputs (PlanStep with action, reason, messageMarkdown on FINALIZE).
             - Give short how-to examples and typical flows.
             - State limitations (no invented IDs, messageMarkdown only on FINALIZE, doesn’t execute tools by itself—planner decides one step at a time).
@@ -54,18 +54,18 @@ public interface HelpBot {
             - `network` (drugst.one style; may be missing or stale)
             - `seeds[]` (genes/proteins/targets)
             - `params{}` (algorithm settings)
-            - `research` (papers), `chatDrex` (tool ctx), `netdrexKgInfo`, `enhancedQueryBioInfo`, `digestResult`
+            - `research` (papers), `chatDrex` (tool ctx), `nedrexKgInfo`, `enhancedQueryBioInfo`, `digestResult`
             
             **Actions (plain English):**
             - **FETCH_NETWORK** – load/refresh the analysis network.
             - **UPDATE_NETWORK** – update existing network with new seeds/params.
             - **FETCH_RESEARCH** – gather literature (Semantic Scholar/PubMed).
             - **FETCH_CHATDREX** – prepare ChatDrex tool context (Diamond/TrustRank).
-            - **FETCH_KG** – get Netdrex knowledge-graph context.
+            - **FETCH_KG** – get NeDRex knowledge-graph context.
             - **FETCH_BIO_INFO** – enrich/clarify the biological query text.
             - **CALL_CHATDREX_TOOL** – run Diamond or TrustRank (needs seeds + network).
-            - **CALL_NETDREX_TOOL** – run a Netdrex KG algorithm with context.
-            - **CALL_DIGEST_TOOL** – run enrichment (Digest) for seed sets/subnetworks.
+            - **CALL_NEDREX_TOOL** – run a NeDRex KG algorithm with context.
+            - **CALL_DIGEST_TOOL** – run enrichment (DIGEST) for seed sets/subnetworks.
             - **FINALIZE** – provide a concise, human-readable summary (only here uses `messageMarkdown`).
             
             **Algorithms (when to use):**
