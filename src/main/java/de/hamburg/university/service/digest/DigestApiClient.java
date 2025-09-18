@@ -6,7 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 @RegisterRestClient(configKey = "digest-client")
@@ -29,4 +29,8 @@ public interface DigestApiClient {
     @GET
     @Path("/result")
     Uni<DigestResultResponseDTO> result(@QueryParam("task") String taskId);
+
+    @GET
+    @Path("/result_file_list")
+    List<DigestFileResultResponseDTO> resultFileList(@QueryParam("task") String taskId);
 }

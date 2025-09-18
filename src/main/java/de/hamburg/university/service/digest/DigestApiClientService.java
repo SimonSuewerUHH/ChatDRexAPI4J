@@ -1,9 +1,12 @@
 package de.hamburg.university.service.digest;
 
+import de.hamburg.university.agent.tool.ToolFileResponseDTO;
+import de.hamburg.university.agent.tool.ToolFileResponseType;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.Vertx;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -22,6 +25,9 @@ public class DigestApiClientService {
     @Inject
     @RestClient
     DigestApiClient digestApiClient;
+
+    @ConfigProperty(name = "quarkus.rest-client.digest-client.url")
+    String digestClientUrl;
 
     @Inject
     protected Vertx vertx;
@@ -91,7 +97,7 @@ public class DigestApiClientService {
                                                 vertx.<DigestToolResultDTO>executeBlocking(promise -> {
                                                     try {
                                                         DigestToolResultDTO formatted =
-                                                                formatterService.formatDigestOutputStructured(r.getResult()); // blocking OK here
+                                                                formatterService.formatDigestOutputStructured(r.getResult(), uid); // blocking OK here
                                                         promise.complete(formatted);
                                                     } catch (Throwable t) {
                                                         promise.fail(t);
@@ -172,5 +178,24 @@ public class DigestApiClientService {
 
     public Uni<DigestToolResultDTO> fallback(String uid) {
         return Uni.createFrom().failure(new RuntimeException("Operation timed out after 60 seconds (uid=" + uid + ")."));
+    }
+
+    public List<ToolFileResponseDTO> getFileList(String uid) {
+        return digestApiClient.resultFileList(uid).stream().map(
+                r -> {
+                    String path = digestClientUrl + "/result_file?name=" + r.getName();
+                    String name = r.getName()
+                            .replaceAll(uid, "")
+                            .replaceAll("_", "")
+                            .split("\\.")[0];
+                    String typeString = r.getType();
+
+                    ToolFileResponseType type = switch (typeString) {
+                        case "png" -> ToolFileResponseType.PNG;
+                        case "csv" -> ToolFileResponseType.CSV;
+                        default -> ToolFileResponseType.DOWNLOAD;
+                    };
+                    return new ToolFileResponseDTO(path, name, type);
+                }).toList();
     }
 }

@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.tool.digest;
 
 import de.hamburg.university.agent.tool.ToolDTO;
+import de.hamburg.university.agent.tool.ToolStructuredContentType;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.digest.DigestApiClientService;
@@ -35,7 +36,8 @@ public class DigestTools {
         //        TODO adjust message for updated definition of DIGEST task
         toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Set.");
         toolDTO.setStop();
-        toolDTO.addStructuredContent(digestService.createPlot(e));
+        toolDTO.addStructuredContent(ToolStructuredContentType.DIGEST, digestService.createPlot(e));
+        toolDTO.addStructuredListFileContent(ToolStructuredContentType.FILE, digestService.getFileList(e.getTask()));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
         return e;
     }
@@ -54,7 +56,8 @@ public class DigestTools {
 //        TODO adjust message for updated definition of DIGEST task
         toolDTO.addContent("Received " + e.getRows().size() + " enrichment results from DIGEST-Subnetwork.");
         toolDTO.setStop();
-        toolDTO.addStructuredContent(digestService.createPlot(e));
+        toolDTO.addStructuredContent(ToolStructuredContentType.DIGEST, digestService.createPlot(e));
+        toolDTO.addStructuredListFileContent(ToolStructuredContentType.FILE, digestService.getFileList(e.getTask()));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
         return e;
     }

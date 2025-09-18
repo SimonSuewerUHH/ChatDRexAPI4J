@@ -9,11 +9,13 @@ import io.smallrye.config.WithDefault;
 public interface ChatdrexConfig {
 
     GuardTrailsConfig guardtrails();
+
     ToolsConfig tools();
 
 
     interface GuardTrailsConfig {
         PromptInjectionConfig promptInjection();
+
         GroundingConfig grounding();
     }
 
@@ -45,6 +47,16 @@ public interface ChatdrexConfig {
 
     interface ToolsConfig {
         KgQueryConfig kgQuery();
+
+        DigestConfig digest();
+    }
+
+    interface DigestConfig {
+        @WithDefault("0.6")
+        double minScore();
+
+        @WithDefault("5")
+        int topN();
     }
 
     interface KgQueryConfig {

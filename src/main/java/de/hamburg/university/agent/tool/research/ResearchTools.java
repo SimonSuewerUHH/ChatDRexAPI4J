@@ -1,7 +1,7 @@
 package de.hamburg.university.agent.tool.research;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.tool.ToolDTO;
+import de.hamburg.university.agent.tool.ToolStructuredContentType;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.service.research.semanticscholar.SemanticScholarServiceImpl;
@@ -12,7 +12,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static io.quarkus.arc.ComponentsProvider.LOG;
@@ -44,10 +43,10 @@ public class ResearchTools {
                     searchResults.add(new ToolSourceDTO(paper));
                     sb.append("Paper ID: ").append(paper.getPaperId()).append("\n");
                     sb.append("Title: ").append(paper.getTitle()).append("\n");
-                    if(paper.getYear() != null){
+                    if (paper.getYear() != null) {
                         sb.append("Year: ").append(paper.getYear()).append("\n");
                     }
-                    if(paper.getAbstractText() != null){
+                    if (paper.getAbstractText() != null) {
                         sb.append("Abstract: ").append(paper.getAbstractText()).append("\n");
                     }
                     sb.append("-----\n");
@@ -61,7 +60,7 @@ public class ResearchTools {
             return "Error querying Semantic Scholar: " + e.getMessage();
         }
         toolDTO.addContent(result);
-        toolDTO.setStructuredContent(Collections.singletonList(searchResults));
+        toolDTO.addStructuredListSourceContent(ToolStructuredContentType.SOURCE, searchResults);
         toolDTO.setStop();
         chatWebsocketSender.sendTool(toolDTO, sessionId);
         return result;
