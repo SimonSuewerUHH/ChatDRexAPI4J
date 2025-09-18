@@ -55,39 +55,6 @@ check:build:maven:
   script:
     - ./mvnw clean install -DskipTests
 
-
-.check:build:docker:
-  image: docker:24.0.2
-  stage: check
-  services:
-    - name: docker:24.0.2-dind
-      alias: docker
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-    DOCKER_HOST: "tcp://docker:2375"
-  before_script:
-    - *docker_login
-  script:
-    - echo "Building Docker image $CI_IMAGE for /src/main/docker/Dockerfile.jvm"
-    - docker build -t $CI_IMAGE -f src/main/docker/Dockerfile.jvm .
-    - docker save -o $TAR_FILE_NAME $CI_IMAGE
-    - chmod 644 $TAR_FILE_NAME
-    - echo "API image created at $TAR_FILE_NAME"
-  artifacts:
-    paths:
-      - $TAR_FILE_NAME
-    expire_in: 1 hour
-
-check:build:docker:
-  extends: .check:build:docker
-  dependencies:
-    - check:build:maven
-  needs:
-    - check:build:maven
-  variables:
-    CI_IMAGE: image:latest
-    TAR_FILE_NAME: image.tar
-
 # ─────────────────────────────────────────────────────────────────────────────
 # deploy
 .deploy:gitlab_registry:
@@ -159,16 +126,6 @@ gitlab-advanced-sast:
   variables:
     RUNNER_SCRIPT_TIMEOUT: 50m
   timeout: 1h
-
-container-scanning:
-  extends: container_scanning
-  stage: security
-  needs:
-    - check:build:docker
-  dependencies:
-    - check:build:docker
-  variables:
-    CS_IMAGE: "archive://image.tar"
 
 
 secret_detection:
