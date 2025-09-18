@@ -13,9 +13,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ApplicationScoped
 public class DigestApiClientService {
@@ -133,7 +131,7 @@ public class DigestApiClientService {
     }
 
     public DigestToolPlotDTO createPlot(DigestToolResultDTO result) {
-        List<DigestToolPlotEntryDTO> entries = new ArrayList<>();
+        Set<DigestToolPlotEntryDTO> entries = new HashSet<>();
 
         if (result != null && result.getRows() != null) {
             for (DigestToolResultDTO.Row row : result.getRows()) {
@@ -173,7 +171,7 @@ public class DigestApiClientService {
             }
         }
 
-        return new DigestToolPlotDTO(entries);
+        return new DigestToolPlotDTO(entries.stream().toList());
     }
 
     public Uni<DigestToolResultDTO> fallback(String uid) {
