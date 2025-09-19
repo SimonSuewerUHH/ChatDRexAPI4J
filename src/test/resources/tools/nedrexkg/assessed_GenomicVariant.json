@@ -1,0 +1,30 @@
+[
+  {
+    "nl_question": "Find all genomic variants of type SNP located on chromosome X that are associated with breast cancer.",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'breast cancer'})\nWHERE v.chromosome = 'X' AND v.variantType = 'SNP'\nRETURN v.displayName AS VariantName"
+  },
+  {
+    "nl_question": "Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: '7'})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'cystic fibrosis'})\nRETURN v.referenceSequence AS ReferenceSequence, v.alternativeSequence AS AlternativeSequence"
+  },
+  {
+    "nl_question": "What are the different variant types observed in genomic variants associated with Parkinson's disease?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'Parkinson\u2019s disease'})\nRETURN DISTINCT v.variantType AS VariantType"
+  },
+  {
+    "nl_question": "Are there any common genomic variants associated with both type 1 and type 2 diabetes?",
+    "cypher_translation": "MATCH (v1:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {displayName: 'type 1 diabetes'})\nMATCH (v2:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d2:Disorder {displayName: 'type 2 diabetes'})\nRETURN v1.displayName AS VariantName"
+  },
+  {
+    "nl_question": "Find all genomic variants of type 'SNV' located within the BRCA1 gene.",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'BRCA1'})\nWHERE v.variantType = 'SNV'\nRETURN v.displayName AS VariantName"
+  },
+  {
+    "nl_question": "List the genes affected by variants with an alternative sequence of 'A' at position 12345 on chromosome X.",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: 'X', position: 12345, alternativeSequence: 'A'})-[:VariantAffectsGene]->(g:Gene)\nRETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What is the reference sequence for the variant at position 78901 on chromosome 2 associated with melanoma?",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: '2', position: 78901})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'Melanoma'})\nRETURN v.referenceSequence AS ReferenceSequence"
+  }
+]

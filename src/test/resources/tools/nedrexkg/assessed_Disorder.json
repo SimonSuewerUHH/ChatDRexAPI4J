@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "What genes are associated with hereditary breast carcinoma?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder {displayName: 'hereditary breast carcinoma'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What is the primary domain ID for cystic fibrosis?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'cystic fibrosis'}) RETURN d.primaryDomainId AS PrimaryDomainID"
+  },
+  {
+    "nl_question": "What are the data sources for the disorder information on Li-Fraumeni syndrome?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'Li-Fraumeni syndrome'}) RETURN d.dataSources AS DataSources"
+  },
+  {
+    "nl_question": "What are the ICD10 codes associated with Wilson disease?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'Wilson disease'}) RETURN d.icd10 AS ICD10Codes"
+  },
+  {
+    "nl_question": "What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?",
+    "cypher_translation": "MATCH (p:Phenotype {displayName: 'ataxia telangiectasia'})<-[:DisorderHasPhenotype]-(d:Disorder) RETURN d.description AS ClinicalDescription"
+  }
+]

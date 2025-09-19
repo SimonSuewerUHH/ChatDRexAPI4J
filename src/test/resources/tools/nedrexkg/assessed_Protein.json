@@ -1,0 +1,38 @@
+[
+  {
+    "nl_question": "What is the amino acid sequence of the protein MYC_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'MYC_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "What genes encode the protein 1433E_HUMAN?",
+    "cypher_translation": "MATCH (g:Gene)-[:ProteinEncodedByGene]->(p:Protein {displayName: '1433E_HUMAN'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What are the signatures associated with the protein CUL3_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'CUL3_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS Signatures"
+  },
+  {
+    "nl_question": "What are the GO annotations for the protein P53_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'P53_HUMAN'})-[:ProteinHasGOAnnotation]->(go:GO) RETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Which proteins interact with TRI67_HUMAN?",
+    "cypher_translation": "MATCH (p1:Protein {displayName: 'TRI67_HUMAN'})-[:ProteinInteractsWithProtein]->(p2:Protein) RETURN p2.displayName AS InteractingProteins"
+  },
+  {
+    "nl_question": "What is the amino acid sequence of the protein EGFR_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'EGFR_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "What are the known signatures for the protein RFA1_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'RFA1_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS Signatures"
+  },
+  {
+    "nl_question": "What gene encodes the protein ESR1_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'ESR1_HUMAN'})<-[:ProteinEncodedByGene]-(g:Gene) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What are the synonyms for the protein HSP7C_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'HSP7C_HUMAN'}) RETURN p.synonyms AS Synonyms"
+  }
+]

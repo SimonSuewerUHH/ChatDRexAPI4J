@@ -1,0 +1,26 @@
+[
+  {
+    "nl_question": "What indications are associated with the use of Ropinirole?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Ropinirole'})-[:DrugHasIndication]->(i:Disorder)\nRETURN i.displayName AS Indication"
+  },
+  {
+    "nl_question": "What are the common side effects observed with Clomipramine administration?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Clomipramine'})-[:DrugHasSideEffect]->(s:SideEffect)\nRETURN s.displayName AS SideEffect"
+  },
+  {
+    "nl_question": "What is the CAS registry number for Ribavirin?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Ribavirin'})\nRETURN d.casNumber AS CASRegistryNumber"
+  },
+  {
+    "nl_question": "What phenotypes are associated with side effects of Donepezil?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Donepezil'})-[:DrugHasSideEffect]->(s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype)\nRETURN p.displayName AS Phenotype"
+  },
+  {
+    "nl_question": "What are the known targets of the drug Pregabalin?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasTarget]->(t:Protein)\nRETURN t.displayName AS TargetProtein"
+  },
+  {
+    "nl_question": "List the contraindications for Paroxetine.",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication"
+  }
+]

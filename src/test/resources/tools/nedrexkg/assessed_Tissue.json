@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "What are the known drug targets expressed in liver tissue?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'liver'}) RETURN d.displayName AS DrugName, p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the common disorders associated with genes expressed in both kidney and liver tissues?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t1:Tissue {displayName: 'kidney'})-[:GeneExpressedInTissue]->(t2:Tissue {displayName: 'liver'})<-[:GeneExpressedInTissue]-(g2:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What are the genomic variants associated with disorders that affect gene expression in the skin epidermis?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'skin epidermis'})-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN v.displayName AS VariantName, d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What are the side effects of drugs that target proteins expressed in the stomach?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'stomach'})<-[:DrugHasSideEffect]-(se:SideEffect) RETURN se.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "Which tissues express genes related to the GO term 'immune response'?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue)-[r:ProteinHasGOAnnotation]->(go:GO {displayName: 'immune response'}) RETURN t.displayName AS TissueName"
+  }
+]

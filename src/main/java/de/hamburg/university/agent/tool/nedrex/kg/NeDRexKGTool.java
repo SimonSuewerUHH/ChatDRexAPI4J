@@ -21,7 +21,6 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -105,7 +104,7 @@ public class NeDRexKGTool {
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
                     return answer;
-                } catch (ClientWebApplicationException e ){
+                } catch (ClientWebApplicationException e) {
                     Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
                 } catch (Exception e) {
                     Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
@@ -152,7 +151,8 @@ public class NeDRexKGTool {
         }
         return sb.toString();
     }
-    private String stringifyEnhancedNodesToHTML(List<NeDRexKGNodeEnhanced> enhancedNodes) {
+
+    public String stringifyEnhancedNodesToHTML(List<NeDRexKGNodeEnhanced> enhancedNodes) {
         StringBuilder sb = new StringBuilder();
         for (NeDRexKGNodeEnhanced node : enhancedNodes) {
             sb.append("<b>Node Type:</b> ").append(node.getNodeType()).append("<br>");
@@ -182,7 +182,7 @@ public class NeDRexKGTool {
         return sb.toString();
     }
 
-    private String stringifyEnhancedNodes(List<NeDRexKGNodeEnhanced> enhancedNodes) {
+    public String stringifyEnhancedNodes(List<NeDRexKGNodeEnhanced> enhancedNodes) {
         StringBuilder sb = new StringBuilder();
         for (NeDRexKGNodeEnhanced node : enhancedNodes) {
             sb.append("Node Type: ").append(node.getNodeType()).append("\n");

@@ -1,0 +1,34 @@
+[
+  {
+    "nl_question": "Which tissues express the gene TTN?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TTN'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "What are the approved symbols and synonyms for the gene MSH2?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'MSH2'})\nRETURN g.approvedSymbol AS ApprovedSymbol, g.synonyms AS Synonyms"
+  },
+  {
+    "nl_question": "What are the pathways associated with proteins encoded by the gene CFTR?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'CFTR'})-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pw:Pathway)\nRETURN pw.displayName AS PathwayName"
+  },
+  {
+    "nl_question": "Which tissues express the BRCA2 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA2'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Provide the gene type and description for the APC gene.",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'APC'})\nRETURN g.geneType AS GeneType, g.description AS Description"
+  },
+  {
+    "nl_question": "What proteins are encoded by the BRCA1 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA1'})-[:ProteinEncodedByGene]->(p:Protein)\nRETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the GO annotations for proteins encoded by the TSC2 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TSC2'})-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinHasGOAnnotation]->(go:GO)\nRETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Find other genes that are expressed in the same tissues as the MSH6 gene.",
+    "cypher_translation": "MATCH (g1:Gene {displayName: 'MSH6'})-[:GeneExpressedInTissue]->(t:Tissue)<-[:GeneExpressedInTissue]-(g2:Gene)\nRETURN g2.displayName AS GeneName"
+  }
+]

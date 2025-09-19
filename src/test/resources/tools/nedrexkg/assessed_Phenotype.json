@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {displayName: 'Seizure'})-[:DisorderHasPhenotype]->(p1:Phenotype) MATCH (d2:Disorder {displayName: 'Intellectual disability'})-[:DisorderHasPhenotype]->(p2:Phenotype) WHERE p1.displayName = 'Seizure' AND p2.displayName = 'Intellectual disability' RETURN v.alternativeSequence AS VariantSequence"
+  },
+  {
+    "nl_question": "What are the common comorbidities or overlapping phenotypes observed with 'Short stature' in children?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p1:Phenotype {displayName: 'Short stature'})-[:SideEffectSameAsPhenotype]->(s:SideEffect) MATCH (d2:Disorder)-[:DisorderHasPhenotype]->(p2:Phenotype) WHERE p2.displayName = s.displayName RETURN d2.displayName AS ComorbidDisorderName"
+  },
+  {
+    "nl_question": "What are the differential diagnoses for a patient presenting with 'Infantile onset' seizures and 'Hypertelorism'?",
+    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Infantile onset'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Hypertelorism'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS DifferentialDiagnosisName"
+  },
+  {
+    "nl_question": "What is the prevalence of 'Micrognathia' in patients with 'Failure to thrive' and 'Delayed speech and language development'?",
+    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Failure to thrive'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Delayed speech and language development'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS PrevalenceDisorderName"
+  },
+  {
+    "nl_question": "What are the long-term developmental outcomes for individuals with 'Ataxia' and 'Feeding difficulties'?",
+    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Ataxia'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Feeding difficulties'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS LongTermOutcomeName"
+  }
+]

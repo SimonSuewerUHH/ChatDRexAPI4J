@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'Immunoglobulins'})-[:VariantAffectsGene]->(g:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What is the database source for the 'Immunoglobulin' signature?",
+    "cypher_translation": "MATCH (s:Signature {displayName: 'Immunoglobulin'}) RETURN s.database AS DatabaseSource"
+  },
+  {
+    "nl_question": "Does the 'Ig-like_dom' signature have any overlap with the 'IG_LIKE' signature?",
+    "cypher_translation": "MATCH (s1:Signature {displayName: 'Ig-like_dom'})-[:GOIsSubtypeOfGO]->(go:GO)-[:GOIsSubtypeOfGO]->(s2:Signature {displayName: 'IG_LIKE'}) RETURN s1.displayName AS Signature1, s2.displayName AS Signature2"
+  },
+  {
+    "nl_question": "Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I-like_Ag-recog_sf'})-[:DrugHasTarget]->(d:Drug) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I'})-[:ProteinEncodedByGene]->(g:Gene)-[:VariantAffectsGene]->(v:GenomicVariant) RETURN v.displayName AS GenomicVariantName"
+  }
+]

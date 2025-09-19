@@ -1,0 +1,67 @@
+category,question,hits,lengthGold,lengthAI,precision,recall,f1
+Drug,What indications are associated with the use of Ropinirole?,3,3,3,1.0,1.0,1.0
+Drug,What are the common side effects observed with Clomipramine administration?,1694,1694,1694,1.0,1.0,1.0
+Drug,What is the CAS registry number for Ribavirin?,1,1,1,1.0,1.0,1.0
+Drug,What phenotypes are associated with side effects of Donepezil?,192,192,192,1.0,1.0,1.0
+Drug,What are the known targets of the drug Pregabalin?,3,3,3,1.0,1.0,1.0
+Drug,List the contraindications for Paroxetine.,6,6,6,1.0,1.0,1.0
+Disorder,What genes are associated with hereditary breast carcinoma?,37,177,37,1.0,0.20903954802259886,0.34579439252336447
+Disorder,What is the primary domain ID for cystic fibrosis?,1,1,1,1.0,1.0,1.0
+Disorder,What are the data sources for the disorder information on Li-Fraumeni syndrome?,1,1,1,1.0,1.0,1.0
+Disorder,What are the ICD10 codes associated with Wilson disease?,1,1,1,1.0,1.0,1.0
+Disorder,What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?,0,0,74,1.0,1.0,1.0
+GenomicVariant,Find all genomic variants of type SNP located on chromosome X that are associated with breast cancer.,0,0,0,1.0,1.0,1.0
+GenomicVariant,Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.,2860,2860,2860,1.0,1.0,1.0
+GenomicVariant,What are the different variant types observed in genomic variants associated with Parkinson's disease?,0,0,3,1.0,1.0,1.0
+GenomicVariant,Are there any common genomic variants associated with both type 1 and type 2 diabetes?,0,0,0,1.0,1.0,1.0
+GenomicVariant,Find all genomic variants of type 'SNV' located within the BRCA1 gene.,0,0,0,1.0,1.0,1.0
+GenomicVariant,List the genes affected by variants with an alternative sequence of 'A' at position 12345 on chromosome X.,0,0,0,1.0,1.0,1.0
+GenomicVariant,What is the reference sequence for the variant at position 78901 on chromosome 2 associated with melanoma?,0,0,0,1.0,1.0,1.0
+Phenotype,What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?,0,0,178160,1.0,1.0,1.0
+Phenotype,What are the common comorbidities or overlapping phenotypes observed with 'Short stature' in children?,0,0,6126,1.0,1.0,1.0
+Phenotype,What are the differential diagnoses for a patient presenting with 'Infantile onset' seizures and 'Hypertelorism'?,0,0,0,1.0,1.0,1.0
+Phenotype,What is the prevalence of 'Micrognathia' in patients with 'Failure to thrive' and 'Delayed speech and language development'?,0,0,1,1.0,1.0,1.0
+Phenotype,What are the long-term developmental outcomes for individuals with 'Ataxia' and 'Feeding difficulties'?,0,0,0,1.0,1.0,1.0
+Signature,Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?,0,0,13970,1.0,1.0,1.0
+Signature,What is the database source for the 'Immunoglobulin' signature?,0,1,0,1.0,1.0,1.0
+Signature,Does the 'Ig-like_dom' signature have any overlap with the 'IG_LIKE' signature?,0,0,1,1.0,1.0,1.0
+Signature,Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?,0,0,0,1.0,1.0,1.0
+Signature,Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?,0,0,0,1.0,1.0,1.0
+GO,What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,0,0,99,1.0,1.0,1.0
+GO,Are there any GO terms related to 'extracellular exosome' that are also subtypes of 'extracellular region'?,0,0,0,1.0,1.0,1.0
+GO,What is the relationship between the GO terms 'ATP binding' and 'DNA binding' in the GO hierarchy?,0,0,0,1.0,1.0,1.0
+GO,Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,0,0,0,1.0,1.0,1.0
+GO,What are the descriptions and data sources associated with the GO term 'plasma membrane'?,1,1,1,1.0,1.0,1.0
+GO,Find all GO terms related to 'regulation of transcription by RNA polymerase II' and their corresponding genes.,0,1592,0,1.0,1.0,1.0
+GO,List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.,0,0,2944,1.0,1.0,1.0
+Protein,What is the amino acid sequence of the protein MYC_HUMAN?,1,1,1,1.0,1.0,1.0
+Protein,What genes encode the protein 1433E_HUMAN?,0,0,0,1.0,1.0,1.0
+Protein,What are the signatures associated with the protein CUL3_HUMAN?,22,22,22,1.0,1.0,1.0
+Protein,What are the GO annotations for the protein P53_HUMAN?,201,201,251,0.8007968127490039,1.0,0.8893805309734513
+Protein,Which proteins interact with TRI67_HUMAN?,2411,2412,7404,0.325634792004322,0.9995854063018242,0.49123879380603097
+Protein,What is the amino acid sequence of the protein EGFR_HUMAN?,1,1,1,1.0,1.0,1.0
+Protein,What are the known signatures for the protein RFA1_HUMAN?,19,19,19,1.0,1.0,1.0
+Protein,What gene encodes the protein ESR1_HUMAN?,0,0,0,1.0,1.0,1.0
+Protein,What are the synonyms for the protein HSP7C_HUMAN?,1,1,1,1.0,1.0,1.0
+Tissue,What are the known drug targets expressed in liver tissue?,0,12937,1434,1.0,1.0,1.0
+Tissue,What are the common disorders associated with genes expressed in both kidney and liver tissues?,0,0,10774,1.0,1.0,1.0
+Tissue,What are the genomic variants associated with disorders that affect gene expression in the skin epidermis?,0,0,0,1.0,1.0,1.0
+Tissue,What are the side effects of drugs that target proteins expressed in the stomach?,0,0,0,1.0,1.0,1.0
+Tissue,Which tissues express genes related to the GO term 'immune response'?,0,0,0,1.0,1.0,1.0
+Gene,Which tissues express the gene TTN?,0,56,0,1.0,1.0,1.0
+Gene,What are the approved symbols and synonyms for the gene MSH2?,1,1,1,1.0,1.0,1.0
+Gene,What are the pathways associated with proteins encoded by the gene CFTR?,0,0,31,1.0,1.0,1.0
+Gene,Which tissues express the BRCA2 gene?,56,56,56,1.0,1.0,1.0
+Gene,Provide the gene type and description for the APC gene.,1,1,1,1.0,1.0,1.0
+Gene,What proteins are encoded by the BRCA1 gene?,0,0,0,1.0,1.0,1.0
+Gene,What are the GO annotations for proteins encoded by the TSC2 gene?,0,0,45,1.0,1.0,1.0
+Gene,Find other genes that are expressed in the same tissues as the MSH6 gene.,19349,1080280,19349,1.0,0.01791109712296812,0.03519186925772238
+Pathway,What are the known drug targets within the 'Immune System' pathway?,0,2747,383,1.0,1.0,1.0
+Pathway,"Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",0,0,0,1.0,1.0,1.0
+Pathway,What tissues express the genes associated with the 'RHO GTPase cycle' pathway?,0,0,56,1.0,1.0,1.0
+Pathway,What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?,0,0,112328,1.0,1.0,1.0
+SideEffect,Is 'Dizziness' a reported side effect of any drugs targeting the protein encoded by the gene BRCA1?,0,0,0,1.0,1.0,1.0
+SideEffect,List all disorders associated with drugs that have 'Vomiting' as a side effect.,0,0,72,1.0,1.0,1.0
+SideEffect,"Are 'Dermatitis' and 'Skin rash' considered the same side effect, or are there subtle differences in their clinical presentation?",0,0,25,1.0,1.0,1.0
+SideEffect,Which genomic variants are associated with increased risk of experiencing 'Pruritus' as a drug side effect?,0,0,179928,1.0,1.0,1.0
+SideEffect,Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?,0,0,13298,1.0,1.0,1.0

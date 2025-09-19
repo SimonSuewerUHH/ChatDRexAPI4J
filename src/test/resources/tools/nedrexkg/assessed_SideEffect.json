@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "Is 'Dizziness' a reported side effect of any drugs targeting the protein encoded by the gene BRCA1?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinEncodedByGene]->(g:Gene {approvedSymbol: 'BRCA1'})-[:SideEffectSameAsPhenotype]->(s:SideEffect {displayName: 'Dizziness'}) RETURN s.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "List all disorders associated with drugs that have 'Vomiting' as a side effect.",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Vomiting'})-[:VariantAssociatedWithDisorder]->(v:GenomicVariant)-[:GeneAssociatedWithDisorder]->(dis:Disorder) RETURN dis.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "Are 'Dermatitis' and 'Skin rash' considered the same side effect, or are there subtle differences in their clinical presentation?",
+    "cypher_translation": "MATCH (s1:SideEffect {displayName: 'Dermatitis'})-[:SideEffectSameAsPhenotype]->(s2:SideEffect {displayName: 'Skin rash'}) RETURN s1.displayName AS SideEffect1, s2.displayName AS SideEffect2"
+  },
+  {
+    "nl_question": "Which genomic variants are associated with increased risk of experiencing 'Pruritus' as a drug side effect?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Pruritus'}) RETURN v.displayName AS VariantName"
+  },
+  {
+    "nl_question": "Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Abdominal pain NOS'})-[:VariantAssociatedWithDisorder]->(v:GenomicVariant)-[:GeneExpressedInTissue]->(t:Tissue) RETURN d.displayName AS DrugName, t.displayName AS TissueName"
+  }
+]

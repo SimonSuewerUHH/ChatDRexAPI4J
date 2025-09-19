@@ -1,0 +1,30 @@
+[
+  {
+    "nl_question": "What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'nucleus'}]->(go1:GO), (p)-[:ProteinInPathway {displayName: 'G protein-coupled receptor signaling pathway'}]->(pathway:Pathway) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "Are there any GO terms related to 'extracellular exosome' that are also subtypes of 'extracellular region'?",
+    "cypher_translation": "MATCH (go1:GO {displayName: 'extracellular exosome'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'extracellular region'}) RETURN go1.displayName AS SubtypeName, go2.displayName AS ParentName"
+  },
+  {
+    "nl_question": "What is the relationship between the GO terms 'ATP binding' and 'DNA binding' in the GO hierarchy?",
+    "cypher_translation": "MATCH (go1:GO {displayName: 'ATP binding'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'DNA binding'}) RETURN go1.displayName AS SubtypeName, go2.displayName AS ParentName"
+  },
+  {
+    "nl_question": "Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'nucleus'}]->(go1:GO), (p)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'G protein-coupled receptor signaling pathway'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the descriptions and data sources associated with the GO term 'plasma membrane'?",
+    "cypher_translation": "MATCH (go:GO {displayName: 'plasma membrane'}) RETURN go.description AS Description, go.dataSources AS DataSources"
+  },
+  {
+    "nl_question": "Find all GO terms related to 'regulation of transcription by RNA polymerase II' and their corresponding genes.",
+    "cypher_translation": "MATCH (go1:GO {displayName: 'regulation of transcription by RNA polymerase II'})<-[:ProteinHasGOAnnotation]-(p:Protein)-[:ProteinEncodedByGene]->(g:Gene) RETURN go1.displayName AS GOName, g.approvedSymbol AS GeneSymbol"
+  },
+  {
+    "nl_question": "List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'metal ion binding'}]->(go1:GO), (p)-[:ProteinInPathway]->(pathway:Pathway) RETURN p.displayName AS ProteinName, pathway.displayName AS PathwayName"
+  }
+]

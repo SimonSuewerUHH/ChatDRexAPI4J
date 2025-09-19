@@ -1,0 +1,22 @@
+[
+  {
+    "nl_question": "What are the known drug targets within the 'Immune System' pathway?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Immune System'})\nRETURN d.displayName AS DrugName, p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the key differences between the 'Innate Immune System' and 'Adaptive Immune System' pathways in terms of protein components and their interactions?",
+    "cypher_translation": "MATCH (p1:Protein)-[:ProteinInPathway]->(pathway1:Pathway {displayName: 'Innate Immune System'})\nMATCH (p2:Protein)-[:ProteinInPathway]->(pathway2:Pathway {displayName: 'Adaptive Immune System'})\nRETURN p1.displayName AS ProteinName1, p2.displayName AS ProteinName2"
+  },
+  {
+    "nl_question": "Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",
+    "cypher_translation": "MATCH (variant:GenomicVariant)-[:VariantAffectsGene]->(gene:Gene)-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Cell Cycle'})\nOPTIONAL MATCH (disorder:Disorder)-[:GeneAssociatedWithDisorder]->(gene)\nRETURN variant.displayName AS VariantName, gene.displayName AS GeneName, disorder.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What tissues express the genes associated with the 'RHO GTPase cycle' pathway?",
+    "cypher_translation": "MATCH (gene:Gene)-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'RHO GTPase cycle'})\nMATCH (tissue:Tissue)-[:GeneExpressedInTissue]->(gene)\nRETURN tissue.displayName AS TissueName"
+  },
+  {
+    "nl_question": "What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'SARS-CoV Infections'})\nMATCH (sideEffect:SideEffect)-[:DrugHasSideEffect]->(d)\nRETURN sideEffect.displayName AS SideEffectName"
+  }
+]
