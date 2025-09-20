@@ -189,7 +189,7 @@ public class NeDRexKGEvaluationTest {
                 oldQuery += "\n " + i + ". " + newQuery;
                 String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
                 String answer = nedrexKGBot.answerQuestion(question, result);
-                return new AiAnswerCypher(answer, result, newQuery);
+                return new AiAnswerCypher(answer, result, newQuery, i);
             } catch (ClientWebApplicationException e) {
                 Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
             } catch (Exception e) {

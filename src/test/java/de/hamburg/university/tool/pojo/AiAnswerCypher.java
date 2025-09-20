@@ -18,16 +18,21 @@ public class AiAnswerCypher {
     private String cypher;
     private Boolean isCorrect;
     private String question;
+    private int attempt;
+    private boolean fallback;
 
-    public AiAnswerCypher(String answer, String context, String cypher) {
+    public AiAnswerCypher(String answer, String context, String cypher, int attempt) {
         this.answer = answer;
         this.context = context;
         this.cypher = cypher;
+        this.fallback = false;
+        this.attempt = attempt;
     }
 
     public AiAnswerCypher(String answer, String context) {
         this.answer = answer;
         this.context = context;
+        this.fallback = true;
     }
 
     public static void printJsonFile(List<AiAnswerCypher> rows, Path file) {
