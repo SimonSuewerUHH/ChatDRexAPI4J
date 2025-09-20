@@ -7,15 +7,13 @@ import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NeDRexKGBot;
 import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
 import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
+import de.hamburg.university.helper.AIJudgeBot;
 import de.hamburg.university.helper.JsonLoader;
 import de.hamburg.university.service.nedrex.NeDRexApiClient;
 import de.hamburg.university.service.nedrex.kg.NeDRexKGNodeEnhanced;
 import de.hamburg.university.service.nedrex.kg.NeDRexKgQueryServiceImpl;
 import de.hamburg.university.tool.helper.NeDRexKGEvaluationHelper;
-import de.hamburg.university.tool.pojo.AiCypher;
-import de.hamburg.university.tool.pojo.CypherQuestion;
-import de.hamburg.university.tool.pojo.QuestionScore;
-import de.hamburg.university.tool.pojo.Score;
+import de.hamburg.university.tool.pojo.*;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -45,6 +43,9 @@ public class NeDRexKGEvaluationTest {
     @Inject
     @RestClient
     NeDRexApiClient neDRexApiClient;
+
+    @Inject
+    AIJudgeBot judgeBot;
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
@@ -112,8 +113,69 @@ public class NeDRexKGEvaluationTest {
 
     }
 
+    @Test
+    public void testAnswer() {
+        List<String> categories = List.of(
+                "Drug",
+                "Disorder",
+                "GenomicVariant",
+                "Phenotype",
+                "Signature",
+                "GO",
+                "Protein",
+                "Tissue",
+                "Gene",
+                "Pathway",
+                "SideEffect"
+        );
+        int total = 0;
+        int correct = 0;
+        List<AiAnswerCypher> allQuestionScores = new ArrayList<>();
 
-    private String answerTest(String question) {
+        Path out = Paths.get("results", "eval", "interactions_ai_judge_scores.json");
+        for (String category : categories) {
+            List<CypherQuestion> questions = loadQuestions(category);
+            for (CypherQuestion question : questions) {
+                try {
+                    Log.info("Question " + (questions.indexOf(question) + 1) + "/" + questions.size() + " [" + (categories.indexOf(category) + 1) + "/" + categories.size() + "]: " + question.getNlQuestion());
+                    AiAnswerCypher answer = answerTest(question.getNlQuestion());
+                    boolean result = judgeBot.isAnswerCorrectGivenContext(
+                            question.getNlQuestion(),
+                            answer.getAnswer(),
+                            answer.getContext(),
+                            "No additional rules."
+                    );
+                    answer.setIsCorrect(result);
+                    answer.setQuestion(question.getNlQuestion());
+                    allQuestionScores.add(answer);
+                    total++;
+                    if (result) correct++;
+                    Log.info("Judge result: " + result);
+                } catch (Exception e) {
+                    Log.errorf(e, "Failed to validate question: %s", question.getNlQuestion());
+                }
+            }
+            float currentCorrect = correct / (float) total;
+            Log.infof("== Category " + category + " Accuracy: " + currentCorrect + " (" + correct + "/" + total + ")");
+
+            AiAnswerCypher.printJsonFile(allQuestionScores, out);
+
+            /*assertTrue(avgCategoryScore.getPrecision() > 0.5,
+                    "Category " + category + " precision avg should be > 0.5 but was " + avgCategoryScore.getPrecision());*/
+
+        }
+        float currentCorrect = correct / (float) total;
+
+        Log.info("==== Overall Score ====");
+        Log.info(currentCorrect);
+       /* assertTrue(overall.getPrecision() > 0.5,
+                "Overall precision should be > 0.5 but was " + overall.getPrecision());*/
+
+
+    }
+
+
+    private AiAnswerCypher answerTest(String question) {
         double minScore = config.tools().kgQuery().minGeneDisorderScore();
         NeDRexKGGraph questionGraph = neDRexKGTool.decomposeToNodes(question, "");
         List<NeDRexKGNodeEnhanced> enhancedNodes = nedrexKgQueryService.enhanceGraph(questionGraph);
@@ -127,7 +189,7 @@ public class NeDRexKGEvaluationTest {
                 oldQuery += "\n " + i + ". " + newQuery;
                 String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
                 String answer = nedrexKGBot.answerQuestion(question, result);
-                return answer;
+                return new AiAnswerCypher(answer, result, newQuery);
             } catch (ClientWebApplicationException e) {
                 Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
             } catch (Exception e) {
@@ -137,7 +199,8 @@ public class NeDRexKGEvaluationTest {
         }
         List<NeDRexKGNodeEnhanced> enhancedNodesFallback = nedrexKgQueryService.enhanceFallbackNodes(enhancedNodes);
         String enhancedNodesFallbackString = neDRexKGTool.stringifyEnhancedNodes(enhancedNodesFallback);
-        return nedrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
+        String answer = nedrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
+        return new AiAnswerCypher(answer, enhancedNodesFallbackString);
     }
 
     private AiCypher fireAICypher(String question) {
