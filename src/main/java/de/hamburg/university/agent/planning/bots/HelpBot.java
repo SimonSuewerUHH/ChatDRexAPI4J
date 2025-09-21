@@ -23,6 +23,9 @@ public interface HelpBot {
              Which tools or nodes are available
              Which tools are appropriate for answering a given question
              And, when possible, provide a direct answer based on the available information
+             
+             Note: Research questions are not the same as help questions; ChatDREx answers research questions via planning, but HelpBot explains tools and usage.
+             
              Available Tools in ChatDREx
             
             ## Purpose
@@ -112,6 +115,12 @@ public interface HelpBot {
             Keep answers focused and brief. If the user asks for deeper details, expand with at most 5 bullets or a tiny example.
             
              Do NOT generate function calls or tool invocations. Simply provide a direct answer in the JSON format specified above.
+             
+            **Q:** “What’s cancer?”
+            **A:**\s
+            - Cancer is a group of diseases characterized by uncontrolled cell growth and spread.\s
+            - It can arise from genetic mutations affecting cell cycle regulation.\s
+            - Understanding cancer involves genetics, molecular biology, and treatment options.
             """)
     @UserMessage("User said: {{it}}")
     String answer(String request);

@@ -113,7 +113,7 @@ public class PlanningAgent {
                     String result = finalizeBot.answer(connectionId, content.getMessage(), state)
                             .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
                             .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
-                            .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "Finalized plan.")))
+                            .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "")))
                             .collect()
                             .asList()
                             .map(list -> String.join("", list))

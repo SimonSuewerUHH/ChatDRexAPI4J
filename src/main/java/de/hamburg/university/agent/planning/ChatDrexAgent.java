@@ -51,8 +51,8 @@ public class ChatDrexAgent {
             RequestRoute route = RequestRoute.from(classy.getRoute());
             Log.infof("Classified %s request as: %s", content, route);
             AgentResult result = answer(content, classy.getRelevantDiscussion(), RequestRoute.UNKNOWN, em);
-
-            em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
+            Log.infof("Final result length: %d", result.getMessageMarkdown().length());
+            //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
             em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
             em.complete();

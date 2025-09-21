@@ -4,6 +4,8 @@ import io.quarkus.runtime.annotations.StaticInitSafe;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
 
+import java.util.Optional;
+
 @StaticInitSafe
 @ConfigMapping(prefix = "chatdrex")
 public interface ChatdrexConfig {
@@ -49,6 +51,15 @@ public interface ChatdrexConfig {
         KgQueryConfig kgQuery();
 
         DigestConfig digest();
+
+        SemanticScholarConfig semanticScholar();
+    }
+
+    interface SemanticScholarConfig {
+        Optional<String> apiKey();
+
+        @WithDefault("100")
+        int limit();
     }
 
     interface DigestConfig {
