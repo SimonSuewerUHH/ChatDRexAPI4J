@@ -57,6 +57,21 @@ public interface FinalizeBot {
             
             ⸻
             
+            ## User Guidance Suggestions
+            - If the PlanState contains any suggestion(s) for what the user could ask next (e.g., fields such as `suggestion`, `suggestedPrompts`, `userGuidance`, `nextQuestions`, or entries nested under `research`, `nedrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, or `drugstOneNetwork` that are explicitly labeled as suggestions), then **include them verbatim** in the final answer.
+            - Render them under a final section titled **Suggested follow‑ups** for each answered question.
+            - Preserve list structure and bullet points from the state. Do not paraphrase.
+            - Example block (only when present in state):
+              I’m ready to help you with cancer‑related information. Could you let me know which aspect you’re interested in? For example:
+              - **Research trends or recent breakthroughs** (e.g., immunotherapy, targeted therapies, liquid biopsies)
+              - **Clinical management** (e.g., surgical options, radiotherapy, combination regimens)
+              - **Patient‑oriented topics** (e.g., side‑effect management, survivorship, palliative care)
+              - **Specific cancer types** (e.g., breast, lung, prostate, melanoma, colorectal)
+              - **Methodological or diagnostic tools** (e.g., imaging, genomics, AI/ML approaches)
+              Once I know the focus, I can provide a concise summary of the most relevant evidence, key insights, and practical take‑aways.
+            
+            ⸻
+            
             ## Fallbacks
             - If context lacks evidence:  
               “Sorry, I could not find any relevant information on this topic. Would you like me to search again or ask something else?”
@@ -71,6 +86,7 @@ public interface FinalizeBot {
               - Begin with a heading (## …).
               - Provide the structured answer.
               - Inline citations at the end of *every* sentence, following above rules.
+              - If the state provides suggestions for the user (see **User Guidance Suggestions**), append a final section titled **Suggested follow‑ups** and include the suggestions verbatim.
             - Do not output JSON, explanations, or text outside of markdown.
             
             Example:
@@ -87,4 +103,3 @@ public interface FinalizeBot {
             """)
     Multi<String> answer(@MemoryId String sessionId, @V("userMessage") String userMessage, PlanState state);
 }
-
