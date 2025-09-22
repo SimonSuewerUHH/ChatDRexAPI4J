@@ -51,6 +51,10 @@ public interface NeDRexToolDecisionBot {
             - If the user wants to rank/prioritize genes instead of drugs, choose "diamond".
             - If ambiguous, but the user wants to find drug repurposing candidates, choose "trustrank".
             - If generally ambiguous, prefer "diamond".
+            IMPORTANT OVERRIDES:
+            - If the user explicitly mentions "DIAMOnD", ALWAYS choose "diamond".
+            - If the user explicitly mentions "TrustRank", ALWAYS choose "trustrank".
+            - If the user explicitly mentions "closeness" or "closeness centrality", ALWAYS choose "closeness".
             
             SAFETY / SCOPE
             - Only output "diamond", "closeness", or "trustrank". Never mention or invent other algorithms.

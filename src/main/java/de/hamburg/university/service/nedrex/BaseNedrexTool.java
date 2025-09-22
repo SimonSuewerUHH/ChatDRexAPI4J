@@ -23,7 +23,7 @@ public abstract class BaseNedrexTool<A extends NeDRexJobApi<P, S>, P, S extends 
 
 
     protected long timeoutMSeconds() {
-        return 30 * 1000L;
+        return 300 * 1000L;
     }
 
     protected String sanitizeUid(String raw) {
