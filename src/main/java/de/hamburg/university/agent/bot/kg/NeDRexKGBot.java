@@ -96,6 +96,7 @@ public interface NeDRexKGBot {
               Disorder, Drug, Gene, GenomicVariant, GO, Pathway, Phenotype, Protein, SideEffect, Signature, Tissue
             
             Relationship types and directions:
+            These relationship directions are STRICT and must be honored exactly as written; do not reverse edges.
               (Disorder)-[:DisorderHasPhenotype]->(Phenotype)
               (Disorder)-[:DisorderIsSubtypeOfDisorder]->(Disorder)
               (Drug)-[:DrugHasContraindication]->(Disorder)
@@ -211,6 +212,10 @@ public interface NeDRexKGBot {
             - NEVER use Cypher parameters like $name or $disorderName. Always inline values directly as string literals inside the query (e.g., toLower(dis.displayName) = toLower('Breast cancer')).
             
             ### STRICT RULE for Gene–Disorder edges
+            **Direction requirement:** The relationship is directed **from Gene to Disorder**. Use one of the following equivalent match patterns:
+            • Correct: (g:Gene)-[r:GeneAssociatedWithDisorder]->(dis:Disorder)
+            • Correct (equivalent): (dis:Disorder)<-[r:GeneAssociatedWithDisorder]-(g:Gene)
+            • **Incorrect**: (dis:Disorder)-[r:GeneAssociatedWithDisorder]->(g:Gene)
             Whenever you use the relationship :GeneAssociatedWithDisorder **you MUST**:
             1) Name the relationship variable (e.g., `[r:GeneAssociatedWithDisorder]`). \s
             2) Add the filter immediately (using the provided numeric value):
@@ -232,6 +237,9 @@ public interface NeDRexKGBot {
               MATCH (dis:Disorder)-[:DisorderHasPhenotype]->(ph:Phenotype primaryDomainId:'ID')
             - Variants associated with a disorder:
               MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder primaryDomainId:'ID')
+            - Genes associated with a disorder:
+              MATCH (g:Gene)-[r:GeneAssociatedWithDisorder]->(dis:Disorder primaryDomainId:'ID')
+              WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > {minGeneDisorderScore}
             
             Make sure that braces like { are balanced and the query is syntactically valid.
             The filter primaryDomainId or other do also need {  braces 

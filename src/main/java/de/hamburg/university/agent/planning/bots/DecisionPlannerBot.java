@@ -39,6 +39,7 @@ public interface DecisionPlannerBot {
             - One task only; avoid conjunctions like "and"/"as well" unless part of a named entity.
             - Be specific and reference available context (e.g., seeds, disease names, identifiers) when known.
             - Keep it concise (\u2264 25 words) and directly executable by the next agent.
+            - Formulate as a concrete, self-contained question containing all necessary details (e.g., entity identifiers, timeframes, edge types, or output format).
             - For "FINALIZE", set `subTaskQuestion` to a concise instruction like "Produce final summary and next-step recommendations based on gathered results." 
             
             ---
@@ -79,7 +80,7 @@ public interface DecisionPlannerBot {
             {
               "action": "FETCH_KG",
               "reason": "Need NeDRex KG neighbors before algorithm run",
-              "subTaskQuestion": "Get first- and second-degree neighbors of BRCA1 and BRCA2 from NeDRex KG."
+              "subTaskQuestion": "Which genes are related to cancer."
             }
             
             4) Fetch biological info:
@@ -93,14 +94,14 @@ public interface DecisionPlannerBot {
             {
               "action": "CALL_NEDREX_TOOL",
               "reason": "DIAMOnD requested; seeds already provided",
-              "subTaskQuestion": "Run DIAMOnD with the current seed genes (k=200) and return ranked candidates."
+              "subTaskQuestion": "Run DIAMOnD with NLRP3, TYK2, TNFSF14, VDR."
             }
             
             6) Call Digest tool:
             {
               "action": "CALL_DIGEST_TOOL",
               "reason": "Perform enrichment analysis on seed set",
-              "subTaskQuestion": "Run GO Biological Process enrichment on the seed genes using DigestSet."
+              "subTaskQuestion": "Run digest set with NLRP3, TYK2, TNFSF14, VDR."
             }
             
             7) Finalize with recommendation:

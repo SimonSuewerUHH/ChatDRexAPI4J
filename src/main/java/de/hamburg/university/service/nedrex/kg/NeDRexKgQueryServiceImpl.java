@@ -73,6 +73,9 @@ public class NeDRexKgQueryServiceImpl {
 
     public String fireNeo4jQuery(String cypher) {
         String result = neDRexApiClient.runQuery(cypher);
+        if (StringUtils.isNotEmpty(result) && result.equals("[]")) {
+            return "";
+        }
         if (StringUtils.isNotEmpty(result) && result.length() > config.tools().kgQuery().maxResultLength()) {
             return result.substring(0, config.tools().kgQuery().maxResultLength()) + "... (truncated)";
         }
