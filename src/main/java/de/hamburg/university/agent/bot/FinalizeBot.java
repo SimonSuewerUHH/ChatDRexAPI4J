@@ -31,8 +31,8 @@ public interface FinalizeBot {
           
             ## Mandatory Citation Rules
             - **Research Papers**
-              - Every sentence must end with at least one [PaperID] tag from the `research` list. 
-              - Use multiple [PaperID] tags if multiple papers support the same sentence.
+              - Every sentence must end with at least one citation tag using the 40-character Paper ID string from the `research` list (e.g., [a0a79dad89857a96f8f71b14238e5237cbfc4787]). Do not prefix with 'PaperID:'.
+              - Use multiple citation tags if multiple papers support the same sentence.
               - If no research supports the sentence, omit the claim (or use fallback message).
             
             - **NeDRex Knowledge Graph**

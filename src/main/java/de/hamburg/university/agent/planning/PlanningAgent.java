@@ -63,7 +63,7 @@ public class PlanningAgent {
         state.setUserGoal(content.getMessage());
 
         List<PlanStep> history = new ArrayList<>();
-        emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planning ..."));
+        emitter.emit(ChatResponseDTO.createReasoningResponse(content, reasonToHtml()));
         String connectionId = content.getConnectionId();
         resetMemory(content, state, 0);
 
@@ -71,8 +71,9 @@ public class PlanningAgent {
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
             history.add(decision);
-            emitter.emit(ChatResponseDTO.createReasoningResponse(content, decision.getAction() + "->" + decision.getReason()));
+            emitter.emit(ChatResponseDTO.createReasoningResponse(content, reasonToHtml(decision)));
 
+            String currentGoal = decision.getSubTaskQuestion();
             Log.debugf("Planning step %d: %s", step, safeToString(decision));
 
             if (decision.getAction() == null) break;
@@ -85,11 +86,11 @@ public class PlanningAgent {
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());
-                    state.getResearch().add(research.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
+                    state.getResearch().add(research.answer(connectionId, currentGoal, state.getPreviousContext()));
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
-                    state.setNeDRexKgInfo(nedrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
+                    state.setNeDRexKgInfo(nedrexKGTool.answer(currentGoal, state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
                     setEnhancedQueryBioInfo(state, decision, connectionId);
@@ -106,7 +107,7 @@ public class PlanningAgent {
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
                         setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
                     }
-                    state.setDigestResult(digestBot.answer(connectionId, state.getUserGoal(), state.getEnhancedQueryBioInfo()));
+                    state.setDigestResult(digestBot.answer(connectionId, currentGoal, state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
                     // Stream all chunks from the finalize bot and emit each part
@@ -131,12 +132,12 @@ public class PlanningAgent {
 
     private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(neDRexBot.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
+        state.setEnhancedQueryBioInfo(neDRexBot.answer(connectionId, decision.getSubTaskQuestion(), state.getPreviousContext()));
     }
 
     private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(neDRexBot.answerEntrezId(connectionId, state.getUserGoal(), state.getPreviousContext()));
+        state.setEnhancedQueryBioInfo(neDRexBot.answerEntrezId(connectionId, decision.getSubTaskQuestion(), state.getPreviousContext()));
     }
 
 
@@ -158,5 +159,21 @@ public class PlanningAgent {
             messages.add(context);
             chatMemoryStore.updateMessages(content.getConnectionId(), messages);
         }
+    }
+
+    public String reasonToHtml() {
+        return "<div class=\"step\">" +
+                "<span class=\"action\"><span class=\"head\">Action:</span>Start planning ...</span>" +
+                "</div>";
+    }
+
+    public String reasonToHtml(PlanStep decision) {
+        if (decision == null) return "";
+
+        return "<div class=\"step\">" +
+                "<span class=\"action\"><span class=\"head\">Action:</span>" + decision.getAction() + "</span>" +
+                "<span class=\"reason\"><span class=\"head\">Reason:</span>" + decision.getReason() + "</span>" +
+                "<span class=\"subtask\"><span class=\"head\">Sub-task:</span>" + decision.getSubTaskQuestion() + "</span>" +
+                "</div>";
     }
 }

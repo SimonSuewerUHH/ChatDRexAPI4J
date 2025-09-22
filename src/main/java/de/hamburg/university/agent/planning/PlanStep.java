@@ -11,4 +11,5 @@ import java.util.Map;
 public class PlanStep {
     private PlanAction action;
     private String reason;
+    private String subTaskQuestion;
 }
