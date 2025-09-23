@@ -100,7 +100,7 @@ public class PlanningAgent {
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
                         setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
                     }
-                    state = neDRexTool.answer(state, content, emitter);
+                    state = neDRexTool.answer(state, decision.getSubTaskQuestion(), content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());

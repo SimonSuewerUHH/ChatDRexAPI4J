@@ -1,0 +1,36 @@
+{
+  "trace_id": "Diamond-002",
+  "translation": [
+    "7157",
+    "672",
+    "1956",
+    "4609"
+  ],
+  "results": [
+    {
+      "DIAMOnD_node": "51455",
+      "p_hyper": "4.15243345091759e-53",
+      "rank": "1"
+    },
+    {
+      "DIAMOnD_node": "6525",
+      "p_hyper": "0.0",
+      "rank": "2"
+    },
+    {
+      "DIAMOnD_node": "79035",
+      "p_hyper": "0.0",
+      "rank": "3"
+    },
+    {
+      "DIAMOnD_node": "63967",
+      "p_hyper": "0.0",
+      "rank": "4"
+    },
+    {
+      "DIAMOnD_node": "9014",
+      "p_hyper": "0.0",
+      "rank": "5"
+    }
+  ]
+}

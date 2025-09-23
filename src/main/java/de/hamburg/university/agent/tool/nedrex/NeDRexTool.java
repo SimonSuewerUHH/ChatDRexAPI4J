@@ -52,12 +52,12 @@ public class NeDRexTool {
     @Inject
     ChatWebsocketSender chatWebsocketSender;
 
-    public PlanState answer(PlanState state, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
+    public PlanState answer(PlanState state, String subTaskQuestion, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         ToolDTO toolDTO = new ToolDTO(Tools.NEDREX_TOOL.name());
-        NeDRexToolDecisionResult result = neDRexToolDecisionBot.answer(state.getUserGoal(), state.getEnhancedQueryBioInfo());
+        NeDRexToolDecisionResult result = neDRexToolDecisionBot.answer(subTaskQuestion, state.getEnhancedQueryBioInfo());
         toolDTO.setInput(result.getToolName() + " with " + result.getEntrezIds().size() + " Entrez IDs");
         if (result.getEntrezIds().isEmpty()) {
-            Log.errorf("No enhanced query bio info found for user %s", state.getUserGoal());
+            Log.errorf("No enhanced query bio info found for user %s", subTaskQuestion);
             toolDTO.setStop();
             toolDTO.addContent("No Entrez IDs found");
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -137,7 +137,7 @@ public class NeDRexTool {
     }
 
 
-    private SeedPayloadDTO getDiamondPayload(List<String> entrezIds) {
+    public SeedPayloadDTO getDiamondPayload(List<String> entrezIds) {
         return new SeedPayloadDTO(entrezIds);
     }
 
