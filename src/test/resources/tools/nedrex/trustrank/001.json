@@ -1,11 +1,16 @@
 {
-  "trace_id": "TrustRank-001",
-  "translation": [
-    "Q01453",
+  "seed_proteins": [
+    "O95140",
     "P25189",
     "P28230",
-    "O95140"
+    "Q01453"
   ],
+  "damping_factor": 0.85,
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 10,
+  "uid": "c75d4acc-bdbc-4047-bea7-01e93c116de8",
+  "status": "completed",
   "results": {
     "drugs": [
       {

@@ -1,11 +1,16 @@
 {
-  "trace_id": "TrustRank-002",
-  "translation": [
-    "Q8TE73",
+  "seed_proteins": [
+    "Q4G0X9",
     "Q8C0M8",
     "Q8NEP3",
-    "Q4G0X9"
+    "Q8TE73"
   ],
+  "damping_factor": 0.85,
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 10,
+  "uid": "d2396411-2975-4407-ac1d-67f8055d49e7",
+  "status": "completed",
   "results": {
     "drugs": [
       {
