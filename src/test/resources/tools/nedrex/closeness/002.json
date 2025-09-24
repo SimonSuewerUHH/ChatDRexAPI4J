@@ -1,0 +1,102 @@
+{
+  "trace_id": "Closeness-002",
+  "translation": [
+    "P06213",
+    "H2L099",
+    "Q4U3Q4"
+  ],
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB09063",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB00619",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB01259",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB04868",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB09330",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB12267",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB11828",
+        "score": "1.0"
+      }
+    ],
+    "edges": [
+      [
+        "drugbank.DB08865",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB11828",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB12267",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB01268",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09063",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB04868",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB00619",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB00398",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09330",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09079",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB01259",
+        "uniprot.P06213"
+      ]
+    ]
+  }
+}

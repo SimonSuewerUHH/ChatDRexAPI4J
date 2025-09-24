@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Starting from the immunotherapy checkpoint genes PDCD1, CTLA4, and LAG3, run the closeness centrality algorithm. Which neighbouring genes show the greatest centrality (highest scores), and what ranks do they hold?",
+    "steps": "Translation: { PDCD1: 'Q15116', CTLA4: 'P16410', LAG3: 'P18627' }",
+    "content": "Seed genes (Closeness input): PDCD1, CTLA4, LAG3. Mapped UniProt IDs: Q15116, P16410, P18627. Drug associations (uniform closeness scores): Multiple drugs (e.g., DB09063, DB08895, DB01268, DB01254) all with score 0.4286 — indicating drug connections, not gene centrality results",
+    "path": "001.json"
+  },
+  {
+    "question": "Using the metabolic disease seeds INSR, GCK, and PPARG, apply the closeness centrality algorithm to the selected network. Which nodes emerge in the top 5 positions, and what are their closeness values?",
+    "steps": "Translation: { INSR: 'P06213', GCK: 'H2L099', PPARG: 'Q4U3Q4' }",
+    "content": "Seed genes (Closeness input): INSR, GCK, PPARG. Mapped UniProt IDs: P06213, H2L099, Q4U3Q4. Top-5 ranked nodes (closeness = 1.0): DB09063, DB01268, DB00619, DB01259, DB04868. Observation: All top positions are drugs connected to INSR (P06213)",
+    "path": "002.json"
+  }
+]

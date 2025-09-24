@@ -1,0 +1,54 @@
+{
+  "trace_id": "TrustRank-002",
+  "translation": [
+    "Q8TE73",
+    "Q8C0M8",
+    "Q8NEP3",
+    "Q4G0X9"
+  ],
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "3.8809358809215366e-05"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "3.198509612599687e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06616",
+        "score": "3.103043451346411e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06595",
+        "score": "3.063923849627185e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "2.1632867728952628e-05"
+      },
+      {
+        "drug_name": "drugbank.DB00822",
+        "score": "1.9963523905842732e-05"
+      },
+      {
+        "drug_name": "drugbank.DB01254",
+        "score": "1.9414628248921633e-05"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "1.8144203587801983e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08877",
+        "score": "1.7767084747845075e-05"
+      },
+      {
+        "drug_name": "drugbank.DB05294",
+        "score": "1.7635285382218934e-05"
+      }
+    ],
+    "edges": []
+  }
+}
