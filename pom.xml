@@ -19,7 +19,7 @@
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <org.projectlombok.version>1.18.38</org.projectlombok.version>
         <org.projectlombok.binding.version>0.2.0</org.projectlombok.binding.version>
-        <quarkus-langchain4j.version>1.2.0.CR3</quarkus-langchain4j.version>
+        <quarkus-langchain4j.version>1.2.0</quarkus-langchain4j.version>
         <quarkus-mcp-server.version>1.5.0</quarkus-mcp-server.version>
     </properties>
 
