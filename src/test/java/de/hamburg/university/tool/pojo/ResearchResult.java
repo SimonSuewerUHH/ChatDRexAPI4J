@@ -16,7 +16,8 @@ public class ResearchResult {
     private String question;
     private String answer;
     List<ToolSourceDTO> searchResults = new ArrayList<>();
-    private boolean correctAnswer;
+    private boolean correctAnswer = false;
+    private String errorMessage;
 
 
     @Override

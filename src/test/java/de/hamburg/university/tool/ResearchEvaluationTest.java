@@ -44,30 +44,36 @@ public class ResearchEvaluationTest {
         });
 
         List<ResearchResult> results = new ArrayList<>();
-        Path out = Paths.get("results", "eval", "research.csv");
+        Path out = Paths.get("results", "eval", "research.json");
 
         for (NeDRexToolQuestion question : questions) {
+            chatWebsocketSender.clearTools();
             ResearchResult result = new ResearchResult();
             result.setQuestion(question.getQuestion());
 
             String id = UUID.randomUUID().toString();
-            String answer = research.answer(id, question.getQuestion(), "");
-            List<ToolSourceDTO> sources = chatWebsocketSender.findContentByToolAndContentType(Tools.RESEARCH, ToolStructuredContentType.SOURCE);
 
-            result.setSearchResults(sources);
-            result.setAnswer(answer);
+            try {
+                String answer = research.answer(id, question.getQuestion(), "");
+                List<ToolSourceDTO> sources = chatWebsocketSender.findContentByToolAndContentType(Tools.RESEARCH, ToolStructuredContentType.SOURCE);
 
-            boolean correctAnswer = judgeBot.isAnswerCorrectGivenContext(
-                    question.getQuestion(),
-                    answer,
-                    papersToString(sources),
-                    "No additional rules."
-            );
+                result.setSearchResults(sources);
+                result.setAnswer(answer);
 
-            result.setCorrectAnswer(correctAnswer);
+                boolean correctAnswer = judgeBot.isAnswerCorrectGivenContext(
+                        question.getQuestion(),
+                        answer,
+                        papersToString(sources),
+                        "No additional rules."
+                );
 
-            Log.info(result);
+                result.setCorrectAnswer(correctAnswer);
+
+            } catch (Exception e) {
+                result.setErrorMessage(e.getMessage());
+            }
             results.add(result);
+            Log.info(result);
 
         }
 
