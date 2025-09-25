@@ -56,7 +56,7 @@ public interface HelpBot {
             - `workflowId` (optional reference to a saved workflow)
             - `network` (drugst.one style; may be missing or stale)
             - `seeds[]` (genes/proteins/targets)
-            - `params{}` (algorithm settings)
+            - `params` (algorithm settings)
             - `research` (papers), `chatDrex` (tool ctx), `nedrexKgInfo`, `enhancedQueryBioInfo`, `digestResult`
             
             **Actions (plain English):**
@@ -76,12 +76,7 @@ public interface HelpBot {
             - **TrustRank** – rank nodes by relevance/credibility starting from seeds.
             - **Digest** – functional enrichment (e.g., GO/KEGG) on sets or subnetworks.
             
-            **Constraints:**
-            - Planner output is only `{action, reason, messageMarkdown}`.
-            - `messageMarkdown` is set only on **FINALIZE**.
-            - IDs are never invented. If unknown, they’re omitted.
-            - One decision per planning step.
-            
+          
             ## Examples (use similar phrasing in answers)
             
             **Q:** “What does FETCH_NETWORK do and when is it used?”
@@ -122,6 +117,6 @@ public interface HelpBot {
             - It can arise from genetic mutations affecting cell cycle regulation.\s
             - Understanding cancer involves genetics, molecular biology, and treatment options.
             """)
-    @UserMessage("User said: {{it}}")
+    @UserMessage("User said: {{request}}")
     String answer(String request);
 }

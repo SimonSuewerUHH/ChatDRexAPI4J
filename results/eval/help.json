@@ -1,0 +1,13 @@
+[ {
+  "question" : "How does Diamond work?",
+  "answer" : "**Diamond**  \nDiamond is a ChatDrex algorithm that expands a disease module around your seed genes to discover related nodes (genes, proteins, or other biomolecules) within a biological network.\n\n- **Input:** A set of seed genes (HGNC or UniProt IDs) and a drugst.one‑style network.  \n- **Process:**  \n  1. Computes pairwise similarity scores between seeds and all other nodes.  \n  2. Uses a propagation step to aggregate evidence of connectivity, weighting edges by confidence.  \n  3. Applies a threshold to retain nodes that are strongly connected to the seeds.  \n  4. Optionally applies a module‑detection step (e.g., community clustering) to refine the expansion.  \n- **Output:**  \n  - A ranked list of expanded nodes with similarity scores.  \n  - A subgraph that can be visualized or further analyzed (e.g., for enrichment).  \n- **When to use:** When you want to explore a broader disease module beyond your initial seed set rather than just rank existing nodes.",
+  "searchResults" : [ ],
+  "correctAnswer" : false,
+  "errorMessage" : null
+}, {
+  "question" : "What is Drug repurposing?",
+  "answer" : "**Drug repurposing**  \n- Re‑identifying existing medicines for new therapeutic indications.  \n- Uses known safety, pharmacokinetics, and manufacturing profiles to shorten development timelines.  \n- Relies on computational approaches (network propagation, chemoinformatics, clinical data mining) to predict disease–drug matches.  \n- Often moves from pre‑clinical validation to early‑phase clinical trials more rapidly than de‑novo drug discovery.  \n- Can uncover unexpected mechanisms of action and expand treatment options for unmet medical needs.",
+  "searchResults" : [ ],
+  "correctAnswer" : false,
+  "errorMessage" : null
+} ]

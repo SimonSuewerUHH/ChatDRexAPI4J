@@ -21,6 +21,8 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,11 +89,13 @@ public class NeDRexToolEvaluationTest {
     @Test
     @Order(4)
     void getResult() {
+        Path out = Paths.get("results", "eval", "neDRexToolEvaluation.json");
+
         Log.info("Final Results:");
         for (NeDRexToolTestResult result : results) {
-            results.add(result);
             Log.info(result.toString());
         }
+        NeDRexToolTestResult.printJsonFile(results, out);
     }
 
     private NeDRexToolTestResult testDiamond(NeDRexToolQuestion question) {

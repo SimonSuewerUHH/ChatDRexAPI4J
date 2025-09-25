@@ -1,7 +1,6 @@
 package de.hamburg.university.socket;
 
 import de.hamburg.university.agent.tool.ToolDTO;
-import de.hamburg.university.agent.tool.ToolStructuredContentDTO;
 import de.hamburg.university.agent.tool.ToolStructuredContentType;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
@@ -48,8 +47,14 @@ public class TestChatWebsocketSender extends ChatWebsocketSender {
                 .collect(Collectors.toList());
     }
 
+    public List<ToolDTO> findToolByToolName(Tools toolName) {
+        return tools.stream()
+                .filter(tool -> tool.getName().equals(toolName.name()))
+                .collect(Collectors.toList());
+    }
+
     public void clearTools() {
-        if(tools == null) {
+        if (tools == null) {
             tools = new ArrayList<>();
         }
         tools.clear();

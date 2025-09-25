@@ -1,7 +1,12 @@
 package de.hamburg.university.tool.pojo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import io.quarkus.logging.Log;
 import lombok.Data;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +43,19 @@ public class NeDRexToolTestResult {
                 ", correctAnswer=" + correctAnswer + '\n' +
                 (missingInputs != null ? ", falseInputs=" + missingInputs + '\n' : "") +
                 "_________________________________________";
+    }
+
+    public static void printJsonFile(List<NeDRexToolTestResult> rows, Path file) {
+        try {
+            Files.createDirectories(file.getParent());
+            ObjectMapper mapper = new ObjectMapper()
+                    .enable(SerializationFeature.INDENT_OUTPUT);
+
+            mapper.writeValue(file.toFile(), rows);
+
+            Log.infof("JSON written: %s", file.toAbsolutePath());
+        } catch (Exception e) {
+            Log.error("Failed to write JSON", e);
+        }
     }
 }
