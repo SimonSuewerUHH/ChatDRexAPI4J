@@ -47,10 +47,10 @@ public class TestDigestApiClientService extends DigestApiClientService {
                 .filter(mock -> equalTarget(mock.getParameters().getTarget(), target))
                 .findFirst()
                 .map(resultMocked -> digestFormatterService.formatDigestOutputStructured(resultMocked.getResult(), resultMocked.getTask()))
-                .orElse(null);
+                .orElse(new DigestToolResultDTO());
     }
 
-    private String getPath(String folderName, String name){
+    private String getPath(String folderName, String name) {
         return "tools/digest/" + folderName + "/" + name;
     }
 
