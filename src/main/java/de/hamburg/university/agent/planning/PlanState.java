@@ -1,6 +1,6 @@
 package de.hamburg.university.agent.planning;
 
-import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import lombok.Data;
 
 import java.util.ArrayList;

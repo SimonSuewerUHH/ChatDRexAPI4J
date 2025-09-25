@@ -9,6 +9,8 @@ import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import de.hamburg.university.helper.drugstone.cypher.CypherResultIdExtractor;
+import de.hamburg.university.helper.drugstone.cypher.CypherToDrugstOne;
 import de.hamburg.university.service.nedrex.kg.NeDRexKGNodeEnhanced;
 import de.hamburg.university.service.nedrex.kg.NeDRexKgQueryServiceImpl;
 import de.hamburg.university.service.nedrex.kg.NeDRexSearchEmbeddingsNodeDTO;
@@ -21,6 +23,7 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.resteasy.reactive.ClientWebApplicationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -37,6 +40,9 @@ public class NeDRexKGTool {
 
     @Inject
     ChatdrexConfig config;
+
+    @Inject
+    CypherToDrugstOne cypherToDrugstOne;
 
     public NeDRexKGGraph decomposeToNodes(String question) {
         return decomposeToNodes(question, "");
@@ -68,6 +74,7 @@ public class NeDRexKGTool {
             toolDTO.addContent(stringifyNodesToHtml(questionGraph.getNodes()));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
             List<NeDRexKGNodeEnhanced> enhancedNodes = nedrexKgQueryService.enhanceGraph(questionGraph);
+            List<String> ids = getIds(enhancedNodes);
             String enhancedNodesString = stringifyEnhancedNodesToHTML(enhancedNodes);
             toolDTO.addContent("<h3>Enhanced Nodes:</h3>");
             toolDTO.addContent(enhancedNodesString);
@@ -98,6 +105,9 @@ public class NeDRexKGTool {
                         Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
                         break;
                     }
+                    List<String> cypherIds = CypherResultIdExtractor.extractResults(result);
+                    cypherIds.addAll(ids);
+                    cypherToDrugstOne.toDrugstOne(cypherIds, content, emitter);
                     String answer = nedrexKGBot.answerQuestion(question, result);
                     toolDTO.addContent(answer);
                     toolDTO.setStop();
@@ -180,6 +190,18 @@ public class NeDRexKGTool {
             sb.append("<br>");
         }
         return sb.toString();
+    }
+
+    public List<String> getIds(List<NeDRexKGNodeEnhanced> enhancedNodes) {
+        List<String> ids = new ArrayList<>();
+        for (NeDRexKGNodeEnhanced node : enhancedNodes) {
+            for (NeDRexSearchEmbeddingsNodeDTO enhancedNode : node.getNodes()) {
+                if (enhancedNode.getPrimaryDomainId() != null) {
+                    ids.add(enhancedNode.getPrimaryDomainId());
+                }
+            }
+        }
+        return ids;
     }
 
     public String stringifyEnhancedNodes(List<NeDRexKGNodeEnhanced> enhancedNodes) {

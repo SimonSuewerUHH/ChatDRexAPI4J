@@ -30,6 +30,10 @@ public class ResearchResult {
                 "_________________________________________";
     }
 
+    public String minimizeString() {
+        return question + " (" + correctAnswer + ")";
+    }
+
     public static void printJsonFile(List<ResearchResult> rows, Path file) {
         try {
             Files.createDirectories(file.getParent());

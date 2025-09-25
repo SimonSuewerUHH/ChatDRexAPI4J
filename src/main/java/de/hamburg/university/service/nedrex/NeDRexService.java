@@ -47,6 +47,8 @@ public class NeDRexService {
             return NeDRexNodeCollection.PROTEIN;
         } else if (id.startsWith("entrez.")) {
             return NeDRexNodeCollection.GENE;
+        } else if (id.startsWith("mondo.")) {
+            return NeDRexNodeCollection.DISORDER;
         } else {
             return NeDRexNodeCollection.DRUG;
         }

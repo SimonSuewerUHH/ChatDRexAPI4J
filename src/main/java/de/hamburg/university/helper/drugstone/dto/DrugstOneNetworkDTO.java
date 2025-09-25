@@ -1,4 +1,4 @@
-package de.hamburg.university.helper.drugstone;
+package de.hamburg.university.helper.drugstone.dto;
 
 import lombok.Data;
 

@@ -9,7 +9,7 @@ import de.hamburg.university.agent.tool.nedrex.NeDRexToolDecisionResult;
 import de.hamburg.university.helper.AIJudgeBot;
 import de.hamburg.university.helper.JsonLoader;
 import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
-import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessResultDTO;
 import de.hamburg.university.service.nedrex.diamond.DiamondResultsDTO;
 import de.hamburg.university.service.nedrex.trustrank.TrustRankResultDTO;

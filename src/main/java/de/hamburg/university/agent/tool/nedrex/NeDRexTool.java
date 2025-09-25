@@ -10,7 +10,7 @@ import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
-import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessResultDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessSeedPayloadDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessToolClientService;

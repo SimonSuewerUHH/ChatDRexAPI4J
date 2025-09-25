@@ -1,5 +1,8 @@
 package de.hamburg.university.helper.drugstone;
 
+import de.hamburg.university.helper.drugstone.dto.DrugstOneEdgeDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNodeDTO;
 import de.hamburg.university.service.nedrex.NeDRexAPIInfoDTO;
 import de.hamburg.university.service.nedrex.NeDRexService;
 import de.hamburg.university.service.nedrex.diamond.DiamondResultsDTO;
