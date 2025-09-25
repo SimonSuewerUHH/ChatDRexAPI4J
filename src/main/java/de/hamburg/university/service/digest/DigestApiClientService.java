@@ -63,7 +63,7 @@ public class DigestApiClientService {
                 });
     }
 
-    @Timeout(value = 180, unit = ChronoUnit.SECONDS)
+    @Timeout(value = 300, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "fallback")
     public Uni<DigestToolResultDTO> retrieveResults(String uid) {
         return Uni.createFrom().emitter(emitter -> {
