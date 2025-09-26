@@ -59,7 +59,7 @@ public class CypherToDrugstOne {
                 DrugstOneNodeDTO node = new DrugstOneNodeDTO();
                 node.setId(id);
                 node.setLabel(edgeDto.getN1DisplayName());
-                node.setType(edgeDto.getN1Type().toLowerCase());
+                node.setGroup(edgeDto.getN1Type().toLowerCase());
                 return node;
             });
 
@@ -67,7 +67,7 @@ public class CypherToDrugstOne {
                 DrugstOneNodeDTO node = new DrugstOneNodeDTO();
                 node.setId(id);
                 node.setLabel(edgeDto.getN2DisplayName());
-                node.setType(edgeDto.getN2Type().toLowerCase());
+                node.setGroup(edgeDto.getN2Type().toLowerCase());
                 return node;
             });
         }
@@ -85,7 +85,7 @@ public class CypherToDrugstOne {
         result.setEdges(graphEdges);
         result.setNetworkType("cypher_qa_tool");
         drugstOneManager.patchNetwork(content, result);
-        drugstOneManager.send(toolDTO, content, emitter);
+        drugstOneManager.stopAndSend(toolDTO, content, emitter);
     }
 
     public String fireNeo4jQuery(String cypher) {

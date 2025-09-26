@@ -107,7 +107,7 @@ public class DrugstOneGraphHelper {
             DrugstOneNodeDTO n = new DrugstOneNodeDTO();
             n.setId(id);
             n.setLabel(StringUtils.defaultIfBlank(label, id));
-            n.setType(StringUtils.defaultIfBlank(type, "default"));
+            n.setGroup(StringUtils.defaultIfBlank(type, "default"));
             return n;
         });
     }

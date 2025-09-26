@@ -8,5 +8,5 @@ public class DrugstOneNodeDTO {
     private String id;
     private String label;
     @JsonProperty("group")
-    private String type;
+    private String group;
 }

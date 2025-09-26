@@ -15,8 +15,6 @@ import jakarta.inject.Inject;
 
 import java.util.*;
 
-import static de.hamburg.university.helper.drugstone.DrugstOneNodeGroupDefaults.defaultEdge;
-
 @ApplicationScoped
 public class DrugstOneManager {
 
@@ -138,7 +136,7 @@ public class DrugstOneManager {
         }
         Set<String> existingTypes = new HashSet<>();
         for(DrugstOneNodeDTO node : current.getNetwork().getNodes()) {
-            String nodeType = node.getType();
+            String nodeType = node.getGroup();
             if(nodeType == null) {
                 continue;
             }
