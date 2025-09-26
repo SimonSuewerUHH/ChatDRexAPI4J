@@ -9,4 +9,9 @@ public class DrugstOneNodeDTO {
     private String label;
     @JsonProperty("group")
     private String group;
+
+    @JsonProperty("type")
+    public String getType() {
+        return group;
+    }
 }
