@@ -3,11 +3,11 @@ package de.hamburg.university.helper.drugstone.cypher;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.tool.ToolDTO;
-import de.hamburg.university.agent.tool.ToolStructuredContentType;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import de.hamburg.university.helper.drugstone.DrugstOneManager;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneEdgeDTO;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneNodeDTO;
@@ -35,10 +35,12 @@ public class CypherToDrugstOne {
     @Inject
     ChatWebsocketSender chatWebsocketSender;
 
+    @Inject
+    DrugstOneManager drugstOneManager;
 
     public void toDrugstOne(List<String> ids, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
 
-        ToolDTO toolDTO = new ToolDTO(Tools.NEDREX_TOOL.name());
+        ToolDTO toolDTO = new ToolDTO(Tools.DRUGST_ONE.name());
         toolDTO.setInput("Building Graph with " + ids.size() + " Entrez IDs");
         chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
@@ -82,10 +84,8 @@ public class CypherToDrugstOne {
         result.setNodes(new ArrayList<>(nodeMap.values()));
         result.setEdges(graphEdges);
         result.setNetworkType("cypher_qa_tool");
-        toolDTO.addStructuredContent(ToolStructuredContentType.DRUGST_ONE, result);
-        toolDTO.setStop();
-        chatWebsocketSender.sendTool(toolDTO, content, emitter);
-
+        drugstOneManager.patchNetwork(content, result);
+        drugstOneManager.send(toolDTO, content, emitter);
     }
 
     public String fireNeo4jQuery(String cypher) {

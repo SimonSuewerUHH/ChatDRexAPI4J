@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.agent.bot.NeDRexToolDecisionBot;
 import de.hamburg.university.agent.planning.PlanState;
 import de.hamburg.university.agent.tool.ToolDTO;
-import de.hamburg.university.agent.tool.ToolStructuredContentType;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
+import de.hamburg.university.helper.drugstone.DrugstOneManager;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessResultDTO;
 import de.hamburg.university.service.nedrex.closeness.ClosenessSeedPayloadDTO;
@@ -52,6 +52,9 @@ public class NeDRexTool {
     @Inject
     ChatWebsocketSender chatWebsocketSender;
 
+    @Inject
+    DrugstOneManager drugstOneManager;
+
     public PlanState answer(PlanState state, String subTaskQuestion, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         ToolDTO toolDTO = new ToolDTO(Tools.NEDREX_TOOL.name());
         NeDRexToolDecisionResult result = neDRexToolDecisionBot.answer(subTaskQuestion, state.getEnhancedQueryBioInfo());
@@ -70,8 +73,9 @@ public class NeDRexTool {
 
             Uni<DiamondResultsDTO> diamondResult = runDiamond(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.diamondToNetwork(diamondResult.await().indefinitely());
-            state.setDrugstOneNetwork(network);
-            toolDTO.addStructuredContent(ToolStructuredContentType.DRUGST_ONE, network);
+            drugstOneManager.setNetwork(content, network);
+            drugstOneManager.send(toolDTO, content, emitter);
+            state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
         } else if (result.getToolName().equalsIgnoreCase("trustrank")) {
             TrustRankSeedPayloadDTO payload = getTrustrankPayload(result.getEntrezIds());
             toolDTO.addContent("Run with:" + getJson(payload));
@@ -79,8 +83,9 @@ public class NeDRexTool {
 
             Uni<TrustRankResultDTO> trustRankResult = runTrustrank(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(trustRankResult.await().indefinitely());
-            state.setDrugstOneNetwork(network);
-            toolDTO.addStructuredContent(ToolStructuredContentType.DRUGST_ONE, network);
+            drugstOneManager.setNetwork(content, network);
+            drugstOneManager.send(toolDTO, content, emitter);
+            state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
         } else if (result.getToolName().equalsIgnoreCase("closeness")) {
             ClosenessSeedPayloadDTO payload = getClosenessPayload(result.getEntrezIds());
             toolDTO.addContent("Run with:" + getJson(payload));
@@ -88,8 +93,9 @@ public class NeDRexTool {
 
             Uni<ClosenessResultDTO> closenessResult = runCloseness(payload);
             DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(closenessResult.await().indefinitely());
-            state.setDrugstOneNetwork(network);
-            toolDTO.addStructuredContent(ToolStructuredContentType.DRUGST_ONE, network);
+            drugstOneManager.setNetwork(content, network);
+            drugstOneManager.send(toolDTO, content, emitter);
+            state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
         }
 
 

@@ -25,7 +25,7 @@ public interface FinalizeBot {
             - nedrexKgInfo
             - digestResult
             - enhancedQueryBioInfo
-            - drugstOneNetwork
+            - networkSummary
 
             ──────────────────────────────────────────────────────────────────────────────
           
@@ -39,7 +39,7 @@ public interface FinalizeBot {
               - If information comes from `nedrexKgInfo`, cite it explicitly with [NeDRex].
             
             - **Entity IDs**
-              - If an drugbank, uniprot or entrez ID appears in `drugstOneNetwork`, annotate it properly:
+              - If an drugbank, uniprot or entrez ID appears in `networkSummary`, annotate it properly:
                 • drugbank → cite as [DrugBank:XXX]  
                 • uniprot  → cite as [UniProt:XXX]  
                 • entrez   → cite as [Entrez:XXX]  
@@ -63,7 +63,7 @@ public interface FinalizeBot {
             
             
             ## User Guidance Suggestions
-            - If the PlanState contains any suggestion(s) for what the user could ask next (e.g., fields such as `suggestion`, `suggestedPrompts`, `userGuidance`, `nextQuestions`, or entries nested under `research`, `nedrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, or `drugstOneNetwork` that are explicitly labeled as suggestions), then **include them verbatim** in the final answer.
+            - If the PlanState contains any suggestion(s) for what the user could ask next (e.g., fields such as `suggestion`, `suggestedPrompts`, `userGuidance`, `nextQuestions`, or entries nested under `research`, `nedrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, or `networkSummary` that are explicitly labeled as suggestions), then **include them verbatim** in the final answer.
             - Render them under a final section titled **Suggested follow‑ups** for each answered question.
             - Preserve list structure and bullet points from the state. Do not paraphrase.
             - Example block (only when present in state):
@@ -83,7 +83,7 @@ public interface FinalizeBot {
             - `nedrexKgInfo` has no relevant items,
             - `digestResult` has no relevant items,
             - `enhancedQueryBioInfo` has no relevant items,
-            - `drugstOneNetwork` has no relevant items.
+            - `networkSummary` has no relevant items.
             If any relevant evidence exists in ANY field, DO NOT use the fallback.
             Instead, answer using that evidence and cite with [NeDRex] or [State:*] where appropriate.
 

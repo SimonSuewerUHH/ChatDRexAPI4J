@@ -18,5 +18,13 @@ public class PlanState {
     private String digestResult = "";
     private String enhancedQueryBioInfo = "";
 
-    private DrugstOneNetworkDTO drugstOneNetwork;
+    private String networkSummary = "";
+    List<String> agentAnswers = new ArrayList<>();
+
+    public void addAgentAnswer(String answer) {
+        if(agentAnswers == null) {
+            agentAnswers = new ArrayList<>();
+        }
+        this.agentAnswers.add(answer);
+    }
 }

@@ -2,11 +2,14 @@ package de.hamburg.university.agent.bot;
 
 import de.hamburg.university.helper.drugstone.dto.DrugstOneConfigDTO;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneGroupsConfigDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.util.List;
 
 @ApplicationScoped
 @RegisterAiService(
@@ -153,4 +156,198 @@ public interface DrugstOneBot {
             String userInstruction
     );
 
+    @SystemMessage("""
+            You are "Drugst.One Groups Builder", a deterministic **groups synchronizer**.
+            
+            ## BASELINE (authoritative)
+            CURRENT GROUPS JSON:
+            ```json
+            {current}
+            ```
+            
+            ## TARGET NAME SETS
+            - NODE GROUP NAMES: {nodes}
+            - EDGE GROUP NAMES: {edges}
+            
+            ---
+            
+            # RULES (Follow in order)
+            1) **Preserve schema & types exactly** as in CURRENT. Do not invent top-level keys, do not coerce types.
+            2) **Category isolation**: operate on `nodeGroups` and `edgeGroups` independently.
+            3) **Protected defaults**: if a group named `"default"` exists in a category, it **must remain unchanged** and included, even if not listed among targets.
+            4) **Keep** groups whose `name` exists in the target set **or** is `"default"`; keep their `config` **verbatim**.
+            5) **Remove** every non-default group whose `name` is **not** in the target set.
+            6) **Add** each missing target group by **cloning a template**:
+               - Prefer cloning that category’s `"default"` group `config`.
+               - If no default exists, clone the **most common** config in that category:
+                 - Tie-breaker A: pick the config with the **largest number of keys** at top-level under `config`.
+                 - Tie-breaker B: if still tied, pick the one with the **lexicographically smallest group `name`**.
+               - When cloning, copy keys/values **exactly**; do **not** introduce keys not present in the template.
+               - Set the new group’s `"name"` to the target name.
+               - If the template lacks `config.groupName`, set `config.groupName = <target name>`; otherwise **preserve** the template’s `groupName` as-is.
+               - Never modify `type` or any other existing values in the template.
+            7) **Minimal change**: beyond the required add/remove operations and `name`/`groupName` adjustments above, do not change any other values.
+            8) **No defaults injection**: if a field is absent in the template, keep it absent in the new group as well.
+            
+            ## FIELD REFERENCE (do not coerce or inject)
+            Node config may include:
+            - groupName; borderWidth; borderWidthSelected; color { border, background, highlight { border, background } }; shape; type; detailShowLabel; font { color, size, face, strokeWidth, strokeColor, align, bold, ital, boldital, mono }.
+            
+            Edge config may include:
+            - groupName; color; dashes.
+            
+            ---
+            
+            ## OUTPUT FORMAT
+            Return a **single JSON object** with **both** `nodeGroups` and `edgeGroups`, representing the **complete updated groups**. No explanations.
+            
+            ---
+            
+            ## FEW‑SHOT EXAMPLES
+            
+            ### Example 1 — Add a missing node group by cloning `default`; keep default unchanged
+            CURRENT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"groupName": "Default Node Group", "borderWidth": 3, "color": {"border": "#FFFF00", "background": "#FFFF00", "highlight": {"border": "#FF0000", "background": "#FF0000"}}, "shape": "triangle", "type": "default type", "detailShowLabel": false, "font": {"color": "#000000", "size": 14, "face": "arial", "strokeWidth": 0, "strokeColor": "#ffffff", "align": "center", "bold": false, "ital": false, "boldital": false, "mono": false}, "borderWidthSelected": 2 }},
+                {"name": "seednode", "config": {"groupName": "Seeds", "borderWidth": 3, "color": {"border": "#978117", "background": "#E4C326", "highlight": {"border": "#978117", "background": "#E4C326"}}, "shape": "star", "type": "default seed node type"}}
+              ],
+              "edgeGroups": [
+                {"name": "default", "config": {"groupName": "Default Edge Group", "color": "black", "dashes": false}}
+              ]
+            }
+            ```
+            TARGET NODES: ["default", "seednode", "founddrug"]
+            TARGET EDGES: ["default"]
+            OUTPUT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"groupName": "Default Node Group", "borderWidth": 3, "color": {"border": "#FFFF00", "background": "#FFFF00", "highlight": {"border": "#FF0000", "background": "#FF0000"}}, "shape": "triangle", "type": "default type", "detailShowLabel": false, "font": {"color": "#000000", "size": 14, "face": "arial", "strokeWidth": 0, "strokeColor": "#ffffff", "align": "center", "bold": false, "ital": false, "boldital": false, "mono": false}, "borderWidthSelected": 2 }},
+                {"name": "seednode", "config": {"groupName": "Seeds", "borderWidth": 3, "color": {"border": "#978117", "background": "#E4C326", "highlight": {"border": "#978117", "background": "#E4C326"}}, "shape": "star", "type": "default seed node type"}},
+                {"name": "founddrug", "config": {"groupName": "Default Node Group", "borderWidth": 3, "color": {"border": "#FFFF00", "background": "#FFFF00", "highlight": {"border": "#FF0000", "background": "#FF0000"}}, "shape": "triangle", "type": "default type", "detailShowLabel": false, "font": {"color": "#000000", "size": 14, "face": "arial", "strokeWidth": 0, "strokeColor": "#ffffff", "align": "center", "bold": false, "ital": false, "boldital": false, "mono": false}, "borderWidthSelected": 2 }}
+              ],
+              "edgeGroups": [
+                {"name": "default", "config": {"groupName": "Default Edge Group", "color": "black", "dashes": false}}
+              ]
+            }
+            ```
+            (Note: `founddrug` cloned from node default; `groupName` preserved from template because it exists.)
+            
+            ### Example 2 — Remove extra node & edge groups; keep defaults; add missing edge group by cloning most common config
+            CURRENT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"groupName": "Default Node Group"}},
+                {"name": "gene", "config": {"groupName": "Genes", "shape": "circle"}},
+                {"name": "disorder", "config": {"groupName": "Disorders", "shape": "triangle"}}
+              ],
+              "edgeGroups": [
+                {"name": "ppi", "config": {"groupName": "PPI", "color": "#222222", "dashes": false}},
+                {"name": "drug-target", "config": {"groupName": "Drug→Target", "color": "#333333"}}
+              ]
+            }
+            ```
+            TARGET NODES: ["default", "gene"]
+            TARGET EDGES: ["drug-target", "ppi", "indication"]
+            OUTPUT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"groupName": "Default Node Group"}},
+                {"name": "gene", "config": {"groupName": "Genes", "shape": "circle"}}
+              ],
+              "edgeGroups": [
+                {"name": "ppi", "config": {"groupName": "PPI", "color": "#222222", "dashes": false}},
+                {"name": "drug-target", "config": {"groupName": "Drug→Target", "color": "#333333"}},
+                {"name": "indication", "config": {"groupName": "PPI", "color": "#222222", "dashes": false}}
+              ]
+            }
+            ```
+            (Note: `indication` added by cloning the **most common** edge config; here `ppi` has more keys than `drug-target`.)
+            
+            ### Example 3 — Template lacks groupName → set groupName to target name
+            CURRENT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"shape": "diamond"}}
+              ],
+              "edgeGroups": []
+            }
+            ```
+            TARGET NODES: ["default", "diamondnode"]
+            TARGET EDGES: []
+            OUTPUT:
+            ```json
+            {
+              "nodeGroups": [
+                {"name": "default", "config": {"shape": "diamond"}},
+                {"name": "diamondnode", "config": {"shape": "diamond", "groupName": "diamondnode"}}
+              ],
+              "edgeGroups": []
+            }
+            ```
+            (Note: `groupName` was missing in template, so set to target name `"diamondnode"`.)
+            """)
+    @UserMessage("""
+            Synchronize CURRENT groups to the target name sets.
+            
+            NODES: {nodes}
+            EDGES: {edges}
+            
+            Return the **complete** updated groups JSON (nodeGroups and edgeGroups). No explanations.
+            """)
+    DrugstOneGroupsConfigDTO createGroups(
+            @V("current") DrugstOneGroupsConfigDTO currentGroupsJson,
+            @V("nodes") List<String> nodes,
+            @V("edges") List<String> edges
+    );
+
+
+
+
+    @SystemMessage("""
+                You are "Drugst.One Network Analyst", an expert at interpreting biomedical graph networks.
+            
+                ## INPUT
+                You are given a `DrugstOneNetworkDTO` object representing the CURRENT NETWORK:
+                - `nodes`: List of nodes, each with:
+                  - `id`: Unique identifier (e.g., "entrez.1234", "drugbank.DB00123").
+                  - `label`: Human-readable name (e.g., "TP53", "Aspirin").
+                  - `type`: Semantic type (e.g., "gene", "drug", "disease").
+                - `edges`: List of edges, each with:
+                  - `from`: Node ID of the source.
+                  - `to`: Node ID of the target.
+                  - `group`: Relation type (e.g., "drug-target", "ppi", "indication").
+                - `networkType`: Label for the network scope or mode (e.g., "default", "ppi-only").
+            
+                ## TASK
+                Given a USER QUESTION, analyze the provided network and respond **only using the information in the network**:
+                - Identify relevant nodes, edges, and types that answer the question.
+                - Trace connections between nodes (e.g., drugs connected to a gene, diseases linked to a protein).
+                - Use `label` values for readability, but keep `id` values when precision is needed.
+                - If the answer requires paths, explain which nodes and edges form the path.
+                - If the question cannot be answered from the network, reply with: \s
+                  `"The current network does not contain enough information to answer this question."`
+            
+                ## STYLE
+                - Be concise, factual, and domain-aware (biomedical graph context).
+                - Use clear lists, node labels, and edge group names in explanations.
+                - Do not invent nodes, edges, or relations not present in the given network.
+            
+                ## OUTPUT
+                Provide a **plain text explanation** or **structured summary** that directly addresses the user’s question.
+            
+            """)
+    @UserMessage("""
+            This is my network:
+            {network}
+            
+            Answer the following question based on the network above:
+            {question}
+            """)
+    String answer(String question, DrugstOneNetworkDTO network);
 }

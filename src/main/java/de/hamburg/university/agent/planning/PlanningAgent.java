@@ -1,10 +1,7 @@
 package de.hamburg.university.agent.planning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hamburg.university.agent.bot.DIGESTBot;
-import de.hamburg.university.agent.bot.FinalizeBot;
-import de.hamburg.university.agent.bot.NeDRexBot;
-import de.hamburg.university.agent.bot.ResearchBot;
+import de.hamburg.university.agent.bot.*;
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
@@ -55,6 +52,9 @@ public class PlanningAgent {
     @Inject
     NeDRexTool neDRexTool;
 
+    @Inject
+    DrugstOneAgent drugstOneAgent;
+
     private final ObjectMapper om = new ObjectMapper();
 
     public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
@@ -81,8 +81,8 @@ public class PlanningAgent {
             switch (decision.getAction()) {
                 case UPDATE_NETWORK -> {
                     Log.debugf("Action UPDATE_NETWORK: %s", decision.getReason());
-                    // FUTURE NOT YET IMPLEMENTED
-                    continue;
+                    String answer = drugstOneAgent.answer(connectionId, currentGoal);
+                    state.addAgentAnswer(answer);
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());

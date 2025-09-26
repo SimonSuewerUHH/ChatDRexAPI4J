@@ -8,6 +8,7 @@ public enum Tools {
     NEDREX,
     DIGEST,
     NEDREX_KG,
-    NEDREX_TOOL
+    NEDREX_TOOL,
+    DRUGST_ONE
 
 }
