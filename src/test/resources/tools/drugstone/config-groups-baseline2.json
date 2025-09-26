@@ -1,0 +1,122 @@
+{
+  "nodeGroups": {
+    "default": {
+      "groupName": "Default Node Group",
+      "borderWidth": 3,
+      "color": {
+        "border": "#FFFF00",
+        "background": "#FFFF00",
+        "highlight": {
+          "border": "#FF0000",
+          "background": "#FF0000"
+        }
+      },
+      "shape": "triangle",
+      "type": "default type",
+      "detailShowLabel": false,
+      "font": {
+        "color": "#000000",
+        "size": 14,
+        "face": "arial",
+        "strokeWidth": 0,
+        "strokeColor": "#ffffff",
+        "align": "center",
+        "bold": false,
+        "ital": false,
+        "boldital": false,
+        "mono": false
+      },
+      "borderWidthSelected": 2
+    },
+    "foundnode": {
+      "groupName": "Found Nodes",
+      "color": {
+        "border": "#F12590",
+        "background": "#F12590",
+        "highlight": {
+          "border": "#F12590",
+          "background": "#F12590"
+        }
+      },
+      "shape": "circle",
+      "type": "default node type"
+    },
+    "seednode": {
+      "groupName": "Seeds",
+      "borderWidth": 3,
+      "color": {
+        "border": "#978117",
+        "background": "#E4C326",
+        "highlight": {
+          "border": "#978117",
+          "background": "#E4C326"
+        }
+      },
+      "shape": "star",
+      "type": "default seed node type"
+    },
+    "diamondnode": {
+      "groupName": "Diamond Nodes",
+      "borderWidth": 3,
+      "color": {
+        "border": "#13367A",
+        "background": "#3F78C1",
+        "highlight": {
+          "border": "#13367A",
+          "background": "#3F78C1"
+        }
+      },
+      "shape": "diamond",
+      "type": "default diamond node type"
+    },
+    "founddrug": {
+      "groupName": "Drugs",
+      "borderWidth": 3,
+      "color": {
+        "border": "#9c195d",
+        "background": "#F12590",
+        "highlight": {
+          "border": "#9c195d",
+          "background": "#F12590"
+        }
+      },
+      "shape": "diamond",
+      "type": "default drug node type"
+    },
+    "gene": {
+      "groupName": "Genes",
+      "borderWidth": 3,
+      "color": {
+        "border": "#356920",
+        "background": "#7EC16A",
+        "highlight": {
+          "border": "#356920",
+          "background": "#7EC16A"
+        }
+      },
+      "shape": "circle",
+      "type": "default gene node type"
+    },
+    "disorder": {
+      "groupName": "Disorders",
+      "borderWidth": 3,
+      "color": {
+        "border": "#d18b19",
+        "background": "#f1a223",
+        "highlight": {
+          "border": "#d18b19",
+          "background": "#f1a223"
+        }
+      },
+      "shape": "triangle",
+      "type": "default gene node type"
+    }
+  },
+  "edgeGroups": {
+    "default": {
+      "groupName": "Default Edge Group",
+      "color": "black",
+      "dashes": false
+    }
+  }
+}

@@ -6,6 +6,7 @@ import de.hamburg.university.agent.bot.DrugstOneBot;
 import de.hamburg.university.helper.JsonLoader;
 import de.hamburg.university.helper.LoggingProgressBar;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneConfigDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneGroupsConfigDTO;
 import de.hamburg.university.tool.pojo.DrugstOneConfigQuestion;
 import de.hamburg.university.tool.pojo.ResearchResult;
 import io.quarkus.logging.Log;
@@ -158,7 +159,61 @@ public class DrugstOneConfigEvaluationTest {
 
     }
 
-    public String diffAsString(DrugstOneConfigDTO actual, DrugstOneConfigDTO other) {
+    @Test
+    void evalQuestionsConfigGroup() {
+        List<DrugstOneConfigQuestion> questions = JsonLoader.loadJson(
+                "tools/drugstone/config-groups-test.json",
+                new com.fasterxml.jackson.core.type.TypeReference<>() {
+                }
+        );
+        LoggingProgressBar bar = LoggingProgressBar.of(LOG, "Testing", questions.size());
+        List<ResearchResult> results = new ArrayList<>();
+        Path out = Paths.get("results", "eval", "drugst-one-config-group.json");
+
+
+        DrugstOneGroupsConfigDTO base = JsonLoader.loadJson(
+                "tools/drugstone/config-groups-baseline2.json",
+                new TypeReference<DrugstOneGroupsConfigDTO>() {
+                }
+        );
+
+        for (DrugstOneConfigQuestion question : questions) {
+            ResearchResult result = new ResearchResult();
+            try {
+                result.setQuestion(question.getQuestion());
+
+                DrugstOneGroupsConfigDTO expectedNode = deepMerge(base, question.getPartResult());
+
+                DrugstOneGroupsConfigDTO actual = bot.updateGroups(base, question.getQuestion());
+
+                result.setAnswer(expectedNode.toString());
+                result.setAnswer(MAPPER.writeValueAsString(actual));
+                if (expectedNode.equals(actual)) {
+                    result.setCorrectAnswer(true);
+                } else {
+                    String diff = diffAsString(expectedNode, actual);
+                    result.setErrorMessage("Configs differ:\n" + diff);
+                }
+            } catch (Exception e) {
+                result.setErrorMessage(e.getMessage());
+            }
+            bar.step();
+            results.add(result);
+        }
+        bar.complete();
+        ResearchResult.printJsonFile(results, out);
+
+        int correct = (int) results.stream().filter(ResearchResult::isCorrectAnswer).count();
+        for (ResearchResult r : results) {
+            LOG.info(r.minimizeString());
+        }
+        Log.info("_________________________________________");
+        Log.infof("Correct answers: %d/%d", correct, results.size());
+        Log.infof("JSON written: %s", out.toAbsolutePath());
+
+    }
+
+    public String diffAsString(Object actual, Object other) {
         if (actual == null && other == null) {
             return "Both configs are null";
         }
@@ -208,7 +263,17 @@ public class DrugstOneConfigEvaluationTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    private DrugstOneGroupsConfigDTO deepMerge(DrugstOneGroupsConfigDTO base, Map<String, Object> partResult) {
+        try {
+            Map<String, Object> baseMap = MAPPER.convertValue(base, new TypeReference<>() {
+            });
+            Map<String, Object> merged = deepMerge(baseMap, partResult);
+            return MAPPER.convertValue(merged, DrugstOneGroupsConfigDTO.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to deep merge config", e);
+        }
+    }
+
     private static <K, V> Map<K, V> deepMerge(Map<K, V> base, Map<K, V> override) {
         if (override == null) {
             return base;
