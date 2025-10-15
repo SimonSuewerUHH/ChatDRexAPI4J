@@ -17,6 +17,7 @@ import de.hamburg.university.tool.pojo.*;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.reactive.ClientWebApplicationException;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,9 @@ public class NeDRexKGEvaluationTest {
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
+    @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "default")
+    String modelName;
+
     @Test
     public void testInteractions() {
         List<String> categories = List.of(
@@ -67,7 +71,7 @@ public class NeDRexKGEvaluationTest {
         List<Score> allScores = new ArrayList<>();
         List<QuestionScore> allQuestionScores = new ArrayList<>();
 
-        Path out = Paths.get("results", "eval", "interactions_scores.csv");
+        Path out = Paths.get("results", "eval", modelName.replace(":latest", ""), "kg_cypher_result.csv");
         for (String category : categories) {
             List<CypherQuestion> questions = loadQuestions(category);
             List<Score> categoryScores = new ArrayList<>();
@@ -132,7 +136,7 @@ public class NeDRexKGEvaluationTest {
         int correct = 0;
         List<AiAnswerCypher> allQuestionScores = new ArrayList<>();
 
-        Path out = Paths.get("results", "eval", "interactions_ai_judge_scores.json");
+        Path out = Paths.get("results", "eval", modelName.replace(":latest", ""), "kg_cypher_result_ai_judge.csv");
         for (String category : categories) {
             List<CypherQuestion> questions = loadQuestions(category);
             for (CypherQuestion question : questions) {
