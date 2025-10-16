@@ -49,7 +49,7 @@ public class NeDRexKGEvaluationTest {
     AIJudgeBot judgeBot;
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
-
+    private static final boolean REPLACE_MODE = false;
     @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "default")
     String modelName;
 
@@ -70,12 +70,26 @@ public class NeDRexKGEvaluationTest {
         );
         List<Score> allScores = new ArrayList<>();
         List<QuestionScore> allQuestionScores = new ArrayList<>();
-
         Path out = Paths.get("results", "eval", modelName.replace(":latest", ""), "kg_cypher_result.csv");
+
+        if (REPLACE_MODE) {
+            Log.warn("REPLACE MODE is ON - existing results will be overwritten!");
+        } else {
+            Log.info("REPLACE MODE is OFF - existing results will be kept!");
+            allQuestionScores = QuestionScore.loadJsonFile(out.resolveSibling("interactions_scores.json"));
+            if(allQuestionScores == null){
+                allQuestionScores = new ArrayList<>();
+                Log.info("No question scores found!");
+            }
+        }
         for (String category : categories) {
             List<CypherQuestion> questions = loadQuestions(category);
             List<Score> categoryScores = new ArrayList<>();
             for (CypherQuestion question : questions) {
+                if(!REPLACE_MODE && QuestionScore.containsQuestion(allQuestionScores, question.getNlQuestion())) {
+                    Log.info("Skipping already evaluated question: " + question.getNlQuestion());
+                    continue;
+                }
                 try {
 
                     Log.info("Question " + (questions.indexOf(question) + 1) + "/" + questions.size() + " [" + (categories.indexOf(category) + 1) + "/" + categories.size() + "]: " + question.getNlQuestion());

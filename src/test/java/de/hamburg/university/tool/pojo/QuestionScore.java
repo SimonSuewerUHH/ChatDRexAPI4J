@@ -56,6 +56,17 @@ public class QuestionScore {
         }
     }
 
+
+    public static List<QuestionScore> loadJsonFile(Path file) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(file.toFile(), mapper.getTypeFactory().constructCollectionType(List.class, QuestionScore.class));
+        } catch (Exception e) {
+            Log.error("Failed to read JSON", e);
+            return null;
+        }
+    }
+
     public static void printJsonFile(List<QuestionScore> rows, Path file) {
         try {
             Files.createDirectories(file.getParent());
@@ -74,6 +85,15 @@ public class QuestionScore {
         boolean needsQuotes = s.contains(",") || s.contains("\"") || s.contains("\n");
         String escaped = s.replace("\"", "\"\"");
         return needsQuotes ? "\"" + escaped + "\"" : escaped;
+    }
+
+    public static boolean containsQuestion(List<QuestionScore> scores, String question) {
+        for (QuestionScore score : scores) {
+            if (score.getQuestion().equals(question)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
