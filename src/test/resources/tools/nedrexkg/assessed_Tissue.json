@@ -5,18 +5,70 @@
   },
   {
     "nl_question": "What are the common disorders associated with genes expressed in both kidney and liver tissues?",
-    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t1:Tissue {displayName: 'kidney'})-[:GeneExpressedInTissue]->(t2:Tissue {displayName: 'liver'})<-[:GeneExpressedInTissue]-(g2:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN d.displayName AS DisorderName"
+    "cypher_translation": "MATCH (t2:Tissue {displayName: 'liver'})<-[:GeneExpressedInTissue]-(g:Gene)-[:GeneExpressedInTissue]->(t1:Tissue {displayName: 'kidney'}) WITH g MATCH (g:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN d.displayName AS DisorderName"
   },
   {
     "nl_question": "What are the genomic variants associated with disorders that affect gene expression in the skin epidermis?",
-    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'skin epidermis'})-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN v.displayName AS VariantName, d.displayName AS DisorderName"
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'skin epidermis'}) WITH g, v MATCH (g)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN v.primaryDomainId AS VariantName, d.displayName AS DisorderName"
   },
   {
     "nl_question": "What are the side effects of drugs that target proteins expressed in the stomach?",
-    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'stomach'})<-[:DrugHasSideEffect]-(se:SideEffect) RETURN se.displayName AS SideEffectName"
+    "cypher_translation": "MATCH (se:SideEffect)<-[:DrugHasSideEffect]-(d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'stomach'}) RETURN se.displayName AS SideEffectName"
   },
   {
     "nl_question": "Which tissues express genes related to the GO term 'immune response'?",
-    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue)-[r:ProteinHasGOAnnotation]->(go:GO {displayName: 'immune response'}) RETURN t.displayName AS TissueName"
+    "cypher_translation": "MATCH (go:GO {displayName: 'immune response'})<-[r:ProteinHasGOAnnotation]- (p:Protein) -[:ProteinEncodedByGene]->(g:Gene)-[:GeneExpressedInTissue]->(t:Tissue) RETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Which proteins are known to be expressed in the 'liver'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'liver'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What genes are expressed in the 'cerebral cortex'?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'cerebral cortex'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "In which tissues is the BRCA1 gene expressed?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA1'})-[:GeneExpressedInTissue]->(t:Tissue) RETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "How many genes are expressed in the 'spleen'?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'spleen'}) RETURN count(g) AS NumberOfGenes"
+  },
+  {
+    "nl_question": "Can you list all the tissues available in the graph?",
+    "cypher_translation": "MATCH (t:Tissue) RETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Which genes are expressed in the 'liver'?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'liver'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What proteins are expressed in the 'cerebral cortex'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'cerebral cortex'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "How many unique genes are known to be expressed in the 'lung'?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'lung'}) RETURN count(DISTINCT g) AS UniqueGeneCount"
+  },
+  {
+    "nl_question": "Which genes are expressed in the 'spleen' tissue?",
+    "cypher_translation": "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'spleen'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What proteins are expressed in the 'liver' tissue?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue {displayName: 'liver'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "In which tissues is the gene BRCA1 expressed, and with which disorders is it associated?",
+    "cypher_translation": "MATCH (t:Tissue) <-[:GeneExpressedInTissue]-(g:Gene {displayName: 'BRCA1'})-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN DISTINCT t.displayName AS Tissue, d.displayName AS Disorder"
+  },
+  {
+    "nl_question": "List all tissues where the 'PRC2B' protein is expressed.",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'PRC2B_HUMAN'})-[:ProteinExpressedInTissue]->(t:Tissue) RETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Which genes are expressed in both 'kidney' and 'heart' tissues?",
+    "cypher_translation": "MATCH (t2:Tissue {displayName: 'heart'}) <-[:GeneExpressedInTissue]-(g:Gene)-[:GeneExpressedInTissue]->(t1:Tissue {displayName: 'kidney'})  RETURN g.displayName AS GeneName"
   }
 ]

@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 llms = ['gpt-oss', 'qwen3-coder']
 
@@ -34,7 +35,7 @@ for llm in llms:
     res_dict[llm]['R'] = res_dict[llm].apply(compute_recall, axis = 1)
     res_dict[llm]['F1'] = res_dict[llm].apply(compute_f1, axis = 1)
 
-print('\n------- Metrics (avg) --------\n')
+print('\n------- TRANSLATION----------\n')
 for llm in llms:
     print(f'---------{llm}-------------\n')
     print(f'PRECISION: {res_dict[llm]["P"].mean()}\n')
@@ -44,5 +45,10 @@ for llm in llms:
 
 ################################## NL GENERATION #########################################
 judge_res = {}
+print('\n------- NL GENERATION----------\n')
 for llm in llms:
-    judge_res[llm] = pd.read_csv(f'{llm}/kg_cypher_result_ai_judge.csv')
+    with open(f'{llm}/kg_cypher_result_ai_judge.csv', "r") as f:
+        judge_res[llm] = pd.DataFrame(json.load(f))
+    print(f'---------{llm}-------------\n')
+    print(f'fraction of positive feedbacks \n {judge_res[llm]["isCorrect"].value_counts(normalize=True)}\n')
+

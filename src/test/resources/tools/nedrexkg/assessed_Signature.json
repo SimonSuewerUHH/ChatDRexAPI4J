@@ -1,22 +1,78 @@
 [
   {
     "nl_question": "Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'Immunoglobulins'})-[:VariantAffectsGene]->(g:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder) RETURN d.displayName AS DisorderName"
+    "cypher_translation": "MATCH (dis:Disorder) <-[:DrugHasIndication]-(d:Drug)-[:DrugHasTarget]-> (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'Immunoglobulins'}) RETURN dis.displayName AS DisorderName"
   },
   {
-    "nl_question": "What is the database source for the 'Immunoglobulin' signature?",
-    "cypher_translation": "MATCH (s:Signature {displayName: 'Immunoglobulin'}) RETURN s.database AS DatabaseSource"
+    "nl_question": "What is the database source for the 'Calcitonin' signature?",
+    "cypher_translation": "MATCH (s:Signature {displayName: 'Calcitonin'}) RETURN s.database AS DatabaseSource"
   },
   {
-    "nl_question": "Does the 'Ig-like_dom' signature have any overlap with the 'IG_LIKE' signature?",
-    "cypher_translation": "MATCH (s1:Signature {displayName: 'Ig-like_dom'})-[:GOIsSubtypeOfGO]->(go:GO)-[:GOIsSubtypeOfGO]->(s2:Signature {displayName: 'IG_LIKE'}) RETURN s1.displayName AS Signature1, s2.displayName AS Signature2"
+    "nl_question": "Find all proteins that contain both the “Ig-like_dom” and “IG_LIKE” protein signatures.",
+    "cypher_translation": "MATCH (s1:Signature {displayName: 'Ig-like_dom'})<-[:ProteinHasSignature]-(p1:Protein)-[:ProteinHasSignature]->(s2:Signature {displayName: 'IG_LIKE'}) RETURN p1.displayName AS Protein "
   },
   {
     "nl_question": "Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I-like_Ag-recog_sf'})-[:DrugHasTarget]->(d:Drug) RETURN d.displayName AS DrugName"
+    "cypher_translation": "MATCH (d:Drug) -[:DrugHasTarget]->(p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I-like_Ag-recog_sf'})  RETURN d.displayName AS DrugName"
   },
   {
     "nl_question": "Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I'})-[:ProteinEncodedByGene]->(g:Gene)-[:VariantAffectsGene]->(v:GenomicVariant) RETURN v.displayName AS GenomicVariantName"
+    "cypher_translation": "MATCH (gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene) <- [:ProteinEncodedByGene]-(p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I'}) RETURN gv.primaryDomainId AS GenomicVariantName"
+  },
+  {
+    "nl_question": "Retrieve a comprehensive list of all distinct database sources for signature entries in the graph.",
+    "cypher_translation": "MATCH (s:Signature) RETURN DISTINCT s.dataSources"
+  },
+  {
+    "nl_question": "For each unique database, provide the total count of associated signatures.",
+    "cypher_translation": "MATCH (s:Signature) RETURN s.dataSources AS Database, COUNT(s) AS SignatureCount"
+  },
+  {
+    "nl_question": "What are the display name and type properties for all signatures originating from the 'Pfam' database?",
+    "cypher_translation": "MATCH (s:Signature {database: 'Pfam'}) RETURN s.displayName AS DisplayName, s.type AS Type"
+  },
+  {
+    "nl_question": "List all unique signature types present in the knowledge graph and provide an example display name for each type.",
+    "cypher_translation": "MATCH (s:Signature) WITH DISTINCT s.type AS SignatureType, collect(s.displayName)[0] AS ExampleDisplayName RETURN SignatureType, ExampleDisplayName"
+  },
+  {
+    "nl_question": "What are the names of all Signature nodes from PANTHER recorded in the graph?",
+    "cypher_translation": "MATCH (s:Signature {database: 'PANTHER'}) RETURN DISTINCT s.displayName"
+  },
+  {
+    "nl_question": "From which database does the `Signature` 'Ig-like_fold' originate?",
+    "cypher_translation": "MATCH (s:Signature {displayName: 'Ig-like_fold'}) RETURN s.database"
+  },
+  {
+    "nl_question": "Which `Protein` nodes are linked to the `Signature` 'MHC_I/II-like_Ag-recog'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'MHC_I/II-like_Ag-recog'}) RETURN p.displayName"
+  },
+  {
+    "nl_question": "List all `Signature` display names that are associated with the 'CDD' database.",
+    "cypher_translation": "MATCH (s:Signature {database: 'CDD'}) RETURN s.displayName"
+  },
+  {
+    "nl_question": "Which proteins have the signature ‘Immunoglobulin,’ and from which database does this signature come?",
+    "cypher_translation": "MATCH (s:Signature {displayName: 'Immunoglobulin'}) OPTIONAL MATCH (p:Protein)-[:ProteinHasSignature]->(s) RETURN s.displayName AS SignatureDisplayName, s.database AS Database, p.displayName AS ProteinDisplayName"
+  },
+  {
+    "nl_question": "What are the data sources and databases for the signature named 'alpha_CA_VI'?",
+    "cypher_translation": "MATCH (s:Signature {displayName: 'alpha_CA_VI'}) RETURN s.dataSources, s.database"
+  },
+  {
+    "nl_question": "Which proteins are associated with the 'Ig-like_fold' signature?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasSignature]->(s:Signature {displayName: 'Ig-like_fold'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "Can you list all signatures that have 'MHC' in their display name and indicate their database?",
+    "cypher_translation": "MATCH (s:Signature) WHERE toLower(s.displayName) CONTAINS 'mhc' RETURN s.displayName AS SignatureName, s.database"
+  },
+  {
+    "nl_question": "What are all the known signatures for a H3BUS4 protein?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'H3BUS4_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS SignatureName"
+  },
+  {
+    "nl_question": "How many distinct signatures originating from the 'InterPro' database are recorded in the knowledge graph?",
+    "cypher_translation": "MATCH (s:Signature {database: 'InterPro'}) RETURN count(DISTINCT s)"
   }
 ]

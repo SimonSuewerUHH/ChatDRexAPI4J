@@ -22,5 +22,45 @@
   {
     "nl_question": "List the contraindications for Paroxetine.",
     "cypher_translation": "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication"
+  },
+  {
+    "nl_question": "What are the medical indications for the drug 'Pregabalin'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.displayName AS Indication"
+  },
+  {
+    "nl_question": "What side effects are associated with the drug 'Citalopram'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Citalopram'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffect"
+  },
+  {
+    "nl_question": "Can you list the biological targets of 'Imatinib'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Imatinib'})-[:DrugHasTarget]->(p:Protein)\nRETURN p.displayName AS Target"
+  },
+  {
+    "nl_question": "Does 'Paroxetine' have any known contraindications?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication"
+  },
+  {
+    "nl_question": "Can you list the side effects of Paroxetine?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "What genes or proteins are targeted by Gabapentin?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Gabapentin'})-[:DrugHasTarget]->(p:Protein)-[:ProteinEncodedByGene]->(g:Gene) RETURN g.displayName AS GeneName, p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the known indications for the drug 'Citalopram'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Citalopram'})-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.displayName AS Indication"
+  },
+  {
+    "nl_question": "What side effects are associated with taking 'Pregabalin'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffect"
+  },
+  {
+    "nl_question": "Does 'Paroxetine' have any contraindications?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication"
+  },
+  {
+    "nl_question": "What are the biological targets of the drug 'Imatinib'?",
+    "cypher_translation": "MATCH (d:Drug {displayName: 'Imatinib'})-[:DrugHasTarget]->(p:Protein)\nRETURN p.displayName AS BiologicalTarget"
   }
 ]
