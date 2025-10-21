@@ -101,6 +101,7 @@ public class NeDRexKGEvaluationTest {
                     categoryScores.add(score);
                     allScores.add(score);
                     allQuestionScores.add(new QuestionScore(category, question.getNlQuestion(), question.getCypherTranslation(), answer, score));
+                    QuestionScore.printJsonFile(allQuestionScores, out.resolveSibling("interactions_scores.json"));
 
                     if (score.getPrecision() < 0.5) {
                         Log.warnf("Low precision for question: %s\nCypher: %s\nGolden: %s\nAI: %s\nScore: %s",
@@ -116,7 +117,6 @@ public class NeDRexKGEvaluationTest {
                 Log.warnf("Low average precision for category: %s, Score: %s", category, avgCategoryScore);
             }
             QuestionScore.printCsvFile(allQuestionScores, out);
-            QuestionScore.printJsonFile(allQuestionScores, out.resolveSibling("interactions_scores.json"));
 
             /*assertTrue(avgCategoryScore.getPrecision() > 0.5,
                     "Category " + category + " precision avg should be > 0.5 but was " + avgCategoryScore.getPrecision());*/
