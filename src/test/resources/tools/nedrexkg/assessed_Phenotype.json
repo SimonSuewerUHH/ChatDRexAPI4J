@@ -1,22 +1,62 @@
 [
   {
     "nl_question": "What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?",
-    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {displayName: 'Seizure'})-[:DisorderHasPhenotype]->(p1:Phenotype) MATCH (d2:Disorder {displayName: 'Intellectual disability'})-[:DisorderHasPhenotype]->(p2:Phenotype) WHERE p1.displayName = 'Seizure' AND p2.displayName = 'Intellectual disability' RETURN v.alternativeSequence AS VariantSequence"
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder) -[:DisorderHasPhenotype]->(p:Phenotype)\n WHERE p.displayName IN ['Seizure', 'Intellectual disability']  WITH v, collect(DISTINCT p.displayName) AS phenotypes WHERE all(x IN ['Seizure', 'Intellectual disability'] WHERE x IN phenotypes) RETURN v.primaryDomainId"
   },
   {
-    "nl_question": "What are the common comorbidities or overlapping phenotypes observed with 'Short stature' in children?",
-    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p1:Phenotype {displayName: 'Short stature'})-[:SideEffectSameAsPhenotype]->(s:SideEffect) MATCH (d2:Disorder)-[:DisorderHasPhenotype]->(p2:Phenotype) WHERE p2.displayName = s.displayName RETURN d2.displayName AS ComorbidDisorderName"
+    "nl_question": "Which disorders are associated with short stature, and what other phenotypes do these disorders have?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p1:Phenotype {displayName: 'Short stature'}) WITH d, p1 MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p2:Phenotype) RETURN d.displayName AS ComorbidDisorderName, p2.displayName AS OverlapPhenotype"
   },
   {
-    "nl_question": "What are the differential diagnoses for a patient presenting with 'Infantile onset' seizures and 'Hypertelorism'?",
-    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Infantile onset'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Hypertelorism'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS DifferentialDiagnosisName"
+    "nl_question": "What are the potential differential diagnoses for patients presenting with infantile onset, seizures, and hypertelorism?",
+    "cypher_translation": "MATCH (p1:Phenotype {displayName: 'Infantile onset'})<-[:DisorderHasPhenotype]-(d:Disorder)-[:DisorderHasPhenotype]->(p2:Phenotype {displayName: 'Seizure'}) WITH d MATCH (d:Disorder )-[:DisorderHasPhenotype]->(p3:Phenotype {displayName: 'Hypertelorism'}) RETURN d.displayName AS DifferentialDiagnosisName"
   },
   {
-    "nl_question": "What is the prevalence of 'Micrognathia' in patients with 'Failure to thrive' and 'Delayed speech and language development'?",
-    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Failure to thrive'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Delayed speech and language development'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS PrevalenceDisorderName"
+    "nl_question": "What is the prevalence of ‘Paroxysmal vertigo’ in patients with ‘EEG with temporal slowing’ and ‘autoimmune limbic encephalitis’?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'autoimmune limbic encephalitis'})-[:DisorderHasPhenotype]->(p1:Phenotype {displayName:'EEG with temporal slowing' }) WITH d MATCH (d)-[:DisorderHasPhenotype]->(p2:Phenotype {displayName:'Paroxysmal vertigo'}) RETURN COUNT(d)"
   },
   {
-    "nl_question": "What are the long-term developmental outcomes for individuals with 'Ataxia' and 'Feeding difficulties'?",
-    "cypher_translation": "MATCH (d1:Disorder {displayName: 'Ataxia'})-[:DisorderHasPhenotype]->(p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s1:SideEffect) MATCH (d2:Disorder {displayName: 'Feeding difficulties'})-[:DisorderHasPhenotype]->(p2:Phenotype)-[:SideEffectSameAsPhenotype]->(s2:SideEffect) WHERE s1.displayName = s2.displayName RETURN d2.displayName AS LongTermOutcomeName"
+    "nl_question": "What are the potential long-term outcomes shared between autoimmune limbic encephalitis and disorders presenting with psychosis?",
+    "cypher_translation": "MATCH (p1:Phenotype{displayName: 'Psychosis'})<-[:DisorderHasPhenotype]-(d:Disorder) WITH d MATCH (d1:Disorder {displayName: 'autoimmune limbic encephalitis'})-[:DisorderHasPhenotype]->(p:Phenotype)<-[:DisorderHasPhenotype]-(d)\n RETURN p.displayName AS LongTermOutcomeName"
+  },
+  {
+    "nl_question": "What is the description and list of data sources for the phenotype 'Global developmental delay'?",
+    "cypher_translation": "MATCH (p:Phenotype {displayName: 'Global developmental delay'}) RETURN p.description, p.dataSources"
+  },
+  {
+    "nl_question": "Which disorders are known to have 'Seizure' as a characteristic phenotype?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p:Phenotype {displayName: 'Seizure'}) RETURN d.displayName"
+  },
+  {
+    "nl_question": "Are there any documented side effects that are considered the same as the phenotype 'Hypotonia'?",
+    "cypher_translation": "MATCH (s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype {displayName: 'Hypotonia'}) RETURN s.displayName"
+  },
+  {
+    "nl_question": "List all phenotypes that include 'onset' in their `displayName`, such as 'Infantile onset' or 'Neonatal onset', and provide their primary domain ID.",
+    "cypher_translation": "MATCH (p:Phenotype) WHERE p.displayName CONTAINS 'onset'  RETURN p.displayName, p.primaryDomainId"
+  },
+  {
+    "nl_question": "For the phenotype 'Intellectual disability', what are its synonyms and main description?",
+    "cypher_translation": "MATCH (p:Phenotype {displayName: 'Intellectual disability'}) RETURN p.synonyms, p.description"
+  },
+  {
+    "nl_question": "What is the descriptive information available for the phenotype 'Global developmental delay'?",
+    "cypher_translation": "MATCH (p:Phenotype {displayName: 'Global developmental delay'}) RETURN p.description AS Description"
+  },
+  {
+    "nl_question": "Which disorders have 'Seizure' as an associated phenotype?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p:Phenotype {displayName: 'Seizure'}) RETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "Can you identify disorders characterized by the phenotype 'Hypotonia'?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderHasPhenotype]->(p:Phenotype {displayName: 'Hypotonia'}) RETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "Are there any known drug side effects that are classified as identical to the phenotype 'Nystagmus'?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype {displayName: 'Nystagmus'}) RETURN DISTINCT d.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "List disorders that present with both 'Short stature' and 'Microcephaly' as phenotypes.",
+    "cypher_translation": "MATCH (p1:Phenotype {displayName: 'Short stature'})<-[:DisorderHasPhenotype]-(d:Disorder)-[:DisorderHasPhenotype]->(p2:Phenotype {displayName: 'Microcephaly'}) RETURN d.displayName AS DisorderName"
   }
 ]

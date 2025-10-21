@@ -1,19 +1,19 @@
 [
   {
     "nl_question": "What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'nucleus'}]->(go1:GO), (p)-[:ProteinInPathway {displayName: 'G protein-coupled receptor signaling pathway'}]->(pathway:Pathway) RETURN p.displayName AS ProteinName"
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation]->(go1:GO {displayName: 'nucleus'}), (p)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Signaling by GPCR'}) RETURN p.displayName AS ProteinName"
   },
   {
-    "nl_question": "Are there any GO terms related to 'extracellular exosome' that are also subtypes of 'extracellular region'?",
-    "cypher_translation": "MATCH (go1:GO {displayName: 'extracellular exosome'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'extracellular region'}) RETURN go1.displayName AS SubtypeName, go2.displayName AS ParentName"
+    "nl_question": "Are there any GO terms related to 'cellular anatomical structure' that are also subtypes of 'extracellular region'?",
+    "cypher_translation": "MATCH (go1:GO {displayName: 'cellular anatomical structure'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'extracellular region'}) RETURN go1 AS SubType, go2 AS Parent"
   },
   {
-    "nl_question": "What is the relationship between the GO terms 'ATP binding' and 'DNA binding' in the GO hierarchy?",
+    "nl_question": "What is the relationship between the GO terms 'cytospinule' and 'actin-based cell projection' in the GO hierarchy?",
     "cypher_translation": "MATCH (go1:GO {displayName: 'ATP binding'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'DNA binding'}) RETURN go1.displayName AS SubtypeName, go2.displayName AS ParentName"
   },
   {
     "nl_question": "Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'nucleus'}]->(go1:GO), (p)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'G protein-coupled receptor signaling pathway'}) RETURN p.displayName AS ProteinName"
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation]->(go1:GO {displayName: 'nucleus'}), (p)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Signaling by GPCR'}) RETURN p.displayName AS ProteinName"
   },
   {
     "nl_question": "What are the descriptions and data sources associated with the GO term 'plasma membrane'?",
@@ -25,6 +25,46 @@
   },
   {
     "nl_question": "List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.",
-    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation {displayName: 'metal ion binding'}]->(go1:GO), (p)-[:ProteinInPathway]->(pathway:Pathway) RETURN p.displayName AS ProteinName, pathway.displayName AS PathwayName"
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation]->(go1:GO {displayName: 'metal ion binding'}), (p)-[:ProteinInPathway]->(pathway:Pathway) RETURN p.displayName AS ProteinName, pathway.displayName AS PathwayName"
+  },
+  {
+    "nl_question": "Can you provide the description for the GO term 'protein binding'?",
+    "cypher_translation": "MATCH (g:GO {displayName: 'protein binding'}) RETURN g.description"
+  },
+  {
+    "nl_question": "List all GO terms that are a subtype of 'membrane'.",
+    "cypher_translation": "MATCH (g1:GO)-[:GOIsSubtypeOfGO]->(g2:GO {displayName: 'membrane'}) RETURN g1.displayName AS Subtype"
+  },
+  {
+    "nl_question": "Which proteins are annotated with the GO term 'kinase activity'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinHasGOAnnotation]->(g:GO {displayName: 'kinase activity'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the broader GO terms that 'cytoplasm' is a subtype of?",
+    "cypher_translation": "MATCH (g1:GO)-[:GOIsSubtypeOfGO]->(g2:GO {displayName: 'cytoplasm'}) RETURN g1.displayName AS BroaderTerm"
+  },
+  {
+    "nl_question": "What are the synonyms for the GO term 'mitotic DNA replication initiation'?",
+    "cypher_translation": "MATCH (g:GO {displayName: 'mitotic DNA replication initiation'}) RETURN g.synonyms"
+  },
+  {
+    "nl_question": "What is the detailed description and any known synonyms for the Gene Ontology (GO) term 'protein binding'?",
+    "cypher_translation": "MATCH (go:GO {displayName: 'protein binding'}) RETURN go.description, go.synonyms"
+  },
+  {
+    "nl_question": "Can you identify all immediate sub-categories or subtypes of the Gene Ontology term 'signal transduction'?",
+    "cypher_translation": "MATCH (go:GO)-[:GOIsSubtypeOfGO]->(parent:GO {displayName: 'signal transduction'}) RETURN go.displayName"
+  },
+  {
+    "nl_question": "Which proteins in the database are annotated with the Gene Ontology term 'membrane'?",
+    "cypher_translation": "MATCH (go:GO {displayName: 'membrane'})<-[:ProteinHasGOAnnotation]-(p:Protein) RETURN DISTINCT  p.displayName"
+  },
+  {
+    "nl_question": "For the GO term 'cytoplasm', what are its direct subtypes and from which data sources is information for these subtypes derived?",
+    "cypher_translation": "MATCH (go:GO)-[:GOIsSubtypeOfGO]->(parent:GO {displayName: 'cytoplasm'}) RETURN go.displayName, go.dataSources"
+  },
+  {
+    "nl_question": "Provide a count of distinct proteins that are associated with the Gene Ontology term 'ATP binding'.",
+    "cypher_translation": "MATCH (go:GO {displayName: 'ATP binding'})<-[:ProteinHasGOAnnotation]-(p:Protein) RETURN COUNT(DISTINCT p)"
   }
 ]

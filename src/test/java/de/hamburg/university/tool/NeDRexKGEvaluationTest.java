@@ -151,6 +151,7 @@ public class NeDRexKGEvaluationTest {
         List<AiAnswerCypher> allQuestionScores = new ArrayList<>();
 
         Path out = Paths.get("results", "eval", modelName.replace(":latest", ""), "kg_cypher_result_ai_judge.csv");
+
         for (String category : categories) {
             List<CypherQuestion> questions = loadQuestions(category);
             for (CypherQuestion question : questions) {

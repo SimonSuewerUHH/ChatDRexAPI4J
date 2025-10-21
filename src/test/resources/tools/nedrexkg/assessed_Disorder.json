@@ -1,7 +1,7 @@
 [
   {
     "nl_question": "What genes are associated with hereditary breast carcinoma?",
-    "cypher_translation": "MATCH (g:Gene)-[:GeneAssociatedWithDisorder]->(d:Disorder {displayName: 'hereditary breast carcinoma'}) RETURN g.displayName AS GeneName"
+    "cypher_translation": "MATCH (g:Gene)-[r:GeneAssociatedWithDisorder]->(d:Disorder {displayName: 'hereditary breast carcinoma'}) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN g.displayName AS GeneName"
   },
   {
     "nl_question": "What is the primary domain ID for cystic fibrosis?",
@@ -17,6 +17,38 @@
   },
   {
     "nl_question": "What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?",
-    "cypher_translation": "MATCH (p:Phenotype {displayName: 'ataxia telangiectasia'})<-[:DisorderHasPhenotype]-(d:Disorder) RETURN d.description AS ClinicalDescription"
+    "cypher_translation": "MATCH (dis:Disorder {displayName: 'ataxia telangiectasia'})-[:DisorderHasPhenotype]->(ph:Phenotype) RETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName, ph.description AS phenotypeDescription"
+  },
+  {
+    "nl_question": "What are the known subtypes of the 'neoplasm' disorder?",
+    "cypher_translation": "MATCH (d:Disorder)-[:DisorderIsSubtypeOfDisorder]->(sd:Disorder {displayName: 'neoplasm'}) RETURN d.displayName AS SubtypeName"
+  },
+  {
+    "nl_question": "List the phenotypes commonly observed in individuals diagnosed with 'cystic fibrosis'.",
+    "cypher_translation": "MATCH (p:Phenotype)<-[:DisorderHasPhenotype]-(d:Disorder {displayName: 'cystic fibrosis'}) RETURN p.displayName AS Phenotype"
+  },
+  {
+    "nl_question": "What drugs have an indication for the treatment of 'type 2 diabetes mellitus'?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasIndication]->(di:Disorder {displayName: 'type 2 diabetes mellitus'}) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "Are there any specific genomic variants known to be associated with 'Alzheimer disease'?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'Alzheimer disease'}) RETURN v.primaryDomainId AS GenomicVariantName"
+  },
+  {
+    "nl_question": "What is the description and ICD-10 code for 'Alzheimer disease'?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'Alzheimer disease'}) RETURN d.description, d.icd10"
+  },
+  {
+    "nl_question": "Which phenotypes are associated with 'type 2 diabetes mellitus'?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'type 2 diabetes mellitus'})-[:DisorderHasPhenotype]->(p:Phenotype) RETURN p.displayName"
+  },
+  {
+    "nl_question": "What disorders are classified as subtypes of 'neoplasm'?",
+    "cypher_translation": "MATCH (d1:Disorder {displayName: 'neoplasm'})<-[:DisorderIsSubtypeOfDisorder]-(d2:Disorder) RETURN d2.displayName"
+  },
+  {
+    "nl_question": "What drugs are indicated for treating 'COVID-19'?",
+    "cypher_translation": "MATCH (d:Disorder {displayName: 'COVID-19'})<-[:DrugHasIndication]-(dr:Drug) RETURN dr.displayName"
   }
 ]

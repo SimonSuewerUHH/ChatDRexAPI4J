@@ -4,19 +4,71 @@
     "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Immune System'})\nRETURN d.displayName AS DrugName, p.displayName AS ProteinName"
   },
   {
-    "nl_question": "What are the key differences between the 'Innate Immune System' and 'Adaptive Immune System' pathways in terms of protein components and their interactions?",
-    "cypher_translation": "MATCH (p1:Protein)-[:ProteinInPathway]->(pathway1:Pathway {displayName: 'Innate Immune System'})\nMATCH (p2:Protein)-[:ProteinInPathway]->(pathway2:Pathway {displayName: 'Adaptive Immune System'})\nRETURN p1.displayName AS ProteinName1, p2.displayName AS ProteinName2"
+    "nl_question": "What are the key differences between the 'Innate Immune System' and 'Adaptive Immune System' pathways in terms of protein components?",
+    "cypher_translation": "MATCH (p1:Protein)-[:ProteinInPathway]->(pathway1:Pathway {displayName: 'Innate Immune System'}) MATCH (p2:Protein)-[:ProteinInPathway]->(pathway2:Pathway {displayName: 'Adaptive Immune System'}) RETURN p1.displayName AS ProteinInnateIS, p2.displayName AS ProteinAdaptiveIS "
   },
   {
     "nl_question": "Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",
-    "cypher_translation": "MATCH (variant:GenomicVariant)-[:VariantAffectsGene]->(gene:Gene)-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Cell Cycle'})\nOPTIONAL MATCH (disorder:Disorder)-[:GeneAssociatedWithDisorder]->(gene)\nRETURN variant.displayName AS VariantName, gene.displayName AS GeneName, disorder.displayName AS DisorderName"
+    "cypher_translation": "MATCH (variant:GenomicVariant)-[:VariantAffectsGene]->(gene:Gene) <-[:ProteinEncodedByGene]- (protein:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Cell Cycle'}) WITH variant, gene\n MATCH (variant:GenomicVariant) -[:VariantAssociatedWithDisorder]->(disorder:Disorder)\n RETURN variant.primaryDomainId AS VariantName, gene.displayName AS GeneName, disorder.displayName AS DisorderName"
   },
   {
-    "nl_question": "What tissues express the genes associated with the 'RHO GTPase cycle' pathway?",
-    "cypher_translation": "MATCH (gene:Gene)-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'RHO GTPase cycle'})\nMATCH (tissue:Tissue)-[:GeneExpressedInTissue]->(gene)\nRETURN tissue.displayName AS TissueName"
+    "nl_question": "Find all genes that encode proteins involved in the Neuronal System pathway and returns the tissues where those proteins are expressed.",
+    "cypher_translation": "MATCH (gene:Gene)<-[:ProteinEncodedByGene]-(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Neuronal System'}) WITH p, gene MATCH (p:Protein)-[:ProteinExpressedInTissue]-> (tissue:Tissue ) RETURN DISTINCT tissue.displayName, gene.displayName"
   },
   {
     "nl_question": "What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?",
-    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'SARS-CoV Infections'})\nMATCH (sideEffect:SideEffect)-[:DrugHasSideEffect]->(d)\nRETURN sideEffect.displayName AS SideEffectName"
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'SARS-CoV Infections'}) WITH d MATCH (d)- [:DrugHasSideEffect]->(sideEffect:SideEffect) RETURN d.displayName AS drugs, sideEffect.displayName AS SideEffect"
+  },
+  {
+    "nl_question": "What are the primary data sources and species associated with the 'Signal Transduction' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Signal Transduction'}) RETURN p.dataSources, p.species"
+  },
+  {
+    "nl_question": "List all proteins that are constituents of the 'Metabolism' pathway.",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Metabolism'}) RETURN DISTINCT p.displayName"
+  },
+  {
+    "nl_question": "For the 'Immune System' pathway, what is the count of all associated proteins?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Immune System'}) RETURN COUNT(DISTINCT p)"
+  },
+  {
+    "nl_question": "For which species is the 'Signal Transduction' pathway known?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Signal Transduction'}) RETURN p.species AS Species"
+  },
+  {
+    "nl_question": "What are the data sources used to curate information about the 'Metabolism' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Metabolism'}) RETURN p.dataSources AS DataSources"
+  },
+  {
+    "nl_question": "Which proteins are involved in the 'Immune System' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Immune System'})<-[:ProteinInPathway]-(pr:Protein) RETURN pr.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "How many distinct proteins are associated with the 'Disease' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Disease'})<-[:ProteinInPathway]-(pr:Protein) RETURN count(DISTINCT pr) AS NumberOfDistinctProteins"
+  },
+  {
+    "nl_question": "For the 'Metabolism of proteins' pathway, list the display names of the proteins that have been reviewed.",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Metabolism of proteins'})<-[:ProteinInPathway]-(pr:Protein {is_reviewed: 'True'}) RETURN DISTINCT pr.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the species and data sources associated with the 'Signal Transduction' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Signal Transduction'}) RETURN p.species, p.dataSources"
+  },
+  {
+    "nl_question": "Which proteins are known to be involved in the 'Immune System' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Immune System'})<-[:ProteinInPathway]-(pr:Protein) RETURN pr.displayName"
+  },
+  {
+    "nl_question": "Can you list all pathways that are specific to 'Homo sapiens'?",
+    "cypher_translation": "MATCH (p:Pathway {species: 'Homo sapiens'}) RETURN p.displayName"
+  },
+  {
+    "nl_question": "From which data sources is information about the 'Metabolism of proteins' pathway obtained?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Metabolism of proteins'}) RETURN p.dataSources"
+  },
+  {
+    "nl_question": "How many unique proteins are associated with the 'Disease' pathway?",
+    "cypher_translation": "MATCH (p:Pathway {displayName: 'Disease'})<-[:ProteinInPathway]-(pr:Protein) RETURN count(DISTINCT pr)"
   }
 ]

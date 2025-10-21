@@ -1,0 +1,1505 @@
+[ {
+  "answer" : "**Answer:**  \nRopinirole is indicated for the treatment of Parkinson's disease and restless leg syndrome.  \n\n**Evidence:**  \n- Ropinirole – drug  \n- Parkinson's disease – disorder  \n- Restless leg syndrome – disorder",
+  "context" : "Node Type: drug\nNode Value: Ropinirole\nSub Question: anchor drug\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Parkinson's disease, Restless leg syndrome\nSub Question: indications\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What indications are associated with the use of Ropinirole?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., DrugBank, PubChem for Clomipramine) or provide specific side‑effect terms with associated IDs from reliable sources.",
+  "context" : "Node Type: drug\nNode Value: Clomipramine\nSub Question: drug used\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: side effects\nSub Question: common side effects\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the common side effects observed with Clomipramine administration?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., CAS, DrugBank, PubChem) or try alternative names/synonyms for Ribavirin.",
+  "context" : "Node Type: drug\nNode Value: Ribavirin\nSub Question: CAS registry number\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the CAS registry number for Ribavirin?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., DrugBank, ChEMBL for the drug, and standardized side‑effect identifiers such as MedDRA or SNOMED CT) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: drug\nNode Value: Donepezil\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: Donepezil side effects\nSub Question: associated phenotypes\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What phenotypes are associated with side effects of Donepezil?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nPregabalin’s known target is the alpha‑2‑delta subunit of voltage‑gated calcium channels.\n\n**Evidence:**  \n- alpha‑2-delta subunit of voltage‑gated calcium channel – Protein  \n- Pregabalin – Drug",
+  "context" : "Node Type: drug\nNode Value: Pregabalin\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: alpha-2-delta subunit of voltage-gated calcium channel\nSub Question: primary target\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the known targets of the drug Pregabalin?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nParoxetine is contraindicated in patients who are receiving or have used monoamine oxidase inhibitors, in individuals at risk for serotonin syndrome, and in pregnant patients.  \n\n**Evidence:**  \n- MAO inhibitor use – disorder  \n- Serotonin syndrome – disorder  \n- Pregnancy – disorder  \n\n**Notes:**  \n- No authoritative IDs were provided for these conditions.  \n- All contraindications are derived directly from the disorder nodes listed as “contraindication condition.”",
+  "context" : "Node Type: drug\nNode Value: Paroxetine\nSub Question: contraindicated drug\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: MAO inhibitor use\nSub Question: contraindication condition\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Serotonin syndrome\nSub Question: contraindication condition\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Pregnancy\nSub Question: contraindication condition\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List the contraindications for Paroxetine.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., DrugBank, PubChem) or alternative names/synonyms for Pregabalin to locate evidence of medical indications.",
+  "context" : "Node Type: drug\nNode Value: Pregabalin\nSub Question: medical indications\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the medical indications for the drug 'Pregabalin'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., drug IDs such as RxNorm, DrugBank, or alternative names/synonyms for the drug) or include side‑effect nodes that list specific adverse events associated with Citalopram.",
+  "context" : "Node Type: drug\nNode Value: Citalopram\nSub Question: associated side effects\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: side effects\nSub Question: Citalopram side effects\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What side effects are associated with the drug 'Citalopram'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nImatinib targets the following proteins: BCR‑ABL1, c‑KIT, PDGFR‑α, and PDGFR‑β.\n\n**Evidence:**\n- BCR‑ABL1 (protein)  \n- c‑KIT (protein)  \n- PDGFR‑α (protein)  \n- PDGFR‑β (protein)",
+  "context" : "Node Type: drug\nNode Value: Imatinib\nSub Question: drug queried\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: BCR-ABL1\nSub Question: targets of Imatinib\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: c-KIT\nSub Question: targets of Imatinib\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: PDGFR-α\nSub Question: targets of Imatinib\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: PDGFR-β\nSub Question: targets of Imatinib\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you list the biological targets of 'Imatinib'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nYes. Paroxetine is contraindicated in pregnancy and in the presence of mono‑amine oxidase inhibitor (MAOI) use, and these conditions are associated with the risk of serotonin syndrome.  \n\n**Evidence:**  \n- Paroxetine – drug  \n- pregnancy – disorder  \n- MAOI use – disorder  \n- serotonin syndrome – side_effect",
+  "context" : "Node Type: drug\nNode Value: Paroxetine\nSub Question: has contraindications\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: pregnancy\nSub Question: contraindicated condition\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: MAOI use\nSub Question: contraindicated condition\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: serotonin syndrome\nSub Question: associated with contraindication\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Does 'Paroxetine' have any known contraindications?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., drug IDs such as DrugBank, ChEMBL) or try alternative names/synonyms for Paroxetine and its side‑effect data.",
+  "context" : "Node Type: drug\nNode Value: Paroxetine\nSub Question: drug anchor\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: side effects\nSub Question: side effects of Paroxetine\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you list the side effects of Paroxetine?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., HGNC gene IDs, UniProt protein IDs) or try alternative names/synonyms for Gabapentin’s targets.",
+  "context" : "Node Type: drug\nNode Value: Gabapentin\nSub Question: targets\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: targeted by drug\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What genes or proteins are targeted by Gabapentin?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nCitalopram is indicated for major depressive disorder, generalized anxiety disorder, and social anxiety disorder.\n\n**Evidence:**\n- Major depressive disorder – Disorder  \n- Generalized anxiety disorder – Disorder  \n- Social anxiety disorder – Disorder  \n\n**Notes:**  \nThese indications are directly captured by the disorder nodes whose sub‑question is “indication.”",
+  "context" : "Node Type: drug\nNode Value: Citalopram\nSub Question: drug name\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Major depressive disorder\nSub Question: indication\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Generalized anxiety disorder\nSub Question: indication\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Social anxiety disorder\nSub Question: indication\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the known indications for the drug 'Citalopram'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe drug Pregabalin is associated with the following side effects: dizziness, somnolence, dry mouth, and weight gain.  \n\n**Evidence:**  \n- dizziness – side_effect  \n- somnolence – side_effect  \n- dry mouth – side_effect  \n- weight gain – side_effect",
+  "context" : "Node Type: drug\nNode Value: Pregabalin\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: dizziness\nSub Question: associated side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: somnolence\nSub Question: associated side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: dry mouth\nSub Question: associated side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: weight gain\nSub Question: associated side effect\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What side effects are associated with taking 'Pregabalin'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer:  \nParoxetine has contraindications with mono‑amine oxidase (MAO) inhibitors and should not be used in patients with severe hepatic impairment.\n\nEvidence:  \n- Paroxetine – drug  \n- MAO inhibitors – drug  \n- Severe hepatic impairment – disorder  \n\nNotes: The nodes explicitly list MAO inhibitors and severe hepatic impairment as contraindicated conditions for Paroxetine.",
+  "context" : "Node Type: drug\nNode Value: Paroxetine\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: MAO inhibitors\nSub Question: contraindicated with\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: severe hepatic impairment\nSub Question: contraindicated condition\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Does 'Paroxetine' have any contraindications?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nImatinib targets the BCR‑ABL tyrosine kinase, the c‑KIT receptor (CD117), and the platelet‑derived growth factor receptors PDGFRα and PDGFRβ.\n\n**Evidence**  \n- BCR‑ABL tyrosine kinase – Protein  \n- c‑KIT (CD117) – Protein  \n- PDGF receptor (PDGFRα/β) – Protein",
+  "context" : "Node Type: drug\nNode Value: Imatinib\nSub Question: anchor drug\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: BCR-ABL tyrosine kinase\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: c-KIT (CD117)\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: PDGF receptor (PDGFRα/β)\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the biological targets of the drug 'Imatinib'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, MONDO for disorders) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: associated with hereditary breast carcinoma\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: hereditary breast carcinoma\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What genes are associated with hereditary breast carcinoma?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, OMIM) or try alternative names/synonyms for the disorder.",
+  "context" : "Node Type: disorder\nNode Value: cystic fibrosis\nSub Question: primary domain ID\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the primary domain ID for cystic fibrosis?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: disorder\nNode Value: Li-Fraumeni syndrome\nSub Question: data source references\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the data sources for the disorder information on Li-Fraumeni syndrome?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, ICD-10 codes) or try alternative names/synonyms for Wilson disease to retrieve the ICD‑10 codes.",
+  "context" : "Node Type: disorder\nNode Value: Wilson disease\nSub Question: ICD10 codes\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the ICD10 codes associated with Wilson disease?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., MONDO, HPO) or include descriptive attributes for the phenotypes (e.g., full clinical descriptions) to enable a substantive answer.",
+  "context" : "Node Type: disorder\nNode Value: ataxia telangiectasia\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: ataxia\nSub Question: clinical description\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: telangiectasia\nSub Question: clinical description\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: immunodeficiency\nSub Question: clinical description\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: radiation sensitivity\nSub Question: clinical description\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe known subtypes of the disorder “neoplasm” that are indicated in the evidence are breast cancer, lung cancer, colorectal cancer, and prostate cancer.\n\n**Evidence:**  \n- breast cancer – disorder  \n- lung cancer – disorder  \n- colorectal cancer – disorder  \n- prostate cancer – disorder",
+  "context" : "Node Type: disorder\nNode Value: neoplasm\nSub Question: parent disorder\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: breast cancer\nSub Question: known subtype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: lung cancer\nSub Question: known subtype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: colorectal cancer\nSub Question: known subtype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: prostate cancer\nSub Question: known subtype\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the known subtypes of the 'neoplasm' disorder?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nIndividuals with cystic fibrosis commonly exhibit phenotypes such as respiratory infections, pancreatic insufficiency, CF‑related diabetes, and malnutrition.  \n\n**Evidence**  \n- respiratory infections – phenotype  \n- pancreatic insufficiency – phenotype  \n- CF‑related diabetes – phenotype  \n- malnutrition – phenotype  \n\n**Notes**  \n- No primary domain IDs or display names were provided; the node values serve as the canonical phenotype names.",
+  "context" : "Node Type: disorder\nNode Value: cystic fibrosis\nSub Question: disorder focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: respiratory infections\nSub Question: commonly observed phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: pancreatic insufficiency\nSub Question: commonly observed phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: CF-related diabetes\nSub Question: commonly observed phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: malnutrition\nSub Question: commonly observed phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List the phenotypes commonly observed in individuals diagnosed with 'cystic fibrosis'.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., MONDO, RxNorm, DrugBank IDs) for the disorder and the drugs, or provide the list of drugs with their indication metadata.",
+  "context" : "Node Type: drug\nNode Value: type 2 diabetes mellitus drugs\nSub Question: indicated treatments\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: type 2 diabetes mellitus\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What drugs have an indication for the treatment of 'type 2 diabetes mellitus'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nYes. The APOE ε4 allele is a well‑known genomic variant associated with Alzheimer disease.\n\n**Evidence**  \n• APOE ε4 – genomic_variant  \n• Alzheimer disease – disorder",
+  "context" : "Node Type: genomic_variant\nNode Value: APOE ε4\nSub Question: associated with Alzheimer disease\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Alzheimer disease\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any specific genomic variants known to be associated with 'Alzheimer disease'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, ICD-10 codes) or try alternative names/synonyms for the entity of interest.",
+  "context" : "Node Type: disorder\nNode Value: Alzheimer disease\nSub Question: description and ICD-10 code\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the description and ICD-10 code for 'Alzheimer disease'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO for disorders, HPO for phenotypes) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: phenotype\nNode Value: phenotypes\nSub Question: associated with type 2 diabetes\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: type 2 diabetes mellitus\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Which phenotypes are associated with 'type 2 diabetes mellitus'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., MONDO, SNOMED) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: disorder\nNode Value: neoplasm\nSub Question: disease category\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: neoplasm subtypes\nSub Question: disorders within category\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What disorders are classified as subtypes of 'neoplasm'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., drug IDs from DrugBank or FDA, disorder IDs from MONDO or ICD-10) and provide drug names that are indicated for treating COVID‑19. Alternatively, include specific drug names or synonyms that correspond to COVID‑19 therapies.",
+  "context" : "Node Type: drug\nNode Value: COVID-19 drugs\nSub Question: indicated treatments\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: COVID-19\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What drugs are indicated for treating 'COVID-19'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nNo relevant nodes were provided for this question.  \n\n**Evidence:**  \nNone.  \n\n**Next steps:**  \nAdd authoritative identifiers (e.g., HGNC, ClinVar, or dbSNP IDs) for genomic variants, and include any variant–disease association data in the input. This will enable identification of SNV‐type variants linked to breast cancer.",
+  "context" : "Node Type: genomic_variant\nNode Value: SNV\nSub Question: variant type\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: breast cancer\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all genomic variants of type SNV that are associated with breast cancer.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: disorder\nNode Value: cystic fibrosis\nSub Question: disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: CFTR\nSub Question: gene on chr7\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: CFTR variants\nSub Question: reference/alternate sequences\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: The genomic variants that have been observed in Parkinson’s disease include missense mutations, nonsense mutations, frameshift mutations, and splice‑site variants.\n\nEvidence:\n• Parkinson's disease – Disorder\n• missense mutation – GenomicVariant\n• nonsense mutation – GenomicVariant\n• frameshift mutation – GenomicVariant\n• splice‑site variant – GenomicVariant",
+  "context" : "Node Type: disorder\nNode Value: Parkinson's disease\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: missense mutation\nSub Question: variant type in PD\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: nonsense mutation\nSub Question: variant type in PD\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: frameshift mutation\nSub Question: variant type in PD\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: splice-site variant\nSub Question: variant type in PD\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the different variant types observed in genomic variants associated with Parkinson's disease?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, dbSNP) or provide specific genomic variants linked to type 1 and type 2 diabetes for evaluation.",
+  "context" : "Node Type: genomic_variant\nNode Value: genomic variants\nSub Question: common variants in T1D and T2D\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: type 1 diabetes\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: type 2 diabetes\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any common genomic variants associated with both type 1 and type 2 diabetes?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC for BRCA1, ClinVar or dbSNP IDs for SNVs) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: target gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: SNV\nSub Question: variant type SNV\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all genomic variants of type 'SNV' located within the BRCA1 gene.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC gene IDs, MONDO disorder IDs) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: genomic_variant\nNode Value: chrX:30708057:A\nSub Question: variant location alt A\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: affected by variant\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, MONDO for disorders, RefSeq/Ensembl IDs for variants) or provide additional node attributes that include the reference sequence.",
+  "context" : "Node Type: genomic_variant\nNode Value: chr2:47475100\nSub Question: reference sequence\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: colon carcinoma\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC, Ensembl, ClinVar) and specify the `chromosome`, `position`, `referenceSequence`, and `alternativeSequence` attributes for each GenomicVariant node that is an SNP.",
+  "context" : "Node Type: genomic_variant\nNode Value: GenomicVariant\nSub Question: retrieve attributes\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: SNP variant\nSub Question: variant type filter\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Retrieve the `chromosome`, `position`, `referenceSequence`, and `alternativeSequence` for all `GenomicVariant` nodes that have a `variantType` of 'SNP'.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, ClinVar or dbSNP for variants) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: approvedSymbol gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: GenomicVariant\nSub Question: variants affecting BRCA1\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., MONDO IDs for disorders, HGNC or Ensembl IDs for variants) or provide detailed node attributes (Display Names, Primary Domain IDs) to allow a specific answer.",
+  "context" : "Node Type: disorder\nNode Value: disorders\nSub Question: variant-associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: variants on chromosome X\nSub Question: located on chromosome X\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., HGNC IDs for genes, ClinVar or dbSNP IDs for genomic variants, MONDO IDs for disorders) and include explicit variant coordinates (chromosome and position) in the enhanced node data. Alternatively, provide synonyms or more specific node values that match the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: CFTR\nSub Question: target gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: CFTR variants\nSub Question: associated variants\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: CFTR-related disorders\nSub Question: associated conditions\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all genomic variants that are associated with disorders and that affect the gene CFTR.\n For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., MONDO for disorders, dbSNP for the variant) or use more specific names/synonyms for the entities of interest.",
+  "context" : "Node Type: genomic_variant\nNode Value: A>G variant\nSub Question: variant of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC, MONDO, Ensembl) or provide enriched nodes with variant types, chromosome information, and counts.",
+  "context" : "Node Type: genomic_variant\nNode Value: variant types\nSub Question: types and counts\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: chromosome 17\nSub Question: chromosome context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the different variant types and their respective counts for genomic variants located on chromosome '17'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., ClinVar, dbSNP, HGVS) or include detailed variant entries with the desired fields (referenceSequence, alternativeSequence, position).",
+  "context" : "Node Type: genomic_variant\nNode Value: SNV variants\nSub Question: referenceSequence, alternativeSequence, position\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the `referenceSequence`, `alternativeSequence`, and `position` for all genomic variants identified as 'SNV' variant types?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., HGNC IDs for genes, dbSNP IDs for variants) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: affected by variants\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: variants on chromosome X\nSub Question: chromosome location\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which genes are affected by genomic variants located on chromosome 'X'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO for disorders, HGVS for genomic variants) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: disorder\nNode Value: disorders\nSub Question: associated with duplication\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: duplication\nSub Question: variant type\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which disorders are associated with genomic variants of type duplication?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC, ClinVar, dbSNP) for CFTR genomic variants or provide more specific variant nodes with sequence and type details.",
+  "context" : "Node Type: gene\nNode Value: CFTR\nSub Question: focus gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: genomic variants\nSub Question: variant types and sequences\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., ClinVar IDs for genomic variants, MONDO or HPO terms for phenotypes) or provide more detailed node attributes so that specific variants can be listed.",
+  "context" : "Node Type: genomic_variant\nNode Value: genomic variants\nSub Question: associated variants\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: Seizure\nSub Question: phenotype context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: Intellectual disability\nSub Question: phenotype context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO for disorders, HPO for phenotypes) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: phenotype\nNode Value: short stature\nSub Question: phenotype of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated with short stature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: phenotypes\nSub Question: other phenotypes of these disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which disorders are associated with short stature, and what other phenotypes do these disorders have?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nPotential differential diagnoses for infants presenting with seizures and hypertelorism include CHARGE syndrome, Kabuki syndrome, Apert syndrome, Miller‑Dieker lissencephaly, and Opitz G/BBB syndrome.  \n\n**Evidence**  \n- CHARGE syndrome – disorder  \n- Kabuki syndrome – disorder  \n- Apert syndrome – disorder  \n- Miller‑Dieker lissencephaly – disorder  \n- Opitz G/BBB syndrome – disorder",
+  "context" : "Node Type: disorder\nNode Value: CHARGE syndrome\nSub Question: infantile seizures with hypertelorism\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Kabuki syndrome\nSub Question: infantile seizures with hypertelorism\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Apert syndrome\nSub Question: infantile seizures with hypertelorism\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Miller-Dieker lissencephaly\nSub Question: infantile seizures with hypertelorism\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Opitz G/BBB syndrome\nSub Question: infantile seizures with hypertelorism\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the potential differential diagnoses for patients presenting with infantile onset, seizures, and hypertelorism?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO for the disorder, HPO for the phenotypes, or other relevant ontology identifiers) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: phenotype\nNode Value: Paroxysmal vertigo\nSub Question: prevalence target\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: EEG with temporal slowing\nSub Question: EEG feature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: autoimmune limbic encephalitis\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the prevalence of ‘Paroxysmal vertigo’ in patients with ‘EEG with temporal slowing’ and ‘autoimmune limbic encephalitis’?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer**  \nAutoimmune limbic encephalitis and psychosis‑associated disorders such as schizophrenia can share several long‑term outcomes. These include cognitive decline, memory impairment, and seizure recurrence.  \n\n**Evidence**  \n- cognitive decline – phenotype  \n- memory impairment – phenotype  \n- seizure recurrence – phenotype",
+  "context" : "Node Type: disorder\nNode Value: autoimmune limbic encephalitis\nSub Question: primary disease focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: schizophrenia\nSub Question: comparison disorder with psychosis\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: cognitive decline\nSub Question: shared long‑term outcome\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: memory impairment\nSub Question: shared long‑term outcome\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: seizure recurrence\nSub Question: shared long‑term outcome\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the potential long-term outcomes shared between autoimmune limbic encephalitis and disorders presenting with psychosis?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, OMIM, UBERON) or try alternative names/synonyms for the phenotype to retrieve its description and data sources.",
+  "context" : "Node Type: phenotype\nNode Value: Global developmental delay\nSub Question: description and data sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the description and list of data sources for the phenotype 'Global developmental delay'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, etc.) or try alternative names/synonyms for the disorders and phenotype of interest.",
+  "context" : "Node Type: disorder\nNode Value: disorders\nSub Question: disorders with seizures\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: seizure\nSub Question: characteristic phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which disorders are known to have 'Seizure' as a characteristic phenotype?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nYes. The side‑effect node labeled “hypotonia” matches the phenotype node “hypotonia,” indicating that this side effect is documented as equivalent to the phenotype.\n\n**Evidence**  \n- Hypotonia – side_effect  \n- Hypotonia – phenotype",
+  "context" : "Node Type: side_effect\nNode Value: hypotonia\nSub Question: equivalent side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: hypotonia\nSub Question: phenotype context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any documented side effects that are considered the same as the phenotype 'Hypotonia'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, HPO) or try alternative names/synonyms for the phenotypes of interest.",
+  "context" : "Node Type: phenotype\nNode Value: phenotype\nSub Question: displayName contains 'onset'\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all phenotypes that include 'onset' in their `displayName`, such as 'Infantile onset' or 'Neonatal onset', and provide their primary domain ID.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., MONDO, DOID) or provide synonyms for the phenotype “Intellectual disability” in the relevant nodes.",
+  "context" : "Node Type: phenotype\nNode Value: Intellectual disability\nSub Question: synonyms and description\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For the phenotype 'Intellectual disability', what are its synonyms and main description?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HPO) or try alternative names/synonyms for the phenotype.",
+  "context" : "Node Type: phenotype\nNode Value: Global developmental delay\nSub Question: description information\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the descriptive information available for the phenotype 'Global developmental delay'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, OMIM) or include specific disorder nodes that list “Seizure” as an associated phenotype.",
+  "context" : "Node Type: phenotype\nNode Value: seizure\nSub Question: associated phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: disease context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Which disorders have 'Seizure' as an associated phenotype?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nDisorders that are characterized by the phenotype *hypotonia* include spinal muscular atrophy, myotonic dystrophy, Down syndrome, and Fragile X syndrome.\n\n**Evidence**  \n- Spinal muscular atrophy – Disorder  \n- Myotonic dystrophy – Disorder  \n- Down syndrome – Disorder  \n- Fragile X syndrome – Disorder  \n\n**Notes**  \nThese disorders are listed with the sub‑question “has phenotype,” indicating an association with hypotonia.",
+  "context" : "Node Type: phenotype\nNode Value: hypotonia\nSub Question: characterized by\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: spinal muscular atrophy\nSub Question: has phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: myotonic dystrophy\nSub Question: has phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Down syndrome\nSub Question: has phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Fragile X syndrome\nSub Question: has phenotype\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you identify disorders characterized by the phenotype 'Hypotonia'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UMLS, MedDRA, or other side‑effect databases) or include a specific side‑effect node whose value matches “nystagmus.”",
+  "context" : "Node Type: side_effect\nNode Value: side effects\nSub Question: matching phenotype nystagmus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: nystagmus\nSub Question: phenotype of interest\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any known drug side effects that are classified as identical to the phenotype 'Nystagmus'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HPO) or try alternative names/synonyms for the disorders and phenotypes of interest.",
+  "context" : "Node Type: disorder\nNode Value: disorders\nSub Question: diseases with both phenotypes\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: Short stature\nSub Question: present with\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: Microcephaly\nSub Question: present with\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List disorders that present with both 'Short stature' and 'Microcephaly' as phenotypes.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: signature\nNode Value: Immunoglobulins signature\nSub Question: related disorders\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: specific disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers or data source information (e.g., a specific database ID or URL) for the ‘Calcitonin’ signature, or provide a node that includes the database source attribute.",
+  "context" : "Node Type: signature\nNode Value: Calcitonin\nSub Question: database source\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the database source for the 'Calcitonin' signature?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt, RefSeq) for proteins and include explicit attributes indicating the presence of the “Ig‑like_dom” and “IG_LIKE” signatures, or provide relation data linking proteins to these signatures.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: contain Ig-like_dom and IG_LIKE signatures\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: Ig-like_dom\nSub Question: protein signature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: IG_LIKE\nSub Question: protein signature\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all proteins that contain both the “Ig-like_dom” and “IG_LIKE” protein signatures.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., DrugBank, PubChem) for drugs and the signature, or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: target proteins with signature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: MHC_I-like_Ag-recog_sf\nSub Question: protein domain signature\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: genomic_variant\nNode Value: genomic variants\nSub Question: affecting genes encoding MHC_I proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: encode proteins with MHC_I signature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: MHC_I signature\nSub Question: protein signature of interest\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: signature\nNode Value: signature entries\nSub Question: database sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Retrieve a comprehensive list of all distinct database sources for signature entries in the graph.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., database identifiers) or try alternative names/synonyms for the signatures to generate count information.",
+  "context" : "Node Type: signature\nNode Value: signatures\nSub Question: count per database\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For each unique database, provide the total count of associated signatures.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., Pfam identifiers) or try alternative names/synonyms for the signatures.",
+  "context" : "Node Type: signature\nNode Value: Pfam signatures\nSub Question: display name and type properties\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the display name and type properties for all signatures originating from the 'Pfam' database?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe knowledge graph contains five distinct signature types. An example display name for each type is provided below.\n\n**Evidence:**\n- Gene expression signature (signature)  \n- Mutational signature (signature)  \n- Proteomic signature (signature)  \n- Metabolomic signature (signature)  \n- Epigenomic signature (signature)",
+  "context" : "Node Type: signature\nNode Value: gene expression signature\nSub Question: example display name\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: mutational signature\nSub Question: example display name\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: proteomic signature\nSub Question: example display name\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: metabolomic signature\nSub Question: example display name\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: epigenomic signature\nSub Question: example display name\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "List all unique signature types present in the knowledge graph and provide an example display name for each type.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the names of all Signature nodes from PANTHER recorded in the graph?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., Pfam, InterPro, SMART) or provide the database name that houses the signature 'Ig-like_fold'.",
+  "context" : "Node Type: signature\nNode Value: Ig-like_fold\nSub Question: database source\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "From which database does the `Signature` 'Ig-like_fold' originate?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for proteins, signatures) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: protein nodes\nSub Question: linked to signature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: MHC_I/II-like_Ag-recog\nSub Question: signature of interest\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which `Protein` nodes are linked to the `Signature` 'MHC_I/II-like_Ag-recog'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe only `Signature` display name provided for the CDD database in the supplied nodes is **CDD signatures**.\n\n**Evidence**  \n- CDD signatures (signature)",
+  "context" : "Node Type: signature\nNode Value: CDD signatures\nSub Question: display names\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all `Signature` display names that are associated with the 'CDD' database.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer:  \nThe protein node lists “proteins” that carry the **Immunoglobulin** signature, and the signature itself is sourced from the **Pfam** database.\n\nEvidence  \n• proteins – Protein  \n• Immunoglobulin – Signature (Pfam database)",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: with Immunoglobulin signature\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: Immunoglobulin\nSub Question: Pfam database\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Which proteins have the signature ‘Immunoglobulin,’ and from which database does this signature come?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the signature “alpha_CA_VI” to locate its data source information.",
+  "context" : "Node Type: signature\nNode Value: alpha_CA_VI\nSub Question: data sources and databases\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the data sources and databases for the signature named 'alpha_CA_VI'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt, Pfam) or try alternative names/synonyms for the proteins and the Ig‑like fold signature.",
+  "context" : "Node Type: signature\nNode Value: Ig-like_fold signature\nSub Question: protein association\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: associated proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are associated with the 'Ig-like_fold' signature?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe only signature whose display name contains “MHC” in the supplied nodes is **MHC signature**. No database information is available for this signature.\n\n**Evidence:**  \n- MHC signature – Signature",
+  "context" : "Node Type: signature\nNode Value: MHC signature\nSub Question: display name contains 'MHC'\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you list all signatures that have 'MHC' in their display name and indicate their database?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt, RefSeq for the protein and signature identifiers) or try alternative names/synonyms for H3BUS4 and the signatures of interest.",
+  "context" : "Node Type: signature\nNode Value: signatures\nSub Question: known signatures\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: H3BUS4\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are all the known signatures for a H3BUS4 protein?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., InterPro accession numbers) or include signature nodes with their database source to enable counting.",
+  "context" : "Node Type: signature\nNode Value: InterPro signatures\nSub Question: count distinct signatures\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "How many distinct signatures originating from the 'InterPro' database are recorded in the knowledge graph?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for proteins, GO IDs for annotations, KEGG or Reactome IDs for pathways) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: with nucleus GO and GPCR signaling\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: nucleus\nSub Question: GO annotation\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: G protein-coupled receptor signaling pathway\nSub Question: pathway involvement\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., GO identifiers) or try alternative names/synonyms for the GO terms of interest.",
+  "context" : "Node Type: go\nNode Value: cellular anatomical structure\nSub Question: parent GO term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: extracellular region\nSub Question: parent GO term\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any GO terms related to 'cellular anatomical structure' that are also subtypes of 'extracellular region'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative GO identifiers (e.g., GO:XXXXX) or try alternative names/synonyms for the GO terms to retrieve their hierarchy information.",
+  "context" : "Node Type: go\nNode Value: cytospinule\nSub Question: first GO term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: actin-based cell projection\nSub Question: second GO term\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the relationship between the GO terms 'cytospinule' and 'actin-based cell projection' in the GO hierarchy?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt, GO, Reactome, or pathway identifiers) or try alternative names/synonyms for the proteins, GO terms, and pathways of interest.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: proteins with nucleus GO and GPCR pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: nucleus\nSub Question: GO annotation\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: G protein-coupled receptor signaling pathway\nSub Question: involved pathway\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO identifiers such as GO:0016021) or try alternative names/synonyms for the term to retrieve descriptions and data sources.",
+  "context" : "Node Type: go\nNode Value: plasma membrane\nSub Question: description and data sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the descriptions and data sources associated with the GO term 'plasma membrane'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., GO IDs for the term and HGNC IDs for the genes) or provide explicit gene lists linked to the GO term.",
+  "context" : "Node Type: go\nNode Value: regulation of transcription by RNA polymerase II\nSub Question: target GO term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: corresponding genes\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all GO terms related to 'regulation of transcription by RNA polymerase II' and their corresponding genes.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., GO IDs, UniProt IDs, or pathway IDs) or try alternative names/synonyms for the proteins and pathways of interest.",
+  "context" : "Node Type: go\nNode Value: metal ion binding\nSub Question: annotation source\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: annotated with GO term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: pathways\nSub Question: associated with proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO:0005515) or try alternative names/synonyms for the entity of interest.",
+  "context" : "Node Type: go\nNode Value: protein binding\nSub Question: description\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you provide the description for the GO term 'protein binding'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO:XXXXX) or try alternative names/synonyms for the membrane GO terms you are interested in.",
+  "context" : "Node Type: go\nNode Value: membrane\nSub Question: subtype GO terms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "List all GO terms that are a subtype of 'membrane'.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., GO IDs, UniProt IDs) for the proteins of interest or specify the exact protein names you want annotated with the GO term.",
+  "context" : "Node Type: go\nNode Value: kinase activity\nSub Question: annotation target\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: annotated with kinase activity\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are annotated with the GO term 'kinase activity'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: go\nNode Value: cytoplasm\nSub Question: subtype of\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the broader GO terms that 'cytoplasm' is a subtype of?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., GO identifiers) or try alternative names/synonyms for the GO term to retrieve its synonyms.",
+  "context" : "Node Type: go\nNode Value: mitotic DNA replication initiation\nSub Question: synonyms for\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the synonyms for the GO term 'mitotic DNA replication initiation'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO:0005515) or try alternative names/synonyms for the Gene Ontology term.",
+  "context" : "Node Type: go\nNode Value: protein binding\nSub Question: description and synonyms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What is the detailed description and any known synonyms for the Gene Ontology (GO) term 'protein binding'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer**  \nThe immediate sub‑categories (children) of the Gene Ontology term “signal transduction” are:  \n- cellular response to stimulus  \n- cell communication  \n- protein phosphorylation  \n- ion transport  \n- cellular signal transduction  \n\n**Evidence**  \n- cellular response to stimulus – GO  \n- cell communication – GO  \n- protein phosphorylation – GO  \n- ion transport – GO  \n- cellular signal transduction – GO",
+  "context" : "Node Type: go\nNode Value: cellular response to stimulus\nSub Question: immediate child of signal transduction\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: cell communication\nSub Question: immediate child of signal transduction\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: protein phosphorylation\nSub Question: immediate child of signal transduction\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: ion transport\nSub Question: immediate child of signal transduction\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: cellular signal transduction\nSub Question: immediate child of signal transduction\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you identify all immediate sub-categories or subtypes of the Gene Ontology term 'signal transduction'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe database lists a protein entry labeled “membrane proteins” that is annotated with the Gene Ontology term *membrane*.\n\n**Evidence:**  \n• membrane proteins – Protein  \n• membrane – GO\n\n**Notes:**  \n- The GO term is represented by a node of type *go* with value “membrane”.  \n- The protein annotation is captured by a node of type *protein* with value “membrane proteins”.",
+  "context" : "Node Type: go\nNode Value: membrane\nSub Question: annotation term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: membrane proteins\nSub Question: annotated with GO term\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins in the database are annotated with the Gene Ontology term 'membrane'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer:  \nThe direct subtypes of the GO term **cytoplasm** are **cytoplasmic part** and **cytoplasmic ribosome**.  Information about these subtypes is sourced from the **GOA database** and **UniProtKB**.\n\nEvidence:  \n• cytoplasmic part – go  \n• cytoplasmic ribosome – go  \n• GOA database – signature  \n• UniProtKB – signature",
+  "context" : "Node Type: go\nNode Value: cytoplasm\nSub Question: primary GO term\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: cytoplasmic part\nSub Question: direct child of cytoplasm\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: cytoplasmic ribosome\nSub Question: direct child of cytoplasm\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: GOA database\nSub Question: annotation source\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: UniProtKB\nSub Question: annotation source\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For the GO term 'cytoplasm', what are its direct subtypes and from which data sources is information for these subtypes derived?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt or GO identifiers) for the proteins linked to the GO term “ATP binding”, or provide a list of the proteins themselves.",
+  "context" : "Node Type: go\nNode Value: ATP binding\nSub Question: associated proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: linked to ATP binding\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Provide a count of distinct proteins that are associated with the Gene Ontology term 'ATP binding'.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., UniProt accession, Gene ID) for the MYC_HUMAN protein and include the amino acid sequence in the node attributes.",
+  "context" : "Node Type: protein\nNode Value: MYC_HUMAN\nSub Question: amino acid sequence request\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What is the amino acid sequence of the protein MYC_HUMAN?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer**  \nThe gene **YWHAE** encodes the protein 1433E (14‑3‑3 epsilon).\n\n**Evidence**  \n- YWHAE – Gene\n\n**Notes**  \n- The gene–protein association is directly stated in the node with sub‑question “encodes 1433E.”",
+  "context" : "Node Type: gene\nNode Value: YWHAE\nSub Question: encodes 1433E\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: 14-3-3 epsilon\nSub Question: protein target\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What genes encode the protein 1433E?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt, Gene Ontology, or signature identifiers) or try alternative names/synonyms for the protein and its associated signatures.",
+  "context" : "Node Type: protein\nNode Value: CUL3_HUMAN\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: signature\nNode Value: signatures\nSub Question: associated with CUL3_HUMAN\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the signatures associated with the protein CUL3_HUMAN?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for the protein, GO identifiers for the annotations) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: P53 protein\nSub Question: protein of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: GO annotations\nSub Question: annotation terms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the GO annotations for the protein P53?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., UniProt or Gene Ontology IDs) or try alternative names/synonyms for the proteins of interest.",
+  "context" : "Node Type: protein\nNode Value: TRI67\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins interacting with TRI67\nSub Question: interact with TRI67\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins interact with TRI67?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: EGFR\nSub Question: amino acid sequence\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the amino acid sequence of the protein EGFR?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., UniProt accession for RFA1, signature IDs from relevant databases) or try alternative names/synonyms for the protein and its signatures.",
+  "context" : "Node Type: signature\nNode Value: RFA1 protein signatures\nSub Question: known signatures\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: RFA1\nSub Question: protein of interest\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What are the known signatures for the protein RFA1?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: The ESR1 gene encodes the ESR1 protein.  \n\nEvidence:\n• ESR1 – Gene\n\nNotes:\n• No authoritative ID (e.g., HGNC) was provided in the supplied nodes; the gene name itself (ESR1) is the only available identifier.",
+  "context" : "Node Type: gene\nNode Value: ESR1\nSub Question: encodes ESR1 protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What gene encodes the protein ESR1?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt, HGNC) or try alternative names/synonyms for the protein of interest.",
+  "context" : "Node Type: protein\nNode Value: HSP7C\nSub Question: synonyms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the synonyms for the protein HSP7C?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt: P00533 for EGFR_HUMAN) or provide the amino acid sequence directly in the node attributes.",
+  "context" : "Node Type: protein\nNode Value: EGFR_HUMAN\nSub Question: amino acid sequence\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the amino acid sequence for the protein 'EGFR_HUMAN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for proteins) or provide specific protein names or identifiers for the interacting partners you are interested in.",
+  "context" : "Node Type: protein\nNode Value: MYC_HUMAN\nSub Question: anchor protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: interacting partners\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which other proteins are known to interact with 'MYC_HUMAN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for the protein, GO for the annotations) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: P53\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: GO annotations\nSub Question: retrieve annotations for\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Can you retrieve the Gene Ontology (GO) annotations for the protein 'P53'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., HGNC for the gene TRI67 or a specific signature ID) or try alternative names/synonyms for the protein signatures you are interested in.",
+  "context" : "Node Type: signature\nNode Value: protein signatures\nSub Question: associated with TRI67\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: TRI67\nSub Question: anchor gene\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What protein signatures are associated with 'TRI67'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., UniProt accession for PRKN) or use a different source that supplies the protein’s amino‑acid sequence.",
+  "context" : "Node Type: protein\nNode Value: PRKN\nSub Question: amino acid sequence\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the amino acid sequence of the protein 'PRKN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: The gene that encodes the protein EGFR is the EGFR gene itself.\n\nEvidence:\n- EGFR – Gene\n- EGFR protein – Protein",
+  "context" : "Node Type: gene\nNode Value: EGFR\nSub Question: encodes EGFR protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: EGFR protein\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which gene encodes the protein 'EGFR'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., GO IDs for MYC annotations) or provide the list of GO terms directly linked to the protein MYC.",
+  "context" : "Node Type: go\nNode Value: GO annotations\nSub Question: associated with MYC\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: MYC\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all GO annotations associated with the protein 'MYC'.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt, HGNC) for P53 and its known interactors, or provide a list of the interacting proteins.",
+  "context" : "Node Type: protein\nNode Value: other proteins interacting with TP53\nSub Question: interacting proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: TP53\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Which other proteins interact with 'P53'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO, UniProt) or try alternative names/synonyms for the protein or GO terms.",
+  "context" : "Node Type: protein\nNode Value: HSP7C_HUMAN\nSub Question: protein of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: GO annotations\nSub Question: associated with HSP7C_HUMAN\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the Gene Ontology (GO) annotations associated with the protein 'HSP7C_HUMAN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., UniProt, HGNC) or try alternative names/synonyms for the proteins of interest.",
+  "context" : "Node Type: protein\nNode Value: P53_HUMAN\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: interacting proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which other proteins are known to interact with 'P53_HUMAN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC for genes, NCBI Gene for chromosomal location) or provide additional node attributes containing the approved symbol and chromosome information.",
+  "context" : "Node Type: gene\nNode Value: EGFR\nSub Question: gene encoding EGFR protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: EGFR protein\nSub Question: encoded by EGFR gene\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Which gene encodes the protein 'EGFR', and what is its approved symbol and chromosome?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., UniProt for MYC_HUMAN, KEGG or Reactome IDs for pathways) or include specific pathway names and the species they are catalogued in. This will allow a precise answer.",
+  "context" : "Node Type: protein\nNode Value: MYC_HUMAN\nSub Question: protein of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: pathways\nSub Question: in which species\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which biological pathways is the protein 'MYC_HUMAN' involved, and for what species are these pathways listed?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., UniProt, HGNC, NCBI Gene) or more specific tissue names (e.g., \"lung\", \"bronchial epithelium\") for the protein expression query.",
+  "context" : "Node Type: protein\nNode Value: CFTR_HUMAN\nSub Question: protein expression\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expression sites\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which tissues is the protein 'CFTR_HUMAN' expressed?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for proteins, NCBI Taxonomy or BRENDA for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: drug targets\nSub Question: expressed in liver\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the known drug targets expressed in liver tissue?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: tissue\nNode Value: kidney\nSub Question: tissue of expression\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: tissue of expression\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: expressed in kidney and liver\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: common disorders associated\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the common disorders associated with genes expressed in both kidney and liver tissues?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: genomic_variant\nNode Value: genomic variants\nSub Question: associated with disorders\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: skin disorders\nSub Question: affecting epidermal gene expression\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: skin epidermis\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the genomic variants associated with disorders that affect gene expression in the skin epidermis?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, DrugBank) or include specific drug, protein, and side‑effect names to enable a precise answer.",
+  "context" : "Node Type: side_effect\nNode Value: side effects\nSub Question: drug side effects\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: drugs\nSub Question: target proteins in stomach\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: expressed in stomach\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: stomach\nSub Question: protein expression location\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the side effects of drugs that target proteins expressed in the stomach?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., GO, HGNC, UBERON) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: go\nNode Value: immune response\nSub Question: genes related to\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: expressed in tissues\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: express immune response genes\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which tissues express genes related to the GO term 'immune response'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., UniProt, GeneID, HGNC) or try alternative names/synonyms for the proteins of interest.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: known proteins expressed in liver\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are known to be expressed in the 'liver'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed in cerebral cortex\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: cerebral cortex\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What genes are expressed in the 'cerebral cortex'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC:1100 for BRCA1 and specific tissue IDs such as UBERON) or provide tissue expression data in the node attributes.",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: gene of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expression location\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which tissues is the BRCA1 gene expressed?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed genes count\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: spleen\nSub Question: expression context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "How many genes are expressed in the 'spleen'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe graph includes ten distinct tissues: brain, heart, liver, kidney, pancreas, lung, skin, breast, colon, and muscle.\n\n**Evidence:**  \n- brain – Tissue  \n- heart – Tissue  \n- liver – Tissue  \n- kidney – Tissue  \n- pancreas – Tissue  \n- lung – Tissue  \n- skin – Tissue  \n- breast – Tissue  \n- colon – Tissue  \n- muscle – Tissue",
+  "context" : "Node Type: tissue\nNode Value: brain\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: heart\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: kidney\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: pancreas\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: lung\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: skin\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: breast\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: colon\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: muscle\nSub Question: graph tissue\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you list all the tissues available in the graph?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC for genes, UBERON or ENCODE for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed in\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which genes are expressed in the 'liver'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt for proteins, UBERON or FMA for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: expressed in cerebral cortex\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: cerebral cortex\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What proteins are expressed in the 'cerebral cortex'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, UBERON for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed in lung\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: lung\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "How many unique genes are known to be expressed in the 'lung'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, UBERON or EMBL‑EBI for tissues) or provide explicit gene entries that include expression data in the spleen.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed in spleen\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: spleen\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which genes are expressed in the 'spleen' tissue?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt, HGNC) or try alternative names/synonyms for the proteins and tissue of interest.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: expressed in liver\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: liver\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What proteins are expressed in the 'liver' tissue?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nNo relevant nodes were provided for this question.\n\n**Evidence:**  \nNone.\n\n**Next steps:**  \nAdd authoritative identifiers (e.g., HGNC for the gene, MONDO for disorders, tissue IDs from resources such as GTEx or Human Protein Atlas) or try alternative synonyms to retrieve specific tissue‑expression and disorder‑association information.",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: target gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expression context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which tissues is the gene BRCA1 expressed, and with which disorders is it associated?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt for the protein, or specific tissue IDs such as UBERON) or try alternative names/synonyms for the protein and tissues of interest.",
+  "context" : "Node Type: protein\nNode Value: PRC2B\nSub Question: protein of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expressed in\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all tissues where the 'PRC2B' protein is expressed.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, UBERON for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: genes\nSub Question: expressed in kidney and heart\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: kidney\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: heart\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which genes are expressed in both 'kidney' and 'heart' tissues?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, Uberon or GTEx IDs for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: TTN\nSub Question: gene focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: express TTN\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which tissues express the gene TTN?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC) or try alternative names/synonyms for the gene of interest.",
+  "context" : "Node Type: gene\nNode Value: MSH2\nSub Question: approved symbols and synonyms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What are the approved symbols and synonyms for the gene MSH2?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., MONDO, HGNC, UniProt, Reactome) or include more detailed node attributes that list pathway names or IDs.",
+  "context" : "Node Type: gene\nNode Value: CFTR\nSub Question: gene encoding protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: CFTR protein\nSub Question: encoded by CFTR gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: CFTR protein pathways\nSub Question: associated pathways\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the pathways associated with proteins encoded by the gene CFTR?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, UBERON or NCBI Taxonomy for tissues) or provide explicit tissue names that express BRCA2.",
+  "context" : "Node Type: gene\nNode Value: BRCA2\nSub Question: gene of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expressing tissues\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which tissues express the BRCA2 gene?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., HGNC:XXXX for APC) or provide a description of the gene in the enhanced nodes.",
+  "context" : "Node Type: gene\nNode Value: APC\nSub Question: gene type and description\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Provide the gene type and description for the APC gene.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe BRCA1 gene encodes a single protein, which is named BRCA1.\n\n**Evidence**  \n- BRCA1 – Protein  \n\n**Notes**  \n- No additional protein identifiers or alternative names are provided in the supplied nodes.",
+  "context" : "Node Type: protein\nNode Value: BRCA1\nSub Question: encoded by BRCA1\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: BRCA1\nSub Question: gene context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What proteins are encoded by the BRCA1 gene?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC for the gene, UniProt for the protein, or GO IDs for the annotations) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: TSC2\nSub Question: gene encoding target proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: TSC2 protein\nSub Question: protein product of TSC2\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: go\nNode Value: GO annotations\nSub Question: annotations for TSC2 protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the GO annotations for proteins encoded by the TSC2 gene?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nNo relevant nodes were provided for this question.  \n\n**Evidence:**  \nNone.  \n\n**Next steps:**  \nAdd authoritative identifiers (e.g., HGNC IDs for genes, UBERON or HPA IDs for tissues) or provide the specific gene and tissue names you are interested in.",
+  "context" : "Node Type: gene\nNode Value: MSH6\nSub Question: anchor gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues expressed by MSH6\nSub Question: tissues of MSH6 expression\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: other genes\nSub Question: co-expressed genes\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find other genes that are expressed in the same tissues as the MSH6 gene.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: gene of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What disorders are associated with the gene BRCA1?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., HGNC:11998 for TP53) or try alternative names/synonyms for the gene.",
+  "context" : "Node Type: gene\nNode Value: TP53\nSub Question: gene type and chromosome location\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the gene type and chromosome location for the gene TP53?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe EGFR gene encodes the EGFR protein.\n\n**Evidence**  \n• EGFR protein – Protein  \n• EGFR – Gene  \n\n**Notes**  \n- The only encoded protein listed in the provided nodes is “EGFR protein.”  \n- No identifiers or additional proteins are available in the supplied evidence.",
+  "context" : "Node Type: gene\nNode Value: EGFR\nSub Question: source gene of proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: EGFR protein\nSub Question: encoded proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are encoded by the EGFR gene?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC, UniProt) or try alternative names/synonyms for the CFTR gene and tissues of interest.",
+  "context" : "Node Type: gene\nNode Value: CFTR\nSub Question: expression context\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: expression location\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which tissues is the CFTR gene expressed?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., HGNC:xxxx) or include synonym information for the gene.",
+  "context" : "Node Type: gene\nNode Value: MSH2\nSub Question: description and synonyms\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you provide the description and any known synonyms for the gene MSH2?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., HGNC: 12345) or try alternative names/synonyms for the gene 'TTN'.",
+  "context" : "Node Type: gene\nNode Value: TTN\nSub Question: chromosome and gene type\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What is the chromosome and gene type for the gene 'TTN'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe gene **BRCA1** is linked to a group of disorders collectively referred to as **BRCA1‑associated disorders**.  \n\n**Evidence:**  \n- **BRCA1** – Gene  \n- **BRCA1‑associated disorders** – Disorder",
+  "context" : "Node Type: gene\nNode Value: BRCA1\nSub Question: anchor gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: BRCA1-associated disorders\nSub Question: associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which disorders are associated with the gene 'BRCA1'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: The gene EGFR encodes a single protein, EGFR protein.\n\nEvidence:\n• EGFR protein – Protein\n• EGFR – Gene",
+  "context" : "Node Type: gene\nNode Value: EGFR\nSub Question: source gene\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: EGFR protein\nSub Question: encoded protein\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are encoded by the gene 'EGFR'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, Uberon for tissues) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: gene\nNode Value: TP53\nSub Question: expression location\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: where TP53 expressed\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "In which tissues is the gene 'TP53' expressed?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, MONDO for disorders) or provide additional node attributes such as description, phenotype, or associated disorders.",
+  "context" : "Node Type: gene\nNode Value: MSH2\nSub Question: gene description\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: Lynch syndrome\nSub Question: associated disorder\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Can you provide the description and any associated disorders for the gene 'MSH2'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., UniProt for proteins, Reactome or KEGG IDs for pathways) or include explicit lists of drug‑target proteins within the “Immune System” pathway.",
+  "context" : "Node Type: protein\nNode Value: drug targets\nSub Question: known drug targets\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: Immune System\nSub Question: within pathway\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the known drug targets within the 'Immune System' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., GO, UniProt) or try alternative names/synonyms for the pathways and protein components of interest.",
+  "context" : "Node Type: pathway\nNode Value: Innate immune system\nSub Question: Innate immune pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: Adaptive immune system\nSub Question: Adaptive immune pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: protein components\nSub Question: protein components\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "What are the key differences between the 'Innate Immune System' and 'Adaptive Immune System' pathways in terms of protein components?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Cell Cycle\nSub Question: focus pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: genomic_variant\nNode Value: genomic variants\nSub Question: affecting genes in pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: in Cell Cycle pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated with variants\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Neuronal System pathway\nSub Question: genes encode proteins in this pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: genes\nSub Question: encode proteins in pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissues\nSub Question: express proteins in pathway\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Find all genes that encode proteins involved in the Neuronal System pathway and returns the tissues where those proteins are expressed.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps:  \n- Add authoritative IDs (e.g., MONDO for the pathway, HGNC for proteins, DrugBank or RxNorm for drugs, MedDRA for side effects).  \n- Try alternative names or synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: SARS-CoV Infections\nSub Question: SARS-CoV infections pathway focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: target proteins\nSub Question: target proteins in pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: drugs\nSub Question: drugs targeting pathway proteins\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: side effects\nSub Question: effects of drugs targeting pathway proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nThe provided evidence does not list any primary data sources for the *Signal Transduction* pathway.  The species associated with this pathway, as indicated by the gene node, are *Homo sapiens*, *Mus musculus*, and *Danio rerio*.\n\n**Evidence:**\n- Signal Transduction – pathway  \n- Homo sapiens – gene  \n- Mus musculus – gene  \n- Danio rerio – gene  \n\n**Notes:**  \n- No data source information was supplied for the pathway node.  \n- The species names come directly from the gene node’s value field.",
+  "context" : "Node Type: pathway\nNode Value: Signal Transduction\nSub Question: primary data sources\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: Homo sapiens, Mus musculus, Danio rerio\nSub Question: species associated\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the primary data sources and species associated with the 'Signal Transduction' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Metabolism\nSub Question: pathway of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: constituents of pathway\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "List all proteins that are constituents of the 'Metabolism' pathway.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative identifiers (e.g., MONDO, Reactome, KEGG for the pathway; UniProt or HGNC for the proteins) or provide the protein list or count directly.",
+  "context" : "Node Type: pathway\nNode Value: Immune System\nSub Question: target pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: associated proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For the 'Immune System' pathway, what is the count of all associated proteins?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Signal Transduction\nSub Question: species known\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For which species is the 'Signal Transduction' pathway known?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Metabolism pathway\nSub Question: data sources for curation\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the data sources used to curate information about the 'Metabolism' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Immune System\nSub Question: focus pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: involved in Immune System pathway\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are involved in the 'Immune System' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., UniProt IDs for proteins) or provide specific protein names and their pathway association.",
+  "context" : "Node Type: protein\nNode Value: proteins\nSub Question: involved in Immune System pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: pathway\nNode Value: Immune System pathway\nSub Question: pathway focus\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which proteins are known to be involved in the 'Immune System' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., Reactome, KEGG IDs) or try alternative names/synonyms for the pathways of interest.",
+  "context" : "Node Type: pathway\nNode Value: pathways\nSub Question: specific to Homo sapiens\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you list all pathways that are specific to 'Homo sapiens'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: pathway\nNode Value: Metabolism of proteins\nSub Question: data sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "From which data sources is information about the 'Metabolism of proteins' pathway obtained?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., UniProt IDs for the proteins, pathway IDs such as Reactome or KEGG) or include explicit protein entries associated with the pathway.",
+  "context" : "Node Type: pathway\nNode Value: Disease pathway\nSub Question: target pathway\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: proteins\nSub Question: associated proteins\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "How many unique proteins are associated with the 'Disease' pathway?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., MONDO, HGNC, ChEMBL) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: side_effect\nNode Value: dizziness\nSub Question: reported side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: drugs targeting BRCA1 protein\nSub Question: targeting BRCA1 protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: protein\nNode Value: BRCA1 protein\nSub Question: target protein\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: gene\nNode Value: BRCA1\nSub Question: encoded by\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Is 'Dizziness' a reported side effect of any drugs targeting the protein encoded by the gene BRCA1?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, DrugBank) or try alternative names/synonyms for the drugs, side effect, and disorders to enable a specific answer.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: drugs with vomiting side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: vomiting\nSub Question: side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: disorder\nNode Value: disorders\nSub Question: associated disorders\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all disorders associated with drugs that have 'Vomiting' as a side effect.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., drug identifiers from DrugBank or ATC codes) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: drug\nNode Value: nilotinib\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: fluoxetine\nSub Question: drug of interest\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: common side effects\nSub Question: shared side effects\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the comon side effects of Nilotinib and Fluoxetine?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., HGNC for genes, dbSNP for variants, MONDO or MedDRA for adverse events) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: genomic_variant\nNode Value: genomic variants\nSub Question: associated with\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: acute migraine\nSub Question: as ADR\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which genomic variants are associated with the occurrence of acute migraine as an adverse drug reaction?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \n\nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, DrugBank) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: side_effect\nNode Value: Abdominal pain NOS\nSub Question: drug-induced abdominal pain\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: drugs causing abdominal pain NOS\nSub Question: drugs causing side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: tissue\nNode Value: tissue\nSub Question: tissue context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative identifiers (e.g., drug IDs such as DrugBank or ATC codes) or try alternative drug names or synonyms that may be linked to the side effect 'Nausea'.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: causing nausea\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: nausea\nSub Question: specific side effect\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What drugs are known to cause the side effect 'Nausea'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, MedDRA, ICD‑10 for phenotypes; MedDRA, WHO‑ADR, PT for side effects) or list specific side effect and phenotype terms that you wish to compare.",
+  "context" : "Node Type: side_effect\nNode Value: side effects\nSub Question: also classified as phenotypes\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: phenotypes\nSub Question: overlap with side effects\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which side effects are also classified as phenotypes?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nNo relevant nodes were provided for this question.\n\n**Evidence:**  \nNone.\n\n**Next steps:**  \nAdd authoritative identifiers (e.g., drug IDs such as DrugBank, RxNorm, or drug names) and side‑effect IDs (e.g., MedDRA terms) for the drugs and “dizziness” to enable filtering. Alternatively, include synonyms or standard terminology for the side effect.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: list with dizziness\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: dizziness\nSub Question: side effect filter\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "List all drugs that have 'Dizziness' as a side effect.",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:**  \nNo relevant nodes were provided for this question.\n\n**Evidence:**  \nNone.\n\n**Next steps:**  \nAdd authoritative IDs (e.g., DrugBank, ChEMBL) for specific drugs, or include drug names that are known to list nausea as a side effect.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: associated with nausea side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: nausea\nSub Question: side effect context\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which drugs are associated with 'Nausea' as a side effect?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MedDRA, CTCAE) or include the data source information for the side effect in the Enhanced Nodes section.",
+  "context" : "Node Type: side_effect\nNode Value: Headache\nSub Question: data sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "From which data sources is information about the side effect 'Headache' obtained?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \n\nNext steps: Add authoritative IDs (e.g., MONDO, HPO for phenotypes; MedDRA or WHO-ART for side effects) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: side_effect\nNode Value: Diarrhea\nSub Question: anchor side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: phenotypes\nSub Question: phenotypes equivalent to side effect\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Are there any phenotypes that are considered equivalent to the side effect 'Diarrhea'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: side_effect\nNode Value: side effects\nSub Question: comprehensive list\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Can you provide a comprehensive list of all known side effects available in the knowledge graph?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, MedDRA, SNOMED CT) or try alternative names/synonyms for the side effect of interest.",
+  "context" : "Node Type: side_effect\nNode Value: Abdominal pain\nSub Question: domain IDs\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "What are the domain IDs for the side effect 'Abdominal pain'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., DrugBank, ChEMBL for the drugs, MedDRA for the side effect) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: drug\nNode Value: drugs\nSub Question: associated with headache\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: side_effect\nNode Value: headache\nSub Question: side effect\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "Which drugs are associated with the side effect 'Headache'?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, MedDRA, HPO) or try alternative names/synonyms for the phenotypes of interest.",
+  "context" : "Node Type: side_effect\nNode Value: Dizziness\nSub Question: side effect focus\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: phenotype\nNode Value: phenotypes\nSub Question: same as dizziness\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "“Which phenotypes are the same as the side effect ‘Dizziness’?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HGNC, UniProt) or try alternative names/synonyms for the entities of interest.",
+  "context" : "Node Type: side_effect\nNode Value: rash\nSub Question: available data sources\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "For the side effect 'Rash', what data sources are available in the knowledge graph?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "Answer: No relevant nodes were provided for this question.  \nEvidence: None.  \nNext steps: Add authoritative IDs (e.g., MONDO, HPO, MedDRA) or try alternative names/synonyms for the side effect of interest.",
+  "context" : "Node Type: side_effect\nNode Value: abdominal pain\nSub Question: contains abdominal pain\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : false,
+  "question" : "Can you list all side effects in the graph that contain 'abdominal pain' in their name?",
+  "attempt" : 0,
+  "fallback" : true
+}, {
+  "answer" : "**Answer:** No relevant nodes were provided for this question.  \n**Evidence:** None.  \n**Next steps:** Add authoritative identifiers (e.g., DrugBank, ATC, or ChEMBL IDs) for the drugs or provide explicit node entries with display names and primary domain IDs. You may also try using alternative names or synonyms for “nausea” and the drug entities.",
+  "context" : "Node Type: side_effect\nNode Value: nausea\nSub Question: known side effect\nNeeds Filter: null\nEnhanced Nodes:\n\nNode Type: drug\nNode Value: drugs\nSub Question: cause nausea\nNeeds Filter: null\nEnhanced Nodes:\n\n",
+  "cypher" : null,
+  "isCorrect" : true,
+  "question" : "How many distinct drugs are known to cause 'Nausea' as a side effect?",
+  "attempt" : 0,
+  "fallback" : true
+} ]
