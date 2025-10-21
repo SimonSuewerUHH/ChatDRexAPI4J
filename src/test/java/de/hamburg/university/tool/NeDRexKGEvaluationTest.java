@@ -49,7 +49,7 @@ public class NeDRexKGEvaluationTest {
     AIJudgeBot judgeBot;
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
-    private static final boolean REPLACE_MODE = false;
+    private static final boolean REPLACE_MODE = true;
     @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "default")
     String modelName;
 
@@ -77,7 +77,7 @@ public class NeDRexKGEvaluationTest {
         } else {
             Log.info("REPLACE MODE is OFF - existing results will be kept!");
             allQuestionScores = QuestionScore.loadJsonFile(out.resolveSibling("interactions_scores.json"));
-            if(allQuestionScores == null){
+            if (allQuestionScores == null) {
                 allQuestionScores = new ArrayList<>();
                 Log.info("No question scores found!");
             }
@@ -86,7 +86,7 @@ public class NeDRexKGEvaluationTest {
             List<CypherQuestion> questions = loadQuestions(category);
             List<Score> categoryScores = new ArrayList<>();
             for (CypherQuestion question : questions) {
-                if(!REPLACE_MODE && QuestionScore.containsQuestion(allQuestionScores, question.getNlQuestion())) {
+                if (!REPLACE_MODE && QuestionScore.containsQuestion(allQuestionScores, question.getNlQuestion())) {
                     Log.info("Skipping already evaluated question: " + question.getNlQuestion());
                     continue;
                 }
@@ -100,7 +100,7 @@ public class NeDRexKGEvaluationTest {
                     Log.info("--------------------------------------------------");
                     categoryScores.add(score);
                     allScores.add(score);
-                    allQuestionScores.add(new QuestionScore(category, question.getNlQuestion(), question.getCypherTranslation(), answer.getCypher(), score));
+                    allQuestionScores.add(new QuestionScore(category, question.getNlQuestion(), question.getCypherTranslation(), answer, score));
 
                     if (score.getPrecision() < 0.5) {
                         Log.warnf("Low precision for question: %s\nCypher: %s\nGolden: %s\nAI: %s\nScore: %s",
@@ -230,19 +230,27 @@ public class NeDRexKGEvaluationTest {
         String oldQuery = "";
         String newQuery = "";
         final int maxAttempts = config.tools().kgQuery().retries();
+        AiCypher cypher = new AiCypher();
         for (int i = 0; i < maxAttempts; i++) {
             try {
+                cypher.moveCypherToHistory();
                 newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                 oldQuery += "\n " + i + ". " + newQuery;
-                return new AiCypher(newQuery, query(newQuery));
+                cypher.setAttempts(i);
+                cypher.setCypher(newQuery);
+                List<Map<String, String>> results = query(newQuery);
+                cypher.setResults(results);
+                return cypher;
             } catch (ClientWebApplicationException e) {
+                cypher.addError(e.getMessage());
                 Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
             } catch (Exception e) {
+                cypher.addError(e.getMessage());
                 Log.warnf(e, "Attempt %d: Failed to generate answer for question: %s", i + 1, question);
             }
 
         }
-        return new AiCypher(newQuery);
+        return cypher;
     }
 
     private List<CypherQuestion> loadQuestions(String topic) {

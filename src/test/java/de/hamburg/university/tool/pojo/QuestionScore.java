@@ -24,6 +24,23 @@ public class QuestionScore {
     private String aiCypher;
     private Score score;
 
+
+    private int attempts;
+    private List<String> previousCyphers;
+    private List<String> errors;
+
+    public QuestionScore(String category, String question, String goldenCypher, AiCypher answer, Score score) {
+        this.category = category;
+        this.question = question;
+        this.goldenCypher = goldenCypher;
+        this.aiCypher = answer.getCypher();
+
+        this.attempts = answer.getAttempts();
+        this.previousCyphers = answer.getPreviousCyphers();
+        this.errors = answer.getErrors();
+        this.score = score;
+    }
+
     public static void printCsvFile(List<QuestionScore> rows, Path file) {
         try {
             Files.createDirectories(file.getParent());
@@ -80,6 +97,7 @@ public class QuestionScore {
             Log.error("Failed to write JSON", e);
         }
     }
+
     private static String csv(String s) {
         if (s == null) return "";
         boolean needsQuotes = s.contains(",") || s.contains("\"") || s.contains("\n");

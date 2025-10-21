@@ -18,13 +18,11 @@ public class Score {
         this.hits = hits;
         this.lengthGold = gold.size();
         this.lengthAI = ai.size();
-        this.precision = ai.isEmpty() ? 0.0 : (double) hits / ai.size();
-        this.recall = gold.isEmpty() ? 0.0 : (double) hits / gold.size();
+        this.precision = ai.isEmpty() ? 0.0 : (double) hits / lengthAI;
+        this.recall = gold.isEmpty() ? 0.0 : (double) hits / lengthGold;
 
         if(this.precision + this.recall == 0) {
-            this.f1 = 1;
-            this.recall = 1;
-            this.precision = 1;
+            this.f1 = 0;
         } else {
             this.f1 = 2 * this.precision * this.recall / (this.precision + this.recall);
         }
