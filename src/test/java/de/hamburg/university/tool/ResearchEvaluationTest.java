@@ -15,6 +15,7 @@ import de.hamburg.university.tool.pojo.ResearchResult;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
@@ -35,8 +36,9 @@ public class ResearchEvaluationTest {
     @Inject
     ResearchBot research;
 
-
-    private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+    private static final boolean REPLACE_MODE = false;
+    @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "default")
+    String modelName;
 
     @Test
     public void testInteractions() {

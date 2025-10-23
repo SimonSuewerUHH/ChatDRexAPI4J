@@ -1,11 +1,15 @@
 package de.hamburg.university.tool.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Score {
     private int hits;
     private int lengthGold;

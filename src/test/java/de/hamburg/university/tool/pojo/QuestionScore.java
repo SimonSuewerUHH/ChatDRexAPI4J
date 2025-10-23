@@ -77,9 +77,14 @@ public class QuestionScore {
     public static List<QuestionScore> loadJsonFile(Path file) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(file.toFile(), mapper.getTypeFactory().constructCollectionType(List.class, QuestionScore.class));
+            mapper.findAndRegisterModules();
+            return mapper.readValue(
+                    file.toFile(),
+                    mapper.getTypeFactory().constructCollectionType(List.class, QuestionScore.class)
+            );
         } catch (Exception e) {
-            Log.error("Failed to read JSON", e);
+            // include the absolute file path in the log and attach the exception
+            Log.errorf(e, "Failed to read JSON from %s", file.toAbsolutePath());
             return null;
         }
     }

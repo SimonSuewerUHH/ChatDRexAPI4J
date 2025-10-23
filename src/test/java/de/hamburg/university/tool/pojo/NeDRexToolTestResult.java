@@ -58,4 +58,19 @@ public class NeDRexToolTestResult {
             Log.error("Failed to write JSON", e);
         }
     }
+
+    public static List<NeDRexToolTestResult> loadJsonFile(Path file) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.findAndRegisterModules();
+            return mapper.readValue(
+                    file.toFile(),
+                    mapper.getTypeFactory().constructCollectionType(List.class, NeDRexToolTestResult.class)
+            );
+        } catch (Exception e) {
+            // include the absolute file path in the log and attach the exception
+            Log.errorf(e, "Failed to read JSON from %s", file.toAbsolutePath());
+            return null;
+        }
+    }
 }

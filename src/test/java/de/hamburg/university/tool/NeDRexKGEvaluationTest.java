@@ -49,7 +49,7 @@ public class NeDRexKGEvaluationTest {
     AIJudgeBot judgeBot;
 
     private static final ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
-    private static final boolean REPLACE_MODE = true;
+    private static final boolean REPLACE_MODE = false;
     @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "default")
     String modelName;
 
@@ -76,7 +76,7 @@ public class NeDRexKGEvaluationTest {
             Log.warn("REPLACE MODE is ON - existing results will be overwritten!");
         } else {
             Log.info("REPLACE MODE is OFF - existing results will be kept!");
-            allQuestionScores = QuestionScore.loadJsonFile(out.resolveSibling("interactions_scores.json"));
+            allQuestionScores = QuestionScore.loadJsonFile(out.resolveSibling("kg_cypher_result.json"));
             if (allQuestionScores == null) {
                 allQuestionScores = new ArrayList<>();
                 Log.info("No question scores found!");
@@ -101,7 +101,7 @@ public class NeDRexKGEvaluationTest {
                     categoryScores.add(score);
                     allScores.add(score);
                     allQuestionScores.add(new QuestionScore(category, question.getNlQuestion(), question.getCypherTranslation(), answer, score));
-                    QuestionScore.printJsonFile(allQuestionScores, out.resolveSibling("interactions_scores.json"));
+                    QuestionScore.printJsonFile(allQuestionScores, out.resolveSibling("kg_cypher_result.json"));
 
                     if (score.getPrecision() < 0.5) {
                         Log.warnf("Low precision for question: %s\nCypher: %s\nGolden: %s\nAI: %s\nScore: %s",

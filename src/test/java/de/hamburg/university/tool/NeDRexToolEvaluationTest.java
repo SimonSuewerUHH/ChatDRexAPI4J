@@ -18,6 +18,9 @@ import de.hamburg.university.tool.pojo.NeDRexToolTestResult;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
@@ -44,8 +47,24 @@ public class NeDRexToolEvaluationTest {
     @Inject
     AIJudgeBot judgeBot;
 
-    List<NeDRexToolTestResult> results = new ArrayList<>();
+    static List<NeDRexToolTestResult> results = new ArrayList<>();
 
+    private static final boolean REPLACE_MODE = false;
+    private static String modelName = ConfigProvider.getConfig().getValue("quarkus.langchain4j.openai.chat-model.model-name", String.class);
+
+    @BeforeAll
+    static void testSetup() {
+        if (REPLACE_MODE) {
+            Log.warn("REPLACE MODE is ON - existing results will be overwritten!");
+        } else {
+            Log.info("REPLACE MODE is OFF - existing results will be kept!");
+            results = NeDRexToolTestResult.loadJsonFile(getPath());
+            if (results == null) {
+                results = new ArrayList<>();
+                Log.info("No question results found!");
+            }
+        }
+    }
 
     @Test
     @Order(1)
@@ -57,6 +76,7 @@ public class NeDRexToolEvaluationTest {
             NeDRexToolTestResult result = testDiamond(question);
             results.add(result);
             Log.info(result.toString());
+            NeDRexToolTestResult.printJsonFile(results, getPath());
         }
     }
 
@@ -70,6 +90,7 @@ public class NeDRexToolEvaluationTest {
             NeDRexToolTestResult result = testTrustrank(question);
             results.add(result);
             Log.info(result.toString());
+            NeDRexToolTestResult.printJsonFile(results, getPath());
         }
     }
 
@@ -83,19 +104,8 @@ public class NeDRexToolEvaluationTest {
             NeDRexToolTestResult result = testCloseness(question);
             results.add(result);
             Log.info(result.toString());
+            NeDRexToolTestResult.printJsonFile(results, getPath());
         }
-    }
-
-    @Test
-    @Order(4)
-    void getResult() {
-        Path out = Paths.get("results", "eval", "neDRexToolEvaluation.json");
-
-        Log.info("Final Results:");
-        for (NeDRexToolTestResult result : results) {
-            Log.info(result.toString());
-        }
-        NeDRexToolTestResult.printJsonFile(results, out);
     }
 
     private NeDRexToolTestResult testDiamond(NeDRexToolQuestion question) {
@@ -208,6 +218,10 @@ public class NeDRexToolEvaluationTest {
         }
 
         result.setCorrectInput(correctInput);
+    }
+
+    static Path getPath() {
+        return Paths.get("results", "eval", modelName.replace(":latest", ""), "digest.json");
     }
 }
 

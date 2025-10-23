@@ -2,7 +2,7 @@ category,question,hits,lengthGold,lengthAI,precision,recall,f1
 Drug,What indications are associated with the use of Ropinirole?,3,3,3,1.0,1.0,1.0
 Drug,What are the common side effects observed with Clomipramine administration?,1694,1694,1694,1.0,1.0,1.0
 Drug,What is the CAS registry number for Ribavirin?,1,1,1,1.0,1.0,1.0
-Drug,What phenotypes are associated with side effects of Donepezil?,192,192,192,1.0,1.0,1.0
+Drug,What phenotypes are associated with side effects of Donepezil?,0,192,0,0.0,0.0,0.0
 Drug,What are the known targets of the drug Pregabalin?,3,3,3,1.0,1.0,1.0
 Drug,List the contraindications for Paroxetine.,6,6,6,1.0,1.0,1.0
 Drug,What are the medical indications for the drug 'Pregabalin'?,3,3,3,1.0,1.0,1.0
@@ -19,106 +19,104 @@ Disorder,What genes are associated with hereditary breast carcinoma?,37,37,37,1.
 Disorder,What is the primary domain ID for cystic fibrosis?,1,1,1,1.0,1.0,1.0
 Disorder,What are the data sources for the disorder information on Li-Fraumeni syndrome?,1,1,1,1.0,1.0,1.0
 Disorder,What are the ICD10 codes associated with Wilson disease?,1,1,1,1.0,1.0,1.0
-Disorder,What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?,74,74,154,0.4805194805194805,1.0,0.6491228070175439
-Disorder,What are the known subtypes of the 'neoplasm' disorder?,0,48,1,1.0,1.0,1.0
+Disorder,What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?,74,74,74,1.0,1.0,1.0
+Disorder,What are the known subtypes of the 'neoplasm' disorder?,48,48,48,1.0,1.0,1.0
 Disorder,List the phenotypes commonly observed in individuals diagnosed with 'cystic fibrosis'.,56,56,56,1.0,1.0,1.0
 Disorder,What drugs have an indication for the treatment of 'type 2 diabetes mellitus'?,77,77,77,1.0,1.0,1.0
 Disorder,Are there any specific genomic variants known to be associated with 'Alzheimer disease'?,3,3,3,1.0,1.0,1.0
 Disorder,What is the description and ICD-10 code for 'Alzheimer disease'?,1,1,1,1.0,1.0,1.0
 Disorder,Which phenotypes are associated with 'type 2 diabetes mellitus'?,5,5,5,1.0,1.0,1.0
-Disorder,What disorders are classified as subtypes of 'neoplasm'?,48,48,40072,0.0011978438810141745,1.0,0.0023928215353938185
+Disorder,What disorders are classified as subtypes of 'neoplasm'?,48,48,48,1.0,1.0,1.0
 Disorder,What drugs are indicated for treating 'COVID-19'?,31,31,31,1.0,1.0,1.0
-GenomicVariant,Find all genomic variants of type SNV that are associated with breast cancer.,0,1530,0,1.0,1.0,1.0
-GenomicVariant,Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.,2864,2864,2864,1.0,1.0,1.0
-GenomicVariant,What are the different variant types observed in genomic variants associated with Parkinson's disease?,0,8,3,1.0,1.0,1.0
-GenomicVariant,Are there any common genomic variants associated with both type 1 and type 2 diabetes?,0,4770,0,1.0,1.0,1.0
-GenomicVariant,Find all genomic variants of type 'SNV' located within the BRCA1 gene.,0,11259,0,1.0,1.0,1.0
-GenomicVariant,List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.,0,2,2,1.0,1.0,1.0
-GenomicVariant,What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?,0,1,1,1.0,1.0,1.0
-GenomicVariant,Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?,14804,14804,14804,1.0,1.0,1.0
-GenomicVariant,What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?,774,774,28950,0.02673575129533679,1.0,0.05207912797739201
+GenomicVariant,Find all genomic variants of type SNV that are associated with breast cancer.,0,1530,0,0.0,0.0,0.0
+GenomicVariant,Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.,2862,2862,2862,1.0,1.0,1.0
+GenomicVariant,What are the different variant types observed in genomic variants associated with Parkinson's disease?,0,8,4,0.0,0.0,0.0
+GenomicVariant,Are there any common genomic variants associated with both type 1 and type 2 diabetes?,0,13286,0,0.0,0.0,0.0
+GenomicVariant,Find all genomic variants of type 'SNV' located within the BRCA1 gene.,0,11260,0,0.0,0.0,0.0
+GenomicVariant,List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.,0,2,2,0.0,0.0,0.0
+GenomicVariant,What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?,0,1,1,0.0,0.0,0.0
+GenomicVariant,Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?,14806,14806,14806,1.0,1.0,1.0
+GenomicVariant,What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?,771,771,28951,0.02663120444889641,1.0,0.051880761725321314
 GenomicVariant,"Find all genomic variants that are associated with disorders and that affect the gene CFTR.
- For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",2535,2535,3984,0.6362951807228916,1.0,0.7777266451909802
-GenomicVariant,Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’,4981,4981,71444,0.0697189407088069,1.0,0.13035001635590449
+ For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",2536,2536,3984,0.6365461847389559,1.0,0.7779141104294479
+GenomicVariant,Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’,4978,4978,71448,0.06967304893069086,1.0,0.1302698034700233
 GenomicVariant,What are the different variant types and their respective counts for genomic variants located on chromosome '17'?,8,8,8,1.0,1.0,1.0
-GenomicVariant,Which genes are affected by genomic variants located on chromosome 'X'?,1037,1037,152622,0.006794564348521183,1.0,0.013497419610956728
-GenomicVariant,Which disorders are associated with genomic variants of type duplication?,0,3189,0,1.0,1.0,1.0
-GenomicVariant,"For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",5667,5667,5667,1.0,1.0,1.0
-Phenotype,What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?,0,81253,0,1.0,1.0,1.0
-Phenotype,"Which disorders are associated with short stature, and what other phenotypes do these disorders have?",7,67706,1531,0.0045721750489875895,1.0338817830029835E-4,2.022040238600748E-4
-Phenotype,"What are the potential differential diagnoses for patients presenting with infantile onset, seizures, and hypertelorism?",0,123,0,1.0,1.0,1.0
-Phenotype,What is the prevalence of ‘Paroxysmal vertigo’ in patients with ‘EEG with temporal slowing’ and ‘autoimmune limbic encephalitis’?,0,1,0,1.0,1.0,1.0
-Phenotype,What are the potential long-term outcomes shared between autoimmune limbic encephalitis and disorders presenting with psychosis?,0,405,0,1.0,1.0,1.0
-Phenotype,What is the description and list of data sources for the phenotype 'Global developmental delay'?,0,1,0,1.0,1.0,1.0
+GenomicVariant,Which genes are affected by genomic variants located on chromosome 'X'?,1038,1038,152808,0.006792838071305167,1.0,0.013494013494013494
+GenomicVariant,Which disorders are associated with genomic variants of type duplication?,0,3176,0,0.0,0.0,0.0
+GenomicVariant,"For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",5726,5726,5726,1.0,1.0,1.0
+Phenotype,What are the genetic variants associated with phenotypes like 'Seizure' and 'Intellectual disability'?,80798,80798,327161,0.2469670895980878,1.0,0.39610843246502714
+Phenotype,"Which disorders are associated with short stature, and what other phenotypes do these disorders have?",66175,67706,66175,1.0,0.977387528431749,0.9885644714335865
+Phenotype,"What are the potential differential diagnoses for patients presenting with infantile onset, seizures, and hypertelorism?",0,123,0,0.0,0.0,0.0
+Phenotype,What is the prevalence of ‘Paroxysmal vertigo’ in patients with ‘EEG with temporal slowing’ and ‘autoimmune limbic encephalitis’?,0,1,0,0.0,0.0,0.0
+Phenotype,What are the potential long-term outcomes shared between autoimmune limbic encephalitis and disorders presenting with psychosis?,0,405,0,0.0,0.0,0.0
+Phenotype,What is the description and list of data sources for the phenotype 'Global developmental delay'?,1,1,1,1.0,1.0,1.0
 Phenotype,Which disorders are known to have 'Seizure' as a characteristic phenotype?,2077,2077,2077,1.0,1.0,1.0
-Phenotype,Are there any documented side effects that are considered the same as the phenotype 'Hypotonia'?,1,1,1,1.0,1.0,1.0
+Phenotype,Are there any documented side effects that are considered the same as the phenotype 'Hypotonia'?,0,1,0,0.0,0.0,0.0
 Phenotype,"List all phenotypes that include 'onset' in their `displayName`, such as 'Infantile onset' or 'Neonatal onset', and provide their primary domain ID.",59,59,60,0.9833333333333333,1.0,0.9915966386554621
 Phenotype,"For the phenotype 'Intellectual disability', what are its synonyms and main description?",1,1,1,1.0,1.0,1.0
 Phenotype,What is the descriptive information available for the phenotype 'Global developmental delay'?,1,1,1,1.0,1.0,1.0
-Phenotype,Which disorders have 'Seizure' as an associated phenotype?,2077,2077,2077,1.0,1.0,1.0
-Phenotype,Can you identify disorders characterized by the phenotype 'Hypotonia'?,1558,1558,1558,1.0,1.0,1.0
-Phenotype,Are there any known drug side effects that are classified as identical to the phenotype 'Nystagmus'?,0,37,1,1.0,1.0,1.0
+Phenotype,Which disorders have 'Seizure' as an associated phenotype?,0,2077,1,0.0,0.0,0.0
+Phenotype,Can you identify disorders characterized by the phenotype 'Hypotonia'?,40,1558,84,0.47619047619047616,0.025673940949935817,0.048721071863581
+Phenotype,Are there any known drug side effects that are classified as identical to the phenotype 'Nystagmus'?,0,37,0,0.0,0.0,0.0
 Phenotype,List disorders that present with both 'Short stature' and 'Microcephaly' as phenotypes.,589,589,589,1.0,1.0,1.0
-Signature,Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?,0,1836,0,1.0,1.0,1.0
-Signature,What is the database source for the 'Calcitonin' signature?,0,1,0,1.0,1.0,1.0
-Signature,Find all proteins that contain both the “Ig-like_dom” and “IG_LIKE” protein signatures.,36814,36814,36814,1.0,1.0,1.0
-Signature,Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?,0,5,0,1.0,1.0,1.0
-Signature,Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?,286,2450,286,1.0,0.11673469387755102,0.2090643274853801
+Signature,Are there any known relationships between the 'Immunoglobulins' signature and specific disorders?,1052,1836,14108,0.07456762120782534,0.5729847494553377,0.131961866532865
+Signature,What is the database source for the 'Calcitonin' signature?,0,1,4,0.0,0.0,0.0
+Signature,Find all proteins that contain both the “Ig-like_dom” and “IG_LIKE” protein signatures.,36806,36823,83990,0.43821883557566377,0.9995383320207479,0.6093052899936264
+Signature,Are there any drugs that target proteins with the 'MHC_I-like_Ag-recog_sf' signature?,0,5,6,0.0,0.0,0.0
+Signature,Are there any genomic variants affecting genes that encode proteins with the 'MHC_I' signature?,0,2450,0,0.0,0.0,0.0
 Signature,Retrieve a comprehensive list of all distinct database sources for signature entries in the graph.,1,1,1,1.0,1.0,1.0
-Signature,"For each unique database, provide the total count of associated signatures.",1,1,1,1.0,1.0,1.0
-Signature,What are the display name and type properties for all signatures originating from the 'Pfam' database?,0,8126,0,1.0,1.0,1.0
-Signature,List all unique signature types present in the knowledge graph and provide an example display name for each type.,0,1,0,1.0,1.0,1.0
-Signature,What are the names of all Signature nodes from PANTHER recorded in the graph?,0,6475,0,1.0,1.0,1.0
-Signature,From which database does the `Signature` 'Ig-like_fold' originate?,0,1,1,1.0,1.0,1.0
+Signature,"For each unique database, provide the total count of associated signatures.",1,1,12,0.08333333333333333,1.0,0.15384615384615385
+Signature,What are the display name and type properties for all signatures originating from the 'Pfam' database?,0,8219,0,0.0,0.0,0.0
+Signature,List all unique signature types present in the knowledge graph and provide an example display name for each type.,0,1,1,0.0,0.0,0.0
+Signature,What are the names of all Signature nodes from PANTHER recorded in the graph?,0,6476,0,0.0,0.0,0.0
+Signature,From which database does the `Signature` 'Ig-like_fold' originate?,0,1,1,0.0,0.0,0.0
 Signature,Which `Protein` nodes are linked to the `Signature` 'MHC_I/II-like_Ag-recog'?,44677,44677,44677,1.0,1.0,1.0
-Signature,List all `Signature` display names that are associated with the 'CDD' database.,0,8834,0,1.0,1.0,1.0
-Signature,"Which proteins have the signature ‘Immunoglobulin,’ and from which database does this signature come?",0,38205,38252,1.0,1.0,1.0
-Signature,What are the data sources and databases for the signature named 'alpha_CA_VI'?,0,1,1,1.0,1.0,1.0
-Signature,Which proteins are associated with the 'Ig-like_fold' signature?,39490,39490,39490,1.0,1.0,1.0
-Signature,Can you list all signatures that have 'MHC' in their display name and indicate their database?,0,51,51,1.0,1.0,1.0
-Signature,What are all the known signatures for a H3BUS4 protein?,17,17,17,1.0,1.0,1.0
+Signature,List all `Signature` display names that are associated with the 'CDD' database.,0,8834,0,0.0,0.0,0.0
+Signature,What are the data sources and databases for the signature named 'alpha_CA_VI'?,0,1,1,0.0,0.0,0.0
+Signature,Which proteins are associated with the 'Ig-like_fold' signature?,38188,39499,38211,0.9993980790871738,0.9668092863110459,0.9828336121477288
+Signature,Can you list all signatures that have 'MHC' in their display name and indicate their database?,51,51,51,1.0,1.0,1.0
+Signature,What are all the known signatures for a H3BUS4 protein?,1,17,19,0.05263157894736842,0.058823529411764705,0.05555555555555555
 Signature,How many distinct signatures originating from the 'InterPro' database are recorded in the knowledge graph?,1,1,1,1.0,1.0,1.0
-GO,What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,0,99,0,1.0,1.0,1.0
-GO,Are there any GO terms related to 'cellular anatomical structure' that are also subtypes of 'extracellular region'?,0,1,0,1.0,1.0,1.0
-GO,What is the relationship between the GO terms 'cytospinule' and 'actin-based cell projection' in the GO hierarchy?,0,0,1,1.0,1.0,1.0
-GO,Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,0,99,0,1.0,1.0,1.0
+GO,What proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,0,96,0,0.0,0.0,0.0
+GO,Are there any GO terms related to 'cellular anatomical structure' that are also subtypes of 'extracellular region'?,0,1,0,0.0,0.0,0.0
+GO,Which proteins have the GO annotation 'nucleus' and are involved in the 'G protein-coupled receptor signaling pathway'?,39,96,127,0.30708661417322836,0.40625,0.34977578475336324
 GO,What are the descriptions and data sources associated with the GO term 'plasma membrane'?,1,1,1,1.0,1.0,1.0
-GO,Find all GO terms related to 'regulation of transcription by RNA polymerase II' and their corresponding genes.,0,1592,154845,1.0,1.0,1.0
-GO,List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.,28506,28506,28506,1.0,1.0,1.0
+GO,Find all GO terms related to 'regulation of transcription by RNA polymerase II' and their corresponding genes.,0,1546,0,0.0,0.0,0.0
+GO,List all proteins annotated with the GO term 'metal ion binding' and their associated pathways.,28506,28506,29879,0.9540479935740821,1.0,0.9764836858782221
 GO,Can you provide the description for the GO term 'protein binding'?,1,1,1,1.0,1.0,1.0
-GO,List all GO terms that are a subtype of 'membrane'.,16,16,16,1.0,1.0,1.0
-GO,Which proteins are annotated with the GO term 'kinase activity'?,645,645,3115,0.20706260032102727,1.0,0.34308510638297873
-GO,What are the broader GO terms that 'cytoplasm' is a subtype of?,0,5,2,1.0,1.0,1.0
+GO,List all GO terms that are a subtype of 'membrane'.,16,16,218,0.07339449541284404,1.0,0.13675213675213677
+GO,Which proteins are annotated with the GO term 'kinase activity'?,645,645,3133,0.20587296520906478,1.0,0.34145050291159346
+GO,What are the broader GO terms that 'cytoplasm' is a subtype of?,0,5,1,0.0,0.0,0.0
 GO,What are the synonyms for the GO term 'mitotic DNA replication initiation'?,1,1,1,1.0,1.0,1.0
 GO,What is the detailed description and any known synonyms for the Gene Ontology (GO) term 'protein binding'?,1,1,1,1.0,1.0,1.0
-GO,Can you identify all immediate sub-categories or subtypes of the Gene Ontology term 'signal transduction'?,0,30,2,1.0,1.0,1.0
-GO,Which proteins in the database are annotated with the Gene Ontology term 'membrane'?,235,8611,242,0.9710743801652892,0.027290674718383465,0.05308934824353327
-GO,"For the GO term 'cytoplasm', what are its direct subtypes and from which data sources is information for these subtypes derived?",0,5,1,1.0,1.0,1.0
+GO,Can you identify all immediate sub-categories or subtypes of the Gene Ontology term 'signal transduction'?,30,30,30,1.0,1.0,1.0
+GO,Which proteins in the database are annotated with the Gene Ontology term 'membrane'?,58,5614,98,0.5918367346938775,0.010331314570716068,0.02030812324929972
+GO,"For the GO term 'cytoplasm', what are its direct subtypes and from which data sources is information for these subtypes derived?",5,5,5,1.0,1.0,1.0
 GO,Provide a count of distinct proteins that are associated with the Gene Ontology term 'ATP binding'.,1,1,1,1.0,1.0,1.0
 Protein,What is the amino acid sequence of the protein MYC_HUMAN?,1,1,1,1.0,1.0,1.0
-Protein,What genes encode the protein 1433E?,1,1,1,1.0,1.0,1.0
+Protein,What genes encode the protein 1433E?,0,1,0,0.0,0.0,0.0
 Protein,What are the signatures associated with the protein CUL3_HUMAN?,22,22,22,1.0,1.0,1.0
-Protein,What are the GO annotations for the protein P53?,5,201,7,0.7142857142857143,0.024875621890547265,0.04807692307692308
-Protein,Which proteins interact with TRI67?,0,2412,0,1.0,1.0,1.0
-Protein,What is the amino acid sequence of the protein EGFR?,0,1,0,1.0,1.0,1.0
-Protein,What are the known signatures for the protein RFA1?,0,19,0,1.0,1.0,1.0
-Protein,What gene encodes the protein ESR1?,0,1,0,1.0,1.0,1.0
-Protein,What are the synonyms for the protein HSP7C?,0,1,0,1.0,1.0,1.0
+Protein,What are the GO annotations for the protein P53?,0,130,0,0.0,0.0,0.0
+Protein,Which proteins interact with TRI67?,0,2425,0,0.0,0.0,0.0
+Protein,What is the amino acid sequence of the protein EGFR?,0,1,0,0.0,0.0,0.0
+Protein,What are the known signatures for the protein RFA1?,19,19,19,1.0,1.0,1.0
+Protein,What gene encodes the protein ESR1?,0,1,0,0.0,0.0,0.0
+Protein,What are the synonyms for the protein HSP7C?,0,1,0,0.0,0.0,0.0
 Protein,What is the amino acid sequence for the protein 'EGFR_HUMAN'?,1,1,1,1.0,1.0,1.0
-Protein,Which other proteins are known to interact with 'MYC_HUMAN'?,3822,3822,3822,1.0,1.0,1.0
-Protein,Can you retrieve the Gene Ontology (GO) annotations for the protein 'P53'?,0,201,0,1.0,1.0,1.0
+Protein,Which other proteins are known to interact with 'MYC_HUMAN'?,3837,3838,5287,0.7257423869869492,0.9997394476289734,0.840986301369863
+Protein,Can you retrieve the Gene Ontology (GO) annotations for the protein 'P53'?,0,130,0,0.0,0.0,0.0
 Protein,What protein signatures are associated with 'TRI67'?,45,45,90,0.5,1.0,0.6666666666666666
-Protein,What is the amino acid sequence of the protein 'PRKN'?,0,1,0,1.0,1.0,1.0
-Protein,Which gene encodes the protein 'EGFR'?,0,1,0,1.0,1.0,1.0
-Protein,List all GO annotations associated with the protein 'MYC'.,0,95,0,1.0,1.0,1.0
-Protein,Which other proteins interact with 'P53'?,0,3617,0,1.0,1.0,1.0
-Protein,What are the Gene Ontology (GO) annotations associated with the protein 'HSP7C_HUMAN'?,74,74,74,1.0,1.0,1.0
-Protein,Which other proteins are known to interact with 'P53_HUMAN'?,1,1349,3617,2.764722145424385E-4,7.412898443291327E-4,4.0273862263391055E-4
-Protein,"Which gene encodes the protein 'EGFR', and what is its approved symbol and chromosome?",0,1,0,1.0,1.0,1.0
+Protein,What is the amino acid sequence of the protein 'PRKN'?,0,1,0,0.0,0.0,0.0
+Protein,Which gene encodes the protein 'EGFR'?,0,1,0,0.0,0.0,0.0
+Protein,List all GO annotations associated with the protein 'MYC'.,0,89,0,0.0,0.0,0.0
+Protein,Which other proteins interact with 'P53'?,0,3627,0,0.0,0.0,0.0
+Protein,What are the Gene Ontology (GO) annotations associated with the protein 'HSP7C_HUMAN'?,0,73,0,0.0,0.0,0.0
+Protein,Which other proteins are known to interact with 'P53_HUMAN'?,0,1353,0,0.0,0.0,0.0
+Protein,"Which gene encodes the protein 'EGFR', and what is its approved symbol and chromosome?",0,1,0,0.0,0.0,0.0
 Protein,"In which biological pathways is the protein 'MYC_HUMAN' involved, and for what species are these pathways listed?",71,71,71,1.0,1.0,1.0
 Protein,In which tissues is the protein 'CFTR_HUMAN' expressed?,48,48,48,1.0,1.0,1.0
-Tissue,What are the known drug targets expressed in liver tissue?,0,12937,1434,1.0,1.0,1.0
-Tissue,Which tissues express genes related to the GO term 'immune response'?,0,23016,0,1.0,1.0,1.0
+Tissue,What are the known drug targets expressed in liver tissue?,0,12937,1,0.0,0.0,0.0
+Tissue,Which tissues express genes related to the GO term 'immune response'?,0,22848,0,0.0,0.0,0.0
 Tissue,Which proteins are known to be expressed in the 'liver'?,13243,13243,13243,1.0,1.0,1.0
 Tissue,What genes are expressed in the 'cerebral cortex'?,19350,19350,19350,1.0,1.0,1.0
 Tissue,In which tissues is the BRCA1 gene expressed?,56,56,56,1.0,1.0,1.0
@@ -126,51 +124,14 @@ Tissue,How many genes are expressed in the 'spleen'?,1,1,1,1.0,1.0,1.0
 Tissue,Can you list all the tissues available in the graph?,66,66,66,1.0,1.0,1.0
 Tissue,Which genes are expressed in the 'liver'?,19350,19350,19350,1.0,1.0,1.0
 Tissue,What proteins are expressed in the 'cerebral cortex'?,13242,13242,13242,1.0,1.0,1.0
-Tissue,How many unique genes are known to be expressed in the 'lung'?,1,1,1,1.0,1.0,1.0
 Tissue,Which genes are expressed in the 'spleen' tissue?,19350,19350,19350,1.0,1.0,1.0
 Tissue,What proteins are expressed in the 'liver' tissue?,13243,13243,13243,1.0,1.0,1.0
 Tissue,"In which tissues is the gene BRCA1 expressed, and with which disorders is it associated?",5488,55048,5488,1.0,0.09969481180061038,0.18131359851988899
-Tissue,List all tissues where the 'PRC2B' protein is expressed.,0,48,0,1.0,1.0,1.0
-Tissue,Which genes are expressed in both 'kidney' and 'heart' tissues?,19350,19350,19350,1.0,1.0,1.0
-Gene,Which tissues express the gene TTN?,43,56,48,0.8958333333333334,0.7678571428571429,0.8269230769230769
-Gene,What are the approved symbols and synonyms for the gene MSH2?,1,1,1,1.0,1.0,1.0
-Gene,What are the pathways associated with proteins encoded by the gene CFTR?,0,0,0,1.0,1.0,1.0
-Gene,Which tissues express the BRCA2 gene?,56,56,56,1.0,1.0,1.0
+Tissue,List all tissues where the 'PRC2B' protein is expressed.,48,48,48,1.0,1.0,1.0
+Gene,Which tissues express the gene TTN?,56,56,56,1.0,1.0,1.0
+Gene,What are the pathways associated with proteins encoded by the gene CFTR?,0,0,0,0.0,0.0,0.0
 Gene,Provide the gene type and description for the APC gene.,1,1,1,1.0,1.0,1.0
-Gene,What proteins are encoded by the BRCA1 gene?,0,0,0,1.0,1.0,1.0
-Gene,What disorders are associated with the gene BRCA1?,98,983,98,1.0,0.09969481180061038,0.18131359851988899
-Gene,What is the gene type and chromosome location for the gene TP53?,1,1,1,1.0,1.0,1.0
+Gene,What proteins are encoded by the BRCA1 gene?,0,0,22,0.0,0.0,0.0
+Gene,What are the GO annotations for proteins encoded by the TSC2 gene?,0,0,39,0.0,0.0,0.0
 Gene,Which proteins are encoded by the EGFR gene?,6,6,6,1.0,1.0,1.0
-Gene,In which tissues is the CFTR gene expressed?,56,56,56,1.0,1.0,1.0
-Gene,Can you provide the description and any known synonyms for the gene MSH2?,1,1,1,1.0,1.0,1.0
-Gene,What is the chromosome and gene type for the gene 'TTN'?,1,1,1,1.0,1.0,1.0
-Gene,Which disorders are associated with the gene 'BRCA1'?,98,98,98,1.0,1.0,1.0
 Gene,Which proteins are encoded by the gene 'EGFR'?,6,6,6,1.0,1.0,1.0
-Gene,In which tissues is the gene 'TP53' expressed?,0,56,0,1.0,1.0,1.0
-Gene,Can you provide the description and any associated disorders for the gene 'MSH2'?,1,1,768,0.0013020833333333333,1.0,0.002600780234070221
-Pathway,What are the known drug targets within the 'Immune System' pathway?,2747,2747,7131,0.3852194643107559,1.0,0.55618546264426
-Pathway,Find all genes that encode proteins involved in the Neuronal System pathway and returns the tissues where those proteins are expressed.,0,13710,0,1.0,1.0,1.0
-Pathway,List all proteins that are constituents of the 'Metabolism' pathway.,2157,2157,2157,1.0,1.0,1.0
-Pathway,"For the 'Immune System' pathway, what is the count of all associated proteins?",1,1,1,1.0,1.0,1.0
-Pathway,For which species is the 'Signal Transduction' pathway known?,1,1,1,1.0,1.0,1.0
-Pathway,What are the data sources used to curate information about the 'Metabolism' pathway?,0,1,0,1.0,1.0,1.0
-Pathway,Which proteins are involved in the 'Immune System' pathway?,2225,2225,2912,0.7640796703296703,1.0,0.8662643566283823
-Pathway,How many distinct proteins are associated with the 'Disease' pathway?,0,1,0,1.0,1.0,1.0
-Pathway,"For the 'Metabolism of proteins' pathway, list the display names of the proteins that have been reviewed.",0,2082,0,1.0,1.0,1.0
-Pathway,What are the species and data sources associated with the 'Signal Transduction' pathway?,1,1,1,1.0,1.0,1.0
-Pathway,Which proteins are known to be involved in the 'Immune System' pathway?,2225,2225,2912,0.7640796703296703,1.0,0.8662643566283823
-Pathway,Can you list all pathways that are specific to 'Homo sapiens'?,2809,2809,2809,1.0,1.0,1.0
-Pathway,From which data sources is information about the 'Metabolism of proteins' pathway obtained?,1,1,1,1.0,1.0,1.0
-Pathway,How many unique proteins are associated with the 'Disease' pathway?,1,1,1,1.0,1.0,1.0
-SideEffect,List all disorders associated with drugs that have 'Vomiting' as a side effect.,1153,4428,1156,0.9974048442906575,0.2603884372177055,0.41296561604584525
-SideEffect,What are the comon side effects of Nilotinib and Fluoxetine?,726,726,726,1.0,1.0,1.0
-SideEffect,What drugs are known to cause the side effect 'Nausea'?,490,490,983,0.49847405900305186,1.0,0.6653088934147997
-SideEffect,Which side effects are also classified as phenotypes?,1237,1237,1237,1.0,1.0,1.0
-SideEffect,Which drugs are associated with 'Nausea' as a side effect?,12,490,25,0.48,0.024489795918367346,0.04660194174757282
-SideEffect,From which data sources is information about the side effect 'Headache' obtained?,1,1,1,1.0,1.0,1.0
-SideEffect,Are there any phenotypes that are considered equivalent to the side effect 'Diarrhea'?,0,0,1,1.0,1.0,1.0
-SideEffect,What are the domain IDs for the side effect 'Abdominal pain'?,1,1,1,1.0,1.0,1.0
-SideEffect,Which drugs are associated with the side effect 'Headache'?,488,488,488,1.0,1.0,1.0
-SideEffect,“Which phenotypes are the same as the side effect ‘Dizziness’?,0,0,0,1.0,1.0,1.0
-SideEffect,"For the side effect 'Rash', what data sources are available in the knowledge graph?",1,1,1,1.0,1.0,1.0
-SideEffect,How many distinct drugs are known to cause 'Nausea' as a side effect?,1,1,1,1.0,1.0,1.0
