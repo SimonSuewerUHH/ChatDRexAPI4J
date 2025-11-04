@@ -135,3 +135,51 @@ Gene,What proteins are encoded by the BRCA1 gene?,0,0,22,0.0,0.0,0.0
 Gene,What are the GO annotations for proteins encoded by the TSC2 gene?,0,0,39,0.0,0.0,0.0
 Gene,Which proteins are encoded by the EGFR gene?,6,6,6,1.0,1.0,1.0
 Gene,Which proteins are encoded by the gene 'EGFR'?,6,6,6,1.0,1.0,1.0
+Pathway,What are the known drug targets within the 'Immune System' pathway?,0,2747,383,0.0,0.0,0.0
+Pathway,What are the primary data sources and species associated with the 'Signal Transduction' pathway?,1,1,1,1.0,1.0,1.0
+Pathway,List all proteins that are constituents of the 'Metabolism' pathway.,0,2157,0,0.0,0.0,0.0
+Pathway,For which species is the 'Signal Transduction' pathway known?,1,1,1,1.0,1.0,1.0
+Pathway,What are the data sources used to curate information about the 'Metabolism' pathway?,1,1,1,1.0,1.0,1.0
+Pathway,"For the 'Metabolism of proteins' pathway, list the display names of the proteins that have been reviewed.",0,2082,0,0.0,0.0,0.0
+Pathway,What are the species and data sources associated with the 'Signal Transduction' pathway?,1,1,1,1.0,1.0,1.0
+GO,What is the relationship between the GO terms 'cytospinule' and 'actin-based cell projection' in the GO hierarchy?,0,0,1,0.0,0.0,0.0
+Gene,Can you provide the description and any known synonyms for the gene MSH2?,1,1,1,1.0,1.0,1.0
+Gene,What is the chromosome and gene type for the gene 'TTN'?,1,1,1,1.0,1.0,1.0
+Gene,Which disorders are associated with the gene 'BRCA1'?,98,98,98,1.0,1.0,1.0
+Gene,In which tissues is the gene 'TP53' expressed?,0,56,0,0.0,0.0,0.0
+Pathway,"For the 'Immune System' pathway, what is the count of all associated proteins?",1,1,1,1.0,1.0,1.0
+Pathway,Which proteins are involved in the 'Immune System' pathway?,2225,2225,2225,1.0,1.0,1.0
+Pathway,How many distinct proteins are associated with the 'Disease' pathway?,1,1,1,1.0,1.0,1.0
+Pathway,Which proteins are known to be involved in the 'Immune System' pathway?,2225,2225,2225,1.0,1.0,1.0
+Pathway,Can you list all pathways that are specific to 'Homo sapiens'?,2809,2809,2809,1.0,1.0,1.0
+Pathway,From which data sources is information about the 'Metabolism of proteins' pathway obtained?,1,1,1,1.0,1.0,1.0
+Pathway,How many unique proteins are associated with the 'Disease' pathway?,1,1,1,1.0,1.0,1.0
+SideEffect,List all disorders associated with drugs that have 'Vomiting' as a side effect.,4428,4428,4428,1.0,1.0,1.0
+SideEffect,What are the comon side effects of Nilotinib and Fluoxetine?,726,726,726,1.0,1.0,1.0
+SideEffect,Which genomic variants are associated with the occurrence of acute migraine as an adverse drug reaction?,0,6,0,0.0,0.0,0.0
+SideEffect,What drugs are known to cause the side effect 'Nausea'?,490,490,490,1.0,1.0,1.0
+SideEffect,List all drugs that have 'Dizziness' as a side effect.,11,442,48,0.22916666666666666,0.024886877828054297,0.044897959183673466
+SideEffect,Which drugs are associated with 'Nausea' as a side effect?,0,490,2,0.0,0.0,0.0
+SideEffect,From which data sources is information about the side effect 'Headache' obtained?,1,1,1,1.0,1.0,1.0
+SideEffect,Are there any phenotypes that are considered equivalent to the side effect 'Diarrhea'?,0,0,1,0.0,0.0,0.0
+SideEffect,Can you provide a comprehensive list of all known side effects available in the knowledge graph?,15095,15095,15095,1.0,1.0,1.0
+SideEffect,What are the domain IDs for the side effect 'Abdominal pain'?,1,1,1,1.0,1.0,1.0
+SideEffect,Which drugs are associated with the side effect 'Headache'?,19,488,19,1.0,0.0389344262295082,0.07495069033530573
+SideEffect,"For the side effect 'Rash', what data sources are available in the knowledge graph?",1,1,1,1.0,1.0,1.0
+SideEffect,How many distinct drugs are known to cause 'Nausea' as a side effect?,1,1,1,1.0,1.0,1.0
+Signature,"Which proteins have the signature ‘Immunoglobulin,’ and from which database does this signature come?",0,38211,38258,0.0,0.0,0.0
+Tissue,How many unique genes are known to be expressed in the 'lung'?,1,1,1,1.0,1.0,1.0
+Tissue,Which genes are expressed in both 'kidney' and 'heart' tissues?,0,19350,0,0.0,0.0,0.0
+Gene,What are the approved symbols and synonyms for the gene MSH2?,1,1,1,1.0,1.0,1.0
+Gene,Which tissues express the BRCA2 gene?,0,56,0,0.0,0.0,0.0
+Gene,What is the gene type and chromosome location for the gene TP53?,1,1,1,1.0,1.0,1.0
+SideEffect,“Which phenotypes are the same as the side effect ‘Dizziness’?,0,0,0,0.0,0.0,0.0
+SideEffect,Can you list all side effects in the graph that contain 'abdominal pain' in their name?,11,11,11,1.0,1.0,1.0
+Gene,What disorders are associated with the gene BRCA1?,98,983,98,1.0,0.09969481180061038,0.18131359851988899
+Gene,In which tissues is the CFTR gene expressed?,56,56,56,1.0,1.0,1.0
+Gene,Can you provide the description and any associated disorders for the gene 'MSH2'?,1,1,78,0.01282051282051282,1.0,0.02531645569620253
+Pathway,"Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",0,99808,0,0.0,0.0,0.0
+Pathway,Find all genes that encode proteins involved in the Neuronal System pathway and returns the tissues where those proteins are expressed.,0,13710,0,0.0,0.0,0.0
+Pathway,What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?,0,112328,579,0.0,0.0,0.0
+SideEffect,Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?,0,138180,326,0.0,0.0,0.0
+SideEffect,Which side effects are also classified as phenotypes?,1237,1237,1237,1.0,1.0,1.0

@@ -2270,4 +2270,660 @@
   "attempts" : 0,
   "previousCyphers" : null,
   "errors" : null
+}, {
+  "category" : "GO",
+  "question" : "What is the relationship between the GO terms 'cytospinule' and 'actin-based cell projection' in the GO hierarchy?",
+  "goldenCypher" : "MATCH (go1:GO {displayName: 'ATP binding'})<-[:GOIsSubtypeOfGO]-(go2:GO {displayName: 'DNA binding'}) RETURN go1.displayName AS SubtypeName, go2.displayName AS ParentName",
+  "aiCypher" : "MATCH p=shortestPath((g1:GO)-[*]->(g2:GO))\nWHERE toLower(g1.displayName)='cytospinule' AND toLower(g2.displayName)='actin-based cell projection'\nRETURN g1.displayName AS term1, g2.displayName AS term2, [rel IN relationships(p) | type(rel)] AS relationshipTypes, length(p) AS distance;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 0,
+    "lengthAI" : 1,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 2,
+  "previousCyphers" : [ "MATCH (g1:GO)-[:GOIsSubtypeOfGO*1..]->(g2:GO)\nWHERE toLower(g1.displayName) = toLower('cytospinule') AND toLower(g2.displayName) = toLower('actin-based cell projection')\nRETURN g1.displayName AS term1, g2.displayName AS term2, 'is subtype of' AS relationship, length((g1)-[:GOIsSubtypeOfGO*]->(g2)) AS distance\nUNION\nMATCH (g1:GO)-[:GOIsSubtypeOfGO*1..]->(g2:GO)\nWHERE toLower(g1.displayName) = toLower('actin-based cell projection') AND toLower(g2.displayName) = toLower('cytospinule')\nRETURN g1.displayName AS term1, g2.displayName AS term2, 'is subtype of' AS relationship, length((g1)-[:GOIsSubtypeOfGO*]->(g2)) AS distance", "MATCH p=shortestPath((g1:GO)-[*]->(g2:GO))\nWHERE toLower(g1.displayName)='cytospinule' AND toLower(g2.displayName)='actin-based cell projection'\nRETURN g1.displayName AS term1, g2.displayName AS term2, [rel IN relationships(p) | type(rel)] AS relationshipTypes, length(p) AS distance;" ],
+  "errors" : [ "Failed to query NeDRex: Received: 'Internal Server Error, status code 500' when invoking REST Client method: 'de.hamburg.university.service.nedrex.NeDRexApiClient#runQuery'", "Failed to query NeDRex: The timeout period of 30000ms has been exceeded while executing GET /open/neo4j/query?query=MATCH+p%3DshortestPath%28%28g1%3AGO%29-%5B*%5D-%3E%28g2%3AGO%29%29%0AWHERE+toLower%28g1.displayName%29%3D%27cytospinule%27+AND+toLower%28g2.displayName%29%3D%27actin-based+cell+projection%27%0ARETURN+g1.displayName+AS+term1%2C+g2.displayName+AS+term2%2C+%5Brel+IN+relationships%28p%29+%7C+type%28rel%29%5D+AS+relationshipTypes%2C+length%28p%29+AS+distance%3B&stream=false for server null" ]
+}, {
+  "category" : "Gene",
+  "question" : "Can you provide the description and any known synonyms for the gene MSH2?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'MSH2'})\nRETURN g.description AS Description, g.synonyms AS Synonyms",
+  "aiCypher" : "MATCH (g:Gene) WHERE toLower(g.displayName) = toLower('MSH2') RETURN g.primaryDomainId AS id, g.displayName AS name, g.description, g.synonyms;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 2,
+  "previousCyphers" : [ "MATCH (g:Gene) WHERE toLower(g.displayName)=toLower('MSH2') RETURN g.primaryDomainId AS id, g.displayName AS name, g.description, g.synonyms;", "MATCH (g:Gene)\nWHERE toLower(g.displayName)=toLower('MSH2')\nRETURN g.primaryDomainId AS id, g.displayName AS name, g.description, g.synonyms;" ],
+  "errors" : [ "Failed to query NeDRex: The timeout period of 30000ms has been exceeded while executing GET /open/neo4j/query?query=MATCH+%28g%3AGene%29+WHERE+toLower%28g.displayName%29%3DtoLower%28%27MSH2%27%29+RETURN+g.primaryDomainId+AS+id%2C+g.displayName+AS+name%2C+g.description%2C+g.synonyms%3B&stream=false for server null", "Failed to query NeDRex: The timeout period of 30000ms has been exceeded while executing GET /open/neo4j/query?query=MATCH+%28g%3AGene%29%0AWHERE+toLower%28g.displayName%29%3DtoLower%28%27MSH2%27%29%0ARETURN+g.primaryDomainId+AS+id%2C+g.displayName+AS+name%2C+g.description%2C+g.synonyms%3B&stream=false for server null" ]
+}, {
+  "category" : "Gene",
+  "question" : "What is the chromosome and gene type for the gene 'TTN'?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'TTN'}) RETURN g.chromosome AS Chromosome, g.geneType AS GeneType",
+  "aiCypher" : "MATCH (g:Gene)\nWHERE toLower(g.displayName) = toLower('TTN')\nRETURN g.primaryDomainId AS geneId,\n       g.displayName AS geneName,\n       g.chromosome AS chromosome,\n       g.geneType AS geneType;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "Which disorders are associated with the gene 'BRCA1'?",
+  "goldenCypher" : "MATCH (d:Disorder)<-[r:GeneAssociatedWithDisorder]-(g:Gene {displayName: 'BRCA1'}) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN d.displayName AS DisorderName",
+  "aiCypher" : "MATCH (g:Gene)\nWHERE toLower(g.displayName) = toLower('BRCA1')\nMATCH (g)-[r:GeneAssociatedWithDisorder]->(dis:Disorder)\nWHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 98,
+    "lengthGold" : 98,
+    "lengthAI" : 98,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "In which tissues is the gene 'TP53' expressed?",
+  "goldenCypher" : "MATCH (t:Tissue)<-[:GeneExpressedInTissue]-(g:Gene {displayName: 'TP53'}) RETURN t.displayName AS TissueName",
+  "aiCypher" : "MATCH (g:Gene {primaryDomainId: 'HGNC:11998'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName, t.primaryDomainId AS tissueId, t.displayName AS tissueName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 56,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "For the 'Immune System' pathway, what is the count of all associated proteins?",
+  "goldenCypher" : "MATCH (p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Immune System'}) RETURN COUNT(DISTINCT p)",
+  "aiCypher" : "MATCH (p:Protein)-[:ProteinInPathway]->(path:Pathway {primaryDomainId:'reactome.R-HSA-168256'})\nRETURN count(p) AS proteinCount;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "Which proteins are involved in the 'Immune System' pathway?",
+  "goldenCypher" : "MATCH (p:Pathway {displayName: 'Immune System'})<-[:ProteinInPathway]-(pr:Protein) RETURN pr.displayName AS ProteinName",
+  "aiCypher" : "MATCH (p:Protein)-[:ProteinInPathway]->(pw:Pathway)\nWHERE pw.primaryDomainId IN ['reactome.R-HSA-1280215','reactome.R-HSA-9637628','reactome.R-HSA-168249','reactome.R-HSA-168256','reactome.R-HSA-1280218']\nRETURN DISTINCT p.primaryDomainId AS proteinId, p.displayName AS proteinName",
+  "score" : {
+    "hits" : 2225,
+    "lengthGold" : 2225,
+    "lengthAI" : 2225,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "How many distinct proteins are associated with the 'Disease' pathway?",
+  "goldenCypher" : "MATCH (p:Pathway {displayName: 'Disease'})<-[:ProteinInPathway]-(pr:Protein) RETURN count(DISTINCT pr) AS NumberOfDistinctProteins",
+  "aiCypher" : "MATCH (pth:Pathway)\nWHERE toLower(pth.displayName) CONTAINS 'disease'\nMATCH (p:Protein)-[r]->(pth)\nRETURN count(DISTINCT p.primaryDomainId) AS proteinCount",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 1,
+  "previousCyphers" : [ "MATCH (pth:Pathway)\nWHERE toLower(pth.displayName) = toLower('Disease pathway')\nMATCH (p:Protein)-[:ProteinInPathway]->(pth)\nRETURN count(DISTINCT p.primaryDomainId) AS proteinCount)" ],
+  "errors" : [ "Failed to query NeDRex: Received: 'Internal Server Error, status code 500' when invoking REST Client method: 'de.hamburg.university.service.nedrex.NeDRexApiClient#runQuery'" ]
+}, {
+  "category" : "Pathway",
+  "question" : "Which proteins are known to be involved in the 'Immune System' pathway?",
+  "goldenCypher" : "MATCH (p:Pathway {displayName: 'Immune System'})<-[:ProteinInPathway]-(pr:Protein) RETURN pr.displayName",
+  "aiCypher" : "MATCH (pro:Protein)-[:ProteinInPathway]->(pw:Pathway)\nWHERE toLower(pw.displayName) = toLower('Immune System')\nRETURN pro.primaryDomainId AS proteinId, pro.displayName AS proteinName",
+  "score" : {
+    "hits" : 2225,
+    "lengthGold" : 2225,
+    "lengthAI" : 2225,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "Can you list all pathways that are specific to 'Homo sapiens'?",
+  "goldenCypher" : "MATCH (p:Pathway {species: 'Homo sapiens'}) RETURN p.displayName",
+  "aiCypher" : "MATCH (p:Pathway)\nWHERE toLower(p.species) = toLower('Homo sapiens')\nRETURN p.primaryDomainId AS pathwayId, p.displayName AS pathwayName",
+  "score" : {
+    "hits" : 2809,
+    "lengthGold" : 2809,
+    "lengthAI" : 2809,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "From which data sources is information about the 'Metabolism of proteins' pathway obtained?",
+  "goldenCypher" : "MATCH (p:Pathway {displayName: 'Metabolism of proteins'}) RETURN p.dataSources",
+  "aiCypher" : "MATCH (p:Pathway) WHERE toLower(p.displayName) = toLower('Metabolism of proteins') RETURN p.primaryDomainId AS pathwayId, p.displayName, p.dataSources;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "How many unique proteins are associated with the 'Disease' pathway?",
+  "goldenCypher" : "MATCH (p:Pathway {displayName: 'Disease'})<-[:ProteinInPathway]-(pr:Protein) RETURN count(DISTINCT pr)",
+  "aiCypher" : "MATCH (pa:Pathway) \nWHERE toLower(pa.displayName) = toLower('Disease pathway') \nMATCH (pr:Protein)-[:ProteinInPathway]->(pa) \nRETURN count(DISTINCT pr.primaryDomainId) AS proteinCount;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "List all disorders associated with drugs that have 'Vomiting' as a side effect.",
+  "goldenCypher" : "MATCH (dis:Disorder)<-[:DrugHasIndication]-(d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Vomiting'}) RETURN dis.displayName AS DisorderName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE toLower(se.displayName) = toLower('vomiting')\nMATCH (d)-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName",
+  "score" : {
+    "hits" : 4428,
+    "lengthGold" : 4428,
+    "lengthAI" : 4428,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "What are the comon side effects of Nilotinib and Fluoxetine?",
+  "goldenCypher" : "MATCH (d1:Drug {displayName:'Fluoxetine'} )-[:DrugHasSideEffect]->(n:SideEffect)<-[:DrugHasSideEffect]-(d2:Drug {displayName: 'Nilotinib'}) RETURN n.displayName AS SideEffects",
+  "aiCypher" : "MATCH (d1:Drug)-[:DrugHasSideEffect]->(se:SideEffect)<-[:DrugHasSideEffect]-(d2:Drug)\nWHERE toLower(d1.displayName) = 'nilotinib' AND toLower(d2.displayName) = 'fluoxetine'\nRETURN DISTINCT se.primaryDomainId AS sideEffectId, se.displayName AS sideEffect;",
+  "score" : {
+    "hits" : 726,
+    "lengthGold" : 726,
+    "lengthAI" : 726,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Which genomic variants are associated with the occurrence of acute migraine as an adverse drug reaction?",
+  "goldenCypher" : "MATCH (se:SideEffect {displayName: 'Acute migraine'})<-[:DrugHasSideEffect]-(drug:Drug)-[:DrugHasIndication]->(dis:Disorder)<-[:VariantAssociatedWithDisorder] -(gv:GenomicVariant) RETURN DISTINCT gv.primaryDomainId AS GenomicVariantId",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)\nMATCH (p:Protein)-[:ProteinEncodedByGene]->(g)\nMATCH (d:Drug)-[:DrugHasTarget]->(p)\nWHERE d.primaryDomainId IN ['drugbank.DB01576','drugbank.DB00182','drugbank.DB05443','drugbank.DB00546','drugbank.DB05485']\nMATCH (d)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE toLower(se.displayName) = toLower('acute migraine')\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantName, v.chromosome, v.position, g.primaryDomainId AS geneId, g.approvedSymbol AS geneSymbol;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 6,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "What drugs are known to cause the side effect 'Nausea'?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN d.displayName AS DrugName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect)\nWHERE toLower(s.displayName) = toLower('Nausea')\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName, s.primaryDomainId AS sideEffectId, s.displayName AS sideEffectName;",
+  "score" : {
+    "hits" : 490,
+    "lengthGold" : 490,
+    "lengthAI" : 490,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "List all drugs that have 'Dizziness' as a side effect.",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Dizziness'}) RETURN d.displayName AS DrugName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE se.primaryDomainId IN ['meddra.10013578','meddra.10013576','meddra.10013579','meddra.10013577','meddra.10031125']\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName",
+  "score" : {
+    "hits" : 11,
+    "lengthGold" : 442,
+    "lengthAI" : 48,
+    "precision" : 0.22916666666666666,
+    "recall" : 0.024886877828054297,
+    "f1" : 0.044897959183673466
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Which drugs are associated with 'Nausea' as a side effect?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN d.displayName AS DrugName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE se.primaryDomainId IN ['meddra.10048364','meddra.10028818','meddra.10036285']\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName,\n       se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 490,
+    "lengthAI" : 2,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "From which data sources is information about the side effect 'Headache' obtained?",
+  "goldenCypher" : "MATCH (s:SideEffect {displayName: 'Headache'}) RETURN s.dataSources AS DataSources",
+  "aiCypher" : "MATCH (se:SideEffect)\nWHERE toLower(se.displayName) = toLower('Headache')\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName, se.dataSources AS dataSources;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Are there any phenotypes that are considered equivalent to the side effect 'Diarrhea'?",
+  "goldenCypher" : "MATCH (p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s:SideEffect {displayName: 'Diarrhea'}) RETURN p1.displayName AS PhenotypeName",
+  "aiCypher" : "MATCH (se:SideEffect {primaryDomainId:'meddra.10012727'})-[:SideEffectSameAsPhenotype]->(ph:Phenotype)\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 0,
+    "lengthAI" : 1,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Can you provide a comprehensive list of all known side effects available in the knowledge graph?",
+  "goldenCypher" : "MATCH (s:SideEffect) RETURN DISTINCT s.displayName AS SideEffectName",
+  "aiCypher" : "MATCH (se:SideEffect) RETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName",
+  "score" : {
+    "hits" : 15095,
+    "lengthGold" : 15095,
+    "lengthAI" : 15095,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "What are the domain IDs for the side effect 'Abdominal pain'?",
+  "goldenCypher" : "MATCH (s:SideEffect {displayName: 'Abdominal pain'}) RETURN s.domainIds AS DomainIDs",
+  "aiCypher" : "MATCH (se:SideEffect)\nWHERE toLower(se.displayName) = toLower('Abdominal pain')\nRETURN se.primaryDomainId AS sideEffectId, se.displayName;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Which drugs are associated with the side effect 'Headache'?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Headache'}) RETURN d.displayName AS DrugName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect)\nWHERE s.primaryDomainId IN ['meddra.10019216','meddra.10019224','meddra.10019228','meddra.10048968','meddra.10020939']\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName;",
+  "score" : {
+    "hits" : 19,
+    "lengthGold" : 488,
+    "lengthAI" : 19,
+    "precision" : 1.0,
+    "recall" : 0.0389344262295082,
+    "f1" : 0.07495069033530573
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "For the side effect 'Rash', what data sources are available in the knowledge graph?",
+  "goldenCypher" : "MATCH (s:SideEffect {displayName: 'Rash'}) RETURN s.dataSources AS DataSources",
+  "aiCypher" : "MATCH (se:SideEffect)\nWHERE toLower(se.displayName) = toLower('Rash')\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName, se.dataSources AS dataSources",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "How many distinct drugs are known to cause 'Nausea' as a side effect?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN count(DISTINCT d) AS NumberOfDrugs",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE toLower(se.displayName) = toLower('Nausea')\nRETURN count(DISTINCT d) AS drugCount",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Signature",
+  "question" : "Which proteins have the signature ‘Immunoglobulin,’ and from which database does this signature come?",
+  "goldenCypher" : "MATCH (s:Signature {displayName: 'Immunoglobulin'}) OPTIONAL MATCH (p:Protein)-[:ProteinHasSignature]->(s) RETURN s.displayName AS SignatureDisplayName, s.database AS Database, p.displayName AS ProteinDisplayName",
+  "aiCypher" : "MATCH (s:Signature)\nWHERE toLower(s.displayName) = toLower('Immunoglobulin')\nMATCH (p:Protein)-[:ProteinHasSignature]->(s)\nRETURN p.primaryDomainId AS proteinId,\n       p.displayName AS proteinName,\n       split(s.primaryDomainId, \".\")[0] AS signatureDatabase,\n       s.primaryDomainId AS signatureId;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 38211,
+    "lengthAI" : 38258,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Tissue",
+  "question" : "How many unique genes are known to be expressed in the 'lung'?",
+  "goldenCypher" : "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {displayName: 'lung'}) RETURN count(DISTINCT g) AS UniqueGeneCount",
+  "aiCypher" : "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue {primaryDomainId:'uberon.0002048'})\nRETURN count(DISTINCT g.primaryDomainId) AS geneCount, collect(DISTINCT g.displayName) AS geneNames;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Tissue",
+  "question" : "Which genes are expressed in both 'kidney' and 'heart' tissues?",
+  "goldenCypher" : "MATCH (t2:Tissue {displayName: 'heart'}) <-[:GeneExpressedInTissue]-(g:Gene)-[:GeneExpressedInTissue]->(t1:Tissue {displayName: 'kidney'})  RETURN g.displayName AS GeneName",
+  "aiCypher" : "MATCH (g:Gene)-[:ProteinEncodedByGene]->(p:Protein)\nMATCH (p)-[:ProteinExpressedInTissue]->(tKidney:Tissue)\nMATCH (p)-[:ProteinExpressedInTissue]->(tHeart:Tissue)\nWHERE toLower(tKidney.displayName)=toLower('kidney')\n  AND tHeart.primaryDomainId='uberon.0001133'\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 19350,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "What are the approved symbols and synonyms for the gene MSH2?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'MSH2'})\nRETURN g.approvedSymbol AS ApprovedSymbol, g.synonyms AS Synonyms",
+  "aiCypher" : "MATCH (g:Gene)\nWHERE toLower(g.displayName) = toLower('MSH2')\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName, g.approvedSymbol AS approvedSymbol, g.synonyms AS synonyms;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "Which tissues express the BRCA2 gene?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'BRCA2'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName",
+  "aiCypher" : "MATCH (g:Gene)-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue)\nWHERE toLower(g.displayName) = toLower('BRCA2')\nRETURN DISTINCT t.primaryDomainId AS tissueId, t.displayName AS tissueName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 56,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "What is the gene type and chromosome location for the gene TP53?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'TP53'})\nRETURN g.geneType AS GeneType, g.chromosome AS ChromosomeLocation",
+  "aiCypher" : "MATCH (g:Gene) \nWHERE toLower(g.displayName) = toLower('TP53') \nRETURN g.geneType AS geneType, g.chromosome AS chromosome",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "“Which phenotypes are the same as the side effect ‘Dizziness’?",
+  "goldenCypher" : "MATCH (p:Phenotype)-[:SideEffectSameAsPhenotype]->(s:SideEffect {displayName: 'Dizziness'}) RETURN p.displayName AS PhenotypeName",
+  "aiCypher" : "MATCH (se:SideEffect {primaryDomainId:'meddra.10013573'})-[:SideEffectSameAsPhenotype]->(ph:Phenotype) RETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 0,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 2,
+  "previousCyphers" : [ "MATCH (se:SideEffect {primaryDomainId:'meddra.10013573'})-[:SideEffectSameAsPhenotype]->(ph:Phenotype)\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName)", "MATCH (ph:Phenotype)\nWHERE toLower(ph.displayName) = toLower('Dizziness')\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName)" ],
+  "errors" : [ "Failed to query NeDRex: Received: 'Internal Server Error, status code 500' when invoking REST Client method: 'de.hamburg.university.service.nedrex.NeDRexApiClient#runQuery'", "Failed to query NeDRex: Received: 'Internal Server Error, status code 500' when invoking REST Client method: 'de.hamburg.university.service.nedrex.NeDRexApiClient#runQuery'" ]
+}, {
+  "category" : "SideEffect",
+  "question" : "Can you list all side effects in the graph that contain 'abdominal pain' in their name?",
+  "goldenCypher" : "MATCH (s:SideEffect) WHERE toLower(s.displayName) CONTAINS 'abdominal pain' RETURN s.displayName AS SideEffectName",
+  "aiCypher" : "MATCH (se:SideEffect)\nWHERE toLower(se.displayName) CONTAINS toLower('abdominal pain')\nRETURN se.primaryDomainId AS seId, se.displayName AS seName;",
+  "score" : {
+    "hits" : 11,
+    "lengthGold" : 11,
+    "lengthAI" : 11,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "What disorders are associated with the gene BRCA1?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'BRCA1'})-[:GeneAssociatedWithDisorder]->(d:Disorder)\nRETURN d.displayName AS DisorderName",
+  "aiCypher" : "MATCH (g:Gene {primaryDomainId:'entrez.672'})-[r:GeneAssociatedWithDisorder]->(dis:Disorder)\nWHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName",
+  "score" : {
+    "hits" : 98,
+    "lengthGold" : 983,
+    "lengthAI" : 98,
+    "precision" : 1.0,
+    "recall" : 0.09969481180061038,
+    "f1" : 0.18131359851988899
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "In which tissues is the CFTR gene expressed?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'CFTR'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName",
+  "aiCypher" : "MATCH (g:Gene)-[:GeneExpressedInTissue]->(t:Tissue)\nWHERE toLower(g.displayName) = toLower('CFTR')\nRETURN t.primaryDomainId AS tissueId, t.displayName AS tissueName, g.primaryDomainId AS geneId, g.displayName AS geneName;",
+  "score" : {
+    "hits" : 56,
+    "lengthGold" : 56,
+    "lengthAI" : 56,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Gene",
+  "question" : "Can you provide the description and any associated disorders for the gene 'MSH2'?",
+  "goldenCypher" : "MATCH (g:Gene {displayName: 'MSH2'}) OPTIONAL MATCH (d:Disorder)<-[r:GeneAssociatedWithDisorder]-(g) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN g.description AS Description, collect(d.displayName) AS AssociatedDisorders",
+  "aiCypher" : "MATCH (g:Gene)\nWHERE toLower(g.displayName) = toLower('MSH2')\nOPTIONAL MATCH (g)-[r:GeneAssociatedWithDisorder]->(dis:Disorder)\nWHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3\nRETURN g.primaryDomainId AS geneId,\n       g.displayName AS geneName,\n       g.description AS geneDescription,\n       dis.primaryDomainId AS disorderId,\n       dis.displayName AS disorderName,\n       dis.description AS disorderDescription;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 78,
+    "precision" : 0.01282051282051282,
+    "recall" : 1.0,
+    "f1" : 0.02531645569620253
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "Are there any genomic variants known to affect genes involved in the 'Cell Cycle' pathway, and are these variants associated with specific disorders?",
+  "goldenCypher" : "MATCH (variant:GenomicVariant)-[:VariantAffectsGene]->(gene:Gene) <-[:ProteinEncodedByGene]- (protein:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Cell Cycle'}) WITH variant, gene\n MATCH (variant:GenomicVariant) -[:VariantAssociatedWithDisorder]->(disorder:Disorder)\n RETURN variant.primaryDomainId AS VariantName, gene.displayName AS GeneName, disorder.displayName AS DisorderName",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)\nMATCH (g)-[:ProteinEncodedByGene]->(p:Protein)\nMATCH (p)-[:ProteinInPathway]->(pw:Pathway)\nWHERE toLower(pw.displayName) = toLower('Cell Cycle')\nMATCH (v)-[:VariantAssociatedWithDisorder]->(dis:Disorder)\nRETURN v.primaryDomainId AS variantId,\n       v.displayName AS variantName,\n       g.primaryDomainId AS geneId,\n       g.approvedSymbol AS geneSymbol,\n       dis.primaryDomainId AS disorderId,\n       dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 99808,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "Find all genes that encode proteins involved in the Neuronal System pathway and returns the tissues where those proteins are expressed.",
+  "goldenCypher" : "MATCH (gene:Gene)<-[:ProteinEncodedByGene]-(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'Neuronal System'}) WITH p, gene MATCH (p:Protein)-[:ProteinExpressedInTissue]-> (tissue:Tissue ) RETURN DISTINCT tissue.displayName, gene.displayName",
+  "aiCypher" : "MATCH (p:Protein)-[:ProteinInPathway]->(path:Pathway {primaryDomainId:'reactome.R-HSA-112316'})\n      <-[:ProteinEncodedByGene]-(g:Gene)\nMATCH (p)-[:ProteinExpressedInTissue]->(t:Tissue)\nRETURN DISTINCT g.primaryDomainId AS geneId, g.displayName AS geneName,\n       t.primaryDomainId AS tissueId, t.displayName AS tissueName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 13710,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Pathway",
+  "question" : "What are the side effects of drugs that target proteins within the 'SARS-CoV Infections' pathway?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinInPathway]->(pathway:Pathway {displayName: 'SARS-CoV Infections'}) WITH d MATCH (d)- [:DrugHasSideEffect]->(sideEffect:SideEffect) RETURN d.displayName AS drugs, sideEffect.displayName AS SideEffect",
+  "aiCypher" : "MATCH (pw:Pathway {primaryDomainId:'reactome.R-HSA-9755779'})\nMATCH (p:Protein)-[:ProteinInPathway]->(pw)\nMATCH (d:Drug)-[:DrugHasTarget]->(p)\nMATCH (d)-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN DISTINCT se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 112328,
+    "lengthAI" : 579,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?",
+  "goldenCypher" : "MATCH (t:Tissue)<-[:ProteinExpressedInTissue]- (p:Protein)<-[:DrugHasTarget]-(d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Abdominal pain NOS'}) RETURN d.displayName AS DrugName, t.displayName AS TissueName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE toLower(se.displayName) = toLower('Abdominal pain NOS')\nOPTIONAL MATCH (d)-[:DrugHasTarget]->(p:Protein)\nOPTIONAL MATCH (p)-[:ProteinExpressedInTissue]->(t:Tissue)\nRETURN d.primaryDomainId AS drugId,\n       d.displayName AS drugName,\n       se.primaryDomainId AS sideEffectId,\n       se.displayName AS sideEffectName,\n       collect(DISTINCT t.primaryDomainId) AS tissueIds,\n       collect(DISTINCT t.displayName) AS tissueNames;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 138180,
+    "lengthAI" : 326,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "SideEffect",
+  "question" : "Which side effects are also classified as phenotypes?",
+  "goldenCypher" : "MATCH (s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype) RETURN s.displayName AS SideEffectName, p.displayName AS PhenotypeName",
+  "aiCypher" : "MATCH (se:SideEffect)-[:SideEffectSameAsPhenotype]->(ph:Phenotype)\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName,\n       ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName;",
+  "score" : {
+    "hits" : 1237,
+    "lengthGold" : 1237,
+    "lengthAI" : 1237,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
 } ]
