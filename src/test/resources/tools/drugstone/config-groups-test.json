@@ -1,0 +1,106 @@
+[
+  {
+    "question": "Set the 'seednode' border width to 4.",
+    "partResult": {
+      "nodeGroups": {
+        "seednode": {
+          "borderWidth": 4
+        }
+      }
+    }
+  },
+  {
+    "question": "Make the 'founddrug' highlight background red (#FF0000).",
+    "partResult": {
+      "nodeGroups": {
+        "founddrug": {
+          "color": {
+            "highlight": {
+              "background": "#FF0000"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "question": "Change 'gene' shape to square and font size to 16.",
+    "partResult": {
+      "nodeGroups": {
+        "gene": {
+          "shape": "square",
+          "font": {
+            "size": 16
+          }
+        }
+      }
+    }
+  },
+  {
+    "question": "Set the default edge group to dashed.",
+    "partResult": {
+      "edgeGroups": {
+        "default": {
+          "dashes": true
+        }
+      }
+    }
+  },
+  {
+    "question": "Rename 'diamondnode' group label to 'Diamond Module Nodes'.",
+    "partResult": {
+      "nodeGroups": {
+        "diamondnode": {
+          "groupName": "Diamond Module Nodes"
+        }
+      }
+    }
+  },
+  {
+    "question": "Increase 'default' node group borderWidthSelected to 3.",
+    "partResult": {
+      "nodeGroups": {
+        "default": {
+          "borderWidthSelected": 3
+        }
+      }
+    }
+  },
+  {
+    "question": "Set 'disorder' color border to #AA7700 and background to #FFBB55.",
+    "partResult": {
+      "nodeGroups": {
+        "disorder": {
+          "color": {
+            "border": "#AA7700",
+            "background": "#FFBB55"
+          }
+        }
+      }
+    }
+  },
+  {
+    "question": "Keep everything unchanged.",
+    "partResult": {}
+  },
+  {
+    "question": "Make the default edge color '#222222'.",
+    "partResult": {
+      "edgeGroups": {
+        "default": {
+          "color": "#222222"
+        }
+      }
+    }
+  },
+  {
+    "question": "Show labels in details for 'default' node group.",
+    "partResult": {
+      "nodeGroups": {
+        "default": {
+          "detailShowLabel": true
+        }
+      }
+    }
+  }
+]

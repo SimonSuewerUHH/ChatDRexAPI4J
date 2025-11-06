@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Does DIGEST confirm that the oncogenes KRAS, BRAF, MYC, EGFR, ERBB2 form a coherent subnetwork disease module that is enriched in cancer-related signaling pathways?",
+    "steps": "3845, 673, 4609, 1956, 2064",
+    "content": "",
+    "path": "001.json"
+  },
+  {
+    "question": "Does DIGEST validate that the tumor suppressors TP53, PTEN, RB1, NF1, CDKN2A form a coherent, network-based disease module characterized by cell-cycle regulation and DNA-damage response pathways?",
+    "steps": "3845, 673, 4609, 1956, 2064",
+    "content": "",
+    "path": "002.json"
+  }
+]

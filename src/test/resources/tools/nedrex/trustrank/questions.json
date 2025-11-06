@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Using TrustRank, can we evaluate whether the genes PMP22, MPZ, GJB1, and MFN2 form a coherent disease module within the protein–protein interaction network?",
+    "steps": "Translation: { PMP22: 'Q01453', MPZ: 'P25189', GJB1: 'P28230', MFN2: 'O95140' }",
+    "content": "Seed genes (TrustRank input): PMP22, MPZ, GJB1, MFN2. Mapped UniProt IDs: Q01453, P25189, P28230, O95140. Module evaluation: TrustRank confirms these four neuropathy-associated genes cluster coherently in the PPI network.  Drug associations (top scores): DB01268, DB06595, DB06616, DB09079, DB08865 (very low scores, suggest possible but weak links)",
+    "path": "001.json"
+  },
+  {
+    "question": "Can TrustRank validate that the seed genes DNAH5, DNAI1, CCDC39, and CCDC40 propagate high trust scores within the ciliary network?",
+    "steps": "Translation: { DNAH5: 'Q8TE73', DNAI1: 'Q8C0M8', CCDC39: 'Q8NEP3', CCDC40: 'Q4G0X9' }",
+    "content": "Seed genes (TrustRank input): DNAH5, DNAI1, CCDC39, CCDC40. Mapped UniProt IDs: Q8TE73, Q8C0M8, Q8NEP3, Q4G0X9. Module evaluation: TrustRank confirms the four ciliary genes propagate trust within the ciliary network. Drug associations (top scores): DB01268, DB09079, DB06616, DB06595, DB08865 (weak, non-specific links)",
+    "path": "002.json"
+  }
+]

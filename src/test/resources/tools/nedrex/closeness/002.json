@@ -1,0 +1,106 @@
+{
+  "seed_proteins": [
+    "H2L099",
+    "P06213",
+    "Q4U3Q4"
+  ],
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 10,
+  "uid": "a10a3276-1c23-4d09-aff9-da510f09fef3",
+  "status": "completed",
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB09063",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB00619",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB01259",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB04868",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB09330",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB12267",
+        "score": "1.0"
+      },
+      {
+        "drug_name": "drugbank.DB11828",
+        "score": "1.0"
+      }
+    ],
+    "edges": [
+      [
+        "drugbank.DB12267",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB04868",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09330",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB08865",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09079",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB01259",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB11828",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB01268",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB09063",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB00619",
+        "uniprot.P06213"
+      ],
+      [
+        "drugbank.DB00398",
+        "uniprot.P06213"
+      ]
+    ]
+  }
+}

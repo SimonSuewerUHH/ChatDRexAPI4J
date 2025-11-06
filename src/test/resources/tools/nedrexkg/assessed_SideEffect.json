@@ -1,0 +1,74 @@
+[
+  {
+    "nl_question": "Is 'Dizziness' a reported side effect of any drugs targeting the protein encoded by the gene BRCA1?",
+    "cypher_translation": "MMATCH (d:Drug)-[:DrugHasTarget]->(p:Protein)-[:ProteinEncodedByGene]->(g:Gene {approvedSymbol: 'BRCA1'}) WITH d MATCH (d)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Dizziness'}) RETURN s.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "List all disorders associated with drugs that have 'Vomiting' as a side effect.",
+    "cypher_translation": "MATCH (dis:Disorder)<-[:DrugHasIndication]-(d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Vomiting'}) RETURN dis.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What are the comon side effects of Nilotinib and Fluoxetine?",
+    "cypher_translation": "MATCH (d1:Drug {displayName:'Fluoxetine'} )-[:DrugHasSideEffect]->(n:SideEffect)<-[:DrugHasSideEffect]-(d2:Drug {displayName: 'Nilotinib'}) RETURN n.displayName AS SideEffects"
+  },
+  {
+    "nl_question": "Which genomic variants are associated with the occurrence of acute migraine as an adverse drug reaction?",
+    "cypher_translation": "MATCH (se:SideEffect {displayName: 'Acute migraine'})<-[:DrugHasSideEffect]-(drug:Drug)-[:DrugHasIndication]->(dis:Disorder)<-[:VariantAssociatedWithDisorder] -(gv:GenomicVariant) RETURN DISTINCT gv.primaryDomainId AS GenomicVariantId"
+  },
+  {
+    "nl_question": "Are there any drugs known to cause 'Abdominal pain NOS' in specific tissues or populations?",
+    "cypher_translation": "MATCH (t:Tissue)<-[:ProteinExpressedInTissue]- (p:Protein)<-[:DrugHasTarget]-(d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Abdominal pain NOS'}) RETURN d.displayName AS DrugName, t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "What drugs are known to cause the side effect 'Nausea'?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "Which side effects are also classified as phenotypes?",
+    "cypher_translation": "MATCH (s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype) RETURN s.displayName AS SideEffectName, p.displayName AS PhenotypeName"
+  },
+  {
+    "nl_question": "List all drugs that have 'Dizziness' as a side effect.",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Dizziness'}) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "Which drugs are associated with 'Nausea' as a side effect?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "From which data sources is information about the side effect 'Headache' obtained?",
+    "cypher_translation": "MATCH (s:SideEffect {displayName: 'Headache'}) RETURN s.dataSources AS DataSources"
+  },
+  {
+    "nl_question": "Are there any phenotypes that are considered equivalent to the side effect 'Diarrhea'?",
+    "cypher_translation": "MATCH (p1:Phenotype)-[:SideEffectSameAsPhenotype]->(s:SideEffect {displayName: 'Diarrhea'}) RETURN p1.displayName AS PhenotypeName"
+  },
+  {
+    "nl_question": "Can you provide a comprehensive list of all known side effects available in the knowledge graph?",
+    "cypher_translation": "MATCH (s:SideEffect) RETURN DISTINCT s.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "What are the domain IDs for the side effect 'Abdominal pain'?",
+    "cypher_translation": "MATCH (s:SideEffect {displayName: 'Abdominal pain'}) RETURN s.domainIds AS DomainIDs"
+  },
+  {
+    "nl_question": "Which drugs are associated with the side effect 'Headache'?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Headache'}) RETURN d.displayName AS DrugName"
+  },
+  {
+    "nl_question": "“Which phenotypes are the same as the side effect ‘Dizziness’?",
+    "cypher_translation": "MATCH (p:Phenotype)-[:SideEffectSameAsPhenotype]->(s:SideEffect {displayName: 'Dizziness'}) RETURN p.displayName AS PhenotypeName"
+  },
+  {
+    "nl_question": "For the side effect 'Rash', what data sources are available in the knowledge graph?",
+    "cypher_translation": "MATCH (s:SideEffect {displayName: 'Rash'}) RETURN s.dataSources AS DataSources"
+  },
+  {
+    "nl_question": "Can you list all side effects in the graph that contain 'abdominal pain' in their name?",
+    "cypher_translation": "MATCH (s:SideEffect) WHERE toLower(s.displayName) CONTAINS 'abdominal pain' RETURN s.displayName AS SideEffectName"
+  },
+  {
+    "nl_question": "How many distinct drugs are known to cause 'Nausea' as a side effect?",
+    "cypher_translation": "MATCH (d:Drug)-[:DrugHasSideEffect]->(s:SideEffect {displayName: 'Nausea'}) RETURN count(DISTINCT d) AS NumberOfDrugs"
+  }
+]

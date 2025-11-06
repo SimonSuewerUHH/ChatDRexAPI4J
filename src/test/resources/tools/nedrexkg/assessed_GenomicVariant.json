@@ -1,0 +1,70 @@
+[
+  {
+    "nl_question": "Find all genomic variants of type SNV that are associated with breast cancer.",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'breast cancer'}) WHERE v.variantType = 'Single Nucleotide Variant' RETURN v.primaryDomainId as variantType"
+  },
+  {
+    "nl_question": "Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: '7'})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'cystic fibrosis'})\nRETURN v.referenceSequence AS ReferenceSequence, v.alternativeSequence AS AlternativeSequence"
+  },
+  {
+    "nl_question": "What are the different variant types observed in genomic variants associated with Parkinson's disease?",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName:     'Parkinson disease'}) RETURN DISTINCT v.primaryDomainId AS VariantType"
+  },
+  {
+    "nl_question": "Are there any common genomic variants associated with both type 1 and type 2 diabetes?",
+    "cypher_translation": "MATCH (v1:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {displayName: 'type 1 diabetes mellitus'}) MATCH (v2:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d2:Disorder {displayName: 'type 2 diabetes mellitus'}) RETURN v1.primaryDomainId as VariantId"
+  },
+  {
+    "nl_question": "Find all genomic variants of type 'SNV' located within the BRCA1 gene.",
+    "cypher_translation": "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'BRCA1'}) WHERE v.variantType = 'Single Nucleotide Variant' RETURN v.primaryDomainId"
+  },
+  {
+    "nl_question": "List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: 'X', position: 30708057, alternativeSequence: 'A'})-[:VariantAffectsGene]->(g:Gene) RETURN v.alternativeSequence AS alternativeSequence, v.position as VariantPosition, g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?",
+    "cypher_translation": "MATCH (v:GenomicVariant {chromosome: '2', position: 47475100})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'colon carcinoma'}) RETURN v.referenceSequence AS ReferenceSequence, v.chromosome AS ChromosomeVariant,v.position AS VariantPosition, d.displayName as DisorderName "
+  },
+  {
+    "nl_question": "Retrieve the `chromosome`, `position`, `referenceSequence`, and `alternativeSequence` for all `GenomicVariant` nodes that have a `variantType` of 'SNP'.",
+    "cypher_translation": "MATCH (gv:GenomicVariant {variantType: 'Single Nucleotide Variant'}) RETURN gv.chromosome, gv.position, gv.referenceSequence, gv.alternativeSequence "
+  },
+  {
+    "nl_question": "Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?",
+    "cypher_translation": "MATCH (gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'BRCA1'}) RETURN gv.primaryDomainId AS Variant"
+  },
+  {
+    "nl_question": "What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?",
+    "cypher_translation": "MATCH (d:Disorder)<-[:VariantAssociatedWithDisorder]-(gv:GenomicVariant {chromosome: 'X'}) RETURN DISTINCT d.displayName AS disorder"
+  },
+  {
+    "nl_question": "Find all genomic variants that are associated with disorders and that affect the gene CFTR.\n For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",
+    "cypher_translation": "MATCH (d:Disorder)<-[:VariantAssociatedWithDisorder]-(gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'CFTR'}) RETURN DISTINCT gv.chromosome, gv.position, gv.primaryDomainId, d.displayName AS Disorder"
+  },
+  {
+    "nl_question": "Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’",
+    "cypher_translation": "MATCH (gv:GenomicVariant {referenceSequence: 'A', alternativeSequence: 'G'})-[:VariantAssociatedWithDisorder]->(d:Disorder) RETURN DISTINCT d.displayName AS Disorder "
+  },
+  {
+    "nl_question": "What are the different variant types and their respective counts for genomic variants located on chromosome '17'?",
+    "cypher_translation": "MATCH (gv:GenomicVariant {chromosome: '17'}) RETURN gv.variantType AS VariantType, count(*) AS Count"
+  },
+  {
+    "nl_question": "What are the `referenceSequence`, `alternativeSequence`, and `position` for all genomic variants identified as 'SNV' variant types?",
+    "cypher_translation": "MATCH (gv:GenomicVariant {variantType: 'Single Nucleotide Variant'}) RETURN gv.referenceSequence AS ReferenceSequence, gv.alternativeSequence AS AlternativeSequence, gv.position AS Position"
+  },
+  {
+    "nl_question": "Which genes are affected by genomic variants located on chromosome 'X'?",
+    "cypher_translation": "MATCH (gv:GenomicVariant {chromosome: 'X'})-[:VariantAffectsGene]->(g:Gene) RETURN DISTINCT g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "Which disorders are associated with genomic variants of type duplication?",
+    "cypher_translation": "MATCH (gv:GenomicVariant {variantType: 'Duplication'})-[:VariantAssociatedWithDisorder]->(d:Disorder) RETURN DISTINCT d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",
+    "cypher_translation": "MATCH (gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'CFTR'}) RETURN gv.alternativeSequence AS AlternativeSequence, gv.variantType AS VariantType"
+  }
+]

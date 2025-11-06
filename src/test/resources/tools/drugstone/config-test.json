@@ -1,0 +1,97 @@
+[
+  {
+    "question": "Turn off the view table.",
+    "partResult": {
+      "showViews": false
+    }
+  },
+  {
+    "question": "Hide the sidebar.",
+    "partResult": {
+      "showSidebar": false
+    }
+  },
+  {
+    "question": "Move the legend to the right.",
+    "partResult": {
+      "legendPos": "right"
+    }
+  },
+  {
+    "question": "Use Entrez IDs for identifiers.",
+    "partResult": {
+      "identifier": "entrez"
+    }
+  },
+  {
+    "question": "Enable physics but disable initial layouting.",
+    "partResult": {
+      "physicsOn": true,
+      "physicsInitial": false
+    }
+  },
+  {
+    "question": "Place the network menu on the left.",
+    "partResult": {
+      "showNetworkMenu": "left"
+    }
+  },
+  {
+    "question": "Start with adjacent drugs enabled and show the button.",
+    "partResult": {
+      "activateNetworkMenuButtonAdjacentDrugs": true,
+      "showNetworkMenuButtonAdjacentDrugs": true
+    }
+  },
+  {
+    "question": "Disable selectable custom edges but keep them considered by algorithms.",
+    "partResult": {
+      "customEdges": {
+        "default": true,
+        "selectable": false
+      }
+    }
+  },
+  {
+    "question": "Remove 'enrichment-gprofiler' from the advanced analysis content.",
+    "partResult": {
+      "showAdvAnalysisContent": [
+        "drug-search",
+        "drug-target-search",
+        "pathway-enrichment",
+        "clustering",
+        "enrichment-digest",
+        "search-ndex"
+      ]
+    }
+  },
+  {
+    "question": "Rename the clustering button to 'Communities' and the drug search button to 'Find Drugs'.",
+    "partResult": {
+      "clusteringName": "Communities",
+      "taskDrugName": "Find Drugs"
+    }
+  },
+  {
+    "question": "Turn on the overlay of directed edges.",
+    "partResult": {
+      "overlayDirectedEdges": true
+    }
+  },
+  {
+    "question": "Enable licensed datasets.",
+    "partResult": {
+      "licensedDatasets": true
+    }
+  },
+  {
+    "question": "Combined: hide sidebar, legend right, show network menu left, enable physics and disable initial layouting.",
+    "partResult": {
+      "showSidebar": false,
+      "legendPos": "right",
+      "showNetworkMenu": "left",
+      "physicsOn": true,
+      "physicsInitial": false
+    }
+  }
+]

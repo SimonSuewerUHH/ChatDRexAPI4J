@@ -1,0 +1,90 @@
+[
+  {
+    "nl_question": "What is the amino acid sequence of the protein MYC_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'MYC_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "What genes encode the protein 1433E?",
+    "cypher_translation": "MATCH (g:Gene)<-[:ProteinEncodedByGene]-(p:Protein {displayName: '1433E_HUMAN'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What are the signatures associated with the protein CUL3_HUMAN?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'CUL3_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS Signatures"
+  },
+  {
+    "nl_question": "What are the GO annotations for the protein P53?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'P53_HUMAN'})-[:ProteinHasGOAnnotation]->(go:GO) RETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Which proteins interact with TRI67?",
+    "cypher_translation": "MATCH (p1:Protein {displayName: 'TRI67_HUMAN'})-[:ProteinInteractsWithProtein]->(p2:Protein) RETURN p2.displayName AS InteractingProteins"
+  },
+  {
+    "nl_question": "What is the amino acid sequence of the protein EGFR?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'EGFR_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "What are the known signatures for the protein RFA1?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'RFA1_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS Signatures"
+  },
+  {
+    "nl_question": "What gene encodes the protein ESR1?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'ESR1_HUMAN'})-[:ProteinEncodedByGene]->(g:Gene) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What are the synonyms for the protein HSP7C?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'HSP7C_HUMAN'}) RETURN p.synonyms AS Synonyms"
+  },
+  {
+    "nl_question": "What is the amino acid sequence for the protein 'EGFR_HUMAN'?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'EGFR_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "Which other proteins are known to interact with 'MYC_HUMAN'?",
+    "cypher_translation": "MATCH (p1:Protein {displayName: 'MYC_HUMAN'})-[:ProteinInteractsWithProtein]->(p2:Protein) RETURN p2.displayName AS InteractingProteins"
+  },
+  {
+    "nl_question": "Can you retrieve the Gene Ontology (GO) annotations for the protein 'P53'?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'P53_HUMAN'})-[:ProteinHasGOAnnotation]->(go:GO) RETURN go.displayName AS GOAnnotations"
+  },
+  {
+    "nl_question": "What protein signatures are associated with 'TRI67'?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'TRI67_HUMAN'})-[:ProteinHasSignature]->(s:Signature) RETURN s.displayName AS ProteinSignatures"
+  },
+  {
+    "nl_question": "What is the amino acid sequence of the protein 'PRKN'?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'PRKN_HUMAN'}) RETURN p.sequence AS AminoAcidSequence"
+  },
+  {
+    "nl_question": "Which gene encodes the protein 'EGFR'?",
+    "cypher_translation": "MATCH (g:Gene)<-[:ProteinEncodedByGene]-(p:Protein {displayName: 'EGFR_HUMAN'}) RETURN g.displayName AS GeneName"
+  },
+  {
+    "nl_question": "List all GO annotations associated with the protein 'MYC'.",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'MYC_HUMAN'})-[:ProteinHasGOAnnotation]->(go:GO) RETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Which other proteins interact with 'P53'?",
+    "cypher_translation": "MATCH (p1:Protein {displayName: 'P53_HUMAN'})-[:ProteinInteractsWithProtein]->(p2:Protein) RETURN p2.displayName AS InteractingProteins"
+  },
+  {
+    "nl_question": "What are the Gene Ontology (GO) annotations associated with the protein 'HSP7C_HUMAN'?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'HSP7C_HUMAN'})-[:ProteinHasGOAnnotation]-> (go:GO) RETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Which other proteins are known to interact with 'P53_HUMAN'?",
+    "cypher_translation": "MATCH (p1:Protein)-[:ProteinInteractsWithProtein]->(p2:Protein {displayName: 'P53_HUMAN'}) RETURN DISTINCT p1.displayName AS InteractingProtein"
+  },
+  {
+    "nl_question": "Which gene encodes the protein 'EGFR', and what is its approved symbol and chromosome?",
+    "cypher_translation": "MATCH (p:Protein {displayName: 'EGFR_HUMAN'})-[:ProteinEncodedByGene]->(g:Gene ) RETURN g.approvedSymbol AS ApprovedSymbol, g.chromosome AS Chromosome"
+  },
+  {
+    "nl_question": "In which biological pathways is the protein 'MYC_HUMAN' involved, and for what species are these pathways listed?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinInPathway]->(pw:Pathway) WHERE p.displayName = 'MYC_HUMAN' RETURN pw.displayName AS PathwayName, pw.species AS Species"
+  },
+  {
+    "nl_question": "In which tissues is the protein 'CFTR_HUMAN' expressed?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinExpressedInTissue]->(t:Tissue) WHERE p.displayName = 'CFTR_HUMAN' RETURN t.displayName AS TissueName"
+  }
+]

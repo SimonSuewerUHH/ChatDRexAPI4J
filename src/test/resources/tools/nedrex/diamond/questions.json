@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Run the DIAMOnD algorithm, using the seed genes PDCD1, CD274, LAG3, and HAVCR2, to perform iterative module expansion based on connectivity significance. Return the ranked list of neighbor genes generated in this expansion, mapped to their corresponding Entrez Gene IDs.",
+    "steps": "Translation: { PDCD1: '5133', CD274: '29126', LAG3: '3902', HAVCR2: '84868' }",
+    "content": "Seeds used: PDCD1, CD274, LAG3, HAVCR2 (immune checkpoint genes). DIAMOnD (iterative expansion based on connectivity significance). Rank 1: JAK1 (Entrez 3716, p ≈ 2.1 × 10⁻²⁴), Rank 2: IRF9 (Entrez 10379, p = 0), Rank 3: TYK2 (Entrez 7297, p = 0), Rank 4: STAT2 (Entrez 6773, p = 0), Rank 5: STAT1 (Entrez 6772, p = 0). Strongly connected to immune checkpoint regulation and potential targets for further study. The expansion builds a coherent disease module, complementing the original immune checkpoint seeds.",
+    "path": "001.json"
+  },
+  {
+    "question": "Given cancer-related seed genes TP53, BRCA1, EGFR, and MYC, run the DIAMOnD algorithm. Which top-ranked neighbour genes are most significantly connected to these seeds?",
+    "steps": "Translation: { TP53: '7157', BRCA1: '672', EGFR: '1956', MYC: '4609' }",
+    "content": "TP53, BRCA1, EGFR, MYC. DIAMOnD. 51455 → Rank 1, p = 4.15e-53. 6525 → Rank 2, p ≈ 0. 79035 → Rank 3, p ≈ 0. 63967 → Rank 4, p ≈ 0. 9014 → Rank 5, p ≈ 0. These nodes are the most statistically significant neighbours directly connected to the cancer seed genes. Extremely low p-values indicate strong over-representation of edges with the seeds, which means high confidence candidates for the expanded disease module.",
+    "path": "002.json"
+  }
+]

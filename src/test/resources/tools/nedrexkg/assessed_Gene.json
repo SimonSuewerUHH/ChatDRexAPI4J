@@ -1,0 +1,74 @@
+[
+  {
+    "nl_question": "Which tissues express the gene TTN?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TTN'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "What are the approved symbols and synonyms for the gene MSH2?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'MSH2'})\nRETURN g.approvedSymbol AS ApprovedSymbol, g.synonyms AS Synonyms"
+  },
+  {
+    "nl_question": "What are the pathways associated with proteins encoded by the gene CFTR?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'CFTR'})-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinInPathway]->(pw:Pathway)\nRETURN pw.displayName AS PathwayName"
+  },
+  {
+    "nl_question": "Which tissues express the BRCA2 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA2'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Provide the gene type and description for the APC gene.",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'APC'})\nRETURN g.geneType AS GeneType, g.description AS Description"
+  },
+  {
+    "nl_question": "What proteins are encoded by the BRCA1 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA1'})-[:ProteinEncodedByGene]->(p:Protein)\nRETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "What are the GO annotations for proteins encoded by the TSC2 gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TSC2'})-[:ProteinEncodedByGene]->(p:Protein)-[:ProteinHasGOAnnotation]->(go:GO)\nRETURN go.displayName AS GOAnnotation"
+  },
+  {
+    "nl_question": "Find other genes that are expressed in the same tissues as the MSH6 gene.",
+    "cypher_translation": "MATCH (g1:Gene {displayName: 'MSH6'})-[:GeneExpressedInTissue]->(t:Tissue)<-[:GeneExpressedInTissue]-(g2:Gene)\nRETURN g2.displayName AS GeneName"
+  },
+  {
+    "nl_question": "What disorders are associated with the gene BRCA1?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'BRCA1'})-[:GeneAssociatedWithDisorder]->(d:Disorder)\nRETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "What is the gene type and chromosome location for the gene TP53?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TP53'})\nRETURN g.geneType AS GeneType, g.chromosome AS ChromosomeLocation"
+  },
+  {
+    "nl_question": "Which proteins are encoded by the EGFR gene?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'EGFR'})<-[:ProteinEncodedByGene]-(p:Protein) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "In which tissues is the CFTR gene expressed?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'CFTR'})-[:GeneExpressedInTissue]->(t:Tissue)\nRETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Can you provide the description and any known synonyms for the gene MSH2?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'MSH2'})\nRETURN g.description AS Description, g.synonyms AS Synonyms"
+  },
+  {
+    "nl_question": "What is the chromosome and gene type for the gene 'TTN'?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'TTN'}) RETURN g.chromosome AS Chromosome, g.geneType AS GeneType"
+  },
+  {
+    "nl_question": "Which disorders are associated with the gene 'BRCA1'?",
+    "cypher_translation": "MATCH (d:Disorder)<-[r:GeneAssociatedWithDisorder]-(g:Gene {displayName: 'BRCA1'}) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN d.displayName AS DisorderName"
+  },
+  {
+    "nl_question": "Which proteins are encoded by the gene 'EGFR'?",
+    "cypher_translation": "MATCH (p:Protein)-[:ProteinEncodedByGene]->(g:Gene {displayName: 'EGFR'}) RETURN p.displayName AS ProteinName"
+  },
+  {
+    "nl_question": "In which tissues is the gene 'TP53' expressed?",
+    "cypher_translation": "MATCH (t:Tissue)<-[:GeneExpressedInTissue]-(g:Gene {displayName: 'TP53'}) RETURN t.displayName AS TissueName"
+  },
+  {
+    "nl_question": "Can you provide the description and any associated disorders for the gene 'MSH2'?",
+    "cypher_translation": "MATCH (g:Gene {displayName: 'MSH2'}) OPTIONAL MATCH (d:Disorder)<-[r:GeneAssociatedWithDisorder]-(g) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN g.description AS Description, collect(d.displayName) AS AssociatedDisorders"
+  }
+]

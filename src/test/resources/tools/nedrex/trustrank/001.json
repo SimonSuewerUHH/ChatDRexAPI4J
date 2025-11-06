@@ -1,0 +1,59 @@
+{
+  "seed_proteins": [
+    "O95140",
+    "P25189",
+    "P28230",
+    "Q01453"
+  ],
+  "damping_factor": 0.85,
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 10,
+  "uid": "c75d4acc-bdbc-4047-bea7-01e93c116de8",
+  "status": "completed",
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "3.8339682004885224e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06595",
+        "score": "3.190120303723163e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06616",
+        "score": "3.1461063729278144e-05"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "3.115093135360253e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "2.1265848583264065e-05"
+      },
+      {
+        "drug_name": "drugbank.DB01254",
+        "score": "2.056389412953641e-05"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "1.9436928714667468e-05"
+      },
+      {
+        "drug_name": "drugbank.DB05294",
+        "score": "1.813253629185615e-05"
+      },
+      {
+        "drug_name": "drugbank.DB11828",
+        "score": "1.7102185772095024e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08877",
+        "score": "1.684234208156907e-05"
+      }
+    ],
+    "edges": []
+  }
+}

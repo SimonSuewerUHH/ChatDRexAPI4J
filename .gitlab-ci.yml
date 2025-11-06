@@ -1,0 +1,139 @@
+image: openjdk:21
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+stages:
+  - check
+  - test
+  - build
+  - security
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .m2/repository
+
+# Helpers
+variables:
+  PROJECT: chatdrex-api
+  CI_IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH
+  CI_IMAGE_STAGING: $CI_IMAGE_BASE/$PROJECT:staging
+  CI_IMAGE_LATEST:  $CI_IMAGE_BASE/$PROJECT:latest
+
+  SAST_JAVA_VERSION: "21"
+  GITLAB_ADVANCED_SAST_ENABLED: "true"
+  GIT_DEPTH: "0"
+  CS_IMAGE: $CI_IMAGE_LATEST
+
+  DOCKER_TLS_CERTDIR: ""
+
+.docker_login: &docker_login
+  - docker info
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+.docker_buildx: &docker_buildx
+  - docker context create fedDB-context
+  - docker buildx create --name fedDBBuilder --use fedDB-context
+  - docker buildx inspect --bootstrap
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Build and test
+
+check:build:maven:
+  stage: check
+  allow_failure: false
+  artifacts:
+    paths:
+      - target
+    expire_in: 1 hour
+  script:
+    - ./mvnw clean install -DskipTests
+
+# ─────────────────────────────────────────────────────────────────────────────
+# deploy
+.deploy:gitlab_registry:
+  image: docker:24.0.2
+  stage: deploy
+  services:
+    - name: docker:24.0.2-dind
+      alias: docker
+  before_script:
+    - *docker_login
+    - *docker_buildx
+  script:
+    - docker buildx build --platform linux/amd64,linux/arm64/v8 --provenance false -t $CI_IMAGE -f $DOCKERFILE --push .
+
+## prod
+deploy:gitlab_registry:prod:
+  extends: .deploy:gitlab_registry
+  only:
+    - main
+  dependencies:
+    - check:build:maven
+  variables:
+    CI_IMAGE: $CI_IMAGE_LATEST
+    DOCKERFILE: src/main/docker/Dockerfile.jvm
+
+
+## staging
+deploy:gitlab_registry:staging:
+  extends: .deploy:gitlab_registry
+  #only:
+  #  - develop
+  dependencies:
+    - check:build:maven
+  needs:
+    - check:build:maven
+  variables:
+    CI_IMAGE: $CI_IMAGE_STAGING
+    DOCKERFILE: src/main/docker/Dockerfile.jvm
+
+
+deploy:gitlab_registry-native:
+  extends: .deploy:gitlab_registry
+  when: manual
+  allow_failure: true
+  timeout: 3 hours 30 minutes
+  dependencies:
+    - check:build:maven
+  variables:
+    CI_IMAGE: $CI_IMAGE_GLOBAL_LATEST-native
+    DOCKERFILE: src/main/docker/Dockerfile.native-build
+# ─────────────────────────────────────────────────────────────────────────────
+# Override all security scanning jobs
+
+spotbugs-sast:
+  dependencies:
+    - check:build:maven
+  variables:
+    COMPILE: "false"
+    SECURE_LOG_LEVEL: debug
+
+gitlab-advanced-sast:
+  dependencies:
+    - check:build:maven
+  artifacts:
+    paths:
+      - '**/trace.ctf'
+    expire_in: 1 week
+    when: always
+  variables:
+    RUNNER_SCRIPT_TIMEOUT: 50m
+  timeout: 1h
+
+
+secret_detection:
+  dependencies:
+    - check:build:maven
+  stage: security
+  variables:
+    GIT_DEPTH: 100
+
+dependency_scanning:
+  dependencies:
+    - check:build:maven

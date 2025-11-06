@@ -1,0 +1,305 @@
+[
+  {
+    "question": "How does Diamond work?"
+  },
+  {
+    "question": "What is Drug repurposing?"
+  },
+  {
+    "question": "Explain my options."
+  },
+  {
+    "question": "What can I ask about ChatDREx?"
+  },
+  {
+    "question": "What can I do next (at a high level)?"
+  },
+  {
+    "question": "Where should I start in ChatDREx?"
+  },
+  {
+    "question": "How can I begin using this system?"
+  },
+  {
+    "question": "Can you guide me through the basics?"
+  },
+  {
+    "question": "What do you suggest I try first?"
+  },
+  {
+    "question": "How should I proceed with an analysis conceptually?"
+  },
+  {
+    "question": "What's the next step in the workflow?"
+  },
+  {
+    "question": "What can this tool do (overview)?"
+  },
+  {
+    "question": "How can you help me understand ChatDREx?"
+  },
+  {
+    "question": "What kinds of questions are in scope here?"
+  },
+  {
+    "question": "What can I explore in the interface?"
+  },
+  {
+    "question": "What information can you provide about features?"
+  },
+  {
+    "question": "What should I look into to get oriented?"
+  },
+  {
+    "question": "How do I get started (step-by-step)?"
+  },
+  {
+    "question": "Where can I go from here in the process?"
+  },
+  {
+    "question": "What insights can you offer about interpreting results?"
+  },
+  {
+    "question": "What are the possibilities with ChatDREx?"
+  },
+  {
+    "question": "What actions are available (planner actions)?"
+  },
+  {
+    "question": "What features are available?"
+  },
+  {
+    "question": "What kinds of analyses are supported?"
+  },
+  {
+    "question": "How do I interact with this system (inputs/outputs)?"
+  },
+  {
+    "question": "What are common use cases?"
+  },
+  {
+    "question": "What are my next steps right now?"
+  },
+  {
+    "question": "Can you walk me through an example (no execution)?"
+  },
+  {
+    "question": "Can you suggest a starting workflow?"
+  },
+  {
+    "question": "What should I try as a first experiment?"
+  },
+  {
+    "question": "What's available to me in the UI?"
+  },
+  {
+    "question": "What can we do together (you explain, I execute)?"
+  },
+  {
+    "question": "How can I use this interface effectively?"
+  },
+  {
+    "question": "Show me what's possible (high-level)."
+  },
+  {
+    "question": "Can you list some options I can explore?"
+  },
+  {
+    "question": "Give me some idea prompts."
+  },
+  {
+    "question": "What can I discover here conceptually?"
+  },
+  {
+    "question": "What are the recommended actions for beginners?"
+  },
+  {
+    "question": "What queries make sense here?"
+  },
+  {
+    "question": "What is the intended use of ChatDREx?"
+  },
+  {
+    "question": "How should I frame my question to get the best guidance?"
+  },
+  {
+    "question": "Give me some starting points."
+  },
+  {
+    "question": "Can I get a demo explanation?"
+  },
+  {
+    "question": "What workflows can I explore conceptually?"
+  },
+  {
+    "question": "What are the capabilities?"
+  },
+  {
+    "question": "How can I dive deeper (docs/sections)?"
+  },
+  {
+    "question": "How can I benefit from using ChatDREx?"
+  },
+  {
+    "question": "Point me in the right direction."
+  },
+  {
+    "question": "What's an example I can try (step-by-step explanation)?"
+  },
+  {
+    "question": "Help me get oriented."
+  },
+  {
+    "question": "Give me a quick overview."
+  },
+  {
+    "question": "Where can I begin exploring in the UI?"
+  },
+  {
+    "question": "What should I click on first (navigation)?"
+  },
+  {
+    "question": "Is there a tutorial or guide you can describe?"
+  },
+  {
+    "question": "How do I learn to use this tool?"
+  },
+  {
+    "question": "What does this interface support?"
+  },
+  {
+    "question": "What tasks can I complete here (in general)?"
+  },
+  {
+    "question": "What are typical use cases?"
+  },
+  {
+    "question": "Is there a guide I can follow (conceptually)?"
+  },
+  {
+    "question": "What data can I access or bring?"
+  },
+  {
+    "question": "What's the best way to start?"
+  },
+  {
+    "question": "Show me something interesting to explore (no execution)."
+  },
+  {
+    "question": "Can you recommend a starting point?"
+  },
+  {
+    "question": "How can I experiment safely here?"
+  },
+  {
+    "question": "What are the top features?"
+  },
+  {
+    "question": "How should I start analyzing data (concept only)?"
+  },
+  {
+    "question": "What should I explore first?"
+  },
+  {
+    "question": "How can I get familiar with this?"
+  },
+  {
+    "question": "Give me a feature tour (explanation)."
+  },
+  {
+    "question": "What's the scope of this tool?"
+  },
+  {
+    "question": "What examples can you give without running them?"
+  },
+  {
+    "question": "What are the limitations?"
+  },
+  {
+    "question": "What kind of results should I expect (format/summary)?"
+  },
+  {
+    "question": "What's the purpose of this tool?"
+  },
+  {
+    "question": "How can I use this effectively?"
+  },
+  {
+    "question": "What knowledge do I need beforehand?"
+  },
+  {
+    "question": "Can you explain the workflow end-to-end?"
+  },
+  {
+    "question": "Where do I go from here?"
+  },
+  {
+    "question": "What happens if I make a mistake (how to recover)?"
+  },
+  {
+    "question": "How do I reset or start over?"
+  },
+  {
+    "question": "What's best practice here?"
+  },
+  {
+    "question": "What options do I have now?"
+  },
+  {
+    "question": "Is there a help section?"
+  },
+  {
+    "question": "What can I use this for?"
+  },
+  {
+    "question": "Can you give me an overview?"
+  },
+  {
+    "question": "How do others use this?"
+  },
+  {
+    "question": "What's the value of using this?"
+  },
+  {
+    "question": "Can I see a sample output format?"
+  },
+  {
+    "question": "What are some common tasks?"
+  },
+  {
+    "question": "Can I customize this tool (configuration overview)?"
+  },
+  {
+    "question": "How long do analyses typically take?"
+  },
+  {
+    "question": "Is this interactive?"
+  },
+  {
+    "question": "What kind of input is expected?"
+  },
+  {
+    "question": "Can I try a demo task explanation?"
+  },
+  {
+    "question": "Where can I learn more?"
+  },
+  {
+    "question": "Is this suitable for beginners?"
+  },
+  {
+    "question": "What is the first action I should take?"
+  },
+  {
+    "question": "Can I combine features?"
+  },
+  {
+    "question": "How do I get the most out of this?"
+  },
+  {
+    "question": "Can I run multiple analyses (conceptually)?"
+  },
+  {
+    "question": "What should I avoid doing here?"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Does DIGEST validate the gene set consisting of BRCA1, BRCA2, TP53, PIK3CA, PTEN, ERBB2, AKT1, GATA3, CDH1, MAP3K1 as a coherent disease module involved in breast cancer?",
+    "steps": "672, 675, 7157, 5290, 5728, 2064, 207, 2625, 999, 4214",
+    "content": "",
+    "path": "001.json"
+  },
+  {
+    "question": "Can DIGEST evaluate the coherence of the immune checkpoint gene set PDCD1, CD274, CTLA4, LAG3, HAVCR2, TIGIT, ICOS, TNFRSF9 and confirm its role in immunoregulatory pathways?",
+    "steps": "5133, 29126, 1493, 3902, 84868, 201633, 29851, 3604",
+    "content": "",
+    "path": "002.json"
+  }
+]
