@@ -10,6 +10,7 @@ import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
 import dev.langchain4j.model.googleai.GoogleAiGeminiStreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
+import io.quarkiverse.langchain4j.jaxrsclient.JaxRsHttpClientBuilderFactory;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -67,6 +68,7 @@ public class LanguageModelProvider {
     private static GoogleAiGeminiChatModel.GoogleAiGeminiChatModelBuilder googleGeminiModelBuilder(UserLLMModelSetting setting) {
         return GoogleAiGeminiChatModel.builder()
                 .apiKey(setting.getGeminiApiKey())
+                .httpClientBuilder(new JaxRsHttpClientBuilderFactory().create())
                 .modelName(setting.getGeminiModel())
                 .maxRetries(3)
                 .logRequestsAndResponses(setting.isLogRequests());
@@ -74,6 +76,7 @@ public class LanguageModelProvider {
 
     private static GoogleAiGeminiStreamingChatModel.GoogleAiGeminiStreamingChatModelBuilder googleGeminiStreamingBuilder(UserLLMModelSetting setting) {
         return GoogleAiGeminiStreamingChatModel.builder()
+                .httpClientBuilder(new JaxRsHttpClientBuilderFactory().create())
                 .apiKey(setting.getGeminiApiKey())
                 .modelName(setting.getGeminiModel())
                 .logRequestsAndResponses(setting.isLogRequests());

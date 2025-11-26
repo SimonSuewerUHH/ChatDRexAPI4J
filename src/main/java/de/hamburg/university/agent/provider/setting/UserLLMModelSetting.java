@@ -2,7 +2,6 @@ package de.hamburg.university.agent.provider.setting;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hamburg.university.agent.provider.MaxTokenPerModel;
 import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
