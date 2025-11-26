@@ -1,13 +1,15 @@
 package de.hamburg.university.agent.bot.kg;
 
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-//@RegisterAiService(modelName = "json")
-@RegisterAiService(chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class)
+@RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
+        chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class)
 public interface NeDRexKGBot {
     @SystemMessage("""
             You are a decomposition assistant for a biomedical Knowledge Graph.
@@ -26,7 +28,7 @@ public interface NeDRexKGBot {
               - "nodeValue": string, the concrete entity or term (e.g., "breast cancer", "TP53", "insulin receptor", "MAPK pathway")
               - "subQuestion": string, <= 12 words, adds role/context (e.g., "approved treatments", "causal genes", "mechanistic pathway", "interacts with insulin receptor")
               - "needsFilter": boolean, true if this node should be filtered for relevance in the context of the user's question
-           
+            
             CONSTRAINTS
             -----------
             - 1..5 nodes total.
@@ -68,7 +70,7 @@ public interface NeDRexKGBot {
               {"nodeType":"drug","nodeValue":"breast cancer drugs","subQuestion":"approved treatments","needsFilter":false},
               {"nodeType":"disorder","nodeValue":"breast cancer","subQuestion":"disease focus","needsFilter":true}
             ]}
-
+            
             Q: Which genes interact with insulin receptors in diabetes?
             {
             nodes: [
@@ -76,7 +78,7 @@ public interface NeDRexKGBot {
               {"nodeType":"protein","nodeValue":"insulin receptors","subQuestion":"interaction target","needsFilter":true},
               {"nodeType":"disorder","nodeValue":"diabetes","subQuestion":"disease context","needsFilter":true}
             ]}
-
+            
             Q: Show pathways involved in Parkinson's disease phenotypes in brain tissue
             {
             nodes: [

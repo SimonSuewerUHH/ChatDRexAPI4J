@@ -2,15 +2,15 @@ package de.hamburg.university.agent.planning.bots;
 
 import de.hamburg.university.agent.planning.PlanState;
 import de.hamburg.university.agent.planning.PlanStep;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
-@RegisterAiService
-@ApplicationScoped
+@RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class)
 public interface DecisionPlannerBot {
 
     @SystemMessage("""

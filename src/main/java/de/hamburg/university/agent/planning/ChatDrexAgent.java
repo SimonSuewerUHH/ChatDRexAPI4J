@@ -4,13 +4,15 @@ import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.planning.bots.RequestClassifierBot;
+import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
-import de.hamburg.university.api.chat.messages.ChatMessageType;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
@@ -35,8 +37,10 @@ public class ChatDrexAgent {
     InMemoryStateHolder stateHolder;
 
     @ActivateRequestContext
-    public Multi<ChatResponseDTO> answer(ChatRequestDTO content) {
+    public Multi<ChatResponseDTO> answer(ChatRequestDTO content, UserLLMModelSettingDTO settings) {
         return Multi.createFrom().emitter(em -> {
+            ChatJsonLanguageModelSupplier.SETTINGS.set(settings);
+
             ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
             toolDTO.setInput("Your question");
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
@@ -55,6 +59,7 @@ public class ChatDrexAgent {
             //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
             em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
+            ChatJsonLanguageModelSupplier.SETTINGS.remove();
             em.complete();
         });
     }

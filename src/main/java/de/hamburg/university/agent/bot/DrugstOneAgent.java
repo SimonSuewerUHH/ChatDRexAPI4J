@@ -1,14 +1,14 @@
 package de.hamburg.university.agent.bot;
 
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import de.hamburg.university.agent.tool.drugstone.DrugstOneGraphTool;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
 @RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
         tools = {
                 DrugstOneGraphTool.class,
         }

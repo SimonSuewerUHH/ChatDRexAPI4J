@@ -3,19 +3,19 @@ package de.hamburg.university.agent.planning.bots;
 import de.hamburg.university.agent.guardrails.PromptInjectionInputGuardrail;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.RequestClassification;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.guardrail.InputGuardrails;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
 
 @RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
         chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class
 )
-@ApplicationScoped
 public interface RequestClassifierBot {
 
     @InputGuardrails(PromptInjectionInputGuardrail.class)

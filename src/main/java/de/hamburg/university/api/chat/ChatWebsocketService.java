@@ -2,15 +2,23 @@ package de.hamburg.university.api.chat;
 
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.planning.ChatDrexAgent;
+import de.hamburg.university.agent.provider.setting.UserLLMModelSetting;
+import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.*;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @WebSocket(path = "/ws/{clientId}")
 public class ChatWebsocketService implements Serializable {
@@ -27,11 +35,15 @@ public class ChatWebsocketService implements Serializable {
     @Inject
     InMemoryStateHolder stateHolder;
 
+    @Inject
+    UserLLMModelSetting userLLMModelSetting;
+
     @OnOpen
     public void onOpen() {
         try {
             String clientId = getClientId();
             Log.info("Connection opened: " + clientId);
+
         } catch (Exception e) {
             Log.error("Error in onOpen: " + e.getMessage());
         }
@@ -63,13 +75,17 @@ public class ChatWebsocketService implements Serializable {
 
     @OnTextMessage
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
+        Map<String, String> queryParams = splitQuery(connection.handshakeRequest().query());
+        String base64Setting = queryParams.get("llmsetting");
+        userLLMModelSetting.setUserSetting(base64Setting);
+        UserLLMModelSettingDTO settings = userLLMModelSetting.getUserSetting();
         String clientId = getClientId();
         request.setConnectionId(clientId);
         sender.addClient(clientId, request);
         ChatResponseDTO start = ChatResponseDTO.createAPIResponse(request, "Start");
         ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
 
-        Multi<ChatResponseDTO> core = agent.answer(request)
+        Multi<ChatResponseDTO> core = agent.answer(request, settings)
                 .onFailure().recoverWithItem(t -> {
                     Log.error("answer() failed", t);
                     return ChatResponseDTO.createErrorResponse(request, t.getMessage());
@@ -84,5 +100,20 @@ public class ChatWebsocketService implements Serializable {
 
     private String getClientId() {
         return connection.pathParam("clientId");
+    }
+
+    public static Map<String, String> splitQuery(String query) {
+        if (StringUtils.isEmpty(query)) {
+            return Map.of();
+        }
+        final Map<String, String> queryPairs = new LinkedHashMap<>();
+        final String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            final int idx = pair.indexOf("=");
+            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), StandardCharsets.UTF_8) : pair;
+            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), StandardCharsets.UTF_8) : null;
+            queryPairs.put(key, value);
+        }
+        return queryPairs;
     }
 }
