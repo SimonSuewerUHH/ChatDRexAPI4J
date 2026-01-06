@@ -15,10 +15,6 @@ public class ChatJsonLanguageModelSupplier implements Supplier<ChatModel> {
     @Override
     public ChatModel get() {
         UserLLMModelSetting setting = CDI.current().select(UserLLMModelSetting.class).get();
-        UserLLMModelSettingDTO threadSetting = SETTINGS.get();
-        if (threadSetting != null) {
-            setting.setUserSetting(threadSetting);
-        }
         return LanguageModelProvider.getJson(setting);
 
     }

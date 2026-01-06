@@ -1,7 +1,11 @@
 package de.hamburg.university.agent.provider.setting;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.logging.Log;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -27,4 +31,20 @@ public class UserLLMModelSettingDTO {
 
     //QueryKeys
     private String semanticScholarApiKey;
+
+
+    public static UserLLMModelSettingDTO getFromString(String userSettingBase64) {
+
+        if (StringUtils.isEmpty(userSettingBase64)) {
+            return new UserLLMModelSettingDTO();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String userSetting = new String(java.util.Base64.getDecoder().decode(userSettingBase64));
+            return mapper.readValue(userSetting, UserLLMModelSettingDTO.class);
+        } catch (JsonProcessingException e) {
+            Log.warn("Error while parsing user setting", e);
+        }
+        return new UserLLMModelSettingDTO();
+    }
 }

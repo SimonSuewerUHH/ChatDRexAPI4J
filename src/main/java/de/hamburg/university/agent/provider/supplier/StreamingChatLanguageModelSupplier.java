@@ -15,10 +15,6 @@ public class StreamingChatLanguageModelSupplier implements Supplier<StreamingCha
     @Override
     public StreamingChatModel get() {
         UserLLMModelSetting setting = CDI.current().select(UserLLMModelSetting.class).get();
-        UserLLMModelSettingDTO threadSetting = SETTINGS.get();
-        if (threadSetting != null) {
-            setting.setUserSetting(threadSetting);
-        }
         return LanguageModelProvider.getStreamingText(setting);
 
     }

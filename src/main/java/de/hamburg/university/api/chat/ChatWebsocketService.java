@@ -10,7 +10,6 @@ import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.*;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 
@@ -77,8 +76,7 @@ public class ChatWebsocketService implements Serializable {
     public Multi<ChatResponseDTO> stream(ChatRequestDTO request) {
         Map<String, String> queryParams = splitQuery(connection.handshakeRequest().query());
         String base64Setting = queryParams.get("llmsetting");
-        userLLMModelSetting.setUserSetting(base64Setting);
-        UserLLMModelSettingDTO settings = userLLMModelSetting.getUserSetting();
+        UserLLMModelSettingDTO settings = UserLLMModelSettingDTO.getFromString(base64Setting);
         String clientId = getClientId();
         request.setConnectionId(clientId);
         sender.addClient(clientId, request);

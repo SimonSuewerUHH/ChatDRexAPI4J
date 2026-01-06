@@ -1,7 +1,5 @@
 package de.hamburg.university.agent.provider.setting;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -11,6 +9,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.util.Optional;
+
+import static de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier.SETTINGS;
 
 @RequestScoped
 public class UserLLMModelSetting {
@@ -42,28 +42,24 @@ public class UserLLMModelSetting {
     @ConfigProperty(name = "quarkus.langchain4j.gemini.chat-model.model-name", defaultValue = "gemini-2.0-flash")
     String geminiModelName;
 
-
-    @Getter
-    private UserLLMModelSettingDTO userSetting = new UserLLMModelSettingDTO();
-
     public String getChatGPTModelName() {
-        return Optional.ofNullable(userSetting.getChatGptModel())
+        return Optional.ofNullable(SETTINGS.get().getChatGptModel())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(chatGPTModelName);
     }
 
 
     public String getOllamaBaseUrl() {
-        return Optional.ofNullable(userSetting.getOllamaBaseUrl())
+        return Optional.ofNullable(SETTINGS.get().getOllamaBaseUrl())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(ollamaBaseUrl);
     }
 
     public String getChatGptApiKey() {
-        return Optional.ofNullable(userSetting.getChatGptApiKey())
+        return Optional.ofNullable(SETTINGS.get().getChatGptApiKey())
                 .filter(StringUtils::isNotEmpty)
                 .orElseGet(() -> {
-                    if (userSetting.getSelectedLLM() == UserLLMType.OLLAMA && userSetting.getOllamaBaseUrl().equals(ollamaBaseUrl)) {
+                    if (SETTINGS.get().getSelectedLLM() == UserLLMType.OLLAMA && SETTINGS.get().getOllamaBaseUrl().equals(ollamaBaseUrl)) {
                         return ollamaApiKey;
                     }
                     return "API_KEY_MISSING";
@@ -71,20 +67,20 @@ public class UserLLMModelSetting {
     }
 
     public String getGeminiApiKey() {
-        return Optional.ofNullable(userSetting.getGeminiApiKey())
+        return Optional.ofNullable(SETTINGS.get().getGeminiApiKey())
                 .filter(StringUtils::isNotEmpty)
                 .orElse("API_KEY_MISSING");
     }
 
     public String getGeminiModel() {
-        return Optional.ofNullable(userSetting.getGeminiModel())
+        return Optional.ofNullable(SETTINGS.get().getGeminiModel())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(geminiModelName);
     }
 
 
     public UserLLMType getUserLLMType() {
-        return Optional.ofNullable(userSetting.getSelectedLLM()).orElse(UserLLMType.OLLAMA);
+        return Optional.ofNullable(SETTINGS.get().getSelectedLLM()).orElse(UserLLMType.OLLAMA);
     }
 
     public String getChatModelName() {
@@ -92,24 +88,6 @@ public class UserLLMModelSetting {
             case CHATGPT, OLLAMA -> getChatGPTModelName();
             case GEMINI -> getGeminiModel();
         };
-    }
-
-    public void setUserSetting(UserLLMModelSettingDTO setting) {
-        this.userSetting = setting;
-    }
-
-    public void setUserSetting(String userSettingBase64) {
-        if (StringUtils.isEmpty(userSettingBase64)) {
-            this.userSetting = new UserLLMModelSettingDTO();
-            return;
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String userSetting = new String(java.util.Base64.getDecoder().decode(userSettingBase64));
-            this.userSetting = mapper.readValue(userSetting, UserLLMModelSettingDTO.class);
-        } catch (JsonProcessingException e) {
-            log.warn("Error while parsing user setting", e);
-        }
     }
 
 }
