@@ -38,13 +38,6 @@ public class UserLLMModelSetting {
                 .orElse(chatGPTModelName);
     }
 
-
-    public String getOllamaBaseUrl() {
-        return Optional.ofNullable(this.settings.getOllamaBaseUrl())
-                .filter(StringUtils::isNotEmpty)
-                .orElse(ollamaBaseUrl);
-    }
-
     public String getChatGptApiKey() {
         return Optional.ofNullable(this.settings.getChatGptApiKey())
                 .filter(StringUtils::isNotEmpty)
