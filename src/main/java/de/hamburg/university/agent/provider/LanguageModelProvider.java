@@ -110,7 +110,7 @@ public class LanguageModelProvider {
         } else if (setting.getUserLLMType().equals(UserLLMType.GEMINI)) {
             return googleGeminiModelBuilder(setting)
                     .timeout(Duration.of(50, ChronoUnit.SECONDS))
-                    .responseFormat(ResponseFormat.TEXT)
+                    .responseFormat(null)
                     .build();
         } else {
             return openAiModelBuilder(setting)
