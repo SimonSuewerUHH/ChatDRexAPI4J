@@ -1,65 +1,55 @@
 package de.hamburg.university.agent.provider.setting;
 
-import io.quarkus.websockets.next.WebSocketConnection;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Inject;
-import lombok.Getter;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.jboss.logging.Logger;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.util.Optional;
 
 import static de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier.SETTINGS;
 
-@RequestScoped
+@Data
 public class UserLLMModelSetting {
-    @Inject
-    Logger log;
 
-    @Inject
-    @Getter
-    WebSocketConnection connection;
+    private String ollamaApiKey;
+    private String ollamaBaseUrl;
+    private boolean logResponses;
+    private boolean logRequests;
+    private String chatGPTModelName;
+    private String geminiModelName;
+    private UserLLMModelSettingDTO settings;
 
-    @Getter
-    @ConfigProperty(name = "quarkus.langchain4j.openai.api-key", defaultValue = "sk-80f5d24ea1ab4bc8ba721a57e4ccd7a8")
-    String ollamaApiKey;
+    public UserLLMModelSetting() {
+        Config configProvider = ConfigProvider.getConfig();
+        this.settings = SETTINGS.get();
+        this.ollamaApiKey = configProvider.getValue("quarkus.langchain4j.openai.api-key", String.class);
+        this.ollamaBaseUrl = configProvider.getValue("quarkus.langchain4j.openai.base-url", String.class);
+        this.logResponses = configProvider.getValue("quarkus.langchain4j.openai.chat-model.log-responses", Boolean.class);
+        this.logRequests = configProvider.getValue("quarkus.langchain4j.openai.chat-model.log-requests", Boolean.class);
+        this.chatGPTModelName = configProvider.getValue("quarkus.langchain4j.openai.chat-model.model-name", String.class);
+        this.geminiModelName = configProvider.getValue("quarkus.langchain4j.gemini.chat-model.model-name", String.class);
+    }
 
-    @ConfigProperty(name = "quarkus.langchain4j.openai.base-url", defaultValue = "https://llm.cosy.bio")
-    String ollamaBaseUrl;
-
-    @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.log-responses", defaultValue = "true")
-    @Getter
-    boolean logResponses;
-
-    @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.log-requests", defaultValue = "true")
-    @Getter
-    boolean logRequests;
-
-    @ConfigProperty(name = "quarkus.langchain4j.openai.chat-model.model-name", defaultValue = "gpt-oss:latest")
-    String chatGPTModelName;
-
-    @ConfigProperty(name = "quarkus.langchain4j.gemini.chat-model.model-name", defaultValue = "gemini-2.0-flash")
-    String geminiModelName;
 
     public String getChatGPTModelName() {
-        return Optional.ofNullable(SETTINGS.get().getChatGptModel())
+        return Optional.ofNullable(this.settings.getChatGptModel())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(chatGPTModelName);
     }
 
 
     public String getOllamaBaseUrl() {
-        return Optional.ofNullable(SETTINGS.get().getOllamaBaseUrl())
+        return Optional.ofNullable(this.settings.getOllamaBaseUrl())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(ollamaBaseUrl);
     }
 
     public String getChatGptApiKey() {
-        return Optional.ofNullable(SETTINGS.get().getChatGptApiKey())
+        return Optional.ofNullable(this.settings.getChatGptApiKey())
                 .filter(StringUtils::isNotEmpty)
                 .orElseGet(() -> {
-                    if (SETTINGS.get().getSelectedLLM() == UserLLMType.OLLAMA && SETTINGS.get().getOllamaBaseUrl().equals(ollamaBaseUrl)) {
+                    if (this.settings.getSelectedLLM() == UserLLMType.OLLAMA && this.settings.getOllamaBaseUrl().equals(ollamaBaseUrl)) {
                         return ollamaApiKey;
                     }
                     return "API_KEY_MISSING";
@@ -67,20 +57,20 @@ public class UserLLMModelSetting {
     }
 
     public String getGeminiApiKey() {
-        return Optional.ofNullable(SETTINGS.get().getGeminiApiKey())
+        return Optional.ofNullable(this.settings.getGeminiApiKey())
                 .filter(StringUtils::isNotEmpty)
                 .orElse("API_KEY_MISSING");
     }
 
     public String getGeminiModel() {
-        return Optional.ofNullable(SETTINGS.get().getGeminiModel())
+        return Optional.ofNullable(this.settings.getGeminiModel())
                 .filter(StringUtils::isNotEmpty)
                 .orElse(geminiModelName);
     }
 
 
     public UserLLMType getUserLLMType() {
-        return Optional.ofNullable(SETTINGS.get().getSelectedLLM()).orElse(UserLLMType.OLLAMA);
+        return Optional.ofNullable(this.settings.getSelectedLLM()).orElse(UserLLMType.OLLAMA);
     }
 
     public String getChatModelName() {

@@ -4,7 +4,6 @@ import de.hamburg.university.agent.provider.LanguageModelProvider;
 import de.hamburg.university.agent.provider.setting.UserLLMModelSetting;
 import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
 import dev.langchain4j.model.chat.ChatModel;
-import jakarta.enterprise.inject.spi.CDI;
 
 import java.util.function.Supplier;
 
@@ -14,8 +13,6 @@ public class ChatJsonLanguageModelSupplier implements Supplier<ChatModel> {
 
     @Override
     public ChatModel get() {
-        UserLLMModelSetting setting = CDI.current().select(UserLLMModelSetting.class).get();
-        return LanguageModelProvider.getJson(setting);
-
+        return LanguageModelProvider.getJson(new UserLLMModelSetting());
     }
 }
