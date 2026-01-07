@@ -4,6 +4,7 @@ import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NeDRexKGBot;
 import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
 import de.hamburg.university.agent.bot.kg.NeDRexKGNode;
+import de.hamburg.university.agent.bot.kg.NeDRexKGPlainBot;
 import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
@@ -35,6 +36,10 @@ public class NeDRexKGTool {
     @Inject
     NeDRexKGBot nedrexKGBot;
 
+
+    @Inject
+    NeDRexKGPlainBot neDRexKGPlainBot;
+
     @Inject
     NeDRexKgQueryServiceImpl nedrexKgQueryService;
 
@@ -57,7 +62,7 @@ public class NeDRexKGTool {
         List<NeDRexKGNodeEnhanced> enhancedNodes = nedrexKgQueryService.enhanceGraph(questionGraph);
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
         double minScore = config.tools().kgQuery().minGeneDisorderScore();
-        String query = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, "", minScore);
+        String query = neDRexKGPlainBot.generateCypherQuery(question, enhancedNodesString, "", minScore);
         return query;
     }
 
@@ -85,7 +90,7 @@ public class NeDRexKGTool {
             final int maxAttempts = config.tools().kgQuery().retries();
             for (int i = 0; i < maxAttempts; i++) {
                 try {
-                    newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
+                    newQuery = neDRexKGPlainBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                     oldQuery += "\n " + i + ". " + newQuery;
                     toolDTO.addContent("<h3>Neo4j Query:</h3>");
                     toolDTO.addContent(newQuery);
@@ -108,7 +113,7 @@ public class NeDRexKGTool {
                     List<String> cypherIds = CypherResultIdExtractor.extractResults(result);
                     cypherIds.addAll(ids);
                     cypherToDrugstOne.toDrugstOne(cypherIds, content, emitter);
-                    String answer = nedrexKGBot.answerQuestion(question, result);
+                    String answer = neDRexKGPlainBot.answerQuestion(question, result);
                     toolDTO.addContent(answer);
                     toolDTO.setStop();
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -128,7 +133,7 @@ public class NeDRexKGTool {
             toolDTO.addContent(enhancedNodesString);
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-            String answer = nedrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
+            String answer = neDRexKGPlainBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
             toolDTO.addContent(answer);
             toolDTO.setStop();
             chatWebsocketSender.sendTool(toolDTO, content, emitter);

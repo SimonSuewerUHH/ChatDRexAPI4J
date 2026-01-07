@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NeDRexKGBot;
 import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
+import de.hamburg.university.agent.bot.kg.NeDRexKGPlainBot;
 import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
 import de.hamburg.university.helper.AIJudgeBot;
 import de.hamburg.university.helper.JsonLoader;
@@ -34,6 +35,9 @@ public class NeDRexKGEvaluationTest {
 
     @Inject
     NeDRexKGBot nedrexKGBot;
+
+    @Inject
+    NeDRexKGPlainBot nedrexKGPlainBot;
 
     @Inject
     ChatdrexConfig config;
@@ -204,10 +208,10 @@ public class NeDRexKGEvaluationTest {
         final int maxAttempts = config.tools().kgQuery().retries();
         for (int i = 0; i < maxAttempts; i++) {
             try {
-                newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
+                newQuery = nedrexKGPlainBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                 oldQuery += "\n " + i + ". " + newQuery;
                 String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
-                String answer = nedrexKGBot.answerQuestion(question, result);
+                String answer = nedrexKGPlainBot.answerQuestion(question, result);
                 return new AiAnswerCypher(answer, result, newQuery, i);
             } catch (ClientWebApplicationException e) {
                 Log.errorf("Failed to query: %s (%s)", newQuery, e.getMessage());
@@ -218,7 +222,7 @@ public class NeDRexKGEvaluationTest {
         }
         List<NeDRexKGNodeEnhanced> enhancedNodesFallback = nedrexKgQueryService.enhanceFallbackNodes(enhancedNodes);
         String enhancedNodesFallbackString = neDRexKGTool.stringifyEnhancedNodes(enhancedNodesFallback);
-        String answer = nedrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
+        String answer = nedrexKGPlainBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
         return new AiAnswerCypher(answer, enhancedNodesFallbackString);
     }
 
@@ -234,7 +238,7 @@ public class NeDRexKGEvaluationTest {
         for (int i = 0; i < maxAttempts; i++) {
             try {
                 cypher.moveCypherToHistory();
-                newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
+                newQuery = nedrexKGPlainBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                 oldQuery += "\n " + i + ". " + newQuery;
                 cypher.setAttempts(i);
                 cypher.setCypher(newQuery);

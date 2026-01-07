@@ -2,7 +2,6 @@ package de.hamburg.university.api.chat;
 
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.planning.ChatDrexAgent;
-import de.hamburg.university.agent.provider.setting.UserLLMModelSetting;
 import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
@@ -18,6 +17,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.Flow.Subscription;
 
 @WebSocket(path = "/ws/{clientId}")
 public class ChatWebsocketService implements Serializable {
@@ -34,8 +34,7 @@ public class ChatWebsocketService implements Serializable {
     @Inject
     InMemoryStateHolder stateHolder;
 
-    @Inject
-    UserLLMModelSetting userLLMModelSetting;
+    private volatile Subscription currentStream;
 
     @OnOpen
     public void onOpen() {
@@ -55,6 +54,10 @@ public class ChatWebsocketService implements Serializable {
             Log.info("Connection closed: " + clientId);
             sender.removeClient(connection.id());
             stateHolder.removeClient(connection.id());
+
+            if (currentStream != null) {
+                currentStream.cancel();
+            }
         } catch (Exception e) {
             Log.error("Error in onClose: " + e.getMessage());
         }
@@ -84,6 +87,7 @@ public class ChatWebsocketService implements Serializable {
         ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
 
         Multi<ChatResponseDTO> core = agent.answer(request, settings)
+                .onSubscription().invoke(sub -> this.currentStream = sub)
                 .onFailure().recoverWithItem(t -> {
                     Log.error("answer() failed", t);
                     return ChatResponseDTO.createErrorResponse(request, t.getMessage());

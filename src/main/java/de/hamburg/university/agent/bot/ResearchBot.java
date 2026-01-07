@@ -1,6 +1,6 @@
 package de.hamburg.university.agent.bot;
 
-import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
+import de.hamburg.university.agent.provider.supplier.ChatLanguageModelSupplier;
 import de.hamburg.university.agent.tool.research.ResearchTools;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
@@ -9,7 +9,7 @@ import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
 
 @RegisterAiService(
-        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
+        chatLanguageModelSupplier = ChatLanguageModelSupplier.class,
         tools = {ResearchTools.class}
 )
 public interface ResearchBot {
