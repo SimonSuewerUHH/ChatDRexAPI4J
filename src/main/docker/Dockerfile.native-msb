@@ -7,7 +7,7 @@ USER quarkus
 WORKDIR /code
 RUN ./mvnw -B org.apache.maven.plugins:maven-dependency-plugin:3.8.1:go-offline
 COPY src /code/src
-RUN ./mvnw package -Dnative -D--initialize-at-run-time=io.quarkiverse.langchain4j.QuarkusJsonCodecFactory$ObjectMapperHolder
+RUN ./mvnw package -Dnative -DskipTests -D--initialize-at-run-time=io.quarkiverse.langchain4j.QuarkusJsonCodecFactory$ObjectMapperHolder
 
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
