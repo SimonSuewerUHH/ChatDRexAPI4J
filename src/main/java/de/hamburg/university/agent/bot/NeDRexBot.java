@@ -1,6 +1,6 @@
 package de.hamburg.university.agent.bot;
 
-import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
+import de.hamburg.university.agent.provider.supplier.ChatLanguageModelSupplier;
 import de.hamburg.university.agent.tool.nedrex.NeDRexTools;
 import de.hamburg.university.agent.tool.nedrex.external.EntrezIdTool;
 import de.hamburg.university.agent.tool.nedrex.external.UniProtTool;
@@ -11,7 +11,7 @@ import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
 
 @RegisterAiService(
-        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
+        chatLanguageModelSupplier = ChatLanguageModelSupplier.class,
         tools = {
                 NeDRexTools.class,
                 EntrezIdTool.class,
