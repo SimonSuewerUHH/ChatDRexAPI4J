@@ -68,7 +68,7 @@ public class LanguageModelProvider {
         return AiGeminiChatLanguageModel.builder()
                 .key(setting.getGeminiApiKey())
                 .modelId(setting.getGeminiModel())
-                .timeout(Duration.of(15, ChronoUnit.SECONDS))
+                .timeout(Duration.of(50, ChronoUnit.SECONDS))
                 .logRequests(setting.isLogRequests())
                 .logResponses(setting.isLogResponses());
     }
@@ -77,7 +77,7 @@ public class LanguageModelProvider {
         return AiGeminiStreamingChatLanguageModel.builder()
                 .key(setting.getGeminiApiKey())
                 .modelId(setting.getGeminiModel())
-                .timeout(Duration.of(15, ChronoUnit.SECONDS))
+                .timeout(Duration.of(50, ChronoUnit.SECONDS))
                 .logRequests(setting.isLogRequests())
                 .logResponses(setting.isLogResponses());
     }
