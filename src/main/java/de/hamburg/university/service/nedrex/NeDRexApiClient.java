@@ -40,6 +40,11 @@ public interface NeDRexApiClient {
     Multi<String> streamQuery(@QueryParam("query") String cypher);
 
     @GET
+    @Path("open/embeddings/available")
+    @Produces(MediaType.TEXT_PLAIN)
+    String embeddingsAvailable();
+
+    @GET
     @Path("open/neo4j/query")
     @Produces(MediaType.TEXT_PLAIN)
     @ClientQueryParam(name = "stream", value = "false")

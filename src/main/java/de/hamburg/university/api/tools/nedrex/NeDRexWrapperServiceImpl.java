@@ -12,6 +12,7 @@ import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 
 public class NeDRexWrapperServiceImpl implements NeDRexWrapperService {
 
@@ -28,6 +29,16 @@ public class NeDRexWrapperServiceImpl implements NeDRexWrapperService {
     @Override
     public NeDRexAPIInfoDTO query(String query) {
         return neDRexService.fetchSingleInfo(query);
+    }
+
+    @Override
+    public Response EmbeddingsAvailable(String query) {
+        boolean available = neDRexService.embeddingsAreAvailable();
+        if (available) {
+            return Response.ok().build();
+        } else {
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
     }
 
     @Override

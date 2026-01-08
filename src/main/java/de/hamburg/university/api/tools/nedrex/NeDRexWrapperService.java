@@ -9,6 +9,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
@@ -29,6 +30,11 @@ public interface NeDRexWrapperService {
     @APIResponse(responseCode = "500", description = "Server error")
     NeDRexAPIInfoDTO query(@QueryParam("q") String query);
 
+    @GET
+    @Path("embeddings-available")
+    @APIResponse(responseCode = "204", description = "Embeddings not found")
+    @APIResponse(responseCode = "200", description = "Available embeddings found")
+    Response EmbeddingsAvailable(@QueryParam("q") String query);
 
     @POST
     @Path("/diamond/run")

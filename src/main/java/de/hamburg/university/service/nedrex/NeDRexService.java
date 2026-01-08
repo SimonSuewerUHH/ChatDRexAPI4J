@@ -15,6 +15,15 @@ public class NeDRexService {
     @RestClient
     protected NeDRexApiClient api;
 
+    public boolean embeddingsAreAvailable() {
+        try {
+            String embeddings = api.embeddingsAvailable();
+            return embeddings != null && !embeddings.isEmpty() && !embeddings.equals("[]");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public List<NeDRexAPIInfoDTO> fetchInfo(List<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return List.of();
