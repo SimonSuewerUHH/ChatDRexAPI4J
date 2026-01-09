@@ -1,14 +1,502 @@
 [
   {
-    "question": "Using TrustRank, can we evaluate whether the genes PMP22, MPZ, GJB1, and MFN2 form a coherent disease module within the protein–protein interaction network?",
-    "steps": "Translation: { PMP22: 'Q01453', MPZ: 'P25189', GJB1: 'P28230', MFN2: 'O95140' }",
-    "content": "Seed genes (TrustRank input): PMP22, MPZ, GJB1, MFN2. Mapped UniProt IDs: Q01453, P25189, P28230, O95140. Module evaluation: TrustRank confirms these four neuropathy-associated genes cluster coherently in the PPI network.  Drug associations (top scores): DB01268, DB06595, DB06616, DB09079, DB08865 (very low scores, suggest possible but weak links)",
+    "question": "Apply TrustRank to propagate trust scores from EPYC, URAD through the network.",
+    "steps": "Q99645, A6NGE7",
     "path": "001.json"
   },
   {
-    "question": "Can TrustRank validate that the seed genes DNAH5, DNAI1, CCDC39, and CCDC40 propagate high trust scores within the ciliary network?",
-    "steps": "Translation: { DNAH5: 'Q8TE73', DNAI1: 'Q8C0M8', CCDC39: 'Q8NEP3', CCDC40: 'Q4G0X9' }",
-    "content": "Seed genes (TrustRank input): DNAH5, DNAI1, CCDC39, CCDC40. Mapped UniProt IDs: Q8TE73, Q8C0M8, Q8NEP3, Q4G0X9. Module evaluation: TrustRank confirms the four ciliary genes propagate trust within the ciliary network. Drug associations (top scores): DB01268, DB09079, DB06616, DB06595, DB08865 (weak, non-specific links)",
+    "question": "Assess which network nodes would score highest in a trust-based propagation model using E7ENB7, Q0GN75.",
+    "steps": "E7ENB7, Q0GN75",
     "path": "002.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from C6orf120, MCM9.",
+    "steps": "Q7Z4R8, Q9NXL9",
+    "path": "003.json"
+  },
+  {
+    "question": "Execute a TrustRank run to determine the most credible nodes around PDK4, SRRT.",
+    "steps": "Q16654, Q9BXP5",
+    "path": "004.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from HES3, BHMT.",
+    "steps": "Q5TGS1, Q93088",
+    "path": "005.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from L7RSL8, Q0GN75.",
+    "steps": "L7RSL8, Q0GN75",
+    "path": "006.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from C6orf15, PGM3.",
+    "steps": "Q6UXA7, O95394",
+    "path": "007.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for TES, EPOP to detect key trusted nodes.",
+    "steps": "P48436, A6NHQ4",
+    "path": "008.json"
+  },
+  {
+    "question": "Rank all genes based on their connectivity and trust relative to NEK6, ABAT.",
+    "steps": "Q9HC98, P80404",
+    "path": "009.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with POMP, KRTAP22-1.",
+    "steps": "Q9H0P0, Q3MIV0",
+    "path": "010.json"
+  },
+  {
+    "question": "Run the TrustRank algorithm starting from the seed genes C9JYS6, A0A0S2Z3T4.",
+    "steps": "C9JYS6, A0A0S2Z3T4",
+    "path": "011.json"
+  },
+  {
+    "question": "Simulate trust diffusion in the interactome initiated from F5H437, E7ER21.",
+    "steps": "F5H437, E7ER21",
+    "path": "012.json"
+  },
+  {
+    "question": "Simulate trust diffusion in the interactome initiated from BDH2, TCF7.",
+    "steps": "Q9BUT1, P36402",
+    "path": "013.json"
+  },
+  {
+    "question": "Use the TrustRank algorithm to compute propagation scores for C9JYS6, A0A8V8TPK6.",
+    "steps": "C9JYS6, A0A8V8TPK6",
+    "path": "014.json"
+  },
+  {
+    "question": "Apply TrustRank to propagate trust scores from OPA3, AOC3, DAB2 through the network.",
+    "steps": "Q9H6K4, Q16853, P98082",
+    "path": "015.json"
+  },
+  {
+    "question": "Assess which network nodes would score highest in a trust-based propagation model using A0A0Y0IMM4, H7C560, A0A8Q3WKZ2.",
+    "steps": "A0A0Y0IMM4, H7C560, A0A8Q3WKZ2",
+    "path": "016.json"
+  },
+  {
+    "question": "Assess which network nodes would score highest in a trust-based propagation model using MXD4, NKX1-1, HEXB.",
+    "steps": "Q14582, Q15270, P07686",
+    "path": "017.json"
+  },
+  {
+    "question": "Assess which network nodes would score highest in a trust-based propagation model using CLN5, WIF1, C5.",
+    "steps": "O75503, Q9Y5W5, P01031",
+    "path": "018.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from GCC1, SGTB, TSR3.",
+    "steps": "Q96CN9, Q96EQ0, Q9UJK0",
+    "path": "019.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from Q499G7, B5MC21, L7RSL8.",
+    "steps": "Q499G7, B5MC21, L7RSL8",
+    "path": "020.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from MICOS10-NBL1, NPPA, TET1.",
+    "steps": "P41271, P01160, Q8NFU7",
+    "path": "021.json"
+  },
+  {
+    "question": "Perform TrustRank analysis to evaluate the reliability of nodes seeded with C9orf152, PMP2, MT-ND2.",
+    "steps": "Q5JTZ5, P02689, P03891",
+    "path": "022.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for E2F7, PES, VWA8 to detect key trusted nodes.",
+    "steps": "Q96AV8, O00541, A3KMH1",
+    "path": "023.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for C6orf163, HES3, MBP to detect key trusted nodes.",
+    "steps": "Q5TEZ5, Q5TGS1, P11226",
+    "path": "024.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for IDI2, TMX4, PBX3 to detect key trusted nodes.",
+    "steps": "Q9BXS1, Q9H1E5, P40426",
+    "path": "025.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using A0A7I2V4R3, F5H437, A0A0S2Z3T4 as initial trusted genes.",
+    "steps": "A0A7I2V4R3, F5H437, A0A0S2Z3T4",
+    "path": "026.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with ADA2, FDPS, DCK.",
+    "steps": "O75478, P14324, P27707",
+    "path": "027.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with WNT2, VDR, NRG4.",
+    "steps": "P09544, O15528, Q8WWG1",
+    "path": "028.json"
+  },
+  {
+    "question": "Rank nodes by proximity to H2AP, PAX1, OMD in a trust propagation model.",
+    "steps": "O75409, P15863, Q99983",
+    "path": "029.json"
+  },
+  {
+    "question": "Run the TrustRank algorithm starting from the seed genes F10, APOB, PUM3.",
+    "steps": "P00742, P04114, Q15397",
+    "path": "030.json"
+  },
+  {
+    "question": "Run TrustRank propagation seeded by CLPP, PID1, STX8.",
+    "steps": "Q16740, Q7Z2X4, Q9UNK0",
+    "path": "031.json"
+  },
+  {
+    "question": "Simulate trust diffusion in the interactome initiated from ASB5, ST13, INTU.",
+    "steps": "Q8WWX0, P50502, Q9ULD6",
+    "path": "032.json"
+  },
+  {
+    "question": "Use the TrustRank algorithm to compute propagation scores for COCH, ELK3, KRT9.",
+    "steps": "O43405, P41970, P35527",
+    "path": "033.json"
+  },
+  {
+    "question": "Use the TrustRank algorithm to compute propagation scores for OGA, JRKL, ARSH.",
+    "steps": "O60502, Q9Y4A0, Q5FYA8",
+    "path": "034.json"
+  },
+  {
+    "question": "Use the TrustRank method to rank nodes based on Q0GN75, A0A8V8TPK6, B3KVH4 as trusted sources.",
+    "steps": "Q0GN75, A0A8V8TPK6, B3KVH4",
+    "path": "035.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to NPW, OMG, SHPK, RHOV.",
+    "steps": "Q8N729, P23515, Q9UHJ6, Q96L33",
+    "path": "036.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to PML, CUL5, KRTAP13-1, TAB2.",
+    "steps": "P29590, Q93034, Q8IUC0, Q9NYJ8",
+    "path": "037.json"
+  },
+  {
+    "question": "Apply TrustRank to propagate trust scores from BAG2, ING4, CLN8, NF1 through the network.",
+    "steps": "O95816, Q9UNL4, Q9UBY8, P21359",
+    "path": "038.json"
+  },
+  {
+    "question": "Apply TrustRank to propagate trust scores from STRN, PDXK, AK4, NFX1 through the network.",
+    "steps": "O43815, O00764, P27144, Q12986",
+    "path": "039.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from CBX4, TMC3, RRN3, RBSN.",
+    "steps": "O00257, Q7Z5M5, Q9NYV6, Q9H1K0",
+    "path": "040.json"
+  },
+  {
+    "question": "Execute a TrustRank run to determine the most credible nodes around PTH, C3orf18, LRP1, MXD4.",
+    "steps": "P01270, Q9UK00, Q07954, Q14582",
+    "path": "041.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at TOP, ARF1, IRX5, NT5M.",
+    "steps": "P52888, P84077, P78411, Q9NPB1",
+    "path": "042.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at POLE, ETDB, PREB, MADD.",
+    "steps": "Q07864, P0DPP9, Q9HCU5, P13804",
+    "path": "043.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at TBCA, ASMT, CIC, KRTAP21-2.",
+    "steps": "O75347, P46597, P53007, Q3LI59",
+    "path": "044.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for GSX1, HLF, PAOX, JPT1 to detect key trusted nodes.",
+    "steps": "Q9H4S2, Q99814, Q6QHF9, Q9UK76",
+    "path": "045.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using PIF1, MTF2, SUN1, ETV4 as initial trusted genes.",
+    "steps": "Q9H611, Q9Y483, O94901, P43268",
+    "path": "046.json"
+  },
+  {
+    "question": "Rank all genes based on their connectivity and trust relative toTCP1, FER, USP6, EYA3.",
+    "steps": "P17987, P16591, P35125, Q99504",
+    "path": "047.json"
+  },
+  {
+    "question": "Rank all genes based on their connectivity and trust relative to CST4, PRR5-ARHGAP8, DEK, FCSK.",
+    "steps": "P01036, B1AHC3, P35659, Q8N0W3",
+    "path": "048.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with RRAD, C11orf52, EXD1, EML3.",
+    "steps": "P55042, Q96A22, Q8NHP7, Q32P44",
+    "path": "049.json"
+  },
+  {
+    "question": "Rank nodes by proximity to TTC1, CPA4, C2orf78, MRAP in a trust propagation model.",
+    "steps": "Q99614, Q9UI42, A6NCI8, P30533",
+    "path": "050.json"
+  },
+  {
+    "question": "Use the TrustRank method to rank nodes based on PNO1, EMG1, UTY, ODF4 as trusted sources.",
+    "steps": "Q9NRX1, Q92979, O14607, Q2M2E3",
+    "path": "051.json"
+  },
+  {
+    "question": "Use the TrustRank method to rank nodes based on WLS, LAT2, DTD1, AQP3 as trusted sources.",
+    "steps": "Q5T9L3, Q9GZY6, Q8TEA8, Q92482",
+    "path": "052.json"
+  },
+  {
+    "question": "Use the TrustRank method to rank nodes based on FZD9, COMMD3-BMI1, KLF1, NTN1 as trusted sources.",
+    "steps": "O00144, P35226, Q13351, O95631",
+    "path": "053.json"
+  },
+  {
+    "question": "Use the TrustRank method to rank nodes based on MDM1, PUS3, AFF4, ARR3 as trusted sources.",
+    "steps": "Q8TC05, Q9BZE2, Q9UHB7, P36575",
+    "path": "054.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to FAT3, C3orf70, MAOB, MAZ.",
+    "steps": "Q8TDW7, A6NLC5, P27338, P56270",
+    "path": "055.json"
+  },
+  {
+    "question": "Determine which nodes in the network gain the highest credibility from GNAQ, H3C6, WWOX, ZIC4, FAAH.",
+    "steps": "P50148, P68431, Q9NZC7, Q8N9L1, O00519",
+    "path": "056.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from ELOA, LUM, DPM2, MSTN, RGCC.",
+    "steps": "Q14241, P51884, O94777, O14793, Q9H4X1",
+    "path": "057.json"
+  },
+  {
+    "question": "Evaluate the influence spread from RGR, NKAP, BSX, PAX7, ZNF7 to detect trusted hubs.",
+    "steps": "P47804, Q8N5F7, Q3C1V8, P23759, P17097",
+    "path": "058.json"
+  },
+  {
+    "question": "Evaluate the influence spread from CTSA, KRTAP10-7, CERK, TST, SOX7 to detect trusted hubs.",
+    "steps": "P10619, P60409, Q8TCT0, Q16762, Q9BT81",
+    "path": "059.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from FER, C12orf76, ALPL, LCA5, ELF5.",
+    "steps": "P16591, A0A087WX00, P05186, Q86VQ0, Q9UKW6",
+    "path": "060.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at SMN1, C8orf74, NRP2, LIX1, WT1.",
+    "steps": "Q16637, Q6P047, Q99435, Q8N485, P19544",
+    "path": "061.json"
+  },
+  {
+    "question": "Rank all genes based on their connectivity and trust relative to Q63HR2, Q96LP6, Q13887, A8MTZ7, Q9BUH6.",
+    "steps": "Q63HR2, Q96LP6, Q13887, A8MTZ7, Q9BUH6",
+    "path": "062.json"
+  },
+  {
+    "question": "Rank nodes by proximity to Q16553, Q92993, P54098, Q9HD89, P11277 in a trust propagation model.",
+    "steps": "Q16553, Q92993, P54098, Q9HD89, P11277",
+    "path": "063.json"
+  },
+  {
+    "question": "Run the TrustRank algorithm starting from the seed genes Q96DH6, Q6ZMJ4, P49418, Q9UQF0, Q9UNZ5",
+    "steps": "Q96DH6, Q6ZMJ4, P49418, Q9UQF0, Q9UNZ5",
+    "path": "064.json"
+  },
+  {
+    "question": "Run TrustRank propagation seeded by Q9UQ10, Q9BYQ9, A8MX34, Q9NZR4, Q13315.",
+    "steps": "Q9UQ10, Q9BYQ9, A8MX34, Q9NZR4, Q13315",
+    "path": "065.json"
+  },
+  {
+    "question": "Run TrustRank propagation seeded by AREG, FRYL, PTK7, C9orf50, C4orf17.",
+    "steps": "P15514, O94915, Q13308, Q5SZB4, Q53FE4",
+    "path": "066.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to RTP1, RPF2, MCEE, AHSG, GLI3, ST7.",
+    "steps": "P59025, Q9H7B2, Q96PE7, P02765, P10071, Q9NRC1",
+    "path": "067.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to Q86WG5, Q16762, Q9UJ68, Q3SYG4, P20800, P15104.",
+    "steps": "Q86WG5, Q16762, Q9UJ68, Q3SYG4, P20800, P15104",
+    "path": "068.json"
+  },
+  {
+    "question": "Apply TrustRank to propagate trust scores from P08174, P50750, O60479, O15539, Q9NYK1, Q96S52 through the network.",
+    "steps": "P08174, P50750, O60479, O15539, Q9NYK1, Q96S52",
+    "path": "069.json"
+  },
+  {
+    "question": "Assess which network nodes would score highest in a trust-based propagation model using FICD, A1BG, AIP, IER3, DENR, RPL17-C18orf32.",
+    "steps": "Q9BVA6, P04217, O00170, P46695, O43583, A0A0A6YYL6",
+    "path": "070.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from C8orf48, RPN2, ATM, GART, GLA, DMWD.",
+    "steps": "Q96LL4, P04844, Q13315, P22102, P06280, Q09019",
+    "path": "071.json"
+  },
+  {
+    "question": "Evaluate the influence spread from CD1D, EPYC, DRC3, EZR, KRTAP24-1, EMCN to detect trusted hubs.",
+    "steps": "P15813, Q99645, Q8TE68, P15311, Q3LI83, Q9ULC0",
+    "path": "072.json"
+  },
+  {
+    "question": "Evaluate the influence spread from ODR4, ZIM2, GKN1, DNTT, PMP2, CLP to detect trusted hubs.",
+    "steps": "Q5SWX8, Q9NZV7, Q9NS71, P04053, P02689, P27482",
+    "path": "073.json"
+  },
+  {
+    "question": "Evaluate the influence spread from Q8TCD1, P15559, P09326, P56589, Q9UBV8, Q9HCK8 to detect trusted hubs.",
+    "steps": "Q8TCD1, P15559, P09326, P56589, Q9UBV8, Q9HCK8",
+    "path": "074.json"
+  },
+  {
+    "question": "Evaluate the influence spread from P78415, O95424, Q14314, O75072, Q8IU68, P30530 to detect trusted hubs.",
+    "steps": "P78415, O95424, Q14314, O75072, Q8IU68, P30530",
+    "path": "075.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at H3C8, TTK, GFI1, LIPC, RIDA, CR1L.",
+    "steps": "P68431, P33981, Q99684, P11150, P52758, Q2VPA4",
+    "path": "076.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for SMOX, C4orf46, FGF7, SPEN, MEST, TRHR to detect key trusted nodes.",
+    "steps": "Q9NWM0, Q504U0, P21781, Q96T58, Q5EB52, P34981",
+    "path": "077.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using P02008, P17987, Q8N9U0, Q96HJ9, Q8TAP4, P12524 as initial trusted genes.",
+    "steps": "P02008, P17987, Q8N9U0, Q96HJ9, Q8TAP4, P12524",
+    "path": "078.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using P35869, O76064, Q9H0K1, Q92838, Q9UQC2, Q99747 as initial trusted genes.",
+    "steps": "P35869, O76064, Q9H0K1, Q92838, Q9UQC2, Q99747",
+    "path": "079.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with SVOP, C8A, SDHB, DAZ4, GDI1, ESD.",
+    "steps": "Q8N4V2, P07357, P21912, Q86SG3, P31150, P10768",
+    "path": "080.json"
+  },
+  {
+    "question": "Run the TrustRank algorithm starting from the seed genes CTBS, SAT1, RECK, NME4, ZP1, RBP5, DPF2.",
+    "steps": "Q01459, P21673, O95980, O00746, P60852, P29762, Q92785",
+    "path": "081.json"
+  },
+  {
+    "question": "Run TrustRank propagation seeded by P27816, P78412, P21246, P09848, P22894, Q92777, O15455.",
+    "steps": "P27816, P78412, P21246, P09848, P22894, Q92777, O15455",
+    "path": "082.json"
+  },
+  {
+    "question": "Simulate trust diffusion in the interactome initiated from Q9Y324, P40692, P06753, Q9H6Q3, Q9HAI6, P35542, Q9Y3S1.",
+    "steps": "Q9Y324, P40692, P06753, Q9H6Q3, Q9HAI6, P35542, Q9Y3S1",
+    "path": "083.json"
+  },
+  {
+    "question": "Use the TrustRank algorithm to compute propagation scores for TOX, RMI1, CLK4, BBS7, GAB2, FEZ1, STAR.",
+    "steps": "O94900, Q9H9A7, Q9HAZ1, Q8IWZ6, Q9UQC2, Q99689, P25092",
+    "path": "084.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to TBL2, RPL6, FST, CSN2, ODR4, IRGC, CBLC.",
+    "steps": "Q9Y4P3, Q02878, P19883, P05814, Q5SWX8, Q6NXR0, Q9ULV8",
+    "path": "085.json"
+  },
+  {
+    "question": "Apply TrustRank to identify high-confidence nodes relative to GSG1, CLN6, GNL2, FLI1, CD1B, TMC6, NBL1.",
+    "steps": "Q9Y2L5, Q9NWW5, Q13823, Q01543, P29016, Q7Z403, A0A087WTY6",
+    "path": "086.json"
+  },
+  {
+    "question": "Apply TrustRank to propagate trust scores from GBP7, USF3, C1orf115, MID1, AFDN, LTB, LCN2 through the network.",
+    "steps": "Q8N8V2, Q68DE3, Q9H7X2, O15344, P55196, Q06643, P80188",
+    "path": "087.json"
+  },
+  {
+    "question": "Estimate which genes are most reliable when information starts from O43347, Q13564, Q96B86, O60481, A1L168, Q96DN6, Q04727.",
+    "steps": "O43347, Q13564, Q96B86, O60481, A1L168, Q96DN6, Q04727",
+    "path": "088.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from C3orf18, XKR9, C4orf17, Q56P03, Q13835, 351",
+    "steps": "Q9UK00, Q5GH70, Q53FE4, Q56P03, Q13835, P05067",
+    "path": "089.json"
+  },
+  {
+    "question": "Find which genes would be ranked top by propagating confidence from 4609, 6822, 6774, Q9HAU5, O75712, P33241, P11487, P63215.",
+    "steps": "P01106, Q06520, P40763, Q9HAU5, O75712, P33241, P11487, P63215",
+    "path": "090.json"
+  },
+  {
+    "question": "Identify highly credible genes through network propagation starting at SKIL, VCAN, OCM, 1956, 672, Q14565, Q96D46, Q9Y3B6.",
+    "steps": "P12757, P13611, P0CE71, P00533, P38398, Q14565, Q96D46, Q9Y3B6",
+    "path": "091.json"
+  },
+  {
+    "question": "Perform TrustRank analysis to evaluate the reliability of nodes seeded with ABR, PHB1, FXR1, 4524, 3643.",
+    "steps": "Q12979, P35232, P51114, P42898, P06213",
+    "path": "092.json"
+  },
+  {
+    "question": "Perform TrustRank analysis to evaluate the reliability of nodes seeded with ZFR2, KRTAP7-1, BUB1, P01242, O15119, 2535, 420",
+    "steps": "Q9UPR6, Q8IUC3, O43683, P01242, O15119, Q93070, Q14332",
+    "path": "093.json"
+  },
+  {
+    "question": "Perform TrustRank scoring for KRTAP6-2, SPTB, C1orf105, H3Y2, 1392, 10333 to detect key trusted nodes.",
+    "steps": "Q3LI66, P11277, O95561, P0DPK5, P06850, Q9Y2C9",
+    "path": "094.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using EGFR, BRAF, TNF, PTEN, LAG3, MYC, CD274 as initial trusted genes.",
+    "steps": "C9JYS6, H7C560, A0A8V8TNL2, A0A8V8TPK6, P18627, Q14899, Q0GN75",
+    "path": "095.json"
+  },
+  {
+    "question": "Propagate confidence scores across the network using ERI3, NCR2, ODF1, O75503, P18847, P17213 as initial trusted genes.",
+    "steps": "O43414, O95944, Q14990, O75503, P18847, P17213",
+    "path": "096.json"
+  },
+  {
+    "question": "Rank all genes based on their connectivity and trust relative to Q96JY0, P04818, Q96K31, P08567, 3120, 3060, 2027, 4864.",
+    "steps": "Q96JY0, P04818, Q96K31, P08567, P05538, O43612, P13929, O15118",
+    "path": "097.json"
+  },
+  {
+    "question": "Rank network genes using TrustRank initialized with GNAQ, TOM1, MEA1, POMC, Q99983, Q16851, Q99909, O43763.",
+    "steps": "P50148, O60784, Q16626, P01189, Q99983, Q16851, Q99909, O43763",
+    "path": "098.json"
+  },
+  {
+    "question": "Run TrustRank propagation seeded by F8, WFS1, 5339, 51321,",
+    "steps": "P00451, O76024, 5339, 51321, Q15149, Q86W34",
+    "path": "099.json"
+  },
+  {
+    "question": "Use the TrustRank algorithm to compute propagation scores for Q9Y625, P16333, HTD2, NSD1, AACS, 6813",
+    "steps": "Q9Y625, P16333, P86397, Q96L73, Q86V21, Q15833",
+    "path": "100.json"
   }
 ]

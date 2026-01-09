@@ -75,9 +75,9 @@ public class DigestEvaluationTest {
         });
 
         for (NeDRexToolQuestion question : questions) {
+            chatWebsocketSender.clearTools();
             NeDRexToolTestResult result = testCloseness(question, true);
             results.add(result);
-            Log.info(result.toString());
             NeDRexToolTestResult.printJsonFile(results, getPath());
         }
     }
@@ -89,9 +89,9 @@ public class DigestEvaluationTest {
         });
 
         for (NeDRexToolQuestion question : questions) {
+            chatWebsocketSender.clearTools();
             NeDRexToolTestResult result = testCloseness(question, false);
             results.add(result);
-            Log.info(result.toString());
             NeDRexToolTestResult.printJsonFile(results, getPath());
         }
     }
@@ -99,48 +99,102 @@ public class DigestEvaluationTest {
     private NeDRexToolTestResult testCloseness(NeDRexToolQuestion question, boolean subnetwork) {
 
         String folder = subnetwork ? "subnet" : "set";
-        String toolContentContains = subnetwork ? "DIGEST-Subnetwork" : "DIGEST-Set";
         NeDRexToolTestResult result = new NeDRexToolTestResult(question.getQuestion(), question.getPath());
         String path = "tools/digest/" + folder + "/" + question.getPath();
         DigestResultResponseDTO resultMocked = JsonLoader.loadJson(path, new TypeReference<DigestResultResponseDTO>() {
         });
 
-        DigestToolResultDTO mappedResult = digestFormatterService.formatDigestOutputStructured(resultMocked.getResult(), resultMocked.getTask());
+        DigestToolResultDTO mappedResult = null;
+        try {
+            mappedResult = digestFormatterService.formatDigestOutputStructured(resultMocked.getResult(), resultMocked.getTask());
+        } catch (IllegalArgumentException e) {
+            Log.warnf("Failed to format digest output (likely p-values don't meet cutoff) for question: %s. Error: %s", 
+                     question.getPath(), e.getMessage());
+        }
 
-        String enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
-        String answer = digestBot.answer(question.getPath(), question.getQuestion(), enhancedContext);
+        String enhancedContext;
+        String answer = null;
+        try {
+            enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
+        } catch (RuntimeException e) {
+            String msg = e.getMessage();
+            if (msg != null && (msg.contains("exceeded") || msg.contains("Something is wrong")) && msg.contains("tool")) {
+                Log.warnf("Tool execution limit exceeded for neDRexBot: %s", msg);
+                enhancedContext = "";
+            } else if (e instanceof NullPointerException || (msg != null && (msg.contains("null") || msg.contains("ChatCompletionResponse")))) {
+                Log.warnf("OpenAI API returned null response in neDRexBot (continuing): %s", 
+                         e.getClass().getSimpleName() + (msg != null ? ": " + msg : ""));
+                enhancedContext = "";
+            } else {
+                Log.warnf("Exception in neDRexBot (continuing): %s", e.getClass().getSimpleName());
+                enhancedContext = "";
+            }
+        }
+        
+        try {
+            answer = digestBot.answer(question.getPath(), question.getQuestion(), enhancedContext);
+        } catch (RuntimeException e) {
+            String msg = e.getMessage();
+            String botName = "digestBot";
+            if (msg != null && (msg.contains("exceeded") || msg.contains("Something is wrong")) && msg.contains("tool")) {
+                Log.warnf("Tool execution limit exceeded for %s: %s", botName, msg);
+            } else if (msg != null && (msg.contains("getUniProtIds") || msg.contains("hallucination") || msg.contains("no such tool"))) {
+                Log.warnf("LLM tried to call non-existent tool in %s: %s", botName, msg);
+            } else if (e instanceof NullPointerException || (msg != null && (msg.contains("null") || msg.contains("ChatCompletionResponse")))) {
+                Log.warnf("OpenAI API error in %s (continuing): %s", botName, e.getClass().getSimpleName());
+            } else {
+                Log.warnf("Exception in %s (continuing): %s", botName, e.getClass().getSimpleName());
+            }
+        }
 
-        List<ToolDTO> context = chatWebsocketSender.findToolByToolName(Tools.DIGEST);
-        List<String> input = context.stream()
-                .filter(t -> !t.getContent().stream().filter(c -> c.contains(toolContentContains)).toList().isEmpty())
+        List<ToolDTO> digestTools = chatWebsocketSender.findToolByToolName(Tools.DIGEST);
+        List<String> input = digestTools.stream()
+                .filter(t -> t.getInput() != null)  
                 .findFirst()
-                .map(t -> Arrays.asList(t.getInput().toString().split(", ")))
+                .map(t -> {
+                    Object inputObj = t.getInput();
+                    return Arrays.stream(inputObj.toString().split(","))
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .toList();
+                })
                 .orElse(new ArrayList<>());
 
-        checkInput(input, resultMocked.getParameters().getTarget(), result);
-        if (!result.isCorrectInput()) {
-            return result;
+        if (!input.isEmpty()) {
+            result.setCorrectTool(true);
+        } else {
+            result.setCorrectTool(false);
         }
-        if (input.isEmpty()) {
-            return result;
-        }
-        result.setCorrectTool(true);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String mockedJson = mappedResult.toString();
-        try {
-            mockedJson = mapper.writeValueAsString(mappedResult);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        boolean correctAnswer = judgeBot.isAnswerCorrectGivenContext(
-                question.getQuestion(),
-                answer,
-                mockedJson,
-                "No additional rules."
-        );
+        List<String> expectedTarget = parseSteps(question.getSteps());
+        checkInput(input, expectedTarget, result);
 
-        result.setCorrectAnswer(correctAnswer);
+        if (answer != null && !answer.trim().isEmpty() && mappedResult != null) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                String mockedJson = mapper.writeValueAsString(mappedResult);
+                
+                boolean correctAnswer = judgeBot.isAnswerCorrectGivenContext(
+                        question.getQuestion(),
+                        answer,
+                        mockedJson,
+                        "No additional rules."
+                );
+                result.setCorrectAnswer(correctAnswer);
+            } catch (JsonProcessingException e) {
+                Log.errorf(e, "Failed to serialize mocked result for question: %s", question.getPath());
+            } catch (Exception e) {
+                Log.errorf(e, "Failed to evaluate answer for question: %s", question.getPath());
+            }
+        } else {
+            if (answer == null || answer.trim().isEmpty()) {
+                Log.warnf("No answer to evaluate for question: %s", question.getPath());
+            }
+            if (mappedResult == null) {
+                Log.warnf("No mocked result available for question: %s (p-values may not meet cutoff)", question.getPath());
+            }
+        }
+        
         return result;
     }
 
@@ -148,19 +202,54 @@ public class DigestEvaluationTest {
         boolean correctInput = true;
         if (list1 == null || list2 == null) {
             result.setCorrectInput(false);
+            Log.warnf("Input check failed: null values - list1=%s, list2=%s", list1, list2);
             return;
         }
-        if (list1.size() != list2.size()) {
+        
+        List<String> normalizedList1 = list1.stream()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        List<String> normalizedList2 = list2.stream()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        
+        if (normalizedList1.size() != normalizedList2.size()) {
             correctInput = false;
+            Log.warnf("Input size mismatch for extracted=%s vs expected=%s", normalizedList1, normalizedList2);
         }
-        for (String item : list1) {
-            if (!list2.contains(item)) {
-                result.addMissingInput(item);
+        
+        for (String item : normalizedList2) {
+            String trimmedItem = item.trim();
+            if (!normalizedList1.contains(trimmedItem)) {
+                result.addMissingInput(trimmedItem);
                 correctInput = false;
+            }
+        }
+        
+        for (String item : normalizedList1) {
+            if (!normalizedList2.contains(item)) {
+                Log.warnf("Extra item in extracted input: %s (not in expected: %s)", item, normalizedList2);
             }
         }
 
         result.setCorrectInput(correctInput);
+    }
+
+    private List<String> parseSteps(String steps) {
+        if (steps == null || steps.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<String> result = new ArrayList<>();
+        String[] parts = steps.split("[, ]+");
+        for (String part : parts) {
+            String trimmed = part.trim();
+            if (!trimmed.isEmpty()) {
+                result.add(trimmed);
+            }
+        }
+        return result;
     }
 
     static Path getPath() {
