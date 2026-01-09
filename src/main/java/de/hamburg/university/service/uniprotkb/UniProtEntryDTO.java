@@ -14,4 +14,5 @@ public class UniProtEntryDTO {
 
     private ProteinNamesDTO protein;
     private List<GeneSimpleDTO> genes;
+    private OrganismDTO organism;
 }

@@ -110,7 +110,6 @@ public class PlanningAgent {
                     state.setDigestResult(digestBot.answer(connectionId, currentGoal, state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
-                    // Stream all chunks from the finalize bot and emit each part
                     String result = finalizeBot.answer(connectionId, content.getMessage(), state)
                             .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
                             .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
@@ -154,10 +153,25 @@ public class PlanningAgent {
     }
 
     private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
-        //for now the same
-        this.setEnhancedQueryBioInfo(state, decision, connectionId);
+        String context = "Previous Context: " + state.getPreviousContext();
+        if (StringUtils.isNotEmpty(state.getNeDRexKgInfo())) {
+            context += "\nNeDRex KG Context: " + state.getNeDRexKgInfo();
+        }
+        if (state.getResearch() != null && !state.getResearch().isEmpty()) {
+            context += "\nResearch Context: " + String.join("\n", state.getResearch());
+        }
+        try {
+            String entrezIdsJson = neDRexBot.answerEntrezId(connectionId, decision.getSubTaskQuestion(), context);
+            state.setEnhancedQueryBioInfo(entrezIdsJson);
+        } catch (Exception e) {
+            try {
+                String entrezIdsJson = neDRexBot.answerEntrezId(connectionId, decision.getSubTaskQuestion(), state.getPreviousContext());
+                state.setEnhancedQueryBioInfo(entrezIdsJson);
+            } catch (Exception e1) {
+                state.setEnhancedQueryBioInfo("");
+            }
+        }
     }
-
 
     private String safeToString(PlanStep d) {
         try {
