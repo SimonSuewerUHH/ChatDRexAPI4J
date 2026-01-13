@@ -1,14 +1,502 @@
 [
   {
-    "question": "Does DIGEST validate the gene set consisting of BRCA1, BRCA2, TP53, PIK3CA, PTEN, ERBB2, AKT1, GATA3, CDH1, MAP3K1 as a coherent disease module involved in breast cancer?",
-    "steps": "672, 675, 7157, 5290, 5728, 2064, 207, 2625, 999, 4214",
-    "content": "",
+    "question": "Run the DIGEST validation pipeline on the gene set Q8WZ73, Q7KZF4.",
+    "steps": "117584, 27044",
     "path": "001.json"
   },
   {
-    "question": "Can DIGEST evaluate the coherence of the immune checkpoint gene set PDCD1, CD274, CTLA4, LAG3, HAVCR2, TIGIT, ICOS, TNFRSF9 and confirm its role in immunoregulatory pathways?",
-    "steps": "5133, 29126, 1493, 3902, 84868, 201633, 29851, 3604",
-    "content": "",
+    "question": "Run a DIGEST test for FSCB, DFFA to measure module significance.",
+    "steps": "84075, 1676",
     "path": "002.json"
+  },
+  {
+    "question": "Use DIGEST to assess the functional and genetic coherence of 64149, 6726.",
+    "steps": "64149, 6726",
+    "path": "003.json"
+  },
+  {
+    "question": "Apply DIGEST to test whether O75431, Q3SYG4 form a statistically significant disease module.",
+    "steps": "10651, 27241",
+    "path": "004.json"
+  },
+  {
+    "question": "Perform DIGEST-based validation on AUP1, NKX1-1 to assess enrichment and coherence.",
+    "steps": "550, 54729",
+    "path": "005.json"
+  },
+  {
+    "question": "Apply DIGEST to test whether 5340, 4494 form a statistically significant disease module.",
+    "steps": "5340, 4494",
+    "path": "006.json"
+  },
+  {
+    "question": "Run a DIGEST test for P60484, Q13724 to measure module significance.",
+    "steps": "5728, 7841",
+    "path": "007.json"
+  },
+  {
+    "question": "Run a DIGEST test for PLD5, RTP3 to measure module significance.",
+    "steps": "200150, 83597",
+    "path": "008.json"
+  },
+  {
+    "question": "Use DIGEST validation to verify the biological relevance of Q6P5Z2, Q00978.",
+    "steps": "29941, 10379",
+    "path": "009.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set 9101, 284546.",
+    "steps": "9101, 284546",
+    "path": "010.json"
+  },
+  {
+    "question": "Apply DIGEST to test whether P48643, P15924 form a statistically significant disease module.",
+    "steps": "22948, 1832",
+    "path": "011.json"
+  },
+  {
+    "question": "Perform DIGEST coherence validation on KRTAP19-6, ZEB2.",
+    "steps": "337973, 9839",
+    "path": "012.json"
+  },
+  {
+    "question": "Use DIGEST to assess the functional and genetic coherence of Q86XK3, P06132.",
+    "steps": "119392, 7389",
+    "path": "013.json"
+  },
+  {
+    "question": "Run a DIGEST test for 23627, 9365 to measure module significance.",
+    "steps": "23627, 9365",
+    "path": "014.json"
+  },
+  {
+    "question": "Use DIGEST validation to verify the biological relevance of ASB2, JRKL.",
+    "steps": "51676, 8690",
+    "path": "015.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set Q8ND04, Q8ND76",
+    "steps": "55181, 219771",
+    "path": "016.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of NRGN, TSC1.",
+    "steps": "4900, 7248",
+    "path": "017.json"
+  },
+  {
+    "question": "Execute DIGEST analysis to evaluate the overlap significance of GLS2, CHKA.",
+    "steps": "27165, 1119",
+    "path": "018.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of 4342, 7813.",
+    "steps": "4342, 7813",
+    "path": "019.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of Q9NQG7, P55916, P11532.",
+    "steps": "89781, 7352, 1756",
+    "path": "020.json"
+  },
+  {
+    "question": "Perform DIGEST-based validation on C6orf147, E4F1, ACP6 to assess enrichment and coherence.",
+    "steps": "80759, 1877, 51205",
+    "path": "021.json"
+  },
+  {
+    "question": "Run a DIGEST test for P21246, Q9UKI8, P26842 to measure module significance.",
+    "steps": "5764, 9874, 939",
+    "path": "022.json"
+  },
+  {
+    "question": "Validate the candidate gene list 85407, 200424, 112812 using DIGEST to compute empirical P-values.",
+    "steps": "85407, 200424, 112812",
+    "path": "023.json"
+  },
+  {
+    "question": "Perform DIGEST coherence validation on Q96NJ6, Q92890, Q12857.",
+    "steps": "124961, 7353, 4774",
+    "path": "024.json"
+  },
+  {
+    "question": "Use DIGEST validation to verify the biological relevance of MICOS10-NBL1, CD7, PLB1.",
+    "steps": "100532736, 924, 151056",
+    "path": "025.json"
+  },
+  {
+    "question": "Perform DIGEST coherence validation on P04080, P35080, Q13253.",
+    "steps": "1476, 5217, 9241",
+    "path": "026.json"
+  },
+  {
+    "question": "Execute DIGEST analysis to evaluate the overlap significance of Q16891, Q02045, O75665.",
+    "steps": "10989, 4636, 8481",
+    "path": "027.json"
+  },
+  {
+    "question": "Use DIGEST to assess the functional and genetic coherence of CD1A, NOM1, SAG.",
+    "steps": "909, 64434, 1755",
+    "path": "028.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set Q8N4V2, O00590, A0A1B0GTR3.",
+    "steps": "55530, 1238, 100129239",
+    "path": "029.json"
+  },
+  {
+    "question": "Validate the candidate gene list KRTAP9-3, H3-7, GPC3 using DIGEST to compute empirical P-values.",
+    "steps": "83900, 440686, 2719",
+    "path": "030.json"
+  },
+  {
+    "question": "Perform DIGEST coherence validation on 649, 7809, 50486.",
+    "steps": "649, 7809, 50486",
+    "path": "031.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of 4638, 401097, 1081.",
+    "steps": "4638, 401097, 1081",
+    "path": "032.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of ACP6, CCN5, CDO1.",
+    "steps": "51205, 8839, 1036",
+    "path": "033.json"
+  },
+  {
+    "question": "Perform DIGEST-based validation on Q8N1A6, P30414, P00740 to assess enrichment and coherence.",
+    "steps": "132321, 4820, 2158",
+    "path": "034.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of C19orf38, NCLN, C2orf15.",
+    "steps": "255809, 56926, 150590",
+    "path": "035.json"
+  },
+  {
+    "question": "Perform DIGEST-based validation on IVL, FLT3, GJC3 to assess enrichment and coherence.",
+    "steps": "3713, 2322, 349149",
+    "path": "036.json"
+  },
+  {
+    "question": "Perform DIGEST-based validation on AK6, NBL1, FRZB to assess enrichment and coherence.",
+    "steps": "26289, 4681, 2487",
+    "path": "037.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of 6950, 761, 22913.",
+    "steps": "6950, 761, 22913",
+    "path": "038.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set O60921, Q9NQ30, Q14534.",
+    "steps": "3364, 11082, 6713",
+    "path": "039.json"
+  },
+  {
+    "question": "Validate the candidate gene list EBPL, DBN1, DLX5 using DIGEST to compute empirical P-values.",
+    "steps": "84650, 1627, 1749",
+    "path": "040.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of P20711, Q7Z6A9, Q8NEQ5.",
+    "steps": "1644, 151888, 128346",
+    "path": "041.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set P23946, P15153, P23528.",
+    "steps": "1215, 5880, 1072",
+    "path": "042.json"
+  },
+  {
+    "question": "Run a DIGEST test for P11413, Q9BT56, P06127 to measure module significance.",
+    "steps": "2539, 80763, 921",
+    "path": "043.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set P78352, P07954, P05230, Q9BTL4.",
+    "steps": "1742, 2271, 2246, 9592",
+    "path": "044.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set 3726, 351, 928, 6768.",
+    "steps": "3726, 351, 928, 6768",
+    "path": "045.json"
+  },
+  {
+    "question": "Run the DIGEST validation pipeline on the gene set IL4, FHIT, NEFL, DLX1.",
+    "steps": "3565, 2272, 4747, 1745",
+    "path": "046.json"
+  },
+  {
+    "question": "Use DIGEST validation to verify the biological relevance of BRCA1, FGFR1, PDCD1, VEGFA.",
+    "steps": "672, 2260, 5133, 7422",
+    "path": "047.json"
+  },
+  {
+    "question": "Apply DIGEST to analyze the disease relevance of P50406, P48382, P12644, P18827.",
+    "steps": "3362, 5993, 652, 6382",
+    "path": "048.json"
+  },
+  {
+    "question": "Execute DIGEST analysis to evaluate the overlap significance of VRK3, KRTAP21-1, BST1, ZPR1.",
+    "steps": "51231, 337977, 683, 8882",
+    "path": "049.json"
+  },
+  {
+    "question": "Run a DIGEST test for P42694, O75390, O14718, Q5XG87 to measure module significance.",
+    "steps": "9931, 1431, 10692, 11044",
+    "path": "050.json"
+  },
+  {
+    "question": "Validate whether the genes NRDC, UBP1, RTF2, PSG7 form a coherent and disease-relevant set.",
+    "steps": "4898, 7342, 51507, 5676",
+    "path": "051.json"
+  },
+  {
+    "question": "Evaluate how likely it is that TET3, DDX4, SND1, LHX6 share functional pathways beyond random chance.",
+    "steps": "200424, 54514, 27044, 26468",
+    "path": "052.json"
+  },
+  {
+    "question": "Determine the likelihood that 8539, 10140, 6352, 90523 represent a valid disease module.",
+    "steps": "8539, 10140, 6352, 90523",
+    "path": "053.json"
+  },
+  {
+    "question": "Determine the likelihood that Q8N1E2, Q9NR00, Q9Y2B9, Q8N442 represent a valid disease module.",
+    "steps": "129530, 56892, 11142, 60558",
+    "path": "054.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing UGDH, SFPQ, NKG7, THBD given the reference network.",
+    "steps": "7358, 6421, 4818, 7056",
+    "path": "055.json"
+  },
+  {
+    "question": "Determine the likelihood that Q9H6K4, Q16617, Q5VY09, Q86SG6 represent a valid disease module.",
+    "steps": "80207, 4818, 51278, 284086",
+    "path": "056.json"
+  },
+  {
+    "question": "Test whether RNH1, GRK6, RPN2, KNL1 are functionally or genetically cohesive.",
+    "steps": "6050, 2870, 6185, 57082",
+    "path": "057.json"
+  },
+  {
+    "question": "Assess the biological significance of Q9H201, P17174, Q15915, P35557 through enrichment and variant comparison.",
+    "steps": "55040, 2805, 7545, 2645",
+    "path": "058.json"
+  },
+  {
+    "question": "Compare the set HLA-E, BIN1, ACE, RHD against background distributions to determine significance.",
+    "steps": "3133, 274, 1636, 6007",
+    "path": "059.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing BBS7, NAAA, BRD8, G0S2 given the reference network.",
+    "steps": "55212, 27163, 10902, 50486",
+    "path": "060.json"
+  },
+  {
+    "question": "Test whether Q00889, Q13936, Q5SXM8, P08473 are functionally or genetically cohesive.",
+    "steps": "5675, 775, 728489, 4311",
+    "path": "061.json"
+  },
+  {
+    "question": "Analyze 2664, 1475, 7297, 924 for overrepresentation of disease associations.",
+    "steps": "2664, 1475, 7297, 924",
+    "path": "062.json"
+  },
+  {
+    "question": "Assess the biological significance of TG, TLR7, SP7, SELP through enrichment and variant comparison.",
+    "steps": "7038, 51284, 121340, 6403",
+    "path": "063.json"
+  },
+  {
+    "question": "Validate whether the genes 127435, 4026, 246744, 729330 form a coherent and disease-relevant set.",
+    "steps": "127435, 4026, 246744, 729330",
+    "path": "064.json"
+  },
+  {
+    "question": "Evaluate how likely it is that Q9UNH6, Q8WYP3, Q96GA7, Q92733, Q86YV9 share functional pathways beyond random chance.",
+    "steps": "51375, 54453, 113675, 5546, 79803",
+    "path": "065.json"
+  },
+  {
+    "question": "Evaluate how likely it is that MEST, KRTAP3-3, ENO4, PEG3, RHEX share functional pathways beyond random chance.",
+    "steps": "4232, 85293, 387712, 5178, 440712",
+    "path": "066.json"
+  },
+  {
+    "question": "Test whether P21397, P01833, O00512, Q9UNE0, P20036 are functionally or genetically cohesive.",
+    "steps": "4128, 5284, 607, 10913, 3113",
+    "path": "067.json"
+  },
+  {
+    "question": "Assess the biological significance of CINP, OLA1, WTAP, ALG2, SOX9 through enrichment and variant comparison.",
+    "steps": "51550, 29789, 9589, 10016, 6662",
+    "path": "068.json"
+  },
+  {
+    "question": "Analyze 7280, 7507, 6662, 1791, 5837 for overrepresentation of disease associations.",
+    "steps": "7280, 7507, 6662, 1791, 5837",
+    "path": "069.json"
+  },
+  {
+    "question": "Analyze Q6NXT2, Q3LI77, Q92521, Q92529, Q6UWP8 for overrepresentation of disease associations.",
+    "steps": "440093, 284827, 9488, 53358, 374897",
+    "path": "070.json"
+  },
+  {
+    "question": "Analyze UMPS, GON7, CFL2, MSX2, KAT7 for overrepresentation of disease associations.",
+    "steps": "7372, 84520, 1073, 4488, 11143",
+    "path": "071.json"
+  },
+  {
+    "question": "Validate whether the genes Q9UIB8, P48380, O75636, O14980, Q96LL3 form a coherent and disease-relevant set.",
+    "steps": "8832, 5991, 8547, 7514, 146378",
+    "path": "072.json"
+  },
+  {
+    "question": "Assess the biological significance of 18, 1213, 4860, 9066, 5586 through enrichment and variant comparison.",
+    "steps": "18, 1213, 4860, 9066, 5586",
+    "path": "073.json"
+  },
+  {
+    "question": "Assess the biological significance of FZR1, CGN, ARF5, TG, SSH3 through enrichment and variant comparison.",
+    "steps": "51343, 57530, 381, 7038, 54961",
+    "path": "074.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing ARTN, CSN2, SNN, MEA1, NCL given the reference network.",
+    "steps": "9048, 1447, 8303, 4201, 4691",
+    "path": "075.json"
+  },
+  {
+    "question": "Compute the statistical enrichment of Q8TD06, Q96AV8, P25774, P15121, O14980 compared to random background sets.",
+    "steps": "155465, 144455, 1520, 231, 7514",
+    "path": "076.json"
+  },
+  {
+    "question": "Assess the biological significance of 2113, 6342, 358, 154796, 4301 through enrichment and variant comparison.",
+    "steps": "2113, 6342, 358, 154796, 4301",
+    "path": "077.json"
+  },
+  {
+    "question": "Test whether 283897, 2535, 5184, 57593, 10943 are functionally or genetically cohesive.",
+    "steps": "283897, 2535, 5184, 57593, 10943",
+    "path": "078.json"
+  },
+  {
+    "question": "Evaluate how likely it is that A7XYQ1, Q8WWX0, Q12846, O60921, Q9NXR1 share functional pathways beyond random chance.",
+    "steps": "55084, 140458, 6810, 3364, 54820",
+    "path": "079.json"
+  },
+  {
+    "question": "Compute the statistical enrichment of LBX1, HK1, RPA3, RMC1, AMZ1, RPL3 compared to random background sets.",
+    "steps": "10660, 3098, 6119, 29919, 155185, 6122",
+    "path": "080.json"
+  },
+  {
+    "question": "Evaluate how likely it is that Q07352, Q9NX55, Q00978, O43612, Q99496, A0A1W2PPE3 share functional pathways beyond random chance.",
+    "steps": "677, 25764, 10379, 3060, 6045, 122455338",
+    "path": "081.json"
+  },
+  {
+    "question": "Analyze GATB, MED8, OAZ2, CYP, COA5, PBX3 for overrepresentation of disease associations.",
+    "steps": "5188, 112950, 4947, 9360, 493753, 5090",
+    "path": "082.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing Q9BQM9, Q9NX58, Q9UK39, Q9UEY8, Q8IYD9, O15400 given the reference network.",
+    "steps": "128864, 55646, 25819, 120, 162681, 8417",
+    "path": "083.json"
+  },
+  {
+    "question": "Determine the likelihood that IRX5, ATF1, PNKD, CIPC, MLX, CXorf38 represent a valid disease module.",
+    "steps": "10265, 466, 25953, 85457, 6945, 159013",
+    "path": "084.json"
+  },
+  {
+    "question": "Compute the statistical enrichment of MAFA, CGA, PBX4, TF, RGS8, NLN compared to random background sets.",
+    "steps": "10219, 1081, 80714, 2152, 85397, 57486",
+    "path": "085.json"
+  },
+  {
+    "question": "Compute the statistical enrichment of Q9NPA8, O14775, P46695, O43402, P16455, P02788 compared to random background sets.",
+    "steps": "56943, 10681, 8870, 10328, 4255, 4057",
+    "path": "086.json"
+  },
+  {
+    "question": "Evaluate how likely it is that 6233, 2912, 8350, 399694, 100505753, 51234 share functional pathways beyond random chance.",
+    "steps": "6233, 2912, 8350, 399694, 100505753, 51234",
+    "path": "087.json"
+  },
+  {
+    "question": "Compare the set Q9H095, O95677, Q9NWQ8, P08949, Q8TDD2, Q9NR61, Q14990 against background distributions to determine significance.",
+    "steps": "84223, 2070, 55824, 4828, 121340, 54567, 4956",
+    "path": "088.json"
+  },
+  {
+    "question": "AnalyzeP10124, Q9H2F5, Q9Y646, 284307, 100130361 for overrepresentation of disease associations.",
+    "steps": "5552, 80314, 10404, 284307, 100130361",
+    "path": "089.json"
+  },
+  {
+    "question": "Evaluate how likely it is that C8G, MZB1, 1652, 6945, A6NGE7 share functional pathways beyond random chance.",
+    "steps": "733, 51237, 1652, 6945, 646625",
+    "path": "090.json"
+  },
+  {
+    "question": "Test whether P13929, P20827, 966, NIFK, Q9NUW8 are functionally or genetically cohesive.",
+    "steps": "2027, 1942, 966, 84365, 55775",
+    "path": "091.json"
+  },
+  {
+    "question": "Assess the biological significance of 79190, 11142, Q96QD8, Q8TC57, O60479 through enrichment and variant comparison.",
+    "steps": "79190, 11142, 54407, 130951, 1747",
+    "path": "092.json"
+  },
+  {
+    "question": "Determine if TPK1, 50853, Q9NWF4, 51466, C1orf74 show significant overlap with known disease genes.",
+    "steps": "27010, 50853, 55065, 51466, 148304",
+    "path": "093.json"
+  },
+  {
+    "question": "Assess the biological significance of Q3SY56, Q9UKI8, Q15397, 65267, 64434 through enrichment and variant comparison.",
+    "steps": "80320, 9874, 9933, 65267, 64434",
+    "path": "094.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing Q8IWB9, Q9H7B2, Q9UQ16, AAK1, PLD2 given the reference network.",
+    "steps": "55852, 84154, 26052, 22848, 5338",
+    "path": "095.json"
+  },
+  {
+    "question": "Assess the biological significance of CTSF, HIC2, ZIM3, P10914, P10515 through enrichment and variant comparison.",
+    "steps": "8722, 23119, 114026, 3659, 1737",
+    "path": "096.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing PENK, EPYC, KRTAP20-1, P03905, Q6NUJ2 given the reference network.",
+    "steps": "5179, 1833, 337975, 4538, 399947",
+    "path": "097.json"
+  },
+  {
+    "question": "Validate whether the genes CDO1, IDNK, 10313, 5649, Q9C010 form a coherent and disease-relevant set.",
+    "steps": "1036, 414328, 10313, 5649, 5570",
+    "path": "098.json"
+  },
+  {
+    "question": "Determine the likelihood that P54803, Q6IBS0, 54796, 9978, C11orf96 represent a valid disease module.",
+    "steps": "2581, 11344, 54796, 9978, 387763",
+    "path": "099.json"
+  },
+  {
+    "question": "Estimate the empirical P-value for observing P32247, Q2M2I8, Q9BYQ9, A6NEN9, 2147 given the reference network.",
+    "steps": "680, 22848, 728224, 158830, 2147",
+    "path": "100.json"
   }
 ]

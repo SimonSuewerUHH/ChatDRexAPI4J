@@ -3,80 +3,139 @@ package de.hamburg.university.agent.tool.nedrex.external;
 import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
-import de.hamburg.university.service.uniprotkb.GeneSimpleDTO;
-import de.hamburg.university.service.uniprotkb.UniProtApiClient;
-import de.hamburg.university.service.uniprotkb.UniProtEntryDTO;
-import dev.langchain4j.agent.tool.P;
+import de.hamburg.university.service.nedrex.NeDRexApiClient;
+import de.hamburg.university.service.nedrex.NeDRexTranslateRequestDTO;
 import dev.langchain4j.agent.tool.Tool;
 import dev.langchain4j.agent.tool.ToolMemoryId;
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static io.quarkus.arc.ComponentsProvider.LOG;
 
 @ApplicationScoped
 public class UniProtTool {
 
     @Inject
     @RestClient
-    UniProtApiClient uniProtApiClient;
+    NeDRexApiClient nedrexApiClient;
 
     @Inject
     ChatWebsocketSender chatWebsocketSender;
 
+    @Tool("Given a list of gene identifiers (symbols, Entrez IDs, UniProt IDs, Ensembl IDs, etc.), retrieves the corresponding unique UniProt accession IDs (human only). Always translates ALL identifiers regardless of their current format.")
+    public List<String> getUniProtIds(List<String> identifiers, @ToolMemoryId String sessionId) {
+        Set<String> uniProtIds = new LinkedHashSet<>();
+        ToolDTO toolDTO = new ToolDTO(Tools.NEDREX.name());
 
-    @Tool("Fetch gene names for multiple UniProt accession IDs")
-    public List<String> getUniProtEntries(@P("UniProt ids (Multiple)") List<String> uniProdIds, @ToolMemoryId String sessionId) {
-        return uniProdIds.stream()
-                .flatMap(id -> getUniProtEntry(id, sessionId).stream())
+        if (identifiers == null || identifiers.isEmpty()) {
+            toolDTO.setInput("");
+            toolDTO.addContent("No identifiers provided.");
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return new ArrayList<>();
+        }
+
+        List<String> stringIdentifiers = identifiers.stream()
+                .map(id -> id != null ? id.toString().trim() : "")
+                .filter(id -> !id.isEmpty())
                 .toList();
-    }
-    
-    @Tool("Fetch gene names for a single UniProt accession ID")
-    public List<String> getUniProtEntry(@P("UniProt id (Singular)") String uniProdId, @ToolMemoryId String sessionId) {
-        ToolDTO toolDTO = new ToolDTO(Tools.UNIPROD.name());
-        toolDTO.setInput(uniProdId);
 
-        if (StringUtils.isEmpty(uniProdId)) {
-            toolDTO.addContent("No UniProt ID provided.");
-            toolDTO.setStop();
-            chatWebsocketSender.sendTool(toolDTO, sessionId);
-            return List.of();
-        }
-
+        toolDTO.setInput(String.join(", ", stringIdentifiers));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
-        UniProtEntryDTO response;
-        try {
-            response = uniProtApiClient.getEntry(uniProdId);
-        } catch (Exception e) {
-            Log.error("Error fetching UniProt entry for ID: " + uniProdId, e);
-            toolDTO.addContent("Error fetching data for UniProt ID: " + uniProdId);
-            toolDTO.setStop();
-            chatWebsocketSender.sendTool(toolDTO, sessionId);
-            return List.of();
-        }
-        List<String> geneNames = new ArrayList<>();
 
-        if (response.getGenes() != null) {
-            for (GeneSimpleDTO gene : response.getGenes()) {
-                if (gene.hasGeneName()) {
-                    geneNames.add(gene.getGeneName().getValue());
-                } else if (gene.hasPrimaryName()) {
-                    geneNames.add(gene.getPrimary().getValue());
-                } else {
-                    Log.warnf("Unexpected structure for gene info: {}", gene);
+        try {
+            NeDRexTranslateRequestDTO request = new NeDRexTranslateRequestDTO(stringIdentifiers);
+
+            Map<String, List<String>> response = nedrexApiClient.translateUniProt(request);
+
+            if (response != null) {
+                for (String identifier : stringIdentifiers) {
+                    toolDTO.addContent("Query:" + identifier);
+                    chatWebsocketSender.sendTool(toolDTO, sessionId);
+
+                    List<String> results = response.get(identifier);
+                    if (results != null && !results.isEmpty()) {
+                        String acc = results.get(0);
+                        if (acc != null && !acc.trim().isEmpty()) {
+                            String normalized = acc.trim();
+                            if (normalized.startsWith("uniprot.")) {
+                                normalized = normalized.substring("uniprot.".length());
+                            }
+                            uniProtIds.add(normalized);
+                            toolDTO.addContent("Hit:" + normalized);
+                            chatWebsocketSender.sendTool(toolDTO, sessionId);
+                        }
+                    }
                 }
             }
+        } catch (Exception e) {
+            LOG.errorf(e, "Error at calling UniProt ID translation for identifiers: %s", String.join(", ", stringIdentifiers));
         }
 
         toolDTO.setStop();
-        toolDTO.addContent(String.join(", ", geneNames));
         chatWebsocketSender.sendTool(toolDTO, sessionId);
-        return geneNames;
+        return new ArrayList<>(uniProtIds);
     }
 
+    @Tool("Given a list of Entrez Gene IDs, retrieves corresponding unique UniProt accession IDs (human only). Always translates ALL Entrez IDs regardless of their format.")
+    public List<String> getUniProtIdsFromEntrez(List<String> entrezIds, @ToolMemoryId String sessionId) {
+        Set<String> uniProtIds = new LinkedHashSet<>();
+        ToolDTO toolDTO = new ToolDTO(Tools.NEDREX.name());
+
+        if (entrezIds == null || entrezIds.isEmpty()) {
+            toolDTO.setInput("");
+            toolDTO.addContent("No Entrez IDs provided.");
+            toolDTO.setStop();
+            chatWebsocketSender.sendTool(toolDTO, sessionId);
+            return new ArrayList<>();
+        }
+
+        List<String> stringEntrezIds = entrezIds.stream()
+                .map(id -> id != null ? id.toString().trim() : "")
+                .filter(id -> !id.isEmpty())
+                .toList();
+
+        toolDTO.setInput(String.join(", ", stringEntrezIds));
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+
+        try {
+            NeDRexTranslateRequestDTO request = new NeDRexTranslateRequestDTO(stringEntrezIds);
+
+            Map<String, List<String>> response = nedrexApiClient.translateUniProt(request);
+
+            if (response != null) {
+                for (String entrez : stringEntrezIds) {
+                    toolDTO.addContent("Entrez:" + entrez);
+                    chatWebsocketSender.sendTool(toolDTO, sessionId);
+
+                    List<String> results = response.get(entrez);
+                    if (results != null && !results.isEmpty()) {
+                        String acc = results.get(0);
+                        if (acc != null && !acc.trim().isEmpty()) {
+                            String normalized = acc.trim();
+                            if (normalized.startsWith("uniprot.")) {
+                                normalized = normalized.substring("uniprot.".length());
+                            }
+                            uniProtIds.add(normalized);
+                            toolDTO.addContent("Hit:" + normalized + " (Entrez:" + entrez + ")");
+                            chatWebsocketSender.sendTool(toolDTO, sessionId);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LOG.errorf(e, "Error mapping Entrez IDs to UniProt: %s", String.join(", ", stringEntrezIds));
+        }
+
+        toolDTO.setStop();
+        chatWebsocketSender.sendTool(toolDTO, sessionId);
+        return new ArrayList<>(uniProtIds);
+    }
 }

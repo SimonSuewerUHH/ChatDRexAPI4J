@@ -1,14 +1,502 @@
 [
   {
-    "question": "Run the DIAMOnD algorithm, using the seed genes PDCD1, CD274, LAG3, and HAVCR2, to perform iterative module expansion based on connectivity significance. Return the ranked list of neighbor genes generated in this expansion, mapped to their corresponding Entrez Gene IDs.",
-    "steps": "Translation: { PDCD1: '5133', CD274: '29126', LAG3: '3902', HAVCR2: '84868' }",
-    "content": "Seeds used: PDCD1, CD274, LAG3, HAVCR2 (immune checkpoint genes). DIAMOnD (iterative expansion based on connectivity significance). Rank 1: JAK1 (Entrez 3716, p ≈ 2.1 × 10⁻²⁴), Rank 2: IRF9 (Entrez 10379, p = 0), Rank 3: TYK2 (Entrez 7297, p = 0), Rank 4: STAT2 (Entrez 6773, p = 0), Rank 5: STAT1 (Entrez 6772, p = 0). Strongly connected to immune checkpoint regulation and potential targets for further study. The expansion builds a coherent disease module, complementing the original immune checkpoint seeds.",
+    "question": "Apply the DIAMOnD algorithm on TGFBR1, MDM2, FOS, PIK3CD to expand the disease module.",
+    "steps": "7046, 4193, 2353, 5293",
     "path": "001.json"
   },
   {
-    "question": "Given cancer-related seed genes TP53, BRCA1, EGFR, and MYC, run the DIAMOnD algorithm. Which top-ranked neighbour genes are most significantly connected to these seeds?",
-    "steps": "Translation: { TP53: '7157', BRCA1: '672', EGFR: '1956', MYC: '4609' }",
-    "content": "TP53, BRCA1, EGFR, MYC. DIAMOnD. 51455 → Rank 1, p = 4.15e-53. 6525 → Rank 2, p ≈ 0. 79035 → Rank 3, p ≈ 0. 63967 → Rank 4, p ≈ 0. 9014 → Rank 5, p ≈ 0. These nodes are the most statistically significant neighbours directly connected to the cancer seed genes. Extremely low p-values indicate strong over-representation of edges with the seeds, which means high confidence candidates for the expanded disease module.",
+    "question": "Use DIAMOnD to predict further disease-associated genes beyond CDKN2A, HRAS, PIK3CA, TSC2.",
+    "steps": "1029, 3265, 5290, 7249",
     "path": "002.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with 367, 4763, 3845, 3091.",
+    "steps": "367, 4763, 3845, 3091",
+    "path": "003.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds LAG3, NRAS.",
+    "steps": "3902, 4893",
+    "path": "004.json"
+  },
+  {
+    "question": "Run DIAMOnD iterations using MAPK1, NOTCH4, AKT1, HIF1A, FOXO4, ATR, CCND1 as seeds to find novel interactors.",
+    "steps": "5594, 4855, 207, 3091, 4303, 545, 595",
+    "path": "005.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with ERBB3, JAK1, IL10, BRCA1, IKBKG, FGFR2, AKT1.",
+    "steps": "2065, 3716, 3586, 672, 8517, 2263, 207",
+    "path": "006.json"
+  },
+  {
+    "question": "Use the DIAMOnD algorithm to expand the seed gene set 3551, 11200.",
+    "steps": "3551, 11200",
+    "path": "007.json"
+  },
+  {
+    "question": "Perform an iterative DIAMOnD module discovery starting from IL10, VHL, NFKB2, BRCA1, EGFR.",
+    "steps": "3586, 7428, 4791, 672, 1956",
+    "path": "008.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds 6776, 3718, 5133, 4853, 3586, 472.",
+    "steps": "6776, 3718, 5133, 4853, 3586, 472",
+    "path": "009.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on EPAS1, MLST8, IKBKG, JUN, ERBB3, NOTCH4 to expand the disease module.",
+    "steps": "2034, 64223, 8517, 3725, 2065, 4855",
+    "path": "010.json"
+  },
+  {
+    "question": "Run DIAMOnD iterations using ATR, RB1, NOTCH3, ERBB3 as seeds to find novel interactors.",
+    "steps": "545, 5925, 4854, 2065",
+    "path": "011.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds ESR1, TGFBR2, NRAS, AKT1.",
+    "steps": "2099, 7048, 4893, 207",
+    "path": "012.json"
+  },
+  {
+    "question": "Perform an iterative DIAMOnD module discovery starting from PGR, FOXO4, VHL.",
+    "steps": "5241, 4303, 7428",
+    "path": "013.json"
+  },
+  {
+    "question": "Run DIAMOnD to identify additional genes functionally connected to 5579, 2353.",
+    "steps": "5579, 2353",
+    "path": "014.json"
+  },
+  {
+    "question": "Execute a DIAMOnD expansion beginning with 4791, 7248, 5294, 324, 29126, 6774.",
+    "steps": "4791, 7248, 5294, 324, 29126, 6774",
+    "path": "015.json"
+  },
+  {
+    "question": "Execute a DIAMOnD expansion beginning with FGFR2, FOXO1, BRAF, ERBB4, HIF1A, KDR.",
+    "steps": "2263, 2308, 673, 2066, 3091, 3791",
+    "path": "016.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with CCND1, IL2.",
+    "steps": " 595, 3558",
+    "path": "017.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on 1956, 1026, 2264, 6777, 3902, 5579 to expand the disease module.",
+    "steps": "1956, 1026, 2264, 6777, 3902, 5579",
+    "path": "018.json"
+  },
+  {
+    "question": "Use the DIAMOnD algorithm to expand the seed gene set 4790, 1956.",
+    "steps": "4790, 1956",
+    "path": "019.json"
+  },
+  {
+    "question": "Use DIAMOnD to predict further disease-associated genes beyond FOXO4, NOTCH2, MLST8.",
+    "steps": "4303, 4853, 64223",
+    "path": "020.json"
+  },
+  {
+    "question": "Run DIAMOnD to identify additional genes functionally connected to 7248, 6776.",
+    "steps": "7248, 6776",
+    "path": "021.json"
+  },
+  {
+    "question": "Perform an iterative DIAMOnD module discovery starting from TNF, RAF1, TGFB1, TSC2, JUN.",
+    "steps": "7124, 5894, 7040, 7249, 3725",
+    "path": "022.json"
+  },
+  {
+    "question": "Execute a DIAMOnD expansion beginning with IKBKG, VHL.",
+    "steps": "8517, 7428",
+    "path": "023.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with NF2, NOTCH4, AR, SMAD4, MDM2, PIK3CG.",
+    "steps": "4771, 4855, 367, 4089, 4193, 5294",
+    "path": "024.json"
+  },
+  {
+    "question": "Run DIAMOnD to identify additional genes functionally connected to MTOR, JAK3, IKBKG, FOXP3, TSC1.",
+    "steps": "2475, 3718, 8517, 50943, 7248",
+    "path": "025.json"
+  },
+  {
+    "question": "Run DIAMOnD to identify additional genes functionally connected to CYP19A1, NOTCH2.",
+    "steps": "1588, 4853",
+    "path": "026.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on 7143, 29126 to expand the disease module.",
+    "steps": "7143, 29126",
+    "path": "027.json"
+  },
+  {
+    "question": "Use the DIAMOnD algorithm to expand the seed gene set LAG3, PRKCB, MTOR, FOS, IL2, MYC, NFKB1.",
+    "steps": "3902, 5579, 2475, 2353, 3558, 4609, 4790",
+    "path": "028.json"
+  },
+  {
+    "question": "Use the DIAMOnD algorithm to expand the seed gene set 5582, 57521, 3551.",
+    "steps": "5582, 57521, 3551",
+    "path": "029.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on CHEK2, MTOR, STAT3, GSK3B, MAPK1 to expand the disease module.",
+    "steps": "11200, 2475, 6774, 2932, 5594",
+    "path": "030.json"
+  },
+  {
+    "question": "Run DIAMOnD iterations using NOTCH1, PTEN, TSC1 as seeds to find novel interactors.",
+    "steps": "4851, 5728, 7248",
+    "path": "031.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds FOXO4, ERBB3.",
+    "steps": "4303, 2065",
+    "path": "032.json"
+  },
+  {
+    "question": "Use DIAMOnD to predict further disease-associated genes beyond PRKCB, LAG3, RELA, CCND1, HRAS, BRCA2, APC.",
+    "steps": "5579, 3902, 5970, 595, 3265, 675, 324",
+    "path": "033.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds 7040, 4609, 5594, 4854.",
+    "steps": "7040, 4609, 5594, 4854",
+    "path": "034.json"
+  },
+  {
+    "question": "Execute a DIAMOnD expansion beginning with AR, DIAMO, HRAS, JAK3, IL10, STAT5B.",
+    "steps": "367, N/A, 3265, 3718, 3586, 6777",
+    "path": "035.json"
+  },
+  {
+    "question": "Run DIAMOnD to identify additional genes functionally connected to AKT1, GSK3B, W.",
+    "steps": "207, 2932, 283869",
+    "path": "036.json"
+  },
+  {
+    "question": "Execute a DIAMOnD expansion beginning with JAK3, FOXP3, MDM4, MTOR.",
+    "steps": "3718, 50943, 4194, 2475",
+    "path": "037.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with 6597, 4851.",
+    "steps": "6597, 4851",
+    "path": "038.json"
+  },
+  {
+    "question": "Run DIAMOnD iterations using TP53, CHEK2, NFKB1, RB1, KRAS, HRAS, AKT1 as seeds to find novel interactors.",
+    "steps": "7157, 11200, 4790, 5925, 3845, 3265, 207",
+    "path": "039.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on IKBKG, ARNT, NOTCH1, CCND1, CD274 to expand the disease module.",
+    "steps": "8517, 405, 4851, 595, 29126",
+    "path": "040.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on CTNNB1, CHUK, BRCA1, VEGFA to expand the disease module.",
+    "steps": "1499, 1147, 672, 7422",
+    "path": "041.json"
+  },
+  {
+    "question": "Conduct DIAMOnD analysis to iteratively add relevant genes to LAG3, STAT3, STAT3, JUN, IL10, HRAS.",
+    "steps": "3902, 6774, 6774, 3725, 3586, 3265",
+    "path": "042.json"
+  },
+  {
+    "question": "Run DIAMOnD iterations using PRKCB, STAT1, FGFR4 as seeds to find novel interactors.",
+    "steps": "5579, 6772, 2264",
+    "path": "043.json"
+  },
+  {
+    "question": "Perform an iterative DIAMOnD module discovery starting from FGFR4, MDM2, CHUK.",
+    "steps": "2264, 4193, 1147",
+    "path": "044.json"
+  },
+  {
+    "question": "Perform a DIAMOnD-based module enrichment using the initial seeds CYP19A1, ERBB2.",
+    "steps": "1588, 2064",
+    "path": "045.json"
+  },
+  {
+    "question": "Use the DIAMOnD algorithm to expand the seed gene set TSC1, TP53, BRAF, CHEK2, JUN.",
+    "steps": "7248, 7157, 673, 11200, 3725",
+    "path": "046.json"
+  },
+  {
+    "question": "Conduct DIAMOnD analysis to iteratively add relevant genes to HIF1A, CD274.",
+    "steps": "3091, 29126",
+    "path": "047.json"
+  },
+  {
+    "question": "Apply the DIAMOnD algorithm on NF1, RPTOR, IL10, EGFR, FGFR2 to expand the disease module.",
+    "steps": "4763, 57521, 3586, 1956, 2263",
+    "path": "048.json"
+  },
+  {
+    "question": "Conduct DIAMOnD analysis to iteratively add relevant genes to PIK3CG, NFKB2.",
+    "steps": "5294, 4791",
+    "path": "049.json"
+  },
+  {
+    "question": "Identify new candidate genes using DIAMOnD seeded with 3551, 3902.",
+    "steps": "3551, 3902",
+    "path": "050.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by TGFBR2, PGR, CYP19A1, HRAS, ATM, CDKN2A.",
+    "steps": "7048, 5241, 1588, 3265, 472, 1029",
+    "path": "051.json"
+  },
+  {
+    "question": "Find new genes that cluster around 4853, 7157, 2260, 3725, 2309, 3845 through shared interactions.",
+    "steps": "4853, 7157, 2260, 3725, 2309, 3845",
+    "path": "052.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by 545, 8517, 7124, 6777, 4853, 4303.",
+    "steps": "545, 8517, 7124, 6777, 4853, 4303",
+    "path": "053.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around ATM, CHUK during disease module formation.",
+    "steps": "472, 1147",
+    "path": "054.json"
+  },
+  {
+    "question": "Identify genes that are most connected to the seed set 5293, 4763, 7428, 4790 in the interactome.",
+    "steps": "5293, 4763, 7428, 4790",
+    "path": "055.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes 3718, 3091 by iteratively adding their strongest interactors.",
+    "steps": "3718, 3091",
+    "path": "056.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes 2475, 4854, 4089 by iteratively adding their strongest interactors.",
+    "steps": "2475, 4854, 4089",
+    "path": "057.json"
+  },
+  {
+    "question": "Analyze which genes would successively integrate into a module seeded by STAT1, FGFR1, BRAF, MAPK3, FOXO1, PIK3CA, NOTCH2.",
+    "steps": "6772, 2260, 673, 5595, 2308, 5290, 4853",
+    "path": "058.json"
+  },
+  {
+    "question": "Using network connectivity, iteratively grow a module beginning from CHUK, NFKB2, JAK3, TGFBR2.",
+    "steps": "1147, 4791, 3718, 7048",
+    "path": "059.json"
+  },
+  {
+    "question": "Find new genes that cluster around VEGFA, W, CYP19A1, EGFR, MAPK1, JAK2 through shared interactions.",
+    "steps": "7422, 283869, 1588, 1956, 5594, 3717",
+    "path": "060.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around 50943, 2021, 4855, 5728, 1026, 1147 during disease module formation.",
+    "steps": "50943, 2021, 4855, 5728, 1026, 1147",
+    "path": "061.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around CDK2, MDM4, TGFBR1, CDK4, MTOR during disease module formation.",
+    "steps": "1017, 4194, 7046, 1019, 2475",
+    "path": "062.json"
+  },
+  {
+    "question": "Extend the gene network iteratively, beginning with FOXO1, DIAMO, to identify related interactors.",
+    "steps": "2308, N/A",
+    "path": "063.json"
+  },
+  {
+    "question": "Extend the gene network iteratively, beginning with 6777, 1029, 2034, 5594, 5925 to identify related interactors.",
+    "steps": "6777, 1029, 2034, 5594, 5925",
+    "path": "064.json"
+  },
+  {
+    "question": "Identify genes that are most connected to the seed set TSC2, RPTOR, IL6, FOXO3, PIK3CD, FOXP3 in the interactome.",
+    "steps": "7249, 57521, 3569, 2309, 5293, 50943",
+    "path": "065.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by 3717, 2321, 207.",
+    "steps": "3717, 2321, 207",
+    "path": "066.json"
+  },
+  {
+    "question": "Using network connectivity, iteratively grow a module beginning from NF2, IL6, TP53, JAK1, AKT1.",
+    "steps": "4771, 3569, 7157, 3716, 207",
+    "path": "067.json"
+  },
+  {
+    "question": "Find new genes that cluster around 4791, 3551, 2309, 5579, 1499, 3551 through shared interactions.",
+    "steps": "4791, 3551, 2309, 5579, 1499, 3551",
+    "path": "068.json"
+  },
+  {
+    "question": "From BRCA1, RPTOR, D, NOTCH2, STAT5A, expand the disease-relevant module using iterative neighbor inclusion.",
+    "steps": "672, 57521, 1362, 4853, 6776",
+    "path": "069.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around 8517, 3569 during disease module formation.",
+    "steps": "8517, 3569",
+    "path": "070.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by 5291, 7124, 50943, 4303.",
+    "steps": "5291, 7124, 50943, 4303",
+    "path": "071.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by ESR1, FGFR3, IL6, BRCA1, CDK4, IKBKG, FOXO3.",
+    "steps": "2099, 2261, 3569, 672, 1019, 8517, 2309",
+    "path": "072.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by STAT5B, D.",
+    "steps": "6777, 1362",
+    "path": "073.json"
+  },
+  {
+    "question": "Analyze which genes would successively integrate into a module seeded by 3586, 5294, 3551, 6774, 7040, 3716, 545.",
+    "steps": "3586, 5294, 3551, 6774, 7040, 3716, 545",
+    "path": "074.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around TP53, FGFR4 during disease module formation.",
+    "steps": "7157, 2264",
+    "path": "075.json"
+  },
+  {
+    "question": "From 324, 5894, 1019, 1362, 3586, 5241, 4194 expand the disease-relevant module using iterative neighbor inclusion.",
+    "steps": "324, 5894, 1019, 1362, 3586, 5241, 4194",
+    "path": "076.json"
+  },
+  {
+    "question": "From CCND1, ESR1, IKBKG, BRAF, FOXO4, expand the disease-relevant module using iterative neighbor inclusion.",
+    "steps": "595, 2099, 8517, 673, 4303",
+    "path": "077.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by 3716, 675, 6776, 5290, 4855, 50943, 1956.",
+    "steps": "3716, 675, 6776, 5290, 4855, 50943, 1956",
+    "path": "078.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by 2475, 8517, 1499, 283869, 7248, 2066, 3725.",
+    "steps": "2475, 8517, 1499, 283869, 7248, 2066, 3725",
+    "path": "079.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by BRAF, AR, ESR1, NF1, MDM4.",
+    "steps": "673, 367, 2099, 4763, 4194",
+    "path": "080.json"
+  },
+  {
+    "question": "Find new genes that cluster around ESR1, EPAS1, PRKCA, ERBB4, ESR2 through shared interactions.",
+    "steps": "2099, 2034, 5578, 2066, 2100",
+    "path": "081.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by MDM4, ESR1, G.",
+    "steps": "4194, 2099, 2021",
+    "path": "082.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by 1588, 4853, 4791, 675, 5594.",
+    "steps": "1588, 4853, 4791, 675, 5594",
+    "path": "083.json"
+  },
+  {
+    "question": "Identify genes that are most connected to the seed set TSC2, TGFB1, MTOR, RAF1, EGFR in the interactome.",
+    "steps": "7249, 7040, 2475, 5894, 1956",
+    "path": "084.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around PRKCB, JAK2, IL6, AR, EGFR, CDKN2A during disease module formation.",
+    "steps": "5579, 3717, 3569, 367, 1956, 1029",
+    "path": "085.json"
+  },
+  {
+    "question": "Simulate a network expansion process seeded by ESR2, STAT1, FOXO1, FOXP3.",
+    "steps": "2100, 6772, 2308, 50943",
+    "path": "086.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by PIK3CG, BRCA2, CYP19A1, NFKB2.",
+    "steps": "5294, 675, 1588, 4791",
+    "path": "087.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by 2100, 5582, 5894, 3091, 50943, 5293, 5970.",
+    "steps": "2100, 5582, 5894, 3091, 50943, 5293, 5970",
+    "path": "088.json"
+  },
+  {
+    "question": "From 405, 7046, 2065 expand the disease-relevant module using iterative neighbor inclusion.",
+    "steps": "405, 7046, 2065",
+    "path": "089.json"
+  },
+  {
+    "question": "Predict which additional genes would join the disease module initiated by 3791, 7143, 6597, 7422, 4089, 673.",
+    "steps": "3791, 7143, 6597, 7422, 4089, 673",
+    "path": "090.json"
+  },
+  {
+    "question": "Using network connectivity, iteratively grow a module beginning from 6772, 1026, 6774.",
+    "steps": "6772, 1026, 6774",
+    "path": "091.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes KRAS, CTNNB1, MTOR by iteratively adding their strongest interactors.",
+    "steps": "3845, 1499, 2475",
+    "path": "092.json"
+  },
+  {
+    "question": "Determine which nodes are most likely to be recruited around 4089, 2260, 5291, 7124, 4609 during disease module formation.",
+    "steps": "4089, 2260, 5291, 7124, 4609",
+    "path": "093.json"
+  },
+  {
+    "question": "Extend the gene network iteratively, beginning with NOTCH4, FOS, FGFR4, CDK2, STAT5A, to identify related interactors.",
+    "steps": "4855, 2353, 2264, 1017, 6776",
+    "path": "094.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes STAT1, JAK3, TSC2, EGFR, MTOR, FGFR1 by iteratively adding their strongest interactors.",
+    "steps": "6772, 3718, 7249, 1956, 2475, 2260",
+    "path": "095.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes 673, 3725, 5894 by iteratively adding their strongest interactors.",
+    "steps": "673, 3725, 5894",
+    "path": "096.json"
+  },
+  {
+    "question": "From 57521, 4893, 4853 expand the disease-relevant module using iterative neighbor inclusion.",
+    "steps": "57521, 4893, 4853",
+    "path": "097.json"
+  },
+  {
+    "question": "Expand the functional module starting from the seed genes PRKCA, FOXP3, NF2, CDK4, FLT1, EGFR by iteratively adding their strongest interactors.",
+    "steps": "5578, 50943, 4771, 1019, 2321, 1956",
+    "path": "098.json"
+  },
+  {
+    "question": "Analyze which genes would successively integrate into a module seeded by VHL, NOTCH1, FGFR3, CDKN2A, IL6.",
+    "steps": "7428, 4851, 2261, 1029, 3569",
+    "path": "099.json"
+  },
+  {
+    "question": "Using network connectivity, iteratively grow a module beginning from 2021, 2264, 2261, 5970, 1017, 5728, 5241.",
+    "steps": "2021, 2264, 2261, 5970, 1017, 5728, 5241",
+    "path": "100.json"
   }
 ]

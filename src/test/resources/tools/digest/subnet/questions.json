@@ -1,14 +1,502 @@
 [
   {
-    "question": "Does DIGEST confirm that the oncogenes KRAS, BRAF, MYC, EGFR, ERBB2 form a coherent subnetwork disease module that is enriched in cancer-related signaling pathways?",
-    "steps": "3845, 673, 4609, 1956, 2064",
-    "content": "",
+    "question": "Run a DIGEST subset validation workflow for Q13520, P53621.",
+    "steps": "363, 1314",
     "path": "001.json"
   },
   {
-    "question": "Does DIGEST validate that the tumor suppressors TP53, PTEN, RB1, NF1, CDKN2A form a coherent, network-based disease module characterized by cell-cycle regulation and DNA-damage response pathways?",
-    "steps": "3845, 673, 4609, 1956, 2064",
-    "content": "",
+    "question": "Execute DIGEST SubSet validation on EML5, CST1 to test subnetwork relevance.",
+    "steps": "161436, 1469",
     "path": "002.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on A6NIX2, P40937 to test subnetwork relevance.",
+    "steps": "126374, 5985",
+    "path": "003.json"
+  },
+  {
+    "question": "Apply DIGEST SubSet to check whether 7062, 2539 are coherent within the parent module.",
+    "steps": "7062, 2539",
+    "path": "004.json"
+  },
+  {
+    "question": "Perform subset validation with DIGEST using PDPN, SOX7 as input genes.",
+    "steps": "10630, 83595",
+    "path": "005.json"
+  },
+  {
+    "question": "Apply DIGEST SubSet to check whether O75347, P42658 are coherent within the parent module.",
+    "steps": "6902, 1804",
+    "path": "006.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on PKP4, ING4 to assess their internal consistency.",
+    "steps": "8502, 51147",
+    "path": "007.json"
+  },
+  {
+    "question": "Validate Q9UL15, Q86SG3 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "9529, 57135",
+    "path": "008.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset P42658, O60449.",
+    "steps": "1804, 100526664",
+    "path": "009.json"
+  },
+  {
+    "question": "Apply DIGEST SubSet to check whether 26052, 6421, 84103 are coherent within the parent module.",
+    "steps": "26052, 6421, 84103",
+    "path": "010.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on C11orf91, BDH2, RGS9 to test subnetwork relevance.",
+    "steps": "5594, 595, 4089, 2260",
+    "path": "011.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for Q8TAQ9, P47871, O95171 to compute intra-module coherence.",
+    "steps": "256979, 2642, 8796",
+    "path": "012.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset SP8, LMO1, TBCE.",
+    "steps": "221833, 4004, 6905",
+    "path": "013.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for 2657, 10923, 258 to compute intra-module coherence.",
+    "steps": "2657, 10923, 258",
+    "path": "014.json"
+  },
+  {
+    "question": "Apply DIGEST SubSet to check whether Q8N1H7, P00740, P43699 are coherent within the parent module.",
+    "steps": "317761, 2158, 7080",
+    "path": "015.json"
+  },
+  {
+    "question": "Use DIGEST SubSet to examine whether RHOJ, MDFI, FTCD form a consistent cluster.",
+    "steps": "57381, 4188, 10841",
+    "path": "016.json"
+  },
+  {
+    "question": "Perform subset validation with DIGEST using P26842, Q9P2W6, Q9Y5A7 as input genes.",
+    "steps": "939, 29125, 51667",
+    "path": "017.json"
+  },
+  {
+    "question": "Validate 84458, 10718, 4636 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "84458, 10718, 4636",
+    "path": "018.json"
+  },
+  {
+    "question": "Perform subset validation with DIGEST using 3418, 1607, 4967 as input genes.",
+    "steps": "3418, 1607, 4967",
+    "path": "019.json"
+  },
+  {
+    "question": "Run a DIGEST subset validation workflow for A0A1B0GUS0, Q8N2H4, Q99518.",
+    "steps": "111064650, 90196, 2327",
+    "path": "020.json"
+  },
+  {
+    "question": "Run a DIGEST subset validation workflow for ENO3, CANX, UCN3.",
+    "steps": "2027, 821, 114131",
+    "path": "021.json"
+  },
+  {
+    "question": "Run a DIGEST subset validation workflow for 2571, 7408, 100151643.",
+    "steps": "2571, 7408, 100151643",
+    "path": "022.json"
+  },
+  {
+    "question": "Validate O43323, P48357, Q86V21, Q4KMG0 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "50846, 3953, 65985, 50937",
+    "path": "023.json"
+  },
+  {
+    "question": "Perform subset validation with DIGEST using TGIF2-RAB5IF, EMC7, COA5, TJP3 as input genes.",
+    "steps": "100527943, 56851, 493753, 27134",
+    "path": "024.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on P55895, P62502, Q75V66, Q9H9G7 to test subnetwork relevance.",
+    "steps": "5897, 158062, 203859, 192669",
+    "path": "025.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on 4514, 171389, 146956, 80207 to assess their internal consistency.",
+    "steps": "4514, 171389, 146956, 80207",
+    "path": "026.json"
+  },
+  {
+    "question": "Run a DIGEST subset validation workflow for TEP1, CD52, GAS6, DRP2.",
+    "steps": "5728, 1043, 2621, 1808",
+    "path": "027.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on SDHA, RALB, RHOC, SOX7 to assess their internal consistency.",
+    "steps": "6389, 5899, 389, 83595",
+    "path": "028.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset P10124, Q15546, Q5VY09, P51689.",
+    "steps": "5552, 23531, 51278, 414",
+    "path": "029.json"
+  },
+  {
+    "question": "Validate 915, 400793, 94235, 2358 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "915, 400793, 94235, 2358",
+    "path": "030.json"
+  },
+  {
+    "question": "Run a DIGEST subset validation workflow for A6NHQ4, Q15746, O95873, Q8NFK1.",
+    "steps": "100170841, 4638, 57827, 349149",
+    "path": "031.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for PUS3, CKLF, GNS, CST3 to compute intra-module coherence.",
+    "steps": "83480, 688, 2799, 1471",
+    "path": "032.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on 7174, 1816, 8721, 23078 to test subnetwork relevance.",
+    "steps": "7174, 1816, 8721, 23078",
+    "path": "033.json"
+  },
+  {
+    "question": "Perform subset validation with DIGEST using Q9NPD7, Q8NHR9, Q14393, P00751 as input genes.",
+    "steps": "51299, 375189, 2621, 629",
+    "path": "034.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for RBM14-RBM4, SLA, SNX7, NPVF to compute intra-module coherence.",
+    "steps": "100526737, 6503, 51375, 64111",
+    "path": "035.json"
+  },
+  {
+    "question": "Validate 402415, 8000, 54953, 759 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "402415, 8000, 54953, 759",
+    "path": "036.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for 6908, 149998, 7216, 54987, 60592 to compute intra-module coherence.",
+    "steps": "6908, 149998, 7216, 54987, 60592",
+    "path": "037.json"
+  },
+  {
+    "question": "Apply DIGEST SubSet to check whether MTR, CGB3, TPBG, FCF1, C3orf52 are coherent within the parent module.",
+    "steps": "4548, 1082, 7162, 51077, 79669",
+    "path": "038.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on MTDH, ENC1, TSR2, TBR1, NT5M to assess their internal consistency.",
+    "steps": "92140, 8507, 90121, 10716, 56953",
+    "path": "039.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset O60602, Q8NFK1, P51460, P60484, Q6GPH4.",
+    "steps": "7100, 349149, 3640, 5728, 54739",
+    "path": "040.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on KRTAP22-1, ATG3, IRX4, SOST, SON to test subnetwork relevance.",
+    "steps": "337979, 64422, 50805, 50964, 6651",
+    "path": "041.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset RAC2, BNC2, CES1, XPC, PTMS.",
+    "steps": "5880, 54796, 1066, 7508, 5763",
+    "path": "042.json"
+  },
+  {
+    "question": "Validate 10133, 353, 7273, 10724, 124975 using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "10133, 353, 7273, 10724, 124975",
+    "path": "043.json"
+  },
+  {
+    "question": "Validate MYCL, TLCD4-RWDD3, MCAT, SRF, HMBS using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "4610, 100527978, 27349, 6722, 3145",
+    "path": "044.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on P07585, Q9NVV5, Q9Y3D6, O43196, P15586 to assess their internal consistency.",
+    "steps": "1634, 51390, 51024, 4439, 2799",
+    "path": "045.json"
+  },
+  {
+    "question": "Validate IQCN, CCT5, DDR2, HLA-DRB5, PREB using DIGEST subset mode to confirm coherence within the larger network.",
+    "steps": "80726, 22948, 4921, 3127, 10113",
+    "path": "046.json"
+  },
+  {
+    "question": "Execute DIGEST SubSet validation on O43679, P15880, P0DN86, Q9NZJ6, Q96SB8 to test subnetwork relevance.",
+    "steps": "9079, 6187, 1082, 51805, 79677",
+    "path": "047.json"
+  },
+  {
+    "question": "Run DIGEST in subset mode for CAPG, OTX2, FAH, GFI1, ASPA to compute intra-module coherence.",
+    "steps": "822, 5015, 2175, 2672, 443",
+    "path": "048.json"
+  },
+  {
+    "question": "Perform a DIGEST subset analysis on O43815, Q9UNL4, P06280, Q02548, P17948 to assess their internal consistency.",
+    "steps": "6801, 51147, 2717, 5079, 2321",
+    "path": "049.json"
+  },
+  {
+    "question": "Run the DIGEST subset validation mode for the gene subset A1E959, P50616, P43307, Q7Z7L7, O95427, Q8N5V2.",
+    "steps": "54959, 10140, 6745, 10444, 23556, 25791",
+    "path": "050.json"
+  },
+  {
+    "question": "Test whether PCLO, NRG4, CDS1, KRT4, H4C7, ATR form a self-contained and coherent subnetwork.",
+    "steps": "27445, 145957, 1040, 3851, 8369, 545",
+    "path": "051.json"
+  },
+  {
+    "question": "Check if 5447, 64080, 6647, 2595, 687, 4940 maintain the same enrichment patterns as the full set.",
+    "steps": "5447, 64080, 6647, 2595, 687, 4940",
+    "path": "052.json"
+  },
+  {
+    "question": "Determine if the smaller group Q92546, Q05193, Q9BTM9, P49895, P02724, Q13588 preserves functional consistency.",
+    "steps": "9827, 1759, 81605, 1733, 2993, 10750",
+    "path": "053.json"
+  },
+  {
+    "question": "Determine if the smaller group CXorf58, DCTD, ALG3, ERVW-1, PCTP, TLR3 preserves functional consistency.",
+    "steps": "254158, 1635, 10195, 30816, 58488, 7098",
+    "path": "054.json"
+  },
+  {
+    "question": "Test whether 9247, 3516, 10536, 5550, 9496, 1514 form a self-contained and coherent subnetwork.",
+    "steps": "9247, 3516, 10536, 5550, 9496, 1514",
+    "path": "055.json"
+  },
+  {
+    "question": "Compare Q13526, Q9Y3P8, Q13046, P07741, P56589, O60921 against their parent module to estimate subset relevance.",
+    "steps": "5300, 27240, 5676, 353, 8504, 3364",
+    "path": "056.json"
+  },
+  {
+    "question": "Test whether NFIA, LXN, IL32, TFRC, C16orf82, GAD2 form a self-contained and coherent subnetwork.",
+    "steps": "4774, 56925, 9235, 7037, 162083, 2572",
+    "path": "057.json"
+  },
+  {
+    "question": "Evaluate the internal consistency of the subset 4190, 9814, 7143, 4436, 29125, 7554 within the full module.",
+    "steps": "4190, 9814, 7143, 4436, 29125, 7554",
+    "path": "058.json"
+  },
+  {
+    "question": "Assess the coherence of GCLM, CHD7, MPC1, TNS1, RBM3, BET1 compared to the broader disease network.",
+    "steps": "2730, 55636, 51660, 7145, 5935, 10282",
+    "path": "059.json"
+  },
+  {
+    "question": "Determine if the smaller group P49356, O75569, Q9NR90, Q9UQC2, P14618, P27918 preserves functional consistency.",
+    "steps": "100529261, 8575, 57054, 9846, 5315, 5199",
+    "path": "060.json"
+  },
+  {
+    "question": "Determine how cohesive the subset VRK2, RND1, CD59, COMMD3-BMI1, FLT1, MC4R is within the overall gene network.",
+    "steps": "7444, 27289, 966, 100532731, 2321, 4160",
+    "path": "061.json"
+  },
+  {
+    "question": "Test whether Q9HCS7, Q6PCB0, Q6PI26, Q9UHC1, O75879, P02751 form a self-contained and coherent subnetwork.",
+    "steps": "56949, 64856, 55164, 27030, 5188, 2335",
+    "path": "062.json"
+  },
+  {
+    "question": "Evaluate the internal consistency of the subset Q15669, Q06889, A0A0X1KG74, Q6P1X5, Q9H0B3, P34947 within the full module.",
+    "steps": "399, 1960, 100529240, 6873, 80726, 2869",
+    "path": "063.json"
+  },
+  {
+    "question": "Determine how cohesive the subset Q9NQ69, P11308, Q8N2R0, Q6E0U4, P16403, O95931 is within the overall gene network.",
+    "steps": "LHX9, ERG, OSR2, DMKN, H1-2, CBX7",
+    "path": "064.json"
+  },
+  {
+    "question": "Assess the coherence of 924, 100527943, 51375, 25796, 386685, 81563 compared to the broader disease network.",
+    "steps": "924, 100527943, 51375, 25796, 386685, 81563",
+    "path": "065.json"
+  },
+  {
+    "question": "Assess the coherence of IGF1, HMSD, CHIA, MTX3, HPR, KRTAP5-5 compared to the broader disease network.",
+    "steps": "3479, 284293, 27159, 345778, 3250, 439915",
+    "path": "066.json"
+  },
+  {
+    "question": "Validate whether the subset P41159, P00395, O95479, P21695, Q30201, Q92765 retains significant biological association.",
+    "steps": "3952, 4512, 9563, 2819, 3077, 2487",
+    "path": "067.json"
+  },
+  {
+    "question": "Validate whether the subset PROZ, BSN, PPIF, OCRL, BLMH, IRF8 retains significant biological association.",
+    "steps": "8858, 8927, 10105, 4952, 642, 3394",
+    "path": "068.json"
+  },
+  {
+    "question": "Evaluate the internal consistency of the subset Q6P4F2, P17858, P41218, P03372, P34741, P08048, P61371 within the full module.",
+    "steps": "112812, 5211, 4332, 2099, 6383, 7544, 3670",
+    "path": "069.json"
+  },
+  {
+    "question": "Compare VWDE, UROS, GRM8, CA8, EN2, TLX2, WNT2 against their parent module to estimate subset relevance.",
+    "steps": "221806, 7390, 2918, 767, 2020, 3196, 7472",
+    "path": "070.json"
+  },
+  {
+    "question": "Check if 7064, 7200, 10219, 1514, 27044, 337960, 84295 maintain the same enrichment patterns as the full set.",
+    "steps": "7064, 7200, 10219, 1514, 27044, 337960, 84295",
+    "path": "071.json"
+  },
+  {
+    "question": "Compare CIPC, OPTC, LTN1, PNCK, GFUS, C3orf20, EML5 against their parent module to estimate subset relevance.",
+    "steps": "85457, 26254, 26046, 139728, 7264, 84077, 161436",
+    "path": "072.json"
+  },
+  {
+    "question": "Assess if CKB, KPTN, CNN1, HHIP, FMN2, C1D, EOGT form a statistically robust subset within the disease module.",
+    "steps": "1120, 11133, 1264, 64399, 56776, 10438, 285203",
+    "path": "073.json"
+  },
+  {
+    "question": "Validate whether the subset Q9UPR3, P27540, Q96HZ4, C9J3I9, P11308, P46109, Q8TDG4 remains consistent with its parent gene module.",
+    "steps": "23381, 405, 55502, 133874, 2078, 1399, 113510",
+    "path": "074.json"
+  },
+  {
+    "question": "Validate whether the subset 6886, 25861, 3087, 29974, 4835, 10983, 54823 remains consistent with its parent gene module.",
+    "steps": "6886, 25861, 3087, 29974, 4835, 10983, 54823",
+    "path": "075.json"
+  },
+  {
+    "question": "Validate whether the subset UPB1, ORM2, FYB1, BRD2, OCRL, DHX9, USE1 remains consistent with its parent gene module.",
+    "steps": "51733, 5005, 2533, 6046, 4952, 1660, 55850",
+    "path": "076.json"
+  },
+  {
+    "question": "Validate whether the subset CDR2, SP7, HP, GCG, ZER1, RPL7, FZD6 remains consistent with its parent gene module.",
+    "steps": "1039, 121340, 3240, 2641, 10444, 6129, 8323",
+    "path": "077.json"
+  },
+  {
+    "question": "Validate whether the subset P28325, Q8WWZ8, Q6ZT12, Q3LI81, Q4VCS5, P00338, Q8N9W6 remains consistent with its parent gene module.",
+    "steps": "1473, 170392, 130507, 643812, 154796, 3939, 66037",
+    "path": "078.json"
+  },
+  {
+    "question": "Determine how cohesive the subset 101059915, 25983, 83700, 642, 4613, 50937, 362 is within the overall gene network.",
+    "steps": "101059915, 25983, 83700, 642, 4613, 50937, 362",
+    "path": "079.json"
+  },
+  {
+    "question": "Determine how cohesive the subset IL6R, EGR4, A1BG, ASIP, TOX4, NSD1, DAD1 is within the overall gene network.",
+    "steps": "3570, 1961, 1, 434, 9878, 64324, 1603",
+    "path": "080.json"
+  },
+  {
+    "question": "Test whether P02766, A6NJI1, Q9H425, Q15517, Q8WWB7, Q9UMS0, P60409 form a self-contained and coherent subnetwork.",
+    "steps": "7276, 254439, 84886, 1041, 112770, 27247, 386675",
+    "path": "081.json"
+  },
+  {
+    "question": "Determine how cohesive the subset 5805, 5966, 678, 23078, 80119, 22808, 2572, 552891 is within the overall gene network.",
+    "steps": "5805, 5966, 678, 23078, 80119, 22808, 2572, 552891",
+    "path": "082.json"
+  },
+  {
+    "question": "Test whether TBXT, MR1, BKGD, EFS, PRG3, OCRL, DSG4, ZFTA form a self-contained and coherent subnetwork.",
+    "steps": "6862, 3140, 28970, 10278, 10394, 4952, 147409, 65998",
+    "path": "083.json"
+  },
+  {
+    "question": "Determine if the smaller group P08922, Q68DA7, P12821, O95760, O94763, P11161, Q9NZV7, Q9Y3S1 preserves functional consistency.",
+    "steps": "6098, 342184, 1636, 90865, 8725, 1959, 23619, 65268",
+    "path": "084.json"
+  },
+  {
+    "question": "Validate whether the subset AMTN, RGL2, PRLR, PKM, C1orf146, STX7, KAT5, PER1 retains significant biological association.",
+    "steps": "401138, 5863, 5618, 5315, 388649, 8417, 10524, 5187",
+    "path": "085.json"
+  },
+  {
+    "question": "Compare 132243, 644139, 129880, 4802, 4904, 4312, 10551, 2917 against their parent module to estimate subset relevance.",
+    "steps": "132243, 644139, 129880, 4802, 4904, 4312, 10551, 2917",
+    "path": "086.json"
+  },
+  {
+    "question": "Assess if P51955, Q6ZN57, Q14833, P49802, P00338, P16104, O75390, Q9NZJ4 form a statistically robust subset within the disease module.",
+    "steps": "4751, 80108, 2914, 6000, 3939, 3014, 1431, 26278",
+    "path": "087.json"
+  },
+  {
+    "question": "Determine how cohesive the subset 5753, 55090, 1236, 1233, 23469, 51705, 389827, 8408 is within the overall gene network.",
+    "steps": "5753, 55090, 1236, 1233, 23469, 51705, 389827, 8408",
+    "path": "088.json"
+  },
+  {
+    "question": "Determine how cohesive the subset Q96PY6, Q8NES3, P13804, FGF6, 4128 is within the overall gene network.",
+    "steps": "4750, 3955, 2108, 2251, 4128",
+    "path": "089.json"
+  },
+  {
+    "question": "Validate whether the subset 9760, 4774, KLF6, DHFR, RPA1 remains consistent with its parent gene module.",
+    "steps": "9760, 4774, 1316, 1719, 6117",
+    "path": "090.json"
+  },
+  {
+    "question": "Check if CLP, TWNK, 4340, Q14146, P29762 maintain the same enrichment patterns as the full set.",
+    "steps": "810, 56652, 4340, 9816, 1381",
+    "path": "091.json"
+  },
+  {
+    "question": "Validate whether the subset Q9Y2L1, Q6NXT2, P35790, PZP, Q92783 retains significant biological association.",
+    "steps": "22894, 440093, 1119, 5858, 8027",
+    "path": "092.json"
+  },
+  {
+    "question": "Validate whether the subset CLPS, DPH1, 55148, 583, FAF2 retains significant biological association.",
+    "steps": "1208, 1801, 55148, 583, 23197",
+    "path": "093.json"
+  },
+  {
+    "question": "Test whether SRP9, 7485, Q9UBD5, SRR, P09919 form a self-contained and coherent subnetwork.",
+    "steps": "6726, 7485, 23595, 63826, 1440",
+    "path": "094.json"
+  },
+  {
+    "question": "Determine how cohesive the subset 687, 5008, 124535, Q96JJ7, P13232 is within the overall gene network.",
+    "steps": "687, 5008, 124535, 54495, 3574",
+    "path": "095.json"
+  },
+  {
+    "question": "Determine if the smaller group Q9H2Z4, Q9NYB9, O00425, 7429, 49860 preserves functional consistency.",
+    "steps": "644524, 10152, 10643, 7429, 49860",
+    "path": "096.json"
+  },
+  {
+    "question": "Check if Q8N884, Q6ZMW3, 9935, 1627, LPO maintain the same enrichment patterns as the full set.",
+    "steps": "115004, 400954, 9935, 1627, 4025",
+    "path": "097.json"
+  },
+  {
+    "question": "Validate whether the subset H3-3A, C6orf52, 5984, P11766, MNX1 retains significant biological association.",
+    "steps": "3020, 347744, 5984, 128, 3110",
+    "path": "098.json"
+  },
+  {
+    "question": "Evaluate the internal consistency of the subset 286046, 646625, O14964, A0A1B0GVM5, CPA3 within the full module.",
+    "steps": "286046, 646625, 9146, 110806299, 1359",
+    "path": "099.json"
+  },
+  {
+    "question": "Determine if the smaller group P49916, P48643, Q16740, 386674, 8575 preserves functional consistency.",
+    "steps": "3980, 22948, 8192, 386674, 8575",
+    "path": "100.json"
   }
 ]

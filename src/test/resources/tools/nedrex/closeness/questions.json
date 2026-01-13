@@ -1,14 +1,502 @@
 [
   {
-    "question": "Starting from the immunotherapy checkpoint genes PDCD1, CTLA4, and LAG3, run the closeness centrality algorithm. Which neighbouring genes show the greatest centrality (highest scores), and what ranks do they hold?",
-    "steps": "Translation: { PDCD1: 'Q15116', CTLA4: 'P16410', LAG3: 'P18627' }",
-    "content": "Seed genes (Closeness input): PDCD1, CTLA4, LAG3. Mapped UniProt IDs: Q15116, P16410, P18627. Drug associations (uniform closeness scores): Multiple drugs (e.g., DB09063, DB08895, DB01268, DB01254) all with score 0.4286 — indicating drug connections, not gene centrality results",
+    "question": "Assess how close TNF13, HIF1A, MTOR, VEGFA are to all other nodes using closeness centrality.",
+    "steps": "O75888, Q16665, P42345, A0A0Y0IMM4",
     "path": "001.json"
   },
   {
-    "question": "Using the metabolic disease seeds INSR, GCK, and PPARG, apply the closeness centrality algorithm to the selected network. Which nodes emerge in the top 5 positions, and what are their closeness values?",
-    "steps": "Translation: { INSR: 'P06213', GCK: 'H2L099', PPARG: 'Q4U3Q4' }",
-    "content": "Seed genes (Closeness input): INSR, GCK, PPARG. Mapped UniProt IDs: P06213, H2L099, Q4U3Q4. Top-5 ranked nodes (closeness = 1.0): DB09063, DB01268, DB00619, DB01259, DB04868. Observation: All top positions are drugs connected to INSR (P06213)",
+    "question": "Use closeness centrality to identify the most central genes among P18627, P40763, P18627, P15692.",
+    "steps": "P18627 P40763, P18627, P15692",
     "path": "002.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group O60674, Q9USP0, O75888.",
+    "steps": "O60674, Q9USP0, O75888",
+    "path": "003.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among Q15116, P42345, E9PFX5.",
+    "steps": "Q15116, P42345, E9PFX5",
+    "path": "004.json"
+  },
+  {
+    "question": "Determine which of the following genes EI2BA, MTHFR, LDLR, STAT5A, IL2, VEGFA, LAG3are the most central according to closeness centrality.",
+    "steps": "Q14232, Q5SNW7, J3KMZ9, P42229, Q0GK43, A0A0Y0IMM4, P18627",
+    "path": "005.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes 3643, 351 as input.",
+    "steps": "P06213, Q14232",
+    "path": "006.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes BRCA1, TNF13, MTHFR, CASP3, ABCC8 as input.",
+    "steps": "E7ENB7, O75888, P42898, C9JXR7, A0A2R8YDG0",
+    "path": "007.json"
+  },
+  {
+    "question": "Calculate the closeness centrality of the genes 1956, 3558, 3902, 2064, 3123.",
+    "steps": "P00533, Q0GK43, P18627, Q14232, F5H1T4, P01911",
+    "path": "008.json"
+  },
+  {
+    "question": "Compute node closeness for MC4R, CASP3, IL2, IL13 in the interactome graph.",
+    "steps": "P32245, C9JXR7, Q0GK43, Q4VB53",
+    "path": "009.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among P48357, Q13485, Q12888, P35218, P10145, Q5S007.",
+    "steps": "P48357, Q13485, Q12888, P35218, P10145, Q5S007",
+    "path": "010.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group P35225, Q12888, P37231, P48357.",
+    "steps": "P35225, A0A087WT22, P37231, P48357",
+    "path": "011.json"
+  },
+  {
+    "question": "Calculate the closeness centrality of the genes Q14765, Q9Y2R2, O75888, P35218, O60674.",
+    "steps": "A0AAQ5BHR1, Q9Y2R2, O75888, P35218, O60674",
+    "path": "012.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among 7422, 3902, 3565, 6774, 3569, 3767.",
+    "steps": "A0A0Y0IMM4, P18627, Q5FC01, P40763, B5MC21, Q14654",
+    "path": "013.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among CAH5A, TP53, CASP3, PPARG.",
+    "steps": "P35218, A0A087WT22, P42574, E9PFX5",
+    "path": "014.json"
+  },
+  {
+    "question": "Determine which of the following genes IL6, BRCA2, MC4R, CAH5A are the most central according to closeness centrality.",
+    "steps": "B5MC21, P51587, P32245, P35218",
+    "path": "015.json"
+  },
+  {
+    "question": "Compute node closeness for P60568, P05113, Q5VWK5, Q38998, P18627, P01116, P51587 in the interactome graph.",
+    "steps": "P60568, P05113, A0A8V8TL76, B3KVH4, P18627, L7RSL8, A0A8V8TPZ2",
+    "path": "016.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among PDCD1, SYUA.",
+    "steps": "E7ER21, P37840",
+    "path": "017.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among 54741, 3953, 4524, 3643.",
+    "steps": "Q4G138, Q5SNW7, P35218, P06213",
+    "path": "018.json"
+  },
+  {
+    "question": "Perform a closeness centrality computation to rank HIF1A, IL13, PPARG, APOE, BRCA1, STAT4, PSN1.",
+    "steps": "A8MYV6, P35225, E9PFX5, P02649, E7ENB7, Q14765, P49768",
+    "path": "019.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among ST2A1, LAG3, IL23R.",
+    "steps": "Q06520, P18627, Q5VWK5",
+    "path": "020.json"
+  },
+  {
+    "question": "Find the closeness values for P35225, P10636, P15692, P49768, P02649, P35225 within the biological network.",
+    "steps": "Q4VB53, P10636, P15692, A0A024R6A3, E9PEV4, P35225",
+    "path": "021.json"
+  },
+  {
+    "question": "Assess how close MYC, NOTCH1, MTOR are to all other nodes using closeness centrality.",
+    "steps": "Q14899, A0A7P0T8U6, P42345",
+    "path": "022.json"
+  },
+  {
+    "question": "Calculate the closeness centrality of the genes ST2A1, LEP.",
+    "steps": "Q06520, P41159",
+    "path": "023.json"
+  },
+  {
+    "question": "Compute node closeness for P48357, Q5S007, P42574, Q9HC29, P15709, P06213 in the interactome graph.",
+    "steps": "P48357, Q5S007, P42574, Q9HC29, Q06520, M0R3E6",
+    "path": "024.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group P06213, P01911, Q12888, P42345, Q99497, P16410.",
+    "steps": "M0R3E6, Q5Y7D1, Q12888, P42345, Q99497, P16410",
+    "path": "025.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes 255738, 4609, 3569, 7040 as input.",
+    "steps": "A0A669KBG0, P01106, P05231, A0A7I2YQL8",
+    "path": "026.json"
+  },
+  {
+    "question": "Perform a closeness centrality computation to rank ABCC8, HIF1A, PARK7.",
+    "steps": "A0A2R8YDG0, A8MYV6, Q99497",
+    "path": "027.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes STAT4, TAU, AKT1, JAK2 as input.",
+    "steps": "Q14765, P10636, B3KVH4, B4DYV1",
+    "path": "028.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes 4609, 6822, 6774 as input.",
+    "steps": "P01106, Q06520, A0A7I2V4R3",
+    "path": "029.json"
+  },
+  {
+    "question": "Determine which of the following genes  CTLA4, STAT3, VEGFA, MTOR are the most central according to closeness centrality.",
+    "steps": "A0A8Q3WKZ2, P40763, A0A0Y0IMM4, A0A8V8TQM6",
+    "path": "030.json"
+  },
+  {
+    "question": "Perform a closeness centrality computation to rank IL2, AKT1.",
+    "steps": "Q0GK43, B3KVH4",
+    "path": "031.json"
+  },
+  {
+    "question": "Assess how close IL13, TGFB1 are to all other nodes using closeness centrality.",
+    "steps": "Q4VB53, A0A7I2YQL8",
+    "path": "032.json"
+  },
+  {
+    "question": "Compute node closeness for FTO, EGFR in the interactome graph.",
+    "steps": "Q9C0B1, C9JYS6",
+    "path": "033.json"
+  },
+  {
+    "question": "Determine which of the following genes  STA5A, ST2A1 are the most central according to closeness centrality.",
+    "steps": "P42229, Q06520",
+    "path": "034.json"
+  },
+  {
+    "question": "Compute node closeness for P60568, P22607, Q14765, P60568 in the interactome graph.",
+    "steps": "P60568, P22607, A0AAQ5BHR1, Q0GK43",
+    "path": "035.json"
+  },
+  {
+    "question": "Assess how close PARK7, FTO, CT451, CXCL8, IL5, IL13 are to all other nodes using closeness centrality.",
+    "steps": "Q99497, Q9C0B1, Q5HYN5, A0A8Q3SIG6, C9JQP9, Q4VB53",
+    "path": "036.json"
+  },
+  {
+    "question": "Analyze the closeness scores of P48357, O60674, P42345, P31749 to determine key regulators.",
+    "steps": "P48357, O60674, A0A8V8TQM6, P31749",
+    "path": "037.json"
+  },
+  {
+    "question": "Analyze the closeness scores of P31749, P05112, C9JXR7, Q5S007, P60568 to determine key regulators.",
+    "steps": "P31749, P05112, C9JXR7, Q5S007, Q0GK43",
+    "path": "038.json"
+  },
+  {
+    "question": "Analyze the closeness scores of P05231, Q16665, P42345, Q9NQB0, Q8NBP7, Q12888 to determine key regulators.",
+    "steps": "P05231, Q16665, A0A8V8TQM6, Q6FHW4, Q8NBP7, A0A087WT22",
+    "path": "039.json"
+  },
+  {
+    "question": "Analyze the closeness scores of Q257X2, P00533, P46531, P22607, P35225, Q5VWK5 to determine key regulators.",
+    "steps": "A4D0Y8, P00533, P46531, P22607, P35225, A0A8V8TL76",
+    "path": "040.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among IL2, CT451, LRRK2, AKT1, PTN22, LEPR, IL8.",
+    "steps": "P60568, Q5HYN5, A0A7P0Z468, P31749, Q9Y2R2, P48357, P10145",
+    "path": "041.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among TF7L2, IL5, STAT4, LRRK2, P, CCND1.",
+    "steps": "Q9NQB0, C9JQP9, A0AAQ5BHR1, A0A7P0Z468, Q5HYN5, F5H437",
+    "path": "042.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes IL13, CT451 as input.",
+    "steps": "Q4VB53, Q5HYN5",
+    "path": "043.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group RASK, SMAD4, MTOR.",
+    "steps": "P01116, Q13485, A0A8V8TQM6",
+    "path": "044.json"
+  },
+  {
+    "question": "Use closeness centrality to identify the most central genes among P02649, Q9HC29, P42898, P01116, Q5HYN5, Q99497.",
+    "steps": "P02649, Q9HC29, P42898, P01116, Q5HYN5, K7ELW0",
+    "path": "045.json"
+  },
+  {
+    "question": "Determine which of the following genes PCSK9, P05113, P02649, P37840 are the most central according to closeness centrality.",
+    "steps": "A0A669KBG0, C9JQP9, P02649, H6UYS7",
+    "path": "046.json"
+  },
+  {
+    "question": "Calculate the closeness centrality of the genes CT451, GCK, LRRK2, VEGFA, TCF7L2, CD274, PPARG.",
+    "steps": "Q5HYN5, H7BXV0, Q5S007, A0A0Y0IMM4, Q6FHW4, Q0GN75, P37231",
+    "path": "047.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group CT451, FTO, CASP3, JAK2.",
+    "steps": "Q5HYN5, A0A1B0GTC5, P42574, O60674",
+    "path": "048.json"
+  },
+  {
+    "question": "Evaluate the network closeness for the gene group PARK7, LEPR, TGFB1.",
+    "steps": "Q99497, Q4G138, A0A7I2YQL8",
+    "path": "049.json"
+  },
+  {
+    "question": "Run a closeness centrality analysis using the genes P51587, P05113 as input.",
+    "steps": "P51587, P05113",
+    "path": "050.json"
+  },
+  {
+    "question": "Find the genes IL5, KCJ11 that act as key mediators due to their overall network proximity.",
+    "steps": "C9JQP9, Q14654",
+    "path": "051.json"
+  },
+  {
+    "question": "Find the genes NOTCH1, LRRK2, PPARG, PTN22, C that act as key mediators due to their overall network proximity.",
+    "steps": "A0A7P0T8U6, Q5S007, E9PFX5, Q9Y2R2, Q9Y297",
+    "path": "052.json"
+  },
+  {
+    "question": "Find the genes TGFB1, AKT1, FTO that act as key mediators due to their overall network proximity.",
+    "steps": "A0A7I2YQL8, P31749, Q9C0B1",
+    "path": "053.json"
+  },
+  {
+    "question": "Find genes among 4524, 3565, 8945, 1956, 5468 that have the shortest overall distances to other nodes.",
+    "steps": "Q5SNW7, P05112, Q9Y297, P00533, E9PFX5",
+    "path": "054.json"
+  },
+  {
+    "question": "Identify which of the genes TNF13, MC4R, AKT1, TGFB1 are positioned nearest to all others in the network.",
+    "steps": "O75888, P32245, B3KVH4, A0A7I2YQL8",
+    "path": "055.json"
+  },
+  {
+    "question": "Rank the genes JAK2, TNF13 based on how centrally located they are within the network.",
+    "steps": "O60674, O75888",
+    "path": "056.json"
+  },
+  {
+    "question": "Find genes among DRB1, IL13, SMAD4 that have the shortest overall distances to other nodes.",
+    "steps": "Q5Y7D1, Q4VB53, Q13485",
+    "path": "057.json"
+  },
+  {
+    "question": "Identify which of the genes SNCA, CCND1, CD274, IL23R, CARF are positioned nearest to all others in the network.",
+    "steps": "H6UYS7, F5H437, Q0GN75, Q5VWK5, J3QRG6",
+    "path": "058.json"
+  },
+  {
+    "question": "Find genes among MAPT, FBW1A that have the shortest overall distances to other nodes.",
+    "steps": "B3KTM0, Q9Y297",
+    "path": "059.json"
+  },
+  {
+    "question": "Find the genes P60568, P18627, Q5S007, Q9NXV6, P04626, P42898, Q9Y297 that act as key mediators due to their overall network proximity.",
+    "steps": "P60568, P18627, Q5S007, J3QRG6, P04626, Q5SNW7, Q9Y297",
+    "path": "060.json"
+  },
+  {
+    "question": "Assess which genes Q9C0B1, Q4U3Q4, Q9Y297, Q9Y2R2, P31749, P24385, Q13485 serve as efficient communication hubs across the interactome.",
+    "steps": "Q9C0B1, E9PFX5, Q9Y297, Q9Y2R2, P31749, F5H437, A0A087WUF3",
+    "path": "061.json"
+  },
+  {
+    "question": "Identify which of the genes P46531, P42345, P06213 are positioned nearest to all others in the network.",
+    "steps": "P46531, A0A8V8TQM6, M0R3E6",
+    "path": "062.json"
+  },
+  {
+    "question": "Evaluate how strongly VEGFA, PDCD1 are positioned at the center of the network topology.",
+    "steps": "P15692, A0A0Y0IMM4, Q15116",
+    "path": "063.json"
+  },
+  {
+    "question": "Identify which of the genes 348, 4160, 1956, 3558, 4160, 351, 3569 are positioned nearest to all others in the network.",
+    "steps": "P02649, P32245, C9JYS6, P60568, P32245, A2VEY9, B5MC21",
+    "path": "064.json"
+  },
+  {
+    "question": "Evaluate how strongly P01106, P15692 are positioned at the center of the network topology.",
+    "steps": "P01106, A0A0Y0IMM4",
+    "path": "065.json"
+  },
+  {
+    "question": "Assess which genes AKT1, HIF1A, STAT3, VEGFA, STAT3, APP, LEPR serve as efficient communication hubs across the interactome.",
+    "steps": "P31749, A8MYV6, A0A7I2V4R3, A0A0Y0IMM4, P40763, A2VEY9, P48357",
+    "path": "066.json"
+  },
+  {
+    "question": "Determine which genes from FBW1A, PARK7, MTOR are most globally connected in the network.",
+    "steps": "Q9Y297, Q99497, A0A8V8TQM6",
+    "path": "067.json"
+  },
+  {
+    "question": "Find the genes AKT1, FBW1A that act as key mediators due to their overall network proximity.",
+    "steps": "B3KVH4, Q9Y297",
+    "path": "068.json"
+  },
+  {
+    "question": "Rank the genes 8945, 64127, 149233, 2261, 672, 3596 based on how centrally located they are within the network.",
+    "steps": "Q9Y297, Q9HC29, A0A8V8TL76, P22607, E7ENB7, P35225",
+    "path": "069.json"
+  },
+  {
+    "question": "Determine which genes from LAG3, STAT4, AKT1, PCSK9, FTO, HIF1A are most globally connected in the network.",
+    "steps": "P18627, A0AAQ5BHR1, P31749, Q8NBP7, A0A1B0GTC5, Q16665",
+    "path": "070.json"
+  },
+  {
+    "question": "Rank the genes FBW1A, STAT3, TNF13, STAT4, IL8 based on how centrally located they are within the network.",
+    "steps": "Q9Y297, P40763, O75888, A0AAQ5BHR1, P10145",
+    "path": "071.json"
+  },
+  {
+    "question": "Assess which genes P05113, P05231 serve as efficient communication hubs across the interactome.",
+    "steps": "P05113, P05231",
+    "path": "072.json"
+  },
+  {
+    "question": "Find genes among DRB1, CCND1, VEGFA, IL8, FTO, MTOR, LEP that have the shortest overall distances to other nodes.",
+    "steps": "P01911, F5H437, A0A0Y0IMM4, P10145, Q9C0B1, A0A8V8TQM6, A4D0Y8",
+    "path": "073.json"
+  },
+  {
+    "question": "Find the genes O60674, P49768, P04626, P01137 that act as key mediators due to their overall network proximity.",
+    "steps": "O60674, P49768, P04626, P01137",
+    "path": "074.json"
+  },
+  {
+    "question": "Which of STAT4, STAT5A, ERBB2, PSN1 are most embedded in the network structure based on path lengths?",
+    "steps": "A0AAQ5BHR1, K7EK35, P04626, P49768",
+    "path": "075.json"
+  },
+  {
+    "question": "Assess which genes IL5, MC4R, MYC, FBW1A, AKT1, ABCC8 serve as efficient communication hubs across the interactome.",
+    "steps": "C9JQP9, P32245, P01106, Q9Y297, B3KVH4, A0A2R8YDG0",
+    "path": "076.json"
+  },
+  {
+    "question": "Which of CARF, PSEN1, MTHFR, TGFB1, MTOR are most embedded in the network structure based on path lengths?",
+    "steps": "Q9NXV6, A0A024R6A3, Q5SNW7, A0A7I2YQL8, P42345",
+    "path": "077.json"
+  },
+  {
+    "question": "Find genes among LAG3, BRCA1, NOD2 that have the shortest overall distances to other nodes.",
+    "steps": "P18627, P38398, J3QL80",
+    "path": "078.json"
+  },
+  {
+    "question": "Which of P41159, Q14654 are most embedded in the network structure based on path lengths?",
+    "steps": "P41159, Q14654",
+    "path": "079.json"
+  },
+  {
+    "question": "Find the genes SYUA, CCND1, LAG3, FTO, RASK, FBW1A, IL6 that act as key mediators due to their overall network proximity.",
+    "steps": "P37840, F5H437, P18627, A0A1B0GTC5, P01116, Q9Y297, P05231",
+    "path": "080.json"
+  },
+  {
+    "question": "Analyze which genes among Q12888, P60568 maintain the highest average proximity to others.",
+    "steps": "Q12888, P60568",
+    "path": "081.json"
+  },
+  {
+    "question": "Identify which of the genes NOD2, CD274, MTHFR, SMAD4, STA5A are positioned nearest to all others in the network.",
+    "steps": "J3QL80, Q0GN75, Q5SNW7, A0A087WUF3, P42229",
+    "path": "082.json"
+  },
+  {
+    "question": "Which of FBW1A, NOTCH1, STA5A, IL23R, PSEN1, CASP3, AKT1 are most embedded in the network structure based on path lengths?",
+    "steps": "Q9Y297, A0A7P0T8U6, P42229, A0A8V8TL76, A0A024R6A3, C9JXR7, B3KVH4",
+    "path": "083.json"
+  },
+  {
+    "question": "Assess which genes P01130, Q9NXV6 serve as efficient communication hubs across the interactome.",
+    "steps": "P01130, Q9NXV6",
+    "path": "084.json"
+  },
+  {
+    "question": "Estimate which of the genes P38398, P04626, INSR, LEPR, Q09428 minimize average distance to all other nodes.",
+    "steps": "P38398, P04626, M0R3E6, Q4G138, Q09428",
+    "path": "085.json"
+  },
+  {
+    "question": "Estimate which of the genes LDLR, PARK7, PTEN, APOE, IL2, STAT3, MAPT minimize average distance to all other nodes.",
+    "steps": "J3KMZ9, K7ELW0, A0A8V8TPK6, P02649, P60568, A0A7I2V4R3, B3KTM0",
+    "path": "086.json"
+  },
+  {
+    "question": "Estimate which of the genes TP53, IL4, SMAD4, STA5A, CCND1, LDLR, LAG3 minimize average distance to all other nodes.",
+    "steps": "A0A087WT22, P05112, A0A087WUF3, P42229, P24385, P01130, P18627",
+    "path": "087.json"
+  },
+  {
+    "question": "Evaluate how strongly P22607, P35225, Q8NBP7 are positioned at the center of the network topology.",
+    "steps": "P22607, Q4VB53, Q8NBP7",
+    "path": "088.json"
+  },
+  {
+    "question": "Identify which of the genes Q14654, P38398, PTPN22, P42898, P01116, Q9NXV6 are positioned nearest to all others in the network.",
+    "steps": "B2RC52, P38398, G3K0T4, P42898, P01116, Q9NXV6",
+    "path": "089.json"
+  },
+  {
+    "question": "Identify which of the genes FBW1A, HIF1A, TCF7L2, BRCA1, CCND1 are positioned nearest to all others in the network.",
+    "steps": "Q9Y297, A8MYV6, Q6FHW4, P38398, F5H437",
+    "path": "090.json"
+  },
+  {
+    "question": "Find genes among Q9Y297, P46531, P49768, Q14765, P15692, P37231 that have the shortest overall distances to other nodes.",
+    "steps": "Q9Y297, A0A7P0T8U6, P49768, Q14765, P15692, E9PFX5",
+    "path": "091.json"
+  },
+  {
+    "question": "Which of BRCA2, PDCD1 are most embedded in the network structure based on path lengths?",
+    "steps": "P51587, E7ER21",
+    "path": "092.json"
+  },
+  {
+    "question": "Determine which genes from Q9NQB0, P01911, P42574, Q16665 are most globally connected in the network.",
+    "steps": "Q6FHW4, P01911, P42574, Q16665",
+    "path": "093.json"
+  },
+  {
+    "question": "Estimate which of the genes P22607, Q12888 minimize average distance to all other nodes.",
+    "steps": "P22607, Q12888",
+    "path": "094.json"
+  },
+  {
+    "question": "Which of TP53, PARK7, INSR, NOD2, FBW1A, KCNJ11 are most embedded in the network structure based on path lengths?",
+    "steps": "A0A087WT22, Q99497, M0R3E6, J3QL80, Q9Y297, B2RC52",
+    "path": "095.json"
+  },
+  {
+    "question": "Find the genes FBW1A, LAG3, PTN22, MYC that act as key mediators due to their overall network proximity.",
+    "steps": "Q9Y297, P18627, Q9Y2R2, P01106",
+    "path": "096.json"
+  },
+  {
+    "question": "Which of KCNJ11, CXCL8, DRB1, BRCA2 are most embedded in the network structure based on path lengths?",
+    "steps": "B2RC52, A0A8Q3SIG6, P01911, A0A8V8TPZ2",
+    "path": "097.json"
+  },
+  {
+    "question": "Find genes among Q9Y2R2, P01137 that have the shortest overall distances to other nodes.",
+    "steps": "G3K0T4, P01137",
+    "path": "098.json"
+  },
+  {
+    "question": "Assess which genes MTHR, STAT3, FBW1A, AKT1, PCSK9 serve as efficient communication hubs across the interactome.",
+    "steps": "P42898, A0A7I2V4R3, Q9Y297, B3KVH4, A0A669KBG0",
+    "path": "099.json"
+  },
+  {
+    "question": "Analyze which genes among ABCC8, ERBB2 maintain the highest average proximity to others.",
+    "steps": "A0A2R8YDG0, P04626",
+    "path": "100.json"
   }
 ]
