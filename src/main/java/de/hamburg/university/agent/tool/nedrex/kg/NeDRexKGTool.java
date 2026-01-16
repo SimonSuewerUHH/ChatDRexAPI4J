@@ -106,10 +106,6 @@ public class NeDRexKGTool {
                         Log.infof("Empty result for query: %s", newQuery);
                         continue;
                     }
-                    if (i == maxAttempts - 1) {
-                        Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
-                        break;
-                    }
                     List<String> cypherIds = CypherResultIdExtractor.extractResults(result);
                     cypherIds.addAll(ids);
                     cypherToDrugstOne.toDrugstOne(cypherIds, content, emitter);
