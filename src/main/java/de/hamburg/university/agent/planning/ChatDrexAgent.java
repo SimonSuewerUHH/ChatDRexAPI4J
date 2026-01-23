@@ -15,12 +15,16 @@ import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.context.ManagedExecutor;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
 public class ChatDrexAgent {
 
+    @Inject
+    ManagedExecutor managedExecutor;
 
     @Inject
     PlanningAgent planningAgent;
@@ -34,32 +38,44 @@ public class ChatDrexAgent {
     @ActivateRequestContext
     public Multi<ChatResponseDTO> answer(ChatRequestDTO content, UserLLMModelSettingDTO settings) {
         return Multi.createFrom().emitter(em -> {
-            ChatJsonLanguageModelSupplier.SETTINGS.set(settings);
+            final AtomicBoolean terminated = new AtomicBoolean(false);
+            em.onTermination(() -> terminated.set(true));
 
-            List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
-            String context = "";
-            if (!states.isEmpty()) {
-                ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
-                toolDTO.setInput(states);
-                em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
-                RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
-                context = classy.getRelevantDiscussion();
-                toolDTO.setStop();
-                toolDTO.addContent("Context:" + context);
-                em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
-            }
+            managedExecutor.execute(() -> {
+                ChatJsonLanguageModelSupplier.SETTINGS.set(settings);
+                try {
+                    String context = getContext(content, em);
+                    AgentResult result = planningAgent.planAnswer(content, context, em, terminated);
+                    Log.infof("Final result length: %d", result.getMessageMarkdown().length());
+                    //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
-            AgentResult result = answer(content, context, em);
-            Log.infof("Final result length: %d", result.getMessageMarkdown().length());
-            //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
-
-            em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
-            ChatJsonLanguageModelSupplier.SETTINGS.remove();
-            em.complete();
+                    em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
+                    ChatJsonLanguageModelSupplier.SETTINGS.remove();
+                    em.complete();
+                } catch (Throwable t) {
+                    Log.error("Unhandled error in answer() stream", t);
+                    em.emit(ChatResponseDTO.createErrorResponse(content, t.getMessage()));
+                } finally {
+                    ChatJsonLanguageModelSupplier.SETTINGS.remove();
+                    if (!terminated.get()) em.complete();
+                }
+            });
         });
     }
 
-    private AgentResult answer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
-        return planningAgent.planAnswer(content, context, emitter);
+    private String getContext(ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> em) {
+        List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
+        String context = "";
+        if (!states.isEmpty()) {
+            ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
+            toolDTO.setInput(states);
+            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
+            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
+            context = classy.getRelevantDiscussion();
+            toolDTO.setStop();
+            toolDTO.addContent("Context:" + context);
+            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
+        }
+        return context;
     }
 }

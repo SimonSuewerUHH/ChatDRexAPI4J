@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
 public class PlanningAgent {
@@ -61,7 +62,7 @@ public class PlanningAgent {
 
     private final ObjectMapper om = new ObjectMapper();
 
-    public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
+    public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter, AtomicBoolean terminated) {
         PlanState state = new PlanState();
         state.setPreviousContext(context);
         state.setUserGoal(content.getMessage());
@@ -72,6 +73,7 @@ public class PlanningAgent {
         resetMemory(content, state, 0);
 
         for (int step = 1; step <= MAX_STEPS; step++) {
+            if (terminated.get()) break;
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
             history.add(decision);
