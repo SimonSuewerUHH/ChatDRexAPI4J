@@ -19,12 +19,10 @@ public abstract class BaseNedrexTool<A extends NeDRexJobApi<P, S>, P, S extends 
     @RestClient
     protected A api;
 
+    protected final long timeoutSeconds = 300;
+
     protected abstract R mapResult(T result);
 
-
-    protected long timeoutMSeconds() {
-        return 300 * 1000L;
-    }
 
     protected String sanitizeUid(String raw) {
         return raw == null ? null : raw.replace("\"", "").trim();
@@ -40,17 +38,20 @@ public abstract class BaseNedrexTool<A extends NeDRexJobApi<P, S>, P, S extends 
                     }
                 });
     }
+
     public Uni<R> fallback(String uid) {
-        return Uni.createFrom().failure(new RuntimeException("Operation timed out after 60 seconds (uid=" + uid + ")."));
+        return Uni.createFrom().failure(
+                new RuntimeException("Operation timed out after " + timeoutSeconds + " seconds (uid=" + uid + ").")
+        );
     }
 
-    @Timeout(value = 180, unit = ChronoUnit.SECONDS)
+    @Timeout(value = timeoutSeconds, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "fallback")
     public Uni<R> retrieveResults(String uid) {
         Objects.requireNonNull(uid, "uid");
         return Uni.createFrom().emitter(emitter -> {
 
-            long pollTimerId = vertx.setPeriodic(timeoutMSeconds(), id -> {
+            long pollTimerId = vertx.setPeriodic(timeoutSeconds * 1000L, id -> {
                 api.status(uid).whenComplete((statusResponse, throwable) -> {
                     if (throwable != null) {
 
