@@ -6,6 +6,7 @@ import de.hamburg.university.agent.bot.NeDRexBot;
 import de.hamburg.university.agent.bot.NeDRexToolDecisionBot;
 import de.hamburg.university.agent.tool.nedrex.NeDRexTool;
 import de.hamburg.university.agent.tool.nedrex.NeDRexToolDecisionResult;
+import de.hamburg.university.agent.tool.nedrex.NeDRexToolTypes;
 import de.hamburg.university.helper.AIJudgeBot;
 import de.hamburg.university.helper.JsonLoader;
 import de.hamburg.university.tool.pojo.NeDRexToolQuestion;
@@ -83,14 +84,14 @@ public class NeDRexToolEvaluationTest {
             results.add(result);
             trustrankResultCount++;
             Log.info(result.toString());
-            
+
             Path savePath = getPath();
             NeDRexToolTestResult.printJsonFile(results, savePath);
-            Log.infof("Saved trustrank result for question: %s to path: %s (total results: %d)", 
-                     question.getPath(), savePath.toAbsolutePath(), results.size());
+            Log.infof("Saved trustrank result for question: %s to path: %s (total results: %d)",
+                    question.getPath(), savePath.toAbsolutePath(), results.size());
         }
-        Log.infof("Trustrank test completed. Added %d trustrank results. Total results in file: %d", 
-                 trustrankResultCount, results.size());
+        Log.infof("Trustrank test completed. Added %d trustrank results. Total results in file: %d",
+                trustrankResultCount, results.size());
     }
 
     @Test
@@ -132,17 +133,17 @@ public class NeDRexToolEvaluationTest {
             Throwable cause = e.getCause();
             String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
             String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
-            
-            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") || 
-                                    className.contains("parsing") || className.contains("output") ||
-                                    causeMsg.contains("parse") || causeMsg.contains("json") ||
-                                    causeClass.contains("parse") || causeClass.contains("json");
-            
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
             boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
-            
+
             if (isParsingError || isHallucination) {
-                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.", 
-                         question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
                 return result;
             }
             throw e;
@@ -155,7 +156,7 @@ public class NeDRexToolEvaluationTest {
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("diamond")) {
+        if (!NeDRexToolTypes.isDiamond(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
@@ -189,17 +190,17 @@ public class NeDRexToolEvaluationTest {
             Throwable cause = e.getCause();
             String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
             String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
-            
-            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") || 
-                                    className.contains("parsing") || className.contains("output") ||
-                                    causeMsg.contains("parse") || causeMsg.contains("json") ||
-                                    causeClass.contains("parse") || causeClass.contains("json");
-            
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
             boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
-            
+
             if (isParsingError || isHallucination) {
-                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.", 
-                         question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
                 return result;
             }
             throw e;
@@ -214,7 +215,7 @@ public class NeDRexToolEvaluationTest {
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("trustrank")) {
+        if (!NeDRexToolTypes.isTrustRank(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
@@ -249,17 +250,17 @@ public class NeDRexToolEvaluationTest {
             Throwable cause = e.getCause();
             String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
             String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
-            
-            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") || 
-                                    className.contains("parsing") || className.contains("output") ||
-                                    causeMsg.contains("parse") || causeMsg.contains("json") ||
-                                    causeClass.contains("parse") || causeClass.contains("json");
-            
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
             boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
-            
+
             if (isParsingError || isHallucination) {
-                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.", 
-                         question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
                 return result;
             }
             throw e;
@@ -275,7 +276,7 @@ public class NeDRexToolEvaluationTest {
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("closeness")) {
+        if (!NeDRexToolTypes.isCloseness(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
