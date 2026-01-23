@@ -36,19 +36,19 @@ public class ChatDrexAgent {
         return Multi.createFrom().emitter(em -> {
             ChatJsonLanguageModelSupplier.SETTINGS.set(settings);
 
-            ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
-            toolDTO.setInput("Your question");
-            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
             List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
             String context = "";
             if (!states.isEmpty()) {
+                ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
+                toolDTO.setInput(states);
+                em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
                 RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
                 context = classy.getRelevantDiscussion();
+                toolDTO.setStop();
+                toolDTO.addContent("Context:" + context);
+                em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
             }
 
-            toolDTO.setStop();
-            toolDTO.addContent("Context:" + context);
-            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
 
             AgentResult result = answer(content, context, em);
             Log.infof("Final result length: %d", result.getMessageMarkdown().length());
