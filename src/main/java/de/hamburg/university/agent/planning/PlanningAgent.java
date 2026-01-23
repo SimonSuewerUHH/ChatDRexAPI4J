@@ -118,22 +118,26 @@ public class PlanningAgent {
                     state.setDigestResult(digestBot.answer(connectionId, currentGoal, state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
-                    String result = finalizeBot.answer(connectionId, content.getMessage(), state)
-                            .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
-                            .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
-                            .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "")))
-                            .collect()
-                            .asList()
-                            .map(list -> String.join("", list))
-                            .await()
-                            .indefinitely();
-
-                    stateHolder.addState(connectionId, new PlanStateResult(state, result));
-                    return new AgentResult(result);
+                    return finalize(content, state, emitter);
                 }
             }
         }
-        return new AgentResult("Could not complete planning. Try asking: \"recommend a model for <task>\" or provide a workflow id for data-fit analysis.");
+        return finalize(content, state, emitter);
+    }
+
+    private AgentResult finalize(ChatRequestDTO content, PlanState state, MultiEmitter<? super ChatResponseDTO> emitter) {
+        String result = finalizeBot.answer(content.getConnectionId(), content.getMessage(), state)
+                .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
+                .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
+                .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "")))
+                .collect()
+                .asList()
+                .map(list -> String.join("", list))
+                .await()
+                .indefinitely();
+
+        stateHolder.addState(content.getConnectionId(), new PlanStateResult(state, result));
+        return new AgentResult(result);
     }
 
 

@@ -49,7 +49,6 @@ public class ChatDrexAgent {
                 em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
             }
 
-
             AgentResult result = answer(content, context, em);
             Log.infof("Final result length: %d", result.getMessageMarkdown().length());
             //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
