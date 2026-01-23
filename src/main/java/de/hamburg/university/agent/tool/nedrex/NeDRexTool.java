@@ -58,33 +58,33 @@ public class NeDRexTool {
     public PlanState answer(PlanState state, String subTaskQuestion, ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> emitter) {
         ToolDTO toolDTO = new ToolDTO(Tools.NEDREX_TOOL.name());
         NeDRexToolDecisionResult result = neDRexToolDecisionBot.answer(content.getConnectionId(), subTaskQuestion, state.getEnhancedQueryBioInfo());
-
-        int seedCount = (result.getToolName().equalsIgnoreCase("closeness") || result.getToolName().equalsIgnoreCase("trustrank"))
+        NeDRexToolTypes type = result.getToolName();
+        int seedCount = (NeDRexToolTypes.isClosenessOrTrustRank(type))
                 ? (result.getUniProtIds() != null ? result.getUniProtIds().size() : 0)
                 : (result.getEntrezIds() != null ? result.getEntrezIds().size() : 0);
 
-        toolDTO.setInput(result.getToolName() + " with " + seedCount + ((result.getToolName().equalsIgnoreCase("closeness") || result.getToolName().equalsIgnoreCase("trustrank")) ? " UniProt IDs" : " Entrez IDs"));
+        toolDTO.setInput(type + " with " + seedCount + (NeDRexToolTypes.isClosenessOrTrustRank(type) ? " UniProt IDs" : " Entrez IDs"));
         Log.infof("NeDRex selection → tool=%s, reason=%s, ids=%s",
-                result.getToolName(),
+                type,
                 result.getReason() != null ? result.getReason() : "",
-                (result.getToolName().equalsIgnoreCase("closeness") || result.getToolName().equalsIgnoreCase("trustrank")) ? result.getUniProtIds() : result.getEntrezIds());
-        toolDTO.addContent("Chosen tool: " + result.getToolName());
+                (NeDRexToolTypes.isClosenessOrTrustRank(type)) ? result.getUniProtIds() : result.getEntrezIds());
+        toolDTO.addContent("Chosen tool: " + type);
         toolDTO.addContent("Reason: " + (result.getReason() != null ? result.getReason() : ""));
         chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-        boolean noSeeds = (result.getToolName().equalsIgnoreCase("closeness") || result.getToolName().equalsIgnoreCase("trustrank"))
+        boolean noSeeds = (NeDRexToolTypes.isClosenessOrTrustRank(type))
                 ? (result.getUniProtIds() == null || result.getUniProtIds().isEmpty())
                 : (result.getEntrezIds() == null || result.getEntrezIds().isEmpty());
 
         if (noSeeds) {
             Log.errorf("No seeds found for user: %s", subTaskQuestion);
             toolDTO.setStop();
-            toolDTO.addContent(result.getToolName().equalsIgnoreCase("closeness") ? "No UniProt IDs found" : "No Entrez IDs found");
+            toolDTO.addContent(NeDRexToolTypes.isCloseness(type) ? "No UniProt IDs found" : "No Entrez IDs found");
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
             return state;
         }
 
-        if (result.getToolName().equalsIgnoreCase("diamond")) {
+        if (NeDRexToolTypes.isDiamond(type)) {
             SeedPayloadDTO payload = getDiamondPayload(result.getEntrezIds());
             toolDTO.addContent("Run with:" + getJson(payload));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -94,7 +94,7 @@ public class NeDRexTool {
             drugstOneManager.setNetwork(content, network);
             drugstOneManager.send(toolDTO, content, emitter);
             state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
-        } else if (result.getToolName().equalsIgnoreCase("trustrank")) {
+        } else if (NeDRexToolTypes.isTrustRank(type)) {
             TrustRankSeedPayloadDTO payload = getTrustrankPayload(result.getUniProtIds());
             toolDTO.addContent("Run with:" + getJson(payload));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -104,7 +104,7 @@ public class NeDRexTool {
             drugstOneManager.setNetwork(content, network);
             drugstOneManager.send(toolDTO, content, emitter);
             state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
-        } else if (result.getToolName().equalsIgnoreCase("closeness")) {
+        } else if (NeDRexToolTypes.isCloseness(type)) {
             ClosenessSeedPayloadDTO payload = getClosenessPayload(result.getUniProtIds());
             toolDTO.addContent("Run with:" + getJson(payload));
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -116,7 +116,7 @@ public class NeDRexTool {
             state.setNetworkSummary(drugstOneManager.analyzeNetwork(subTaskQuestion, content));
         }
 
-        toolDTO.addContent("Tool " + result.getToolName() + " executed with " + seedCount + ((result.getToolName().equalsIgnoreCase("closeness") || result.getToolName().equalsIgnoreCase("trustrank")) ? " UniProt IDs" : " Entrez IDs"));
+        toolDTO.addContent("Tool " + type + " executed with " + seedCount + (NeDRexToolTypes.isClosenessOrTrustRank(type) ? " UniProt IDs" : " Entrez IDs"));
         toolDTO.setStop();
         chatWebsocketSender.sendTool(toolDTO, content, emitter);
         return state;

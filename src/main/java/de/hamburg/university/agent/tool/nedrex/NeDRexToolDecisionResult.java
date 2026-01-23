@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Data
 public class NeDRexToolDecisionResult {
-    private String toolName;
+    private NeDRexToolTypes toolName;
     private List<String> entrezIds;
     private List<String> uniProtIds;
     private String reason;
