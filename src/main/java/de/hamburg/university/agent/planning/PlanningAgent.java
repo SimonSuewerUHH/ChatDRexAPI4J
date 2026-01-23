@@ -5,6 +5,7 @@ import de.hamburg.university.agent.bot.*;
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
+import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.tool.nedrex.NeDRexTool;
 import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
@@ -55,6 +56,9 @@ public class PlanningAgent {
     @Inject
     DrugstOneAgent drugstOneAgent;
 
+    @Inject
+    HelpBot helpBot;
+
     private final ObjectMapper om = new ObjectMapper();
 
     public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
@@ -83,6 +87,10 @@ public class PlanningAgent {
                     Log.debugf("Action UPDATE_NETWORK: %s", decision.getReason());
                     String answer = drugstOneAgent.answer(connectionId, currentGoal);
                     state.addAgentAnswer(answer);
+                }
+                case HELP -> {
+                    String helpResult = helpBot.answer(decision.getSubTaskQuestion());
+                    return new AgentResult(helpResult);
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());

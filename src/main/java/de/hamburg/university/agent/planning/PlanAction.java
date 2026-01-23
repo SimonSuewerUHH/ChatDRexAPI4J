@@ -7,5 +7,6 @@ public enum PlanAction {
     FETCH_BIO_INFO,
     CALL_NEDREX_TOOL,
     CALL_DIGEST_TOOL,
+    HELP,
     FINALIZE
 }

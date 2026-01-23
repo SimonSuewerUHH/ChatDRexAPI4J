@@ -2,7 +2,6 @@ package de.hamburg.university.agent.planning;
 
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
-import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.planning.bots.RequestClassifierBot;
 import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
 import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
@@ -12,7 +11,6 @@ import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
@@ -31,9 +29,6 @@ public class ChatDrexAgent {
     RequestClassifierBot requestClassifierBot;
 
     @Inject
-    HelpBot helpBot;
-
-    @Inject
     InMemoryStateHolder stateHolder;
 
     @ActivateRequestContext
@@ -45,16 +40,17 @@ public class ChatDrexAgent {
             toolDTO.setInput("Your question");
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
             List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
-            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
+            String context = "";
+            if (!states.isEmpty()) {
+                RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
+                context = classy.getRelevantDiscussion();
+            }
 
             toolDTO.setStop();
-            toolDTO.addContent("Context:" + classy.getRelevantDiscussion());
-            toolDTO.addContent("You need: " + classy.getRoute());
+            toolDTO.addContent("Context:" + context);
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
 
-            RequestRoute route = RequestRoute.from(classy.getRoute());
-            Log.infof("Classified %s request as: %s", content, route);
-            AgentResult result = answer(content, classy.getRelevantDiscussion(), RequestRoute.UNKNOWN, em);
+            AgentResult result = answer(content, context, em);
             Log.infof("Final result length: %d", result.getMessageMarkdown().length());
             //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
@@ -64,10 +60,7 @@ public class ChatDrexAgent {
         });
     }
 
-    private AgentResult answer(ChatRequestDTO content, String context, RequestRoute route, MultiEmitter<? super ChatResponseDTO> emitter) {
-        return switch (route) {
-            case HELP -> new AgentResult(helpBot.answer(content.getMessage()));
-            default -> planningAgent.planAnswer(content, context, emitter);
-        };
+    private AgentResult answer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
+        return planningAgent.planAnswer(content, context, emitter);
     }
 }

@@ -1,6 +1,5 @@
 package de.hamburg.university.agent.planning;
 
-import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class PlanState {
     List<String> agentAnswers = new ArrayList<>();
 
     public void addAgentAnswer(String answer) {
-        if(agentAnswers == null) {
+        if (agentAnswers == null) {
             agentAnswers = new ArrayList<>();
         }
         this.agentAnswers.add(answer);
