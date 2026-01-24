@@ -135,20 +135,20 @@ public class DrugstOneManager {
             return;
         }
         Set<String> existingTypes = new HashSet<>();
-        for(DrugstOneNodeDTO node : current.getNetwork().getNodes()) {
+        for (DrugstOneNodeDTO node : current.getNetwork().getNodes()) {
             String nodeType = node.getGroup();
-            if(nodeType == null) {
+            if (nodeType == null) {
                 continue;
             }
-            if(!existingTypes.contains(nodeType)) {
+            if (!existingTypes.contains(nodeType)) {
                 existingTypes.add(nodeType);
-            }else{
+            } else {
                 continue;
             }
-            nodeGroups.put(nodeType,DrugstOneNodeGroupDefaults.getByName(nodeType));
+            nodeGroups.put(nodeType, DrugstOneNodeGroupDefaults.getByName(nodeType));
         }
-        for(String group : nodeGroups.keySet()) {
-            if(!existingTypes.contains(group)) {
+        for (String group : nodeGroups.keySet()) {
+            if (!existingTypes.contains(group)) {
                 nodeGroups.remove(group);
             }
         }

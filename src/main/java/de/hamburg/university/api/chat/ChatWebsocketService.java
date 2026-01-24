@@ -82,7 +82,7 @@ public class ChatWebsocketService implements Serializable {
         UserLLMModelSettingDTO settings = UserLLMModelSettingDTO.getFromString(base64Setting);
         String clientId = getClientId();
         request.setConnectionId(clientId);
-        sender.addClient(clientId, request);
+        sender.addClient(request);
         ChatResponseDTO start = ChatResponseDTO.createAPIResponse(request, "Start");
         ChatResponseDTO stop = ChatResponseDTO.createAPIResponse(request, "Stop");
 

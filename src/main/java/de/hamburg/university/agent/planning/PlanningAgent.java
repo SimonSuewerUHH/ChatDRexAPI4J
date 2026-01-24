@@ -69,7 +69,7 @@ public class PlanningAgent {
 
         List<PlanStep> history = new ArrayList<>();
         emitter.emit(ChatResponseDTO.createReasoningResponse(content, reasonToHtml()));
-        String connectionId = content.getConnectionId();
+        String threadId = content.getThreadId();
         resetMemory(content, state, 0);
 
         for (int step = 1; step <= MAX_STEPS; step++) {
@@ -87,7 +87,7 @@ public class PlanningAgent {
             switch (decision.getAction()) {
                 case UPDATE_NETWORK -> {
                     Log.debugf("Action UPDATE_NETWORK: %s", decision.getReason());
-                    String answer = drugstOneAgent.answer(connectionId, currentGoal);
+                    String answer = drugstOneAgent.answer(threadId, currentGoal);
                     state.addAgentAnswer(answer);
                 }
                 case HELP -> {
@@ -96,28 +96,28 @@ public class PlanningAgent {
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());
-                    state.getResearch().add(research.answer(connectionId, currentGoal, state.getPreviousContext()));
+                    state.getResearch().add(research.answer(threadId, currentGoal, state.getPreviousContext()));
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
                     state.setNeDRexKgInfo(nedrexKGTool.answer(currentGoal, state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
-                    setEnhancedQueryBioInfo(state, decision, connectionId);
+                    setEnhancedQueryBioInfo(state, decision, threadId);
                 }
                 case CALL_NEDREX_TOOL -> {
                     Log.debugf("Action CALL_NEDREX_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
+                        setEnhancedQueryBioInfoEnrezId(state, decision, threadId);
                     }
                     state = neDRexTool.answer(state, decision.getSubTaskQuestion(), content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
+                        setEnhancedQueryBioInfoEnrezId(state, decision, threadId);
                     }
-                    state.setDigestResult(digestBot.answer(connectionId, currentGoal, state.getEnhancedQueryBioInfo()));
+                    state.setDigestResult(digestBot.answer(threadId, currentGoal, state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
                     return finalize(content, state, emitter);
@@ -138,12 +138,12 @@ public class PlanningAgent {
                 .await()
                 .indefinitely();
 
-        stateHolder.addState(content.getConnectionId(), new PlanStateResult(state, result));
+        stateHolder.addState(content.getConnectionId(), content.getThreadId(), new PlanStateResult(state, result));
         return new AgentResult(result);
     }
 
 
-    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String threadId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
 
         String context = "Previous Context: " + state.getPreviousContext();
@@ -154,11 +154,11 @@ public class PlanningAgent {
             context += "\nResearch Context: " + String.join("\n", state.getResearch());
         }
         try {
-            state.setEnhancedQueryBioInfo(neDRexBot.answer(connectionId, decision.getSubTaskQuestion(), context));
+            state.setEnhancedQueryBioInfo(neDRexBot.answer(threadId, decision.getSubTaskQuestion(), context));
         } catch (Exception e) {
             Log.errorf(e, "Failed to get enhanced bio info for decision 1 %s", safeToString(decision));
             try {
-                state.setEnhancedQueryBioInfo(neDRexBot.answer(connectionId, decision.getSubTaskQuestion(), state.getPreviousContext()));
+                state.setEnhancedQueryBioInfo(neDRexBot.answer(threadId, decision.getSubTaskQuestion(), state.getPreviousContext()));
             } catch (Exception e1) {
                 Log.errorf(e, "Failed to get enhanced bio info for decision 2 %s", safeToString(decision));
                 state.setEnhancedQueryBioInfo("");
@@ -166,7 +166,7 @@ public class PlanningAgent {
         }
     }
 
-    private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
+    private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String threadId) {
         String context = "Previous Context: " + state.getPreviousContext();
         if (StringUtils.isNotEmpty(state.getNeDRexKgInfo())) {
             context += "\nNeDRex KG Context: " + state.getNeDRexKgInfo();
@@ -175,11 +175,11 @@ public class PlanningAgent {
             context += "\nResearch Context: " + String.join("\n", state.getResearch());
         }
         try {
-            String entrezIdsJson = neDRexBot.answerEntrezId(connectionId, decision.getSubTaskQuestion(), context);
+            String entrezIdsJson = neDRexBot.answerEntrezId(threadId, decision.getSubTaskQuestion(), context);
             state.setEnhancedQueryBioInfo(entrezIdsJson);
         } catch (Exception e) {
             try {
-                String entrezIdsJson = neDRexBot.answerEntrezId(connectionId, decision.getSubTaskQuestion(), state.getPreviousContext());
+                String entrezIdsJson = neDRexBot.answerEntrezId(threadId, decision.getSubTaskQuestion(), state.getPreviousContext());
                 state.setEnhancedQueryBioInfo(entrezIdsJson);
             } catch (Exception e1) {
                 state.setEnhancedQueryBioInfo("");

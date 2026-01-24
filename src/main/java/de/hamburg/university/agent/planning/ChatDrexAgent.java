@@ -64,7 +64,7 @@ public class ChatDrexAgent {
     }
 
     private String getContext(ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> em) {
-        List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
+        List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId(), content.getThreadId());
         String context = "";
         if (!states.isEmpty()) {
             ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
