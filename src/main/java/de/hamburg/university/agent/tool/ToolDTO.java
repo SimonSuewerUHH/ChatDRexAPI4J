@@ -1,6 +1,7 @@
 package de.hamburg.university.agent.tool;
 
 import de.hamburg.university.agent.tool.research.ToolSourceDTO;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@RegisterForReflection
 public class ToolDTO {
     private String id;
     private String name;
