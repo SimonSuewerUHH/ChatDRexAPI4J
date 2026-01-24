@@ -28,7 +28,7 @@ public class UserLLMModelSetting {
         this.logResponses = configProvider.getValue("quarkus.langchain4j.openai.chat-model.log-responses", Boolean.class);
         this.logRequests = configProvider.getValue("quarkus.langchain4j.openai.chat-model.log-requests", Boolean.class);
         this.chatGPTModelName = configProvider.getValue("quarkus.langchain4j.openai.chat-model.model-name", String.class);
-        this.geminiModelName = configProvider.getValue("quarkus.langchain4j.gemini.chat-model.model-name", String.class);
+        this.geminiModelName = configProvider.getOptionalValue("quarkus.langchain4j.gemini.chat-model.model-name", String.class).orElse("gemini-2.0-flash");
     }
 
 

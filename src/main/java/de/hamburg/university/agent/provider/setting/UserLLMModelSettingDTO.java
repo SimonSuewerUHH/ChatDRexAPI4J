@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.logging.Log;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@RegisterForReflection
 public class UserLLMModelSettingDTO {
     private UserLLMType selectedLLM;
     private String ollamaBaseUrl;
