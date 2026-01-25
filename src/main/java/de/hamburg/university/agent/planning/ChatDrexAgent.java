@@ -68,7 +68,7 @@ public class ChatDrexAgent {
         String context = "";
         if (!states.isEmpty()) {
             ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
-            toolDTO.setInput(states);
+            toolDTO.setInput("Your previous messages and the agent's responses");
             em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
             RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
             context = classy.getRelevantDiscussion();
