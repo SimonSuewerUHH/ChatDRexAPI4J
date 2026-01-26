@@ -51,7 +51,7 @@ public abstract class BaseNedrexTool<A extends NeDRexJobApi<P, S>, P, S extends 
         Objects.requireNonNull(uid, "uid");
         return Uni.createFrom().emitter(emitter -> {
 
-            long pollTimerId = vertx.setPeriodic(timeoutSeconds * 1000L, id -> {
+            long pollTimerId = vertx.setPeriodic(1000L, id -> {
                 api.status(uid).whenComplete((statusResponse, throwable) -> {
                     if (throwable != null) {
 
