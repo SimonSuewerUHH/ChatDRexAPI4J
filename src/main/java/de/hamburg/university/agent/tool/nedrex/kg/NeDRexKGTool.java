@@ -10,6 +10,7 @@ import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import de.hamburg.university.helper.cypher.CypherEscaper;
 import de.hamburg.university.helper.drugstone.cypher.CypherResultIdExtractor;
 import de.hamburg.university.helper.drugstone.cypher.CypherToDrugstOne;
 import de.hamburg.university.service.nedrex.kg.NeDRexKGNodeEnhanced;
@@ -95,7 +96,10 @@ public class NeDRexKGTool {
                     toolDTO.addContent("<h3>Neo4j Query:</h3>");
                     toolDTO.addContent(newQuery);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
-
+                    if (CypherEscaper.hasUnescapedQuotes(newQuery)) {
+                        Log.warnf("Generated query has unescaped quotes, regenerating. Query: %s", newQuery);
+                        newQuery = CypherEscaper.escapeIfNeeded(newQuery);
+                    }
                     String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
                     toolDTO.addContent("<h3>Neo4j Result:</h3>");
                     toolDTO.addContent(result);
