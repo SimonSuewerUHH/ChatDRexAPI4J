@@ -22,6 +22,7 @@ variables:
   PROJECT: chatdrex-api
   CI_IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH
   CI_IMAGE_STAGING: $CI_IMAGE_BASE/$PROJECT:staging
+  CI_IMAGE_STAGING_NATIVE: $CI_IMAGE_BASE/$PROJECT:native-staging
   CI_IMAGE_LATEST:  $CI_IMAGE_BASE/$PROJECT:latest
   CI_IMAGE_LATEST_NATIVE: $CI_IMAGE_BASE/$PROJECT:native-latest
 
@@ -103,6 +104,17 @@ deploy:gitlab_registry:staging:
     CI_IMAGE: $CI_IMAGE_STAGING
     DOCKERFILE: src/main/docker/Dockerfile.jvm
 
+deploy:gitlab_registry:staging-native:
+  extends: .deploy:gitlab_registry
+  #only:
+  #  - develop
+  dependencies:
+    - check:build:maven
+  needs:
+    - check:build:maven
+  variables:
+    CI_IMAGE: $CI_IMAGE_STAGING_NATIVE
+    DOCKERFILE: src/main/docker/Dockerfile.native-msb
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Override all security scanning jobs
