@@ -3,6 +3,7 @@ package de.hamburg.university.agent.bot;
 import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import de.hamburg.university.agent.tool.nedrex.NeDRexToolDecisionResult;
 import de.hamburg.university.agent.tool.nedrex.external.EntrezIdTool;
+import de.hamburg.university.agent.tool.nedrex.external.UniProtTool;
 import dev.langchain4j.service.MemoryId;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
@@ -12,7 +13,8 @@ import io.quarkiverse.langchain4j.RegisterAiService;
 @RegisterAiService(
         chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
         tools = {
-                EntrezIdTool.class
+                EntrezIdTool.class,
+                UniProtTool.class
         }
 )
 public interface NeDRexToolDecisionBot {
@@ -22,10 +24,9 @@ public interface NeDRexToolDecisionBot {
             - CLOSENESS: CLOSENESS centrality / proximity / shortest-path distance based ranking.
             - TRUSTRANK: trust propagation / trust scores / trust-based ranking from seeds.
 
-            ONLY AVAILABLE TOOL
-              You can call ONLY: getEntrezIds([symbol1, symbol2, ...])
-              - Use it ONLY to translate gene symbols (e.g., TP53, BRCA1) into Entrez Gene IDs.
-              - Do NOT invent other tool names.
+            AVAILABLE TOOLS FOR TRANSLATION
+              1. getEntrezIds([symbol1, symbol2, ...]) → Translates gene symbols to Entrez IDs (for DIAMOND).
+              2. getUniProtIds([identifier1, identifier2, ...]) → Translates gene symbols/IDs to UniProt IDs (for CLOSENESS/TRUSTRANK).
 
             GENE SYMBOL RECOGNITION
             When you see comma-separated ALL-CAPS identifiers like "TGFBR1, MDM2, FOS, PIK3CD" in a question, these are ALWAYS gene symbols.
@@ -190,20 +191,25 @@ public interface NeDRexToolDecisionBot {
               - STEP 1: IDENTIFY all gene symbols from the question (preserve order)
                 Example: "Apply TrustRank to propagate trust scores from EPYC, URAD through the network." → identify: ["EPYC", "URAD"]
                 COUNT them: If question mentions 2 gene symbols, you MUST extract exactly 2 UniProt IDs
-              - STEP 2: CHECK {context} for UniProt ID translations (MANDATORY - context usually contains translations)
+              - STEP 2: CHECK {context} for UniProt ID translations
                 Extract UniProt IDs from {context} using the following methods (in priority order):
                 1. FIRST PRIORITY: Look for "Translation: { SYMBOL1: 'UNIPROT1', SYMBOL2: 'UNIPROT2', ... }" format
                    - Match each gene symbol from question to the Translation mapping keys
                    - Example: Question "EPYC, URAD" + Context "Translation: { EPYC: 'Q99645', URAD: 'A6NGE7' }" → ["Q99645", "A6NGE7"]
                    - If ALL symbols are found in Translation mapping → use those UniProt IDs (preserve input order)
-                   - If some symbols missing from Translation → proceed to next method
+                   - If some symbols missing from Translation → proceed to STEP 3
                 2. SECOND PRIORITY: Look for "Mapped UniProt IDs: UNIPROT1, UNIPROT2, ..." - use positional mapping (context[i] corresponds to input[i])
                 3. THIRD PRIORITY: Extract from YAML entities.proteins section with "id: uniprot.ACCESSION" - extract ACCESSION values in order
                 4. LAST RESORT: Extract comma-separated UniProt IDs list - use positional mapping
+              - STEP 3: CALL getUniProtIds() tool (MANDATORY if context is empty or incomplete)
+                - If context doesn't provide complete UniProt ID translations, you MUST call getUniProtIds([symbol1, symbol2, ...])
+                - The tool accepts gene symbols and returns UniProt IDs as strings
+                - Example: getUniProtIds(["EPYC", "URAD"]) → ["Q99645", "A6NGE7"]
+                - NEVER skip this step - if you have gene symbols and no complete context translation, you MUST call the tool
               - CRITICAL: When using positional mapping, context IDs must be in EXACT SAME ORDER as input identifiers
               - CRITICAL: If context has Translation format, ALWAYS use it first - it's the most reliable and accurate mapping
-              - MANDATORY: For each gene symbol identified in the question, you MUST find a corresponding UniProt ID in the context
-                If question has 2 gene symbols, output MUST have 2 UniProt IDs. If you have 0, you failed - re-check context more carefully
+              - MANDATORY: For each gene symbol identified in the question, you MUST find a corresponding UniProt ID (from context or tool)
+                If question has 2 gene symbols, output MUST have 2 UniProt IDs. If you have 0, you failed - use getUniProtIds() tool
               - Mapping algorithm for positional mapping:
                 1. Extract seed gene symbols from user input in order: ["DAP3", "PHAX", "Q16790", "P22749"]
                 2. Extract UniProt IDs from context in order: ["P51398", "Q9H814", "Q16790", "P22749"]
@@ -216,7 +222,7 @@ public interface NeDRexToolDecisionBot {
                 4. Result: ["Q99645", "A6NGE7"] (preserve input order - EPYC→Q99645, URAD→A6NGE7)
               - For identifiers already in UniProt format in input, use them directly (don't replace with context)
               - Result count must equal input identifier count
-              - If context is empty or missing UniProt mappings, return empty uniProtIds array with reason
+              - If context is empty or missing UniProt mappings, call getUniProtIds() tool with the gene symbols
             - Deduplicate; preserve input order (first occurrence).
 
             VALIDATION RULES
@@ -237,13 +243,13 @@ public interface NeDRexToolDecisionBot {
               - Count them: "TGFBR1, MDM2, FOS, PIK3CD" = 4 identifiers
               - Note their order and positions
             STEP 3: Extract the appropriate ID format based on the selected tool
-              - For "DIAMOND": Extract Entrez IDs (translate gene symbols if needed)
-              - For "CLOSENESS"/"TRUSTRANK": Extract UniProt IDs (translate gene symbols if needed)
+              - For "DIAMOND": Extract Entrez IDs (translate gene symbols using getEntrezIds() if context doesn't provide them)
+              - For "CLOSENESS"/"TRUSTRANK": Extract UniProt IDs (translate gene symbols using getUniProtIds() if context doesn't provide them)
             STEP 4: CRITICAL - Count and verify
               - Before finalizing, count how many genes/identifiers are mentioned in the question
               - Verify you extracted exactly that many
               - If the count doesn't match, re-examine the question and re-extract
-              - If you have 0 IDs but the question mentions gene symbols → you FAILED - call getEntrezIds() tool
+              - If you have 0 IDs but the question mentions gene symbols → you FAILED - call getEntrezIds() for DIAMOND or getUniProtIds() for CLOSENESS/TRUSTRANK
 
             EXAMPLES
 
@@ -262,6 +268,14 @@ public interface NeDRexToolDecisionBot {
 
             Example 5: Input "Apply TrustRank to propagate trust scores from EPYC, URAD through the network", Context: "Translation: { EPYC: 'Q99645', URAD: 'A6NGE7' }"
             Output: {"toolName": "TRUSTRANK", "uniProtIds": ["Q99645", "A6NGE7"], "entrezIds": [], "reason": "..."}
+            
+            Example 8: Input "Run TrustRank on EPYC, URAD", Context: "" (empty)
+            Process: Extract gene symbols: ["EPYC", "URAD"] → Context empty → MUST call getUniProtIds(["EPYC", "URAD"]) → Tool returns: ["Q99645", "A6NGE7"]
+            Output: {"toolName": "TRUSTRANK", "uniProtIds": ["Q99645", "A6NGE7"], "entrezIds": [], "reason": "TrustRank selected. Translated gene symbols using getUniProtIds() tool."}
+            
+            Example 9: Input "Assess closeness centrality for TNF13, HIF1A", Context: "" (empty)
+            Process: Extract gene symbols: ["TNF13", "HIF1A"] → Context empty → MUST call getUniProtIds(["TNF13", "HIF1A"]) → Tool returns: ["O75888", "Q16665"]
+            Output: {"toolName": "CLOSENESS", "uniProtIds": ["O75888", "Q16665"], "entrezIds": [], "reason": "CLOSENESS selected. Translated gene symbols using getUniProtIds() tool."}
 
             Example 6: Input "Run DIAMOnD using seed genes PDCD1, CD274, LAG3, HAVCR2", Context: "Translation: { PDCD1: '5133', CD274: '29126', LAG3: '3902', HAVCR2: '84868' }"
             Output: {"toolName": "DIAMOND", "entrezIds": ["5133", "29126", "3902", "84868"], ...}
@@ -271,6 +285,11 @@ public interface NeDRexToolDecisionBot {
             Output: {"toolName": "DIAMOND", "entrezIds": ["3902", "4893"], ...}
 
             WRONG:
+            Input: "Apply TrustRank to propagate trust scores from EPYC, URAD through the network", Context: "" (empty)
+            Output: {"toolName": "TRUSTRANK", "uniProtIds": []} WRONG - Empty uniProtIds when gene symbols are present
+            Correct: Extract gene symbols: ["EPYC", "URAD"] → Context empty → MUST call getUniProtIds(["EPYC", "URAD"]) → Tool returns: ["Q99645", "A6NGE7"]
+            Correct Output: {"toolName": "TRUSTRANK", "uniProtIds": ["Q99645", "A6NGE7"], "entrezIds": [], "reason": "TrustRank selected. Translated using getUniProtIds() tool."}
+            
             Input: "Apply TrustRank to propagate trust scores from EPYC, URAD through the network", Context: "Translation: { EPYC: 'Q99645', URAD: 'A6NGE7' }"
             Output: {"toolName": "TRUSTRANK", "uniProtIds": ["EPYC", "URAD"], ...} WRONG - EPYC and URAD are gene symbols, NOT UniProt IDs. Must translate: ["Q99645", "A6NGE7"]
 
