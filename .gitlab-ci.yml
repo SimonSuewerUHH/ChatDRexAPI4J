@@ -1,4 +1,4 @@
-image: openjdk:25-ea-jdk-oraclelinux9
+image: openjdk:25-ea-jdk
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
