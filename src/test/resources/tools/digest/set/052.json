@@ -1,0 +1,15 @@
+{
+  "question": "Evaluate how likely it is that TET3, DDX4, SND1, LHX6 share functional pathways beyond random chance.",
+  "gene_names": [
+    "TET3",
+    "DDX4",
+    "SND1",
+    "LHX6"
+  ],
+  "entrez_ids": [
+    "200424",
+    "54514",
+    "27044",
+    "26468"
+  ]
+}

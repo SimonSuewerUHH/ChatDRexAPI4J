@@ -1,0 +1,15 @@
+{
+  "question": "Run a DIGEST test for P42694, O75390, O14718, Q5XG87 to measure module significance.",
+  "gene_names": [
+    "P42694",
+    "O75390",
+    "O14718",
+    "Q5XG87"
+  ],
+  "entrez_ids": [
+    "9931",
+    "1431",
+    "10692",
+    "11044"
+  ]
+}

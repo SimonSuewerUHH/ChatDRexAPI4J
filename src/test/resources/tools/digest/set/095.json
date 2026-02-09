@@ -1,0 +1,17 @@
+{
+  "question": "Estimate the empirical P-value for observing Q8IWB9, Q9H7B2, Q9UQ16, AAK1, PLD2 given the reference network.",
+  "gene_names": [
+    "Q8IWB9",
+    "Q9H7B2",
+    "Q9UQ16",
+    "AAK1",
+    "PLD2"
+  ],
+  "entrez_ids": [
+    "55852",
+    "84154",
+    "26052",
+    "22848",
+    "5338"
+  ]
+}

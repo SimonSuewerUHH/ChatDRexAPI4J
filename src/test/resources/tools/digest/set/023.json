@@ -1,0 +1,13 @@
+{
+  "question": "Validate the candidate gene list 85407, 200424, 112812 using DIGEST to compute empirical P-values.",
+  "gene_names": [
+    "85407",
+    "200424",
+    "112812"
+  ],
+  "entrez_ids": [
+    "85407",
+    "200424",
+    "112812"
+  ]
+}

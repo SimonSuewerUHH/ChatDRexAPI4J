@@ -1,0 +1,17 @@
+{
+  "question": "Analyze Q6NXT2, Q3LI77, Q92521, Q92529, Q6UWP8 for overrepresentation of disease associations.",
+  "gene_names": [
+    "Q6NXT2",
+    "Q3LI77",
+    "Q92521",
+    "Q92529",
+    "Q6UWP8"
+  ],
+  "entrez_ids": [
+    "440093",
+    "284827",
+    "9488",
+    "53358",
+    "374897"
+  ]
+}

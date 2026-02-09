@@ -1,0 +1,17 @@
+{
+  "question": "AnalyzeP10124, Q9H2F5, Q9Y646, 284307, 100130361 for overrepresentation of disease associations.",
+  "gene_names": [
+    "P10124",
+    "Q9H2F5",
+    "Q9Y646",
+    "284307",
+    "100130361"
+  ],
+  "entrez_ids": [
+    "5552",
+    "80314",
+    "10404",
+    "284307",
+    "100130361"
+  ]
+}

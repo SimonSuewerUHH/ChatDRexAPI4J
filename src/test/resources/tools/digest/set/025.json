@@ -1,0 +1,13 @@
+{
+  "question": "Use DIGEST validation to verify the biological relevance of MICOS10-NBL1, CD7, PLB1.",
+  "gene_names": [
+    "MICOS10-NBL1",
+    "CD7",
+    "PLB1"
+  ],
+  "entrez_ids": [
+    "100532736",
+    "924",
+    "151056"
+  ]
+}

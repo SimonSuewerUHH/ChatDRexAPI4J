@@ -1,0 +1,30 @@
+{
+  "failed": true,
+  "task": "07f672b5-b52b-422d-827a-bd9deea42fa5",
+  "done": false,
+  "status": "No mapping found for target set. Please check if ID type is correct.",
+  "stats": {
+    "queueLength": 0,
+    "queuePosition": 1
+  },
+  "mode": "subnetwork",
+  "type": "gene",
+  "input": {
+    "target_id": "symbol",
+    "target": [
+      "101059915",
+      "25983",
+      "83700",
+      "642",
+      "4613",
+      "50937",
+      "362"
+    ],
+    "runs": 1000,
+    "replace": 100,
+    "distance": "jaccard",
+    "background_model": "complete",
+    "type": "gene"
+  },
+  "progress": 0.05
+}

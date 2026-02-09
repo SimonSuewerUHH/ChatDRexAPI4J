@@ -1,0 +1,19 @@
+{
+  "question": "Estimate the empirical P-value for observing Q9BQM9, Q9NX58, Q9UK39, Q9UEY8, Q8IYD9, O15400 given the reference network.",
+  "gene_names": [
+    "Q9BQM9",
+    "Q9NX58",
+    "Q9UK39",
+    "Q9UEY8",
+    "Q8IYD9",
+    "O15400"
+  ],
+  "entrez_ids": [
+    "128864",
+    "55646",
+    "25819",
+    "120",
+    "162681",
+    "8417"
+  ]
+}

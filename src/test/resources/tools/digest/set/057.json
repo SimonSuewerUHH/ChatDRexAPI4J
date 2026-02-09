@@ -1,0 +1,15 @@
+{
+  "question": "Test whether RNH1, GRK6, RPN2, KNL1 are functionally or genetically cohesive.",
+  "gene_names": [
+    "RNH1",
+    "GRK6",
+    "RPN2",
+    "KNL1"
+  ],
+  "entrez_ids": [
+    "6050",
+    "2870",
+    "6185",
+    "57082"
+  ]
+}

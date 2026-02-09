@@ -1,0 +1,11 @@
+{
+  "question": "Apply DIGEST to test whether O75431, Q3SYG4 form a statistically significant disease module.",
+  "gene_names": [
+    "O75431",
+    "Q3SYG4"
+  ],
+  "entrez_ids": [
+    "10651",
+    "27241"
+  ]
+}

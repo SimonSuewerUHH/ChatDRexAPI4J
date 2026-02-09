@@ -1,0 +1,15 @@
+{
+  "question": "Determine the likelihood that 8539, 10140, 6352, 90523 represent a valid disease module.",
+  "gene_names": [
+    "8539",
+    "10140",
+    "6352",
+    "90523"
+  ],
+  "entrez_ids": [
+    "8539",
+    "10140",
+    "6352",
+    "90523"
+  ]
+}

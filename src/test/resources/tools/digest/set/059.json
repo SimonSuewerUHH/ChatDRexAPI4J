@@ -1,0 +1,15 @@
+{
+  "question": "Compare the set HLA-E, BIN1, ACE, RHD against background distributions to determine significance.",
+  "gene_names": [
+    "HLA-E",
+    "BIN1",
+    "ACE",
+    "RHD"
+  ],
+  "entrez_ids": [
+    "3133",
+    "274",
+    "1636",
+    "6007"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "question": "Determine the likelihood that Q9H6K4, Q16617, Q5VY09, Q86SG6 represent a valid disease module.",
+  "gene_names": [
+    "Q9H6K4",
+    "Q16617",
+    "Q5VY09",
+    "Q86SG6"
+  ],
+  "entrez_ids": [
+    "80207",
+    "4818",
+    "51278",
+    "284086"
+  ]
+}

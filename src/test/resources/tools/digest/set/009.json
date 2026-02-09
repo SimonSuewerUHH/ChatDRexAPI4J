@@ -1,0 +1,11 @@
+{
+  "question": "Use DIGEST validation to verify the biological relevance of Q6P5Z2, Q00978.",
+  "gene_names": [
+    "Q6P5Z2",
+    "Q00978"
+  ],
+  "entrez_ids": [
+    "29941",
+    "10379"
+  ]
+}

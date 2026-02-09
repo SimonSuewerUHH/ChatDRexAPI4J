@@ -1,0 +1,15 @@
+{
+  "question": "Execute DIGEST analysis to evaluate the overlap significance of VRK3, KRTAP21-1, BST1, ZPR1.",
+  "gene_names": [
+    "VRK3",
+    "KRTAP21-1",
+    "BST1",
+    "ZPR1"
+  ],
+  "entrez_ids": [
+    "51231",
+    "337977",
+    "683",
+    "8882"
+  ]
+}

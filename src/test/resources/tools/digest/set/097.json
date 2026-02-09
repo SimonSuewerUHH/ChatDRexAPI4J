@@ -1,0 +1,17 @@
+{
+  "question": "Estimate the empirical P-value for observing PENK, EPYC, KRTAP20-1, P03905, Q6NUJ2 given the reference network.",
+  "gene_names": [
+    "PENK",
+    "EPYC",
+    "KRTAP20-1",
+    "P03905",
+    "Q6NUJ2"
+  ],
+  "entrez_ids": [
+    "5179",
+    "1833",
+    "337975",
+    "4538",
+    "399947"
+  ]
+}
