@@ -1,0 +1,13 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of 6950, 761, 22913.",
+  "gene_names": [
+    "6950",
+    "761",
+    "22913"
+  ],
+  "entrez_ids": [
+    "6950",
+    "761",
+    "22913"
+  ]
+}

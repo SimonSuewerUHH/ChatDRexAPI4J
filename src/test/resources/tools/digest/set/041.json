@@ -1,0 +1,13 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of P20711, Q7Z6A9, Q8NEQ5.",
+  "gene_names": [
+    "P20711",
+    "Q7Z6A9",
+    "Q8NEQ5"
+  ],
+  "entrez_ids": [
+    "1644",
+    "151888",
+    "128346"
+  ]
+}

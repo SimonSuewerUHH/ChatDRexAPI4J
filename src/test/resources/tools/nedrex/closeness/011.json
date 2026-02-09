@@ -1,0 +1,365 @@
+{
+  "seed_proteins": [
+    "P04179",
+    "Q58EX2"
+  ],
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 50,
+  "uid": "41ec700f-9b7b-4499-8d07-1f4eafa78d62",
+  "status": "completed",
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB09063",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00530",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB01254",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00860",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00619",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB09053",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB06803",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB06151",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00317",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB06589",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB05294",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB06616",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB06595",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB11828",
+        "score": "0.5"
+      },
+      {
+        "drug_name": "drugbank.DB00477",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00620",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB08889",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01248",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB09078",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00959",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB09034",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB08901",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00796",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00822",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01204",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01234",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00091",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00635",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00741",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01380",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00443",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00679",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00313",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00623",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00257",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01136",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00342",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00637",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00626",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00882",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00547",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00841",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00997",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01127",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00756",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01235",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00968",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01110",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00471",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00220",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01074",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB06820",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00675",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00549",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB04813",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00406",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB14533",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01013",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00170",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00359",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00152",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01025",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00705",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB01259",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB00622",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB04868",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB08873",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB05521",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB05245",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB08877",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB06626",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB08916",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB06290",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB09330",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB09149",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB09148",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB12267",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB13874",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB11703",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB04815",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB11963",
+        "score": "0.4"
+      },
+      {
+        "drug_name": "drugbank.DB11951",
+        "score": "0.4"
+      }
+    ],
+    "edges": [
+      [
+        "drugbank.DB06151",
+        "uniprot.P04179"
+      ]
+    ]
+  }
+}

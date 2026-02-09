@@ -1,0 +1,11 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of NRGN, TSC1.",
+  "gene_names": [
+    "NRGN",
+    "TSC1"
+  ],
+  "entrez_ids": [
+    "4900",
+    "7248"
+  ]
+}

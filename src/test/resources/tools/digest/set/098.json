@@ -1,0 +1,17 @@
+{
+  "question": "Validate whether the genes CDO1, IDNK, 10313, 5649, Q9C010 form a coherent and disease-relevant set.",
+  "gene_names": [
+    "CDO1",
+    "IDNK",
+    "10313",
+    "5649",
+    "Q9C010"
+  ],
+  "entrez_ids": [
+    "1036",
+    "414328",
+    "10313",
+    "5649",
+    "5570"
+  ]
+}

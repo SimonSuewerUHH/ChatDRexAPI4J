@@ -1,0 +1,13 @@
+{
+  "question": "Execute DIGEST analysis to evaluate the overlap significance of Q16891, Q02045, O75665.",
+  "gene_names": [
+    "Q16891",
+    "Q02045",
+    "O75665"
+  ],
+  "entrez_ids": [
+    "10989",
+    "4636",
+    "8481"
+  ]
+}

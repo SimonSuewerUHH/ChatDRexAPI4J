@@ -1,0 +1,15 @@
+{
+  "question": "Estimate the empirical P-value for observing UGDH, SFPQ, NKG7, THBD given the reference network.",
+  "gene_names": [
+    "UGDH",
+    "SFPQ",
+    "NKG7",
+    "THBD"
+  ],
+  "entrez_ids": [
+    "7358",
+    "6421",
+    "4818",
+    "7056"
+  ]
+}

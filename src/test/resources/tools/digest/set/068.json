@@ -1,0 +1,17 @@
+{
+  "question": "Assess the biological significance of CINP, OLA1, WTAP, ALG2, SOX9 through enrichment and variant comparison.",
+  "gene_names": [
+    "CINP",
+    "OLA1",
+    "WTAP",
+    "ALG2",
+    "SOX9"
+  ],
+  "entrez_ids": [
+    "51550",
+    "29789",
+    "9589",
+    "10016",
+    "6662"
+  ]
+}

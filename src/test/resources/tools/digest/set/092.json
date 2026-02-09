@@ -1,0 +1,17 @@
+{
+  "question": "Assess the biological significance of 79190, 11142, Q96QD8, Q8TC57, O60479 through enrichment and variant comparison.",
+  "gene_names": [
+    "79190",
+    "11142",
+    "Q96QD8",
+    "Q8TC57",
+    "O60479"
+  ],
+  "entrez_ids": [
+    "79190",
+    "11142",
+    "54407",
+    "130951",
+    "1747"
+  ]
+}

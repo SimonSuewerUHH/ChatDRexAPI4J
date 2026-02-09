@@ -1,0 +1,17 @@
+{
+  "question": "Evaluate how likely it is that Q9UNH6, Q8WYP3, Q96GA7, Q92733, Q86YV9 share functional pathways beyond random chance.",
+  "gene_names": [
+    "Q9UNH6",
+    "Q8WYP3",
+    "Q96GA7",
+    "Q92733",
+    "Q86YV9"
+  ],
+  "entrez_ids": [
+    "51375",
+    "54453",
+    "113675",
+    "5546",
+    "79803"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "question": "Estimate the empirical P-value for observing BBS7, NAAA, BRD8, G0S2 given the reference network.",
+  "gene_names": [
+    "BBS7",
+    "NAAA",
+    "BRD8",
+    "G0S2"
+  ],
+  "entrez_ids": [
+    "55212",
+    "27163",
+    "10902",
+    "50486"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "question": "Perform DIGEST-based validation on AK6, NBL1, FRZB to assess enrichment and coherence.",
+  "gene_names": [
+    "AK6",
+    "NBL1",
+    "FRZB"
+  ],
+  "entrez_ids": [
+    "26289",
+    "4681",
+    "2487"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "seeds": [
+    "11255",
+    "147912",
+    "1911",
+    "23163",
+    "167691"
+  ],
+  "seed_type": "gene",
+  "n": 50,
+  "alpha": 1,
+  "network": "DEFAULT",
+  "edges": "limited",
+  "uid": "2e79d956-3fdf-4bcd-a881-d7ca2b03899c",
+  "status": "pending",
+  "results": {
+    "diamond_nodes": [],
+    "edges": [],
+    "seeds_in_network": [
+      "11255",
+      "147912",
+      "1911",
+      "23163",
+      "167691"
+    ]
+  }
+}

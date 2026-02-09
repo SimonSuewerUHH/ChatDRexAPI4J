@@ -1,0 +1,17 @@
+{
+  "question": "Assess the biological significance of FZR1, CGN, ARF5, TG, SSH3 through enrichment and variant comparison.",
+  "gene_names": [
+    "FZR1",
+    "CGN",
+    "ARF5",
+    "TG",
+    "SSH3"
+  ],
+  "entrez_ids": [
+    "51343",
+    "57530",
+    "381",
+    "7038",
+    "54961"
+  ]
+}

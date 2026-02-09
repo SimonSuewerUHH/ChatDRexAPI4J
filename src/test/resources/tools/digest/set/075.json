@@ -1,0 +1,17 @@
+{
+  "question": "Estimate the empirical P-value for observing ARTN, CSN2, SNN, MEA1, NCL given the reference network.",
+  "gene_names": [
+    "ARTN",
+    "CSN2",
+    "SNN",
+    "MEA1",
+    "NCL"
+  ],
+  "entrez_ids": [
+    "9048",
+    "1447",
+    "8303",
+    "4201",
+    "4691"
+  ]
+}

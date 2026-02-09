@@ -1,0 +1,17 @@
+{
+  "question": "Determine the likelihood that P54803, Q6IBS0, 54796, 9978, C11orf96 represent a valid disease module.",
+  "gene_names": [
+    "P54803",
+    "Q6IBS0",
+    "54796",
+    "9978",
+    "C11orf96"
+  ],
+  "entrez_ids": [
+    "2581",
+    "11344",
+    "54796",
+    "9978",
+    "387763"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "question": "Assess the biological significance of TG, TLR7, SP7, SELP through enrichment and variant comparison.",
+  "gene_names": [
+    "TG",
+    "TLR7",
+    "SP7",
+    "SELP"
+  ],
+  "entrez_ids": [
+    "7038",
+    "51284",
+    "121340",
+    "6403"
+  ]
+}

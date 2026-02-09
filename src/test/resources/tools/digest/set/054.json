@@ -1,0 +1,15 @@
+{
+  "question": "Determine the likelihood that Q8N1E2, Q9NR00, Q9Y2B9, Q8N442 represent a valid disease module.",
+  "gene_names": [
+    "Q8N1E2",
+    "Q9NR00",
+    "Q9Y2B9",
+    "Q8N442"
+  ],
+  "entrez_ids": [
+    "129530",
+    "56892",
+    "11142",
+    "60558"
+  ]
+}

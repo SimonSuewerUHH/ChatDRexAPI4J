@@ -1,0 +1,17 @@
+{
+  "question": "Evaluate how likely it is that MEST, KRTAP3-3, ENO4, PEG3, RHEX share functional pathways beyond random chance.",
+  "gene_names": [
+    "MEST",
+    "KRTAP3-3",
+    "ENO4",
+    "PEG3",
+    "RHEX"
+  ],
+  "entrez_ids": [
+    "4232",
+    "85293",
+    "387712",
+    "5178",
+    "440712"
+  ]
+}

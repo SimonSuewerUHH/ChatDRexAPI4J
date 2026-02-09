@@ -1,0 +1,15 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of P50406, P48382, P12644, P18827.",
+  "gene_names": [
+    "P50406",
+    "P48382",
+    "P12644",
+    "P18827"
+  ],
+  "entrez_ids": [
+    "3362",
+    "5993",
+    "652",
+    "6382"
+  ]
+}

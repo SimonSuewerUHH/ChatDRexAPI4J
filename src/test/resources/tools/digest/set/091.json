@@ -1,0 +1,17 @@
+{
+  "question": "Test whether P13929, P20827, 966, NIFK, Q9NUW8 are functionally or genetically cohesive.",
+  "gene_names": [
+    "P13929",
+    "P20827",
+    "966",
+    "NIFK",
+    "Q9NUW8"
+  ],
+  "entrez_ids": [
+    "2027",
+    "1942",
+    "966",
+    "84365",
+    "55775"
+  ]
+}

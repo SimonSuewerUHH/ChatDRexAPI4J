@@ -1,0 +1,17 @@
+{
+  "question": "Evaluate how likely it is that C8G, MZB1, 1652, 6945, A6NGE7 share functional pathways beyond random chance.",
+  "gene_names": [
+    "C8G",
+    "MZB1",
+    "1652",
+    "6945",
+    "A6NGE7"
+  ],
+  "entrez_ids": [
+    "733",
+    "51237",
+    "1652",
+    "6945",
+    "646625"
+  ]
+}

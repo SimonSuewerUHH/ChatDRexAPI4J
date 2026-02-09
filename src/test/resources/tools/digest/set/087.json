@@ -1,0 +1,19 @@
+{
+  "question": "Evaluate how likely it is that 6233, 2912, 8350, 399694, 100505753, 51234 share functional pathways beyond random chance.",
+  "gene_names": [
+    "6233",
+    "2912",
+    "8350",
+    "399694",
+    "100505753",
+    "51234"
+  ],
+  "entrez_ids": [
+    "6233",
+    "2912",
+    "8350",
+    "399694",
+    "100505753",
+    "51234"
+  ]
+}

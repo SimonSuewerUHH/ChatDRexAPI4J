@@ -1,0 +1,15 @@
+{
+  "question": "Assess the biological significance of Q9H201, P17174, Q15915, P35557 through enrichment and variant comparison.",
+  "gene_names": [
+    "Q9H201",
+    "P17174",
+    "Q15915",
+    "P35557"
+  ],
+  "entrez_ids": [
+    "55040",
+    "2805",
+    "7545",
+    "2645"
+  ]
+}

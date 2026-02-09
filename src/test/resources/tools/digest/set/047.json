@@ -1,0 +1,15 @@
+{
+  "question": "Use DIGEST validation to verify the biological relevance of BRCA1, FGFR1, PDCD1, VEGFA.",
+  "gene_names": [
+    "BRCA1",
+    "FGFR1",
+    "PDCD1",
+    "VEGFA"
+  ],
+  "entrez_ids": [
+    "672",
+    "2260",
+    "5133",
+    "7422"
+  ]
+}

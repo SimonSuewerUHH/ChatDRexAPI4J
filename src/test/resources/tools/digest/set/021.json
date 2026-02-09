@@ -1,0 +1,13 @@
+{
+  "question": "Perform DIGEST-based validation on C6orf147, E4F1, ACP6 to assess enrichment and coherence.",
+  "gene_names": [
+    "C6orf147",
+    "E4F1",
+    "ACP6"
+  ],
+  "entrez_ids": [
+    "80759",
+    "1877",
+    "51205"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "question": "Estimate the empirical P-value for observing P32247, Q2M2I8, Q9BYQ9, A6NEN9, 2147 given the reference network.",
+  "gene_names": [
+    "P32247",
+    "Q2M2I8",
+    "Q9BYQ9",
+    "A6NEN9",
+    "2147"
+  ],
+  "entrez_ids": [
+    "680",
+    "22848",
+    "728224",
+    "158830",
+    "2147"
+  ]
+}

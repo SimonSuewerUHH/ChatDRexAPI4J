@@ -1,0 +1,17 @@
+{
+  "question": "Validate whether the genes Q9UIB8, P48380, O75636, O14980, Q96LL3 form a coherent and disease-relevant set.",
+  "gene_names": [
+    "Q9UIB8",
+    "P48380",
+    "O75636",
+    "O14980",
+    "Q96LL3"
+  ],
+  "entrez_ids": [
+    "8832",
+    "5991",
+    "8547",
+    "7514",
+    "146378"
+  ]
+}
