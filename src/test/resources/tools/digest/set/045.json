@@ -1,0 +1,15 @@
+{
+  "question": "Run the DIGEST validation pipeline on the gene set 3726, 351, 928, 6768.",
+  "gene_names": [
+    "3726",
+    "351",
+    "928",
+    "6768"
+  ],
+  "entrez_ids": [
+    "3726",
+    "351",
+    "928",
+    "6768"
+  ]
+}

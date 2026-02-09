@@ -1,0 +1,15 @@
+{
+  "question": "Validate whether the genes 127435, 4026, 246744, 729330 form a coherent and disease-relevant set.",
+  "gene_names": [
+    "127435",
+    "4026",
+    "246744",
+    "729330"
+  ],
+  "entrez_ids": [
+    "127435",
+    "4026",
+    "246744",
+    "729330"
+  ]
+}

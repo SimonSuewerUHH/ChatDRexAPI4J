@@ -1,0 +1,19 @@
+{
+  "question": "Compute the statistical enrichment of LBX1, HK1, RPA3, RMC1, AMZ1, RPL3 compared to random background sets.",
+  "gene_names": [
+    "LBX1",
+    "HK1",
+    "RPA3",
+    "RMC1",
+    "AMZ1",
+    "RPL3"
+  ],
+  "entrez_ids": [
+    "10660",
+    "3098",
+    "6119",
+    "29919",
+    "155185",
+    "6122"
+  ]
+}

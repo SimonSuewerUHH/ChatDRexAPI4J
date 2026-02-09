@@ -1,0 +1,13 @@
+{
+  "question": "Perform DIGEST coherence validation on 649, 7809, 50486.",
+  "gene_names": [
+    "649",
+    "7809",
+    "50486"
+  ],
+  "entrez_ids": [
+    "649",
+    "7809",
+    "50486"
+  ]
+}

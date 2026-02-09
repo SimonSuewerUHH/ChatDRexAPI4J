@@ -1,0 +1,25 @@
+{
+  "seeds": [
+    "10874",
+    "546",
+    "9315",
+    "43"
+  ],
+  "seed_type": "gene",
+  "n": 50,
+  "alpha": 1,
+  "network": "DEFAULT",
+  "edges": "limited",
+  "uid": "89a8a646-4bfe-499b-957b-d57d60d79d3c",
+  "status": "pending",
+  "results": {
+    "diamond_nodes": [],
+    "edges": [],
+    "seeds_in_network": [
+      "10874",
+      "546",
+      "9315",
+      "43"
+    ]
+  }
+}

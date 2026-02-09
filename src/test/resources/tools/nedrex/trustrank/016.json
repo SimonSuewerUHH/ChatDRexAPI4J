@@ -1,0 +1,14 @@
+{
+  "seed_proteins": [
+    "A0A0Y0IMM4",
+    "A0A8Q3WKZ2",
+    "H7C560"
+  ],
+  "damping_factor": 0.85,
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 50,
+  "uid": "41a273e3-a69c-47c8-9186-b52ab8735444",
+  "status": "failed",
+  "error": "Process exited with exit code 1 -- please contact API developer."
+}

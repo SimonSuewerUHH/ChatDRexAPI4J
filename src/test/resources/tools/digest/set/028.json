@@ -1,0 +1,13 @@
+{
+  "question": "Use DIGEST to assess the functional and genetic coherence of CD1A, NOM1, SAG.",
+  "gene_names": [
+    "CD1A",
+    "NOM1",
+    "SAG"
+  ],
+  "entrez_ids": [
+    "909",
+    "64434",
+    "1755"
+  ]
+}

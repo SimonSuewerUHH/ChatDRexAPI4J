@@ -1,0 +1,15 @@
+{
+  "question": "Validate whether the genes NRDC, UBP1, RTF2, PSG7 form a coherent and disease-relevant set.",
+  "gene_names": [
+    "NRDC",
+    "UBP1",
+    "RTF2",
+    "PSG7"
+  ],
+  "entrez_ids": [
+    "4898",
+    "7342",
+    "51507",
+    "5676"
+  ]
+}

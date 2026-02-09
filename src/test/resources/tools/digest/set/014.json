@@ -1,0 +1,11 @@
+{
+  "question": "Run a DIGEST test for 23627, 9365 to measure module significance.",
+  "gene_names": [
+    "23627",
+    "9365"
+  ],
+  "entrez_ids": [
+    "23627",
+    "9365"
+  ]
+}

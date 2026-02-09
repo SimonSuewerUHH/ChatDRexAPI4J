@@ -1,0 +1,11 @@
+{
+  "question": "Apply DIGEST to test whether P48643, P15924 form a statistically significant disease module.",
+  "gene_names": [
+    "P48643",
+    "P15924"
+  ],
+  "entrez_ids": [
+    "22948",
+    "1832"
+  ]
+}

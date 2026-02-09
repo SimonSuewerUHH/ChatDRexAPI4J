@@ -1,0 +1,11 @@
+{
+  "question": "Perform DIGEST coherence validation on KRTAP19-6, ZEB2.",
+  "gene_names": [
+    "KRTAP19-6",
+    "ZEB2"
+  ],
+  "entrez_ids": [
+    "337973",
+    "9839"
+  ]
+}

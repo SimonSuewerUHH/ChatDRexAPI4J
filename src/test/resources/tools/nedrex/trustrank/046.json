@@ -1,0 +1,219 @@
+{
+  "seed_proteins": [
+    "O94901",
+    "P43268",
+    "Q9H611",
+    "Q9Y483"
+  ],
+  "damping_factor": 0.85,
+  "only_direct_drugs": false,
+  "only_approved_drugs": false,
+  "N": 50,
+  "uid": "38ba4821-20e2-4b53-9e55-9185a7071875",
+  "status": "completed",
+  "results": {
+    "drugs": [
+      {
+        "drug_name": "drugbank.DB01268",
+        "score": "3.7909986724440916e-05"
+      },
+      {
+        "drug_name": "drugbank.DB09079",
+        "score": "3.171966667076035e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06595",
+        "score": "2.9725749987086904e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06616",
+        "score": "2.8422715292696825e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08865",
+        "score": "2.1008466579493123e-05"
+      },
+      {
+        "drug_name": "drugbank.DB01254",
+        "score": "1.827822261209118e-05"
+      },
+      {
+        "drug_name": "drugbank.DB08877",
+        "score": "1.7637114637683038e-05"
+      },
+      {
+        "drug_name": "drugbank.DB00398",
+        "score": "1.6771005708784725e-05"
+      },
+      {
+        "drug_name": "drugbank.DB05294",
+        "score": "1.5225305570332295e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06589",
+        "score": "1.5060972138995664e-05"
+      },
+      {
+        "drug_name": "drugbank.DB11828",
+        "score": "1.5007707590843985e-05"
+      },
+      {
+        "drug_name": "drugbank.DB06626",
+        "score": "1.447264404255866e-05"
+      },
+      {
+        "drug_name": "drugbank.DB00530",
+        "score": "1.3919939045750127e-05"
+      },
+      {
+        "drug_name": "drugbank.DB04868",
+        "score": "9.996619507798306e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00317",
+        "score": "9.743960041577331e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00619",
+        "score": "9.627416984275664e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00477",
+        "score": "8.191841547531698e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00257",
+        "score": "7.695576701660956e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00536",
+        "score": "7.685394951574648e-06"
+      },
+      {
+        "drug_name": "drugbank.DB06637",
+        "score": "7.685394951574648e-06"
+      },
+      {
+        "drug_name": "drugbank.DB11640",
+        "score": "7.685394951574648e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00331",
+        "score": "7.165313532822527e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00738",
+        "score": "7.09208089995165e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00637",
+        "score": "7.075221581505317e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00675",
+        "score": "6.989160328427769e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01110",
+        "score": "6.784467313989996e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01118",
+        "score": "6.6798361051596886e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01127",
+        "score": "6.510157985412075e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01199",
+        "score": "6.35882371980001e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00975",
+        "score": "5.683194620658142e-06"
+      },
+      {
+        "drug_name": "drugbank.DB09063",
+        "score": "5.379029049430264e-06"
+      },
+      {
+        "drug_name": "drugbank.DB08895",
+        "score": "5.139012805574332e-06"
+      },
+      {
+        "drug_name": "drugbank.DB08916",
+        "score": "5.105956205560478e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00679",
+        "score": "5.003024439366864e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00623",
+        "score": "4.909740406935838e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00481",
+        "score": "4.868933044439452e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00184",
+        "score": "4.817490889116513e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00363",
+        "score": "4.8085833004512695e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00255",
+        "score": "4.6193028924539985e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00334",
+        "score": "4.45931427625693e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00502",
+        "score": "4.36511159483412e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01238",
+        "score": "4.1772782504170175e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00246",
+        "score": "4.153638948261884e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00203",
+        "score": "4.109955528426078e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00948",
+        "score": "4.0657912312634494e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00661",
+        "score": "4.050646420598399e-06"
+      },
+      {
+        "drug_name": "drugbank.DB06148",
+        "score": "4.039763783325321e-06"
+      },
+      {
+        "drug_name": "drugbank.DB09225",
+        "score": "4.009397511676467e-06"
+      },
+      {
+        "drug_name": "drugbank.DB01233",
+        "score": "3.950925445211764e-06"
+      },
+      {
+        "drug_name": "drugbank.DB00734",
+        "score": "3.820352750355589e-06"
+      }
+    ],
+    "edges": []
+  }
+}

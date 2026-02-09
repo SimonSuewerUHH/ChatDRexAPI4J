@@ -1,0 +1,13 @@
+{
+  "question": "Validate the candidate gene list EBPL, DBN1, DLX5 using DIGEST to compute empirical P-values.",
+  "gene_names": [
+    "EBPL",
+    "DBN1",
+    "DLX5"
+  ],
+  "entrez_ids": [
+    "84650",
+    "1627",
+    "1749"
+  ]
+}

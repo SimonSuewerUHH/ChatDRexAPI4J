@@ -1,0 +1,19 @@
+{
+  "question": "Evaluate how likely it is that Q07352, Q9NX55, Q00978, O43612, Q99496, A0A1W2PPE3 share functional pathways beyond random chance.",
+  "gene_names": [
+    "Q07352",
+    "Q9NX55",
+    "Q00978",
+    "O43612",
+    "Q99496",
+    "A0A1W2PPE3"
+  ],
+  "entrez_ids": [
+    "677",
+    "25764",
+    "10379",
+    "3060",
+    "6045",
+    "122455338"
+  ]
+}

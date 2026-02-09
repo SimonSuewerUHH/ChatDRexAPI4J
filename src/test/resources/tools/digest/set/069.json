@@ -1,0 +1,17 @@
+{
+  "question": "Analyze 7280, 7507, 6662, 1791, 5837 for overrepresentation of disease associations.",
+  "gene_names": [
+    "7280",
+    "7507",
+    "6662",
+    "1791",
+    "5837"
+  ],
+  "entrez_ids": [
+    "7280",
+    "7507",
+    "6662",
+    "1791",
+    "5837"
+  ]
+}

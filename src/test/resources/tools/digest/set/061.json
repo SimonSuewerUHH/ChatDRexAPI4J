@@ -1,0 +1,15 @@
+{
+  "question": "Test whether Q00889, Q13936, Q5SXM8, P08473 are functionally or genetically cohesive.",
+  "gene_names": [
+    "Q00889",
+    "Q13936",
+    "Q5SXM8",
+    "P08473"
+  ],
+  "entrez_ids": [
+    "5675",
+    "775",
+    "728489",
+    "4311"
+  ]
+}

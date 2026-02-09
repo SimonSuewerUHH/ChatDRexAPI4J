@@ -1,0 +1,11 @@
+{
+  "question": "Use DIGEST validation to verify the biological relevance of ASB2, JRKL.",
+  "gene_names": [
+    "ASB2",
+    "JRKL"
+  ],
+  "entrez_ids": [
+    "51676",
+    "8690"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "question": "Perform DIGEST coherence validation on Q96NJ6, Q92890, Q12857.",
+  "gene_names": [
+    "Q96NJ6",
+    "Q92890",
+    "Q12857"
+  ],
+  "entrez_ids": [
+    "124961",
+    "7353",
+    "4774"
+  ]
+}

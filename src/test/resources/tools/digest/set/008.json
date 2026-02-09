@@ -1,0 +1,11 @@
+{
+  "question": "Run a DIGEST test for PLD5, RTP3 to measure module significance.",
+  "gene_names": [
+    "PLD5",
+    "RTP3"
+  ],
+  "entrez_ids": [
+    "200150",
+    "83597"
+  ]
+}

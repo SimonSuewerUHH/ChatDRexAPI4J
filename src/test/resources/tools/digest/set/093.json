@@ -1,0 +1,17 @@
+{
+  "question": "Determine if TPK1, 50853, Q9NWF4, 51466, C1orf74 show significant overlap with known disease genes.",
+  "gene_names": [
+    "TPK1",
+    "50853",
+    "Q9NWF4",
+    "51466",
+    "C1orf74"
+  ],
+  "entrez_ids": [
+    "27010",
+    "50853",
+    "55065",
+    "51466",
+    "148304"
+  ]
+}
