@@ -4,11 +4,13 @@ import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.agent.bot.kg.NeDRexKGBot;
 import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
 import de.hamburg.university.agent.bot.kg.NeDRexKGNode;
+import de.hamburg.university.agent.bot.kg.NeDRexKGPlainBot;
 import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
 import de.hamburg.university.api.chat.ChatWebsocketSender;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
+import de.hamburg.university.helper.cypher.CypherEscaper;
 import de.hamburg.university.helper.drugstone.cypher.CypherResultIdExtractor;
 import de.hamburg.university.helper.drugstone.cypher.CypherToDrugstOne;
 import de.hamburg.university.service.nedrex.kg.NeDRexKGNodeEnhanced;
@@ -35,6 +37,10 @@ public class NeDRexKGTool {
     @Inject
     NeDRexKGBot nedrexKGBot;
 
+
+    @Inject
+    NeDRexKGPlainBot neDRexKGPlainBot;
+
     @Inject
     NeDRexKgQueryServiceImpl nedrexKgQueryService;
 
@@ -57,7 +63,7 @@ public class NeDRexKGTool {
         List<NeDRexKGNodeEnhanced> enhancedNodes = nedrexKgQueryService.enhanceGraph(questionGraph);
         String enhancedNodesString = stringifyEnhancedNodes(enhancedNodes);
         double minScore = config.tools().kgQuery().minGeneDisorderScore();
-        String query = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, "", minScore);
+        String query = neDRexKGPlainBot.generateCypherQuery(question, enhancedNodesString, "", minScore);
         return query;
     }
 
@@ -85,12 +91,15 @@ public class NeDRexKGTool {
             final int maxAttempts = config.tools().kgQuery().retries();
             for (int i = 0; i < maxAttempts; i++) {
                 try {
-                    newQuery = nedrexKGBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
+                    newQuery = neDRexKGPlainBot.generateCypherQuery(question, enhancedNodesString, oldQuery, minScore);
                     oldQuery += "\n " + i + ". " + newQuery;
                     toolDTO.addContent("<h3>Neo4j Query:</h3>");
                     toolDTO.addContent(newQuery);
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
-
+                    if (CypherEscaper.hasUnescapedQuotes(newQuery)) {
+                        Log.warnf("Generated query has unescaped quotes, regenerating. Query: %s", newQuery);
+                        newQuery = CypherEscaper.escapeIfNeeded(newQuery);
+                    }
                     String result = nedrexKgQueryService.fireNeo4jQuery(newQuery);
                     toolDTO.addContent("<h3>Neo4j Result:</h3>");
                     toolDTO.addContent(result);
@@ -101,14 +110,10 @@ public class NeDRexKGTool {
                         Log.infof("Empty result for query: %s", newQuery);
                         continue;
                     }
-                    if (i == maxAttempts - 1) {
-                        Log.infof("Final attempt %d, returning result even if it might be incomplete.", i + 1);
-                        break;
-                    }
                     List<String> cypherIds = CypherResultIdExtractor.extractResults(result);
                     cypherIds.addAll(ids);
                     cypherToDrugstOne.toDrugstOne(cypherIds, content, emitter);
-                    String answer = nedrexKGBot.answerQuestion(question, result);
+                    String answer = neDRexKGPlainBot.answerQuestion(question, result);
                     toolDTO.addContent(answer);
                     toolDTO.setStop();
                     chatWebsocketSender.sendTool(toolDTO, content, emitter);
@@ -128,7 +133,7 @@ public class NeDRexKGTool {
             toolDTO.addContent(enhancedNodesString);
             chatWebsocketSender.sendTool(toolDTO, content, emitter);
 
-            String answer = nedrexKGBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
+            String answer = neDRexKGPlainBot.answerFallbackQuestion(question, enhancedNodesFallbackString);
             toolDTO.addContent(answer);
             toolDTO.setStop();
             chatWebsocketSender.sendTool(toolDTO, content, emitter);

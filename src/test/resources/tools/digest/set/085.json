@@ -1,0 +1,19 @@
+{
+  "question": "Compute the statistical enrichment of MAFA, CGA, PBX4, TF, RGS8, NLN compared to random background sets.",
+  "gene_names": [
+    "MAFA",
+    "CGA",
+    "PBX4",
+    "TF",
+    "RGS8",
+    "NLN"
+  ],
+  "entrez_ids": [
+    "10219",
+    "1081",
+    "80714",
+    "2152",
+    "85397",
+    "57486"
+  ]
+}

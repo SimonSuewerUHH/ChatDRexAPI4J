@@ -1,0 +1,17 @@
+{
+  "question": "Test whether P21397, P01833, O00512, Q9UNE0, P20036 are functionally or genetically cohesive.",
+  "gene_names": [
+    "P21397",
+    "P01833",
+    "O00512",
+    "Q9UNE0",
+    "P20036"
+  ],
+  "entrez_ids": [
+    "4128",
+    "5284",
+    "607",
+    "10913",
+    "3113"
+  ]
+}

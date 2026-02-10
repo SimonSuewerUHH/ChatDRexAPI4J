@@ -1,6 +1,6 @@
 package de.hamburg.university.agent.memory;
 
-import de.hamburg.university.api.chat.messages.ChatRequestDTO;
+import de.hamburg.university.helper.drugstone.dto.DrugstOneDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.ArrayList;
@@ -9,27 +9,52 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 public class InMemoryStateHolder {
+    private final ConcurrentHashMap<Object, List<String>> threads = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Object, List<PlanStateResult>> states = new ConcurrentHashMap<>();
 
-    public void addClient(String clientId, ChatRequestDTO request) {
-        states.put(clientId, new ArrayList<>());
-    }
 
     public void removeClient(String clientId) {
-        states.remove(clientId);
+        if (!threads.containsKey(clientId)) {
+            return;
+        }
+        List<String> threadIds = threads.get(clientId);
+        for (String threadId : threadIds) {
+            states.remove(threadId);
+            sharedDrugstOne.remove(threadId);
+        }
+        threads.remove(clientId);
     }
 
-    public List<PlanStateResult> getStates(String clientId) {
-        if (!states.containsKey(clientId)) {
-            return new ArrayList<>();
+    public List<PlanStateResult> getStates(String clientId, String threadId) {
+        insureThreadExists(clientId, threadId);
+        if (!states.containsKey(threadId)) {
+            states.put(threadId, new ArrayList<>());
         }
-        return states.get(clientId);
+        return states.get(threadId);
     }
 
-    public void addState(String clientId, PlanStateResult state) {
-        if (!states.containsKey(clientId)) {
-            states.put(clientId, new ArrayList<>());
+    public DrugstOneDTO getDrugstOne(String sessionId) {
+        if (!sharedDrugstOne.containsKey(sessionId)) {
+            sharedDrugstOne.put(sessionId, new DrugstOneDTO());
         }
-        states.get(clientId).add(state);
+        return sharedDrugstOne.get(sessionId);
+    }
+
+    public void addState(String clientId, String threadId, PlanStateResult state) {
+        insureThreadExists(clientId, threadId);
+        if (!states.containsKey(threadId)) {
+            states.put(threadId, new ArrayList<>());
+        }
+        states.get(threadId).add(state);
+    }
+
+    private void insureThreadExists(String clientId, String threadId) {
+        if (!threads.containsKey(clientId)) {
+            threads.put(clientId, new ArrayList<>());
+        }
+        List<String> threadIds = threads.get(clientId);
+        if (!threadIds.contains(threadId)) {
+            threadIds.add(threadId);
+        }
     }
 }

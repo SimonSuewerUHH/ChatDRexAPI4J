@@ -1,0 +1,17 @@
+{
+  "question": "Test whether 283897, 2535, 5184, 57593, 10943 are functionally or genetically cohesive.",
+  "gene_names": [
+    "283897",
+    "2535",
+    "5184",
+    "57593",
+    "10943"
+  ],
+  "entrez_ids": [
+    "283897",
+    "2535",
+    "5184",
+    "57593",
+    "10943"
+  ]
+}

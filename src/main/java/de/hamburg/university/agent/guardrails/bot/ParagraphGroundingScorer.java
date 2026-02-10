@@ -1,14 +1,15 @@
 package de.hamburg.university.agent.bot.guardrails;
 
 import de.hamburg.university.agent.planning.PlanState;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
-@RegisterAiService(chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class)
-@ApplicationScoped
+@RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
+        chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class)
 public interface ParagraphGroundingScorer {
 
     @SystemMessage("""
@@ -41,10 +42,10 @@ public interface ParagraphGroundingScorer {
     @UserMessage("""
             Paragraph to evaluate (markdown):
             {paragraph}
-
+            
             PlanState (JSON):
             {state}
-
+            
             Return a single float (0.0–1.0) as described. Nothing else.
             """)
     double score(@V("paragraph") String paragraph, PlanState state);

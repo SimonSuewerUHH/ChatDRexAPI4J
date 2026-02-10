@@ -1,7 +1,9 @@
 package de.hamburg.university.api.chat.messages;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
+@RegisterForReflection
 public enum MessageType {
     @JsonAlias({"sending", "SENDING"})
     SENDING,

@@ -1,0 +1,21 @@
+{
+  "question": "Compare the set Q9H095, O95677, Q9NWQ8, P08949, Q8TDD2, Q9NR61, Q14990 against background distributions to determine significance.",
+  "gene_names": [
+    "Q9H095",
+    "O95677",
+    "Q9NWQ8",
+    "P08949",
+    "Q8TDD2",
+    "Q9NR61",
+    "Q14990"
+  ],
+  "entrez_ids": [
+    "84223",
+    "2070",
+    "55824",
+    "4828",
+    "121340",
+    "54567",
+    "4956"
+  ]
+}

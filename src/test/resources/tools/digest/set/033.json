@@ -1,0 +1,13 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of ACP6, CCN5, CDO1.",
+  "gene_names": [
+    "ACP6",
+    "CCN5",
+    "CDO1"
+  ],
+  "entrez_ids": [
+    "51205",
+    "8839",
+    "1036"
+  ]
+}

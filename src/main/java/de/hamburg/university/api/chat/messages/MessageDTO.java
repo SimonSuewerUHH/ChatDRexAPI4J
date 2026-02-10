@@ -1,10 +1,12 @@
 package de.hamburg.university.api.chat.messages;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@RegisterForReflection
 public class MessageDTO {
     private Object message;
     private ChatMessageType messageType;

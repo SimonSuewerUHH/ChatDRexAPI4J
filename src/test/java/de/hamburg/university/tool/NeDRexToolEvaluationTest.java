@@ -6,20 +6,15 @@ import de.hamburg.university.agent.bot.NeDRexBot;
 import de.hamburg.university.agent.bot.NeDRexToolDecisionBot;
 import de.hamburg.university.agent.tool.nedrex.NeDRexTool;
 import de.hamburg.university.agent.tool.nedrex.NeDRexToolDecisionResult;
+import de.hamburg.university.agent.tool.nedrex.NeDRexToolTypes;
 import de.hamburg.university.helper.AIJudgeBot;
 import de.hamburg.university.helper.JsonLoader;
-import de.hamburg.university.helper.drugstone.DrugstOneGraphHelper;
-import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
-import de.hamburg.university.service.nedrex.closeness.ClosenessResultDTO;
-import de.hamburg.university.service.nedrex.diamond.DiamondResultsDTO;
-import de.hamburg.university.service.nedrex.trustrank.TrustRankResultDTO;
 import de.hamburg.university.tool.pojo.NeDRexToolQuestion;
 import de.hamburg.university.tool.pojo.NeDRexToolTestResult;
 import io.quarkus.logging.Log;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -40,9 +35,6 @@ public class NeDRexToolEvaluationTest {
 
     @Inject
     NeDRexToolDecisionBot neDRexToolDecisionBot;
-
-    @Inject
-    DrugstOneGraphHelper drugstOneGraphHelper;
 
     @Inject
     AIJudgeBot judgeBot;
@@ -86,12 +78,20 @@ public class NeDRexToolEvaluationTest {
         List<NeDRexToolQuestion> questions = JsonLoader.loadJson("tools/nedrex/trustrank/questions.json", new TypeReference<List<NeDRexToolQuestion>>() {
         });
 
+        int trustrankResultCount = 0;
         for (NeDRexToolQuestion question : questions) {
             NeDRexToolTestResult result = testTrustrank(question);
             results.add(result);
+            trustrankResultCount++;
             Log.info(result.toString());
-            NeDRexToolTestResult.printJsonFile(results, getPath());
+
+            Path savePath = getPath();
+            NeDRexToolTestResult.printJsonFile(results, savePath);
+            Log.infof("Saved trustrank result for question: %s to path: %s (total results: %d)",
+                    question.getPath(), savePath.toAbsolutePath(), results.size());
         }
+        Log.infof("Trustrank test completed. Added %d trustrank results. Total results in file: %d",
+                trustrankResultCount, results.size());
     }
 
     @Test
@@ -110,94 +110,193 @@ public class NeDRexToolEvaluationTest {
 
     private NeDRexToolTestResult testDiamond(NeDRexToolQuestion question) {
         NeDRexToolTestResult result = new NeDRexToolTestResult(question.getQuestion(), question.getPath());
-        String path = "tools/nedrex/diamond/" + question.getPath();
-        DiamondResultsDTO resultMocked = JsonLoader.loadJson(path, new TypeReference<DiamondResultsDTO>() {
-        });
 
+        List<String> expectedSeeds = parseSteps(question.getSteps());
+        if (expectedSeeds == null || expectedSeeds.isEmpty()) {
+            Log.warnf("No steps found in question for path: %s", question.getPath());
+            return result;
+        }
 
-        String enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
-        NeDRexToolDecisionResult decision = neDRexToolDecisionBot.answer(question.getQuestion(), enhancedContext);
+        String enhancedContext = "";
+        try {
+            enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
+        } catch (Exception e) {
+            Log.warnf(e, "Failed to get enhanced context from neDRexBot for question: %s. Using empty context.", question.getQuestion());
+            enhancedContext = "";
+        }
+        NeDRexToolDecisionResult decision;
+        try {
+            decision = neDRexToolDecisionBot.answer("test-session", question.getQuestion(), enhancedContext);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
+            String className = e.getClass().getSimpleName().toLowerCase();
+            Throwable cause = e.getCause();
+            String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
+            String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
+            boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
+
+            if (isParsingError || isHallucination) {
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                return result;
+            }
+            throw e;
+        }
         if (decision.getEntrezIds() == null || decision.getEntrezIds().isEmpty()) {
             return result;
         }
         List<String> entrezIds = decision.getEntrezIds();
-        checkInput(resultMocked.getSeeds(), entrezIds, result);
+        checkInput(expectedSeeds, entrezIds, result);
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("diamond")) {
+        if (!NeDRexToolTypes.isDiamond(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
 
-        //As we now that the input correct, we can assume that the output is correct if the tool is called
-        DrugstOneNetworkDTO network = drugstOneGraphHelper.diamondToNetwork(resultMocked);
-        if (network.getNodes().isEmpty()) {
-            return result;
-        }
         result.setCorrectAnswer(true);
         return result;
     }
 
     private NeDRexToolTestResult testTrustrank(NeDRexToolQuestion question) {
         NeDRexToolTestResult result = new NeDRexToolTestResult(question.getQuestion(), question.getPath());
-        String path = "tools/nedrex/trustrank/" + question.getPath();
-        TrustRankResultDTO resultMocked = JsonLoader.loadJson(path, new TypeReference<TrustRankResultDTO>() {
-        });
 
-
-        String enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
-        NeDRexToolDecisionResult decision = neDRexToolDecisionBot.answer(question.getQuestion(), enhancedContext);
-        if (decision.getEntrezIds() == null || decision.getEntrezIds().isEmpty()) {
+        List<String> expectedSeeds = parseSteps(question.getSteps());
+        if (expectedSeeds == null || expectedSeeds.isEmpty()) {
+            Log.warnf("No steps found in question for path: %s", question.getPath());
             return result;
         }
-        List<String> entrezIds = decision.getEntrezIds();
-        checkInput(resultMocked.getSeedProteins(), entrezIds, result);
+
+        String enhancedContext = "";
+        try {
+            enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
+        } catch (Exception e) {
+            Log.warnf(e, "Failed to get enhanced context from neDRexBot for question: %s. Using empty context.", question.getQuestion());
+            enhancedContext = "";
+        }
+        NeDRexToolDecisionResult decision;
+        try {
+            decision = neDRexToolDecisionBot.answer("test-session", question.getQuestion(), enhancedContext);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
+            String className = e.getClass().getSimpleName().toLowerCase();
+            Throwable cause = e.getCause();
+            String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
+            String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
+            boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
+
+            if (isParsingError || isHallucination) {
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                return result;
+            }
+            throw e;
+        }
+        if (decision.getUniProtIds() == null || decision.getUniProtIds().isEmpty()) {
+            return result;
+        }
+        List<String> uniProtIds = decision.getUniProtIds().stream()
+                .map(id -> id != null && id.startsWith("uniprot.") ? id.replace("uniprot.", "") : id)
+                .toList();
+        checkInput(expectedSeeds, uniProtIds, result);
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("trustrank")) {
+        if (!NeDRexToolTypes.isTrustRank(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
 
-        //As we now that the input correct, we can assume that the output is correct if the tool is called
-        DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(resultMocked);
-        if (network.getNodes().isEmpty()) {
-            return result;
-        }
         result.setCorrectAnswer(true);
         return result;
     }
 
     private NeDRexToolTestResult testCloseness(NeDRexToolQuestion question) {
         NeDRexToolTestResult result = new NeDRexToolTestResult(question.getQuestion(), question.getPath());
-        String path = "tools/nedrex/closeness/" + question.getPath();
-        ClosenessResultDTO resultMocked = JsonLoader.loadJson(path, new TypeReference<ClosenessResultDTO>() {
-        });
 
-
-        String enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
-        NeDRexToolDecisionResult decision = neDRexToolDecisionBot.answer(question.getQuestion(), enhancedContext);
-        if (decision.getEntrezIds() == null || decision.getEntrezIds().isEmpty()) {
+        List<String> expectedSeeds = parseSteps(question.getSteps());
+        if (expectedSeeds == null || expectedSeeds.isEmpty()) {
+            Log.warnf("No steps found in question for path: %s", question.getPath());
             return result;
         }
-        List<String> entrezIds = decision.getEntrezIds();
-        checkInput(resultMocked.getSeedProteins(), entrezIds, result);
+        expectedSeeds = expectedSeeds.stream().distinct().toList();
+
+        String enhancedContext = "";
+        try {
+            enhancedContext = neDRexBot.answer(question.getPath(), question.getQuestion(), "");
+        } catch (Exception e) {
+            Log.warnf(e, "Failed to get enhanced context from neDRexBot for question: %s. Using empty context.", question.getQuestion());
+            enhancedContext = "";
+        }
+        NeDRexToolDecisionResult decision;
+        try {
+            decision = neDRexToolDecisionBot.answer("test-session", question.getQuestion(), enhancedContext);
+        } catch (Exception e) {
+            String errorMsg = e.getMessage() != null ? e.getMessage().toLowerCase() : "";
+            String className = e.getClass().getSimpleName().toLowerCase();
+            Throwable cause = e.getCause();
+            String causeMsg = cause != null && cause.getMessage() != null ? cause.getMessage().toLowerCase() : "";
+            String causeClass = cause != null ? cause.getClass().getSimpleName().toLowerCase() : "";
+
+            boolean isParsingError = errorMsg.contains("parse") || errorMsg.contains("json") ||
+                    className.contains("parsing") || className.contains("output") ||
+                    causeMsg.contains("parse") || causeMsg.contains("json") ||
+                    causeClass.contains("parse") || causeClass.contains("json");
+
+            boolean isHallucination = errorMsg.contains("hallucination") || errorMsg.contains("no such tool exists");
+
+            if (isParsingError || isHallucination) {
+                Log.warnf(e, "LLM returned invalid response for question: %s. Error type: %s. Returning empty result.",
+                        question.getQuestion(), isParsingError ? "parsing" : "hallucination");
+                return result;
+            }
+            throw e;
+        }
+        if (decision.getUniProtIds() == null || decision.getUniProtIds().isEmpty()) {
+            return result;
+        }
+        List<String> uniProtIds = decision.getUniProtIds().stream()
+                .map(id -> id != null && id.startsWith("uniprot.") ? id.replace("uniprot.", "") : id)
+                .distinct()
+                .toList();
+        checkInput(expectedSeeds, uniProtIds, result);
         if (!result.isCorrectInput()) {
             return result;
         }
-        if (!decision.getToolName().equalsIgnoreCase("closeness")) {
+        if (!NeDRexToolTypes.isCloseness(decision.getToolName())) {
             return result;
         }
         result.setCorrectTool(true);
 
-        //As we now that the input correct, we can assume that the output is correct if the tool is called
-        DrugstOneNetworkDTO network = drugstOneGraphHelper.trustrankToNetwork(resultMocked);
-        if (network.getNodes().isEmpty()) {
-            return result;
-        }
         result.setCorrectAnswer(true);
+        return result;
+    }
+
+    private List<String> parseSteps(String steps) {
+        if (steps == null || steps.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<String> result = new ArrayList<>();
+        String[] parts = steps.split("[, ]+");
+        for (String part : parts) {
+            String trimmed = part.trim();
+            if (!trimmed.isEmpty()) {
+                result.add(trimmed);
+            }
+        }
         return result;
     }
 

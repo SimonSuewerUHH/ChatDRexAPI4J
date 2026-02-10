@@ -1,13 +1,13 @@
 package de.hamburg.university.agent.memory.bot;
 
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
-@RegisterAiService
-@ApplicationScoped
+@RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class)
 public interface CompressionAIBot {
     @SystemMessage("""
             You compress dialogue into a *single compact line* that preserves the user’s original intent and the assistant’s core answer.

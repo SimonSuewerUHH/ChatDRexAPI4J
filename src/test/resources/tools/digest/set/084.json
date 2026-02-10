@@ -1,0 +1,19 @@
+{
+  "question": "Determine the likelihood that IRX5, ATF1, PNKD, CIPC, MLX, CXorf38 represent a valid disease module.",
+  "gene_names": [
+    "IRX5",
+    "ATF1",
+    "PNKD",
+    "CIPC",
+    "MLX",
+    "CXorf38"
+  ],
+  "entrez_ids": [
+    "10265",
+    "466",
+    "25953",
+    "85457",
+    "6945",
+    "159013"
+  ]
+}

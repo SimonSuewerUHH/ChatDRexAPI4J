@@ -1,0 +1,13 @@
+{
+  "question": "Apply DIGEST to analyze the disease relevance of C19orf38, NCLN, C2orf15.",
+  "gene_names": [
+    "C19orf38",
+    "NCLN",
+    "C2orf15"
+  ],
+  "entrez_ids": [
+    "255809",
+    "56926",
+    "150590"
+  ]
+}

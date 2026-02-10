@@ -1,8 +1,5 @@
 package de.hamburg.university.agent.planning;
 
-import de.hamburg.university.helper.drugstone.DrugstOneNetworkDTO;
-import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
-import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -20,5 +17,13 @@ public class PlanState {
     private String digestResult = "";
     private String enhancedQueryBioInfo = "";
 
-    private DrugstOneNetworkDTO drugstOneNetwork;
+    private String networkSummary = "";
+    List<String> agentAnswers = new ArrayList<>();
+
+    public void addAgentAnswer(String answer) {
+        if (agentAnswers == null) {
+            agentAnswers = new ArrayList<>();
+        }
+        this.agentAnswers.add(answer);
+    }
 }

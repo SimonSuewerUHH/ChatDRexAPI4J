@@ -3,36 +3,31 @@ package de.hamburg.university.agent.planning.bots;
 import de.hamburg.university.agent.guardrails.PromptInjectionInputGuardrail;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.RequestClassification;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.guardrail.InputGuardrails;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
 
 @RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
         chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class
 )
-@ApplicationScoped
 public interface RequestClassifierBot {
 
     @InputGuardrails(PromptInjectionInputGuardrail.class)
     @SystemMessage("""
-            You are a strict request router AND context summarizer for downstream agents.
+            You are a strict context summarizer for downstream agents.
             
             OUTPUT FORMAT (mandatory):
-            Return exactly one JSON object with fields of Java class RequestClassification, in this order and with these exact keys:
+            Return exactly one JSON object, in this order and with these exact keys:
             {
-              "route": "ACTION" | "HELP",
               "relevantDiscussion": string
             }
             No markdown, no code fences, no extra text.
-            
-            ROUTING (first match wins; case-insensitive):
-            - HELP: User asks for general assistance/capabilities/usage or says "help", "what can you do", "how does this work".
-            - ACTION: Any request to do/create/fix/run/execute/retrieve/explain something specific or continue prior work.
             
             INPUTS:
             - userMessage: the user's latest message (source of truth for the immediate task).
@@ -71,7 +66,7 @@ public interface RequestClassifierBot {
             - Be precise and compact; semicolon-separated clauses are OK.
             - Quote user-supplied tokens exactly (e.g., gene lists, file names, parameter keys).
             - Normalize nothing; do not reformat IDs.
-            - Never add fields beyond "route" and "relevantDiscussion".
+            - Never add fields beyond "relevantDiscussion".
             
             EXAMPLES (not templates; follow the rules above):
             
@@ -79,17 +74,17 @@ public interface RequestClassifierBot {
             userMessage: "run DIAMOnD on genes: TP53, BRCA1, EGFR with k=200"
             history: last step used TrustRank on TP53; output file "trustrank_top100.csv"
             Output:
-            {"route":"ACTION","relevantDiscussion":"User requests DIAMOnD on genes: TP53, BRCA1, EGFR; k=200; Prior: TrustRank already run on TP53 → trustrank_top100.csv; Avoid repeating TrustRank; k provided; no background seeds beyond list."}
+            {"relevantDiscussion":"User requests DIAMOnD on genes: TP53, BRCA1, EGFR; k=200; Prior: TrustRank already run on TP53 → trustrank_top100.csv; Avoid repeating TrustRank; k provided; no background seeds beyond list."}
             
             Example B (ACTION, long list):
             userMessage: "Please run TrustRank with seeds: TP53, BRCA1, EGFR, MYC, PTEN, APOE, MAPT"
             Output:
-            {"route":"ACTION","relevantDiscussion":"Run TrustRank with seeds: TP53, BRCA1, EGFR, MYC, PTEN … (+2 more); No params specified (alpha, maxDepth unknown); No conflicting prior runs detected."}
+            {"relevantDiscussion":"Run TrustRank with seeds: TP53, BRCA1, EGFR, MYC, PTEN … (+2 more); No params specified (alpha, maxDepth unknown); No conflicting prior runs detected."}
             
             Example C (HELP):
             userMessage: "What does TrustRank do and how do I provide seeds?"
             Output:
-            {"route":"HELP","relevantDiscussion":""}
+            {"relevantDiscussion":""}
             
             Now classify and summarize.
             """)

@@ -1,0 +1,19 @@
+{
+  "question": "Analyze GATB, MED8, OAZ2, CYP, COA5, PBX3 for overrepresentation of disease associations.",
+  "gene_names": [
+    "GATB",
+    "MED8",
+    "OAZ2",
+    "CYP",
+    "COA5",
+    "PBX3"
+  ],
+  "entrez_ids": [
+    "5188",
+    "112950",
+    "4947",
+    "9360",
+    "493753",
+    "5090"
+  ]
+}

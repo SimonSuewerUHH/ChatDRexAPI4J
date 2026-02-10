@@ -1,0 +1,15 @@
+{
+  "question": "Run the DIGEST validation pipeline on the gene set P78352, P07954, P05230, Q9BTL4.",
+  "gene_names": [
+    "P78352",
+    "P07954",
+    "P05230",
+    "Q9BTL4"
+  ],
+  "entrez_ids": [
+    "1742",
+    "2271",
+    "2246",
+    "9592"
+  ]
+}

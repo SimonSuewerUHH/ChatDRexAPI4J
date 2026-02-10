@@ -1,0 +1,17 @@
+{
+  "question": "Analyze UMPS, GON7, CFL2, MSX2, KAT7 for overrepresentation of disease associations.",
+  "gene_names": [
+    "UMPS",
+    "GON7",
+    "CFL2",
+    "MSX2",
+    "KAT7"
+  ],
+  "entrez_ids": [
+    "7372",
+    "84520",
+    "1073",
+    "4488",
+    "11143"
+  ]
+}

@@ -12,6 +12,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.reactive.RestStreamElementType;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RegisterRestClient(configKey = "nedrex-client")
@@ -40,9 +41,25 @@ public interface NeDRexApiClient {
     Multi<String> streamQuery(@QueryParam("query") String cypher);
 
     @GET
+    @Path("open/embeddings/available")
+    @Produces(MediaType.TEXT_PLAIN)
+    String embeddingsAvailable();
+
+    @GET
     @Path("open/neo4j/query")
     @Produces(MediaType.TEXT_PLAIN)
     @ClientQueryParam(name = "stream", value = "false")
     String runQuery(@QueryParam("query") String cypher);
 
+    @POST
+    @Path("open/translate/translate_entrez")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    Map<String, List<String>> translateEntrez(NeDRexTranslateRequestDTO request);
+
+    @POST
+    @Path("open/translate/translate_uniprot")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    Map<String, List<String>> translateUniProt(NeDRexTranslateRequestDTO request);
 }

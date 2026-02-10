@@ -1,0 +1,17 @@
+{
+  "question": "Evaluate how likely it is that A7XYQ1, Q8WWX0, Q12846, O60921, Q9NXR1 share functional pathways beyond random chance.",
+  "gene_names": [
+    "A7XYQ1",
+    "Q8WWX0",
+    "Q12846",
+    "O60921",
+    "Q9NXR1"
+  ],
+  "entrez_ids": [
+    "55084",
+    "140458",
+    "6810",
+    "3364",
+    "54820"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "question": "Validate the candidate gene list KRTAP9-3, H3-7, GPC3 using DIGEST to compute empirical P-values.",
+  "gene_names": [
+    "KRTAP9-3",
+    "H3-7",
+    "GPC3"
+  ],
+  "entrez_ids": [
+    "83900",
+    "440686",
+    "2719"
+  ]
+}

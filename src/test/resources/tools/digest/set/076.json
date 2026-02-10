@@ -1,0 +1,17 @@
+{
+  "question": "Compute the statistical enrichment of Q8TD06, Q96AV8, P25774, P15121, O14980 compared to random background sets.",
+  "gene_names": [
+    "Q8TD06",
+    "Q96AV8",
+    "P25774",
+    "P15121",
+    "O14980"
+  ],
+  "entrez_ids": [
+    "155465",
+    "144455",
+    "1520",
+    "231",
+    "7514"
+  ]
+}

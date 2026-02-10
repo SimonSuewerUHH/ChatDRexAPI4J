@@ -1,0 +1,17 @@
+{
+  "question": "Assess the biological significance of Q3SY56, Q9UKI8, Q15397, 65267, 64434 through enrichment and variant comparison.",
+  "gene_names": [
+    "Q3SY56",
+    "Q9UKI8",
+    "Q15397",
+    "65267",
+    "64434"
+  ],
+  "entrez_ids": [
+    "80320",
+    "9874",
+    "9933",
+    "65267",
+    "64434"
+  ]
+}

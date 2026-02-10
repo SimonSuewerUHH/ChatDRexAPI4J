@@ -1,0 +1,11 @@
+{
+  "question": "Perform DIGEST-based validation on AUP1, NKX1-1 to assess enrichment and coherence.",
+  "gene_names": [
+    "AUP1",
+    "NKX1-1"
+  ],
+  "entrez_ids": [
+    "550",
+    "54729"
+  ]
+}

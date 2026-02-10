@@ -1,0 +1,11 @@
+{
+  "question": "Execute DIGEST analysis to evaluate the overlap significance of GLS2, CHKA.",
+  "gene_names": [
+    "GLS2",
+    "CHKA"
+  ],
+  "entrez_ids": [
+    "27165",
+    "1119"
+  ]
+}

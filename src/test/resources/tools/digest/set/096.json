@@ -1,0 +1,17 @@
+{
+  "question": "Assess the biological significance of CTSF, HIC2, ZIM3, P10914, P10515 through enrichment and variant comparison.",
+  "gene_names": [
+    "CTSF",
+    "HIC2",
+    "ZIM3",
+    "P10914",
+    "P10515"
+  ],
+  "entrez_ids": [
+    "8722",
+    "23119",
+    "114026",
+    "3659",
+    "1737"
+  ]
+}

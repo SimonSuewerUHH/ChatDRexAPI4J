@@ -2,11 +2,11 @@ package de.hamburg.university.agent.planning;
 
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
-import de.hamburg.university.agent.planning.bots.HelpBot;
 import de.hamburg.university.agent.planning.bots.RequestClassifierBot;
+import de.hamburg.university.agent.provider.setting.UserLLMModelSettingDTO;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import de.hamburg.university.agent.tool.ToolDTO;
 import de.hamburg.university.agent.tool.Tools;
-import de.hamburg.university.api.chat.messages.ChatMessageType;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import io.quarkus.logging.Log;
@@ -15,12 +15,16 @@ import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.context.ManagedExecutor;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
 public class ChatDrexAgent {
 
+    @Inject
+    ManagedExecutor managedExecutor;
 
     @Inject
     PlanningAgent planningAgent;
@@ -29,40 +33,49 @@ public class ChatDrexAgent {
     RequestClassifierBot requestClassifierBot;
 
     @Inject
-    HelpBot helpBot;
-
-    @Inject
     InMemoryStateHolder stateHolder;
 
     @ActivateRequestContext
-    public Multi<ChatResponseDTO> answer(ChatRequestDTO content) {
+    public Multi<ChatResponseDTO> answer(ChatRequestDTO content, UserLLMModelSettingDTO settings) {
         return Multi.createFrom().emitter(em -> {
-            ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
-            toolDTO.setInput("Your question");
-            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
-            List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId());
-            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
+            final AtomicBoolean terminated = new AtomicBoolean(false);
+            em.onTermination(() -> terminated.set(true));
 
-            toolDTO.setStop();
-            toolDTO.addContent("Context:" + classy.getRelevantDiscussion());
-            toolDTO.addContent("You need: " + classy.getRoute());
-            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
+            managedExecutor.execute(() -> {
+                ChatJsonLanguageModelSupplier.SETTINGS.set(settings);
+                try {
+                    String context = getContext(content, em);
+                    AgentResult result = planningAgent.planAnswer(content, context, em, terminated);
+                    Log.infof("Final result length: %d", result.getMessageMarkdown().length());
+                    //em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
 
-            RequestRoute route = RequestRoute.from(classy.getRoute());
-            Log.infof("Classified %s request as: %s", content, route);
-            AgentResult result = answer(content, classy.getRelevantDiscussion(), RequestRoute.UNKNOWN, em);
-
-            em.emit(ChatResponseDTO.createSingleResponse(content, result.getMessageMarkdown(), ChatMessageType.AI));
-
-            em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
-            em.complete();
+                    em.emit(ChatResponseDTO.createAPIResponse(content, "Stop"));
+                    ChatJsonLanguageModelSupplier.SETTINGS.remove();
+                    em.complete();
+                } catch (Throwable t) {
+                    Log.error("Unhandled error in answer() stream", t);
+                    em.emit(ChatResponseDTO.createErrorResponse(content, t.getMessage()));
+                } finally {
+                    ChatJsonLanguageModelSupplier.SETTINGS.remove();
+                    if (!terminated.get()) em.complete();
+                }
+            });
         });
     }
 
-    private AgentResult answer(ChatRequestDTO content, String context, RequestRoute route, MultiEmitter<? super ChatResponseDTO> emitter) {
-        return switch (route) {
-            case HELP -> new AgentResult(helpBot.answer(content.getMessage()));
-            default -> planningAgent.planAnswer(content, context, emitter);
-        };
+    private String getContext(ChatRequestDTO content, MultiEmitter<? super ChatResponseDTO> em) {
+        List<PlanStateResult> states = stateHolder.getStates(content.getConnectionId(), content.getThreadId());
+        String context = "";
+        if (!states.isEmpty()) {
+            ToolDTO toolDTO = new ToolDTO(Tools.CONTEXT.name());
+            toolDTO.setInput("Your previous messages and the agent's responses");
+            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
+            RequestClassification classy = requestClassifierBot.classify(content.getMessage(), states);
+            context = classy.getRelevantDiscussion();
+            toolDTO.setStop();
+            toolDTO.addContent("Context:" + context);
+            em.emit(ChatResponseDTO.createToolResponse(content, toolDTO));
+        }
+        return context;
     }
 }

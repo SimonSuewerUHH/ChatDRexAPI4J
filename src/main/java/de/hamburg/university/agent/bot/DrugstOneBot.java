@@ -1,5 +1,6 @@
 package de.hamburg.university.agent.bot;
 
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneConfigDTO;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneGroupsConfigDTO;
 import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
@@ -7,12 +8,11 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
-@ApplicationScoped
 @RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class,
         chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class
 )
 public interface DrugstOneBot {
@@ -305,8 +305,6 @@ public interface DrugstOneBot {
             @V("nodes") List<String> nodes,
             @V("edges") List<String> edges
     );
-
-
 
 
     @SystemMessage("""

@@ -2,100 +2,118 @@ package de.hamburg.university.agent.planning.bots;
 
 import de.hamburg.university.agent.planning.PlanState;
 import de.hamburg.university.agent.planning.PlanStep;
+import de.hamburg.university.agent.provider.supplier.ChatJsonLanguageModelSupplier;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
 
-@RegisterAiService
-@ApplicationScoped
+@RegisterAiService(
+        chatLanguageModelSupplier = ChatJsonLanguageModelSupplier.class)
 public interface DecisionPlannerBot {
 
     @SystemMessage("""
             You are a planning/decision agent for a biomedical knowledge-graph and drug-repurposing workflow.
             
-            INPUTS YOU RECEIVE:
-            - userGoal: The user's current free-text task or intent.
-            - previousContext: A compressed summary of earlier discussions and decisions;\s
-              use this to avoid repeating tools or steps already taken and to ensure continuity.
-            - network: A drugst.one style network object (nodes and edges relevant to biomedical graph analysis).
-            - research: A set of papers or literature results.
-            - netdrexKgInfo: Retrieved information from the Netdrex Knowledge Graph.
-            - enhancedQueryBioInfo: Augmented or reformulated bio-information queries.
-            - digestResult: Results from Digest tools (set or subnetwork enrichment analyses).
-            
+            You receive:
+            - userGoal: current user intent.
+            - previousContext: summary of earlier steps (do not repeat actions).
+            - network: current drugst.one-style network (nodes/edges).
+            - research: retrieved literature.
+            - nedrexKgInfo: NeDRex KG results.
+            - enhancedQueryBioInfo: normalized/augmented bio queries.
+            - digestResult: DIGEST enrichment results.
+       
             Your task:
-            Decide EXACTLY ONE next action as a JSON object matching PlanStep:
-            
+            Decide EXACTLY ONE next action as a JSON object matching PlanStep and PREPARE the `subTaskQuestion` which will be the input for the next agent. The `subTaskQuestion` must express a SINGLE, atomic task for the selected action. If the user goal contains multiple requests, BREAK IT DOWN and choose the most essential next atomic sub-task for this step.
+
+            JSON schema to output:
             {
-              "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" |  "CALL_NETDREX_TOOL" | "CALL_DIGEST_TOOL" |
-                         "FINALIZE",
+              "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" | "CALL_NEDREX_TOOL" | "CALL_DIGEST_TOOL" | "FINALIZE" | "HELP",
               "reason": "short rationale",
             }
-            
+
+            Rules for `subTaskQuestion`:
+            - One task only (no conjunctions).
+            - Be specific; include identifiers if known.
+            - Fully executable by the next agent.
+            - If action is FINALIZE: use
+              "Produce final summary and next-step recommendations based on gathered results."
             ---
+
+            Action selection:
+            - UPDATE_NETWORK → visually annotate/highlight existing network elements.
+            - FETCH_RESEARCH → background evidence or missing literature.
+            - FETCH_KG → retrieve KG context (NOT for algorithms).
+            - FETCH_BIO_INFO → normalize or map biological identifiers.
+            - CALL_NEDREX_TOOL → DIAMOnD, TrustRank, or closeness centrality.
+            - CALL_DIGEST_TOOL → functional enrichment or gene-set coherence.
+            - FINALIZE → all required information is available.
+            - HELP → only if the user explicitly asks for usage guidance.
             
-            Available actions:
-            - **UPDATE_NETWORK** → when network asks for highlight specific parts of it.
-            - **FETCH_RESEARCH** → When the user asks for background information or the current answer could use more information.
-            - **FETCH_KG** → when knowledge-graph context is needed. 
-            This should be preferred for a question if the question is aimed at obtaining information that could be included in a knowledge graph.
-            This is NOT the case if the user ask for DIAMOND, trustrank, Closess or enrichment analysis.
-            - **FETCH_BIO_INFO** → when biological enrichment of the query is needed.
-            - **CALL_NETDREX_TOOL** → when a user asks for diamond, trustrank, closeness or just drug repurposing. 
-            If the user ask for running these tools like Only run DIAMOND on my seeds, you should call this action directly if the needed context is already available.
-            Here you dont need to fetch more context.
-            - **CALL_DIGEST_TOOL** → when enrichment analysis is needed.
-            Here you dont need to fetch more context.
-            - **FINALIZE** → when you can summarize and recommend next steps.
-            
+            Tool decision rules:
+             1. Explicit “DIGEST” / enrichment / pathways / gene-set validation → CALL_DIGEST_TOOL
+             2. Explicit “DIAMOnD”, “TrustRank”, or “closeness/centrality” → CALL_NEDREX_TOOL
+             3. Module expansion / finding new genes → CALL_NEDREX_TOOL (DIAMOnD)
+             4. Ranking or proximity analysis → CALL_NEDREX_TOOL
+             5. Gene list + “what do they do?” → CALL_DIGEST_TOOL
+             6. If seeds are provided and a tool is requested → call it directly
+             7. Do not fetch KG or bio info if identifiers are already sufficient
+             8. CRITICAL: Make sure you call correct CALL_NEDREX_TOOL vs CALL_DIGEST_TOOL
+
+           Efficiency constraints:
+           - Minimize steps.
+           - Never repeat an action from history.
+           - Finalize immediately when no further action is required.
+
             ---
-            
+
             Output policy:
-            - Output ONLY a valid JSON object with fields: action, reason
+            - Output ONLY a valid JSON object with fields: action, reason, subTaskQuestion.
+            - No extra properties or text.
+
             ---
             
             ### Examples
-            
-            1. Need to update network with new seeds:
+
+            1) Need to update network with new seeds:
             {
               "action": "UPDATE_NETWORK",
               "reason": "User wanna have drugs red"
             }
-            
-            3. Fetch research:
+
+            2) Fetch research:
             {
               "action": "FETCH_RESEARCH",
               "reason": "User asked for supporting literature on TP53"
             }
-            
-            4. Fetch KG context:
+
+            3) Fetch KG context:
             {
               "action": "FETCH_KG",
               "reason": "Need Netdrex KG context before algorithm run"
             }
-            
-            5. Fetch biological info:
+
+            4) Fetch biological info:
             {
               "action": "FETCH_BIO_INFO",
               "reason": "Query ambiguous, need enhanced bio info"
             }
-            
-            6. Call Netdrex tool:
+
+            5) Call NeDRex tool:
             {
               "action": "CALL_NETDREX_TOOL",
               "reason": "Netdrex algorithm requested with KG context available"
             }
-            
-            7. Call Digest tool:
+
+            6) Call Digest tool:
             {
               "action": "CALL_DIGEST_TOOL",
               "reason": "Perform enrichment analysis on provided seed set"
             }
-            
-            8. Finalize with recommendation:
+
+            7) Finalize with recommendation:
             {
               "action": "FINALIZE",
               "reason": "All context gathered; providing summary"

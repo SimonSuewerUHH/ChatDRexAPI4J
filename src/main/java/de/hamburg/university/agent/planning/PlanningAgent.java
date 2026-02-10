@@ -8,8 +8,9 @@ import de.hamburg.university.agent.bot.ResearchBot;
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
-import de.hamburg.university.agent.tool.netdrex.NetdrexTool;
-import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
+import de.hamburg.university.agent.planning.bots.HelpBot;
+import de.hamburg.university.agent.tool.nedrex.NeDRexTool;
+import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
 import de.hamburg.university.api.chat.messages.ChatRequestDTO;
 import de.hamburg.university.api.chat.messages.ChatResponseDTO;
 import dev.langchain4j.data.message.ChatMessage;
@@ -23,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @ApplicationScoped
 public class PlanningAgent {
@@ -55,19 +57,23 @@ public class PlanningAgent {
     @Inject
     NetdrexTool netdrexTool;
 
+    @Inject
+    HelpBot helpBot;
+
     private final ObjectMapper om = new ObjectMapper();
 
-    public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter) {
+    public AgentResult planAnswer(ChatRequestDTO content, String context, MultiEmitter<? super ChatResponseDTO> emitter, AtomicBoolean terminated) {
         PlanState state = new PlanState();
         state.setPreviousContext(context);
         state.setUserGoal(content.getMessage());
 
         List<PlanStep> history = new ArrayList<>();
-        emitter.emit(ChatResponseDTO.createReasoningResponse(content, "Start planning ..."));
-        String connectionId = content.getConnectionId();
+        emitter.emit(ChatResponseDTO.createReasoningResponse(content, reasonToHtml()));
+        String threadId = content.getThreadId();
         resetMemory(content, state, 0);
 
         for (int step = 1; step <= MAX_STEPS; step++) {
+            if (terminated.get()) break;
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
             history.add(decision);
@@ -80,65 +86,105 @@ public class PlanningAgent {
             switch (decision.getAction()) {
                 case UPDATE_NETWORK -> {
                     Log.debugf("Action UPDATE_NETWORK: %s", decision.getReason());
-                    // FUTURE NOT YET IMPLEMENTED
-                    continue;
+                    String answer = drugstOneAgent.answer(threadId, currentGoal);
+                    state.addAgentAnswer(answer);
+                }
+                case HELP -> {
+                    String helpResult = helpBot.answer(decision.getSubTaskQuestion());
+                    return new AgentResult(helpResult);
                 }
                 case FETCH_RESEARCH -> {
                     Log.debugf("Action FETCH_RESEARCH: %s", decision.getReason());
-                    state.getResearch().add(research.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
+                    state.getResearch().add(research.answer(threadId, currentGoal, state.getPreviousContext()));
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
                     state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
-                    setEnhancedQueryBioInfo(state, decision, connectionId);
+                    setEnhancedQueryBioInfo(state, decision, threadId);
                 }
                 case CALL_NETDREX_TOOL -> {
                     Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
+                        setEnhancedQueryBioInfoEnrezId(state, decision, threadId);
                     }
                     state = netdrexTool.answer(state, content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
-                        setEnhancedQueryBioInfoEnrezId(state, decision, connectionId);
+                        setEnhancedQueryBioInfoEnrezId(state, decision, threadId);
                     }
-                    state.setDigestResult(digestBot.answer(connectionId, state.getUserGoal(), state.getEnhancedQueryBioInfo()));
+                    state.setDigestResult(digestBot.answer(threadId, currentGoal, state.getEnhancedQueryBioInfo()));
                 }
                 case FINALIZE -> {
-                    // Stream all chunks from the finalize bot and emit each part
-                    String result = finalizeBot.answer(connectionId, content.getMessage(), state)
-                            .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
-                            .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
-                            .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "Finalized plan.")))
-                            .collect()
-                            .asList()
-                            .map(list -> String.join("", list))
-                            .await()
-                            .indefinitely();
-
-                    stateHolder.addState(connectionId, new PlanStateResult(state, result));
-                    return new AgentResult(result);
+                    return finalize(content, state, emitter);
                 }
             }
         }
-        return new AgentResult("Could not complete planning. Try asking: \"recommend a model for <task>\" or provide a workflow id for data-fit analysis.");
+        return finalize(content, state, emitter);
+    }
+
+    private AgentResult finalize(ChatRequestDTO content, PlanState state, MultiEmitter<? super ChatResponseDTO> emitter) {
+        String result = finalizeBot.answer(content.getConnectionId(), content.getMessage(), state)
+                .onItem().invoke(chunk -> emitter.emit(ChatResponseDTO.createAIResponse(content, chunk)))
+                .onFailure().invoke(t -> emitter.emit(ChatResponseDTO.createAIResponse(content, t.getMessage())))
+                .onCompletion().invoke(() -> emitter.emit(ChatResponseDTO.createAIResponse(content, "")))
+                .collect()
+                .asList()
+                .map(list -> String.join("", list))
+                .await()
+                .indefinitely();
+
+        stateHolder.addState(content.getConnectionId(), content.getThreadId(), new PlanStateResult(state, result));
+        return new AgentResult(result);
     }
 
 
-    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String connectionId) {
+    private void setEnhancedQueryBioInfo(PlanState state, PlanStep decision, String threadId) {
         Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answer(connectionId, state.getUserGoal(), state.getPreviousContext()));
+
+        String context = "Previous Context: " + state.getPreviousContext();
+        if (StringUtils.isNotEmpty(state.getNeDRexKgInfo())) {
+            context += "\nNeDRex KG Context: " + state.getNeDRexKgInfo();
+        }
+        if (state.getResearch() != null && !state.getResearch().isEmpty()) {
+            context += "\nResearch Context: " + String.join("\n", state.getResearch());
+        }
+        try {
+            state.setEnhancedQueryBioInfo(neDRexBot.answer(threadId, decision.getSubTaskQuestion(), context));
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to get enhanced bio info for decision 1 %s", safeToString(decision));
+            try {
+                state.setEnhancedQueryBioInfo(neDRexBot.answer(threadId, decision.getSubTaskQuestion(), state.getPreviousContext()));
+            } catch (Exception e1) {
+                Log.errorf(e, "Failed to get enhanced bio info for decision 2 %s", safeToString(decision));
+                state.setEnhancedQueryBioInfo("");
+            }
+        }
     }
 
-    private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String connectionId) {
-        Log.debugf("Action FETCH_BIO_INFO: %s", decision.getReason());
-        state.setEnhancedQueryBioInfo(netdrexBot.answerEntrezId(connectionId, state.getUserGoal(), state.getPreviousContext()));
+    private void setEnhancedQueryBioInfoEnrezId(PlanState state, PlanStep decision, String threadId) {
+        String context = "Previous Context: " + state.getPreviousContext();
+        if (StringUtils.isNotEmpty(state.getNeDRexKgInfo())) {
+            context += "\nNeDRex KG Context: " + state.getNeDRexKgInfo();
+        }
+        if (state.getResearch() != null && !state.getResearch().isEmpty()) {
+            context += "\nResearch Context: " + String.join("\n", state.getResearch());
+        }
+        try {
+            String entrezIdsJson = neDRexBot.answerEntrezId(threadId, decision.getSubTaskQuestion(), context);
+            state.setEnhancedQueryBioInfo(entrezIdsJson);
+        } catch (Exception e) {
+            try {
+                String entrezIdsJson = neDRexBot.answerEntrezId(threadId, decision.getSubTaskQuestion(), state.getPreviousContext());
+                state.setEnhancedQueryBioInfo(entrezIdsJson);
+            } catch (Exception e1) {
+                state.setEnhancedQueryBioInfo("");
+            }
+        }
     }
-
 
     private String safeToString(PlanStep d) {
         try {

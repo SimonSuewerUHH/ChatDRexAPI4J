@@ -9,6 +9,7 @@ import io.smallrye.mutiny.subscription.MultiEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
@@ -18,23 +19,25 @@ public class ChatWebsocketSender {
     @Inject
     OpenConnections connections;
 
-    private final ConcurrentHashMap<Object, ChatRequestDTO> currentClients = new ConcurrentHashMap<>();
+    // Map<threadId, ChatRequestDTO>
+    private final ConcurrentHashMap<Object, ChatRequestDTO> currentThreads = new ConcurrentHashMap<>();
 
-    public void addClient(Object clientId, ChatRequestDTO request) {
-        currentClients.put(clientId, request);
+    public void addClient(ChatRequestDTO request) {
+        currentThreads.put(request.getThreadId(), request);
     }
 
     public void removeClient(Object clientId) {
-        currentClients.remove(clientId);
+        currentThreads.entrySet().removeIf(entry ->
+                Objects.equals(entry.getValue().getConnectionId(), clientId)
+        );
     }
 
-
     public void sendTool(ToolDTO tool, Object memoryId) {
-        if (!currentClients.containsKey(memoryId)) {
+        if (!currentThreads.containsKey(memoryId)) {
             Log.warnf("No client found with id %s", memoryId);
             return;
         }
-        ChatRequestDTO request = currentClients.get(memoryId);
+        ChatRequestDTO request = currentThreads.get(memoryId);
         ChatResponseDTO start = ChatResponseDTO.createToolResponse(request, tool);
         sendMessageToClient(start, request.getConnectionId());
     }

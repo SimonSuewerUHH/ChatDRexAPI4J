@@ -1,11 +1,13 @@
 package de.hamburg.university.api.chat.messages;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@RegisterForReflection
 public class ChatResponseDTO {
     private List<MessageDTO> messages = new ArrayList<>();
     private MessageType messageType;

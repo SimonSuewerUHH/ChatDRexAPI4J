@@ -1,0 +1,44 @@
+Diamond Results :
+  - Model: GPT-OSS
+  - Evaluation Date: 2025-12-17
+  - Metrics:
+      - F1 Score:
+   - Answers Correct : 96
+   - Answers wrong : 4
+   - Total Questions : 100
+
+Digest Set :
+    - Model: GPT-OSS
+      - Evaluation Date: 2025-12-17
+      - Metrics:
+          - F1 Score: 0.92
+       - Answers wrong : 89
+       - Total Questions : 100
+       - Wrong Answer but extraction and translation correct : 87
+
+Digest Subset :
+    - Model: GPT-OSS
+      - Evaluation Date: 2024-11-7
+      - Metrics:
+          - F1 Score: 0.484
+       - Tool/extraction correct : 76
+       - Answers correct : 32
+       - Total Questions : 100
+       - Tool Extraction accuracy : 0.76
+
+Closeness :
+    - Model: GPT-OSS
+      - Evaluation Date: 2025-12-17
+      - Metrics:
+          - F1 Score:
+       - correct Answer : 95
+       - Correct tool selection : 99
+       - Total Questions : 100
+
+TrustRank :
+    - Model: GPT-OSS
+      - Evaluation Date: 2025-12-17
+      - Metrics:
+
+       - False Input: 2
+       - Total Questions : 100
