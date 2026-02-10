@@ -1,7 +1,10 @@
 package de.hamburg.university.agent.planning;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.hamburg.university.agent.bot.*;
+import de.hamburg.university.agent.bot.DigestBot;
+import de.hamburg.university.agent.bot.FinalizeBot;
+import de.hamburg.university.agent.bot.NetdrexBot;
+import de.hamburg.university.agent.bot.ResearchBot;
 import de.hamburg.university.agent.memory.InMemoryStateHolder;
 import de.hamburg.university.agent.memory.PlanStateResult;
 import de.hamburg.university.agent.planning.bots.DecisionPlannerBot;
@@ -43,19 +46,16 @@ public class PlanningAgent {
     FinalizeBot finalizeBot;
 
     @Inject
-    NeDRexKGTool nedrexKGTool;
+    NetdrexKGTool netdrexKGTool;
 
     @Inject
-    NeDRexBot neDRexBot;
+    NetdrexBot netdrexBot;
 
     @Inject
-    DIGESTBot digestBot;
+    DigestBot digestBot;
 
     @Inject
-    NeDRexTool neDRexTool;
-
-    @Inject
-    DrugstOneAgent drugstOneAgent;
+    NetdrexTool netdrexTool;
 
     @Inject
     HelpBot helpBot;
@@ -77,9 +77,8 @@ public class PlanningAgent {
             int stepLeft = MAX_STEPS - step;
             PlanStep decision = planner.decide(state, history, stepLeft);
             history.add(decision);
-            emitter.emit(ChatResponseDTO.createReasoningResponse(content, reasonToHtml(decision)));
+            emitter.emit(ChatResponseDTO.createReasoningResponse(content, decision.getAction() + "->" + decision.getReason()));
 
-            String currentGoal = decision.getSubTaskQuestion();
             Log.debugf("Planning step %d: %s", step, safeToString(decision));
 
             if (decision.getAction() == null) break;
@@ -100,17 +99,17 @@ public class PlanningAgent {
                 }
                 case FETCH_KG -> {
                     Log.debugf("Action FETCH_KG: %s", decision.getReason());
-                    state.setNeDRexKgInfo(nedrexKGTool.answer(currentGoal, state.getPreviousContext(), content, emitter));
+                    state.setNetdrexKgInfo(netdrexKGTool.answer(state.getUserGoal(), state.getPreviousContext(), content, emitter));
                 }
                 case FETCH_BIO_INFO -> {
                     setEnhancedQueryBioInfo(state, decision, threadId);
                 }
-                case CALL_NEDREX_TOOL -> {
-                    Log.debugf("Action CALL_NEDREX_TOOL: %s", decision.getReason());
+                case CALL_NETDREX_TOOL -> {
+                    Log.debugf("Action CALL_NETDREX_TOOL: %s", decision.getReason());
                     if (StringUtils.isEmpty(state.getEnhancedQueryBioInfo())) {
                         setEnhancedQueryBioInfoEnrezId(state, decision, threadId);
                     }
-                    state = neDRexTool.answer(state, decision.getSubTaskQuestion(), content, emitter);
+                    state = netdrexTool.answer(state, content, emitter);
                 }
                 case CALL_DIGEST_TOOL -> {
                     Log.debugf("Action CALL_DIGEST_TOOL: %s", decision.getReason());
@@ -205,21 +204,5 @@ public class PlanningAgent {
             messages.add(context);
             chatMemoryStore.updateMessages(content.getConnectionId(), messages);
         }
-    }
-
-    public String reasonToHtml() {
-        return "<div class=\"step\">" +
-                "<span class=\"action\"><span class=\"head\">Action:</span>Start planning ...</span>" +
-                "</div>";
-    }
-
-    public String reasonToHtml(PlanStep decision) {
-        if (decision == null) return "";
-
-        return "<div class=\"step\">" +
-                "<span class=\"action\"><span class=\"head\">Action:</span>" + decision.getAction() + "</span>" +
-                "<span class=\"reason\"><span class=\"head\">Reason:</span>" + decision.getReason() + "</span>" +
-                "<span class=\"subtask\"><span class=\"head\">Sub-task:</span>" + decision.getSubTaskQuestion() + "</span>" +
-                "</div>";
     }
 }

@@ -1,13 +1,10 @@
 package de.hamburg.university.helper.drugstone;
 
-import de.hamburg.university.helper.drugstone.dto.DrugstOneEdgeDTO;
-import de.hamburg.university.helper.drugstone.dto.DrugstOneNetworkDTO;
-import de.hamburg.university.helper.drugstone.dto.DrugstOneNodeDTO;
-import de.hamburg.university.service.nedrex.NeDRexAPIInfoDTO;
-import de.hamburg.university.service.nedrex.NeDRexService;
-import de.hamburg.university.service.nedrex.diamond.DiamondResultsDTO;
-import de.hamburg.university.service.nedrex.trustrank.TrustRankResultDTO;
-import de.hamburg.university.service.nedrex.trustrank.TrustRankToolEdge;
+import de.hamburg.university.service.netdrex.NetdrexAPIInfoDTO;
+import de.hamburg.university.service.netdrex.NetdrexService;
+import de.hamburg.university.service.netdrex.diamond.DiamondResultsDTO;
+import de.hamburg.university.service.netdrex.trustrank.TrustRankResultDTO;
+import de.hamburg.university.service.netdrex.trustrank.TrustRankToolEdge;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -22,7 +19,7 @@ import java.util.Map;
 public class DrugstOneGraphHelper {
 
     @Inject
-    NeDRexService neDRexService;
+    NetdrexService netdrexService;
 
     public DrugstOneNetworkDTO diamondToNetwork(DiamondResultsDTO in) {
         DrugstOneNetworkDTO out = new DrugstOneNetworkDTO();
@@ -107,7 +104,7 @@ public class DrugstOneGraphHelper {
             DrugstOneNodeDTO n = new DrugstOneNodeDTO();
             n.setId(id);
             n.setLabel(StringUtils.defaultIfBlank(label, id));
-            n.setGroup(StringUtils.defaultIfBlank(type, "default"));
+            n.setType(StringUtils.defaultIfBlank(type, "default"));
             return n;
         });
     }
@@ -138,9 +135,9 @@ public class DrugstOneGraphHelper {
 
     private String fetchDrugName(String drugbankId) {
         try {
-            List<NeDRexAPIInfoDTO> list = neDRexService.fetchInfo(drugbankId);
+            List<NetdrexAPIInfoDTO> list = netdrexService.fetchInfo(drugbankId);
             return list.stream()
-                    .map(NeDRexAPIInfoDTO::getDisplayName)
+                    .map(NetdrexAPIInfoDTO::getDisplayName)
                     .filter(StringUtils::isNotEmpty)
                     .findFirst()
                     .orElse(drugbankId);
@@ -157,9 +154,9 @@ public class DrugstOneGraphHelper {
             uniprotId = "uniprot." + uniprotId;
         }
         try {
-            List<NeDRexAPIInfoDTO> list = neDRexService.fetchInfo(uniprotId);
+            List<NetdrexAPIInfoDTO> list = netdrexService.fetchInfo(uniprotId);
             return list.stream()
-                    .map(NeDRexAPIInfoDTO::getDisplayName)
+                    .map(NetdrexAPIInfoDTO::getDisplayName)
                     .filter(StringUtils::isNotEmpty)
                     .findFirst()
                     .orElse(uniprotId);
