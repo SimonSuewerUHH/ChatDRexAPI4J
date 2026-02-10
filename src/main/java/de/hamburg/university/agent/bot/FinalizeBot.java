@@ -61,13 +61,6 @@ public interface FinalizeBot {
             
             ──────────────────────────────────────────────────────────────────────────────
             
-            ## Fallbacks
-            - If context lacks evidence:  
-              “Sorry, I could not find any relevant information on this topic. Would you like me to search again or ask something else?”
-            
-            - If the input is vague, ask briefly for clarification.
-            
-            ⸻
             
              ## User Guidance Suggestions
              - If the PlanState contains any suggestion(s) for what the user could ask next (e.g., fields such as `suggestion`, `suggestedPrompts`, `userGuidance`, `nextQuestions`, or entries nested under `research`, `nedrexKgInfo`, `digestResult`, `enhancedQueryBioInfo`, or `networkSummary` that are explicitly labeled as suggestions), then **include them verbatim** in the final answer.
@@ -123,4 +116,3 @@ public interface FinalizeBot {
             """)
     Multi<String> answer(@MemoryId String sessionId, @V("userMessage") String userMessage, PlanState state);
 }
-

@@ -17,7 +17,7 @@ public class ToolDTO {
     private String name;
     private boolean started;
     private List<String> content;
-    private List<Object> structuredContent;
+    private List<ToolStructuredContentDTO> structuredContent;
     private Object input;
 
     public ToolDTO(String name) {
@@ -37,10 +37,23 @@ public class ToolDTO {
         this.content.add(content);
     }
 
-    public void addStructuredContent(Object structuredContent) {
+    public void addStructuredContent(ToolStructuredContentType type, Object structuredContent) {
         if (this.structuredContent == null) {
             this.structuredContent = new ArrayList<>();
         }
-        this.structuredContent.add(structuredContent);
+        this.structuredContent.add(new ToolStructuredContentDTO(structuredContent, type));
     }
+
+    public void addStructuredListSourceContent(ToolStructuredContentType type, List<ToolSourceDTO> structuredContent) {
+        for (Object item : structuredContent) {
+            addStructuredContent(type, item);
+        }
+    }
+
+    public void addStructuredListFileContent(ToolStructuredContentType type, List<ToolFileResponseDTO> structuredContent) {
+        for (Object item : structuredContent) {
+            addStructuredContent(type, item);
+        }
+    }
+
 }

@@ -4,16 +4,20 @@ import io.quarkus.runtime.annotations.StaticInitSafe;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
 
+import java.util.Optional;
+
 @StaticInitSafe
 @ConfigMapping(prefix = "chatdrex")
 public interface ChatdrexConfig {
 
     GuardTrailsConfig guardtrails();
+
     ToolsConfig tools();
 
 
     interface GuardTrailsConfig {
         PromptInjectionConfig promptInjection();
+
         GroundingConfig grounding();
     }
 
@@ -45,6 +49,25 @@ public interface ChatdrexConfig {
 
     interface ToolsConfig {
         KgQueryConfig kgQuery();
+
+        DigestConfig digest();
+
+        SemanticScholarConfig semanticScholar();
+    }
+
+    interface SemanticScholarConfig {
+        Optional<String> apiKey();
+
+        @WithDefault("100")
+        int limit();
+    }
+
+    interface DigestConfig {
+        @WithDefault("0.6")
+        double minScore();
+
+        @WithDefault("5")
+        int topN();
     }
 
     interface KgQueryConfig {

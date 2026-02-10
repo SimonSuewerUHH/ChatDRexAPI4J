@@ -65,5 +65,5 @@ public interface ResearchBot {
     @UserMessage("""
             {input}
             """)
-    String answer(@MemoryId String sessionId, @V("input") String userMessage, String context);
+    String answer(@MemoryId String sessionId, @V("input") String userMessage, @V("context") String context);
 }

@@ -104,6 +104,6 @@ public interface HelpBot {
             1.  Use the **Diamond** algorithm to see if they form a connected functional module in the protein interaction network.
             2.  Use the **Digest** tool directly to perform a functional enrichment analysis, which will tell you what biological pathways or functions your gene list is associated with."
             """)
-    @UserMessage("User said: {{it}}")
+    @UserMessage("User said: {{request}}")
     String answer(String request);
 }

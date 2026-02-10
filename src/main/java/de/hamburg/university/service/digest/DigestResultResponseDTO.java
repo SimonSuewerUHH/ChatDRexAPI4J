@@ -8,5 +8,5 @@ import lombok.Data;
 public class DigestResultResponseDTO {
     private String task;
     private DigestResultsDTO result;
-
+    private DigestToolResponseParametersDTO parameters;
 }

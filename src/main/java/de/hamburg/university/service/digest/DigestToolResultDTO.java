@@ -14,6 +14,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DigestToolResultDTO {
     private List<Row> rows;
+    private String task;
 
     @Data
     @NoArgsConstructor

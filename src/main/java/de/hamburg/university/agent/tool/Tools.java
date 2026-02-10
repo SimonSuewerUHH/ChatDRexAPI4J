@@ -5,9 +5,10 @@ public enum Tools {
     RESEARCH,
     UNIPROD,
     MYGENE,
-    NETDREX,
+    NEDREX,
     DIGEST,
-    NETDREX_KG,
-    NETDREX_TOOL
+    NEDREX_KG,
+    NEDREX_TOOL,
+    DRUGST_ONE
 
 }

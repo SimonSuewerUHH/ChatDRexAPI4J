@@ -51,5 +51,15 @@ public interface SemanticScholarService {
     @Produces(MediaType.APPLICATION_JSON)
     @ClientQueryParam(name = "fields", value = "paperId,title,abstract,authors,year,venue,externalIds,referenceCount,citationCount,isOpenAccess,openAccessPdf,url")
     SemanticScholarResponseDTO search(
-            @QueryParam("query") String query);
+            @QueryParam("query") String query,
+            @QueryParam("limit") @DefaultValue("50") int limit);
+
+    @GET
+    @Path("/bulk")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ClientQueryParam(name = "fields", value = "paperId,title,abstract,authors,year,venue,externalIds,referenceCount,citationCount,isOpenAccess,openAccessPdf,url")
+    SemanticScholarResponseDTO search(
+            @HeaderParam("x-api-key") String apiKey,
+            @QueryParam("query") String query,
+            @QueryParam("limit") @DefaultValue("50") int limit);
 }

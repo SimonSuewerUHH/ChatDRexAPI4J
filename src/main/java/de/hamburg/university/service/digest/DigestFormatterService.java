@@ -1,7 +1,6 @@
 package de.hamburg.university.service.digest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import de.hamburg.university.ChatdrexConfig;
 import de.hamburg.university.service.mygene.MyGeneClient;
 import de.hamburg.university.service.mygene.MyGeneGoResponseDTO;
 import de.hamburg.university.service.mygene.MyGeneGoTermDTO;
@@ -21,20 +20,20 @@ public class DigestFormatterService {
     private static final Logger LOG = Logger.getLogger(DigestFormatterService.class);
 
     @Inject
-    ObjectMapper objectMapper;
-
-    @Inject
     @RestClient
     MyGeneClient myGeneClient;
 
-    public DigestToolResultDTO formatDigestOutputStructured(DigestResultsDTO results) {
-        return formatDigestOutputStructured(results, 0.6, 5);
+    @Inject
+    ChatdrexConfig config;
+
+    public DigestToolResultDTO formatDigestOutputStructured(DigestResultsDTO results, String uid) {
+        return formatDigestOutputStructured(results, uid, config.tools().digest().minScore(), config.tools().digest().topN());
     }
 
     /**
      * Full Python-equivalent: returns a structured table ("digest_out") like the pandas result.
      */
-    public DigestToolResultDTO formatDigestOutputStructured(DigestResultsDTO results, double cutOff, int topN) {
+    public DigestToolResultDTO formatDigestOutputStructured(DigestResultsDTO results, String uid, double cutOff, int topN) {
         if (results == null
                 || results.getPValues() == null
                 || results.getPValues().getValues() == null) {
@@ -109,23 +108,9 @@ public class DigestFormatterService {
             rows.add(row);
         }
 
-        // Python often keeps original/groupby order; here we keep discover order of dbsPassing.
-        return new DigestToolResultDTO(rows);
+        return new DigestToolResultDTO(rows, uid);
     }
 
-    /**
-     * Convenience: return JSON string identical to Python's `json.dumps(..., indent=4)`.
-     */
-    public String formatDigestOutputJson(DigestResultsDTO results, double cutOff, int topN) {
-        DigestToolResultDTO dto = formatDigestOutputStructured(results, cutOff, topN);
-        try {
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(dto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to serialize digest_out", e);
-        }
-    }
-
-    // ==== helpers =====================================================================================
 
     private LinkedHashMap<String, Integer> selectTopN(Map<String, Integer> terms, int n) {
         LinkedHashMap<String, Integer> out = new LinkedHashMap<>();

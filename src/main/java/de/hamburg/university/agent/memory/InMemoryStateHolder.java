@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryStateHolder {
     private final ConcurrentHashMap<Object, List<String>> threads = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Object, List<PlanStateResult>> states = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Object, DrugstOneDTO> sharedDrugstOne = new ConcurrentHashMap<>();
 
 
     public void removeClient(String clientId) {
