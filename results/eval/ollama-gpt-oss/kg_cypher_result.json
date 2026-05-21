@@ -1,0 +1,749 @@
+[ {
+  "category" : "Drug",
+  "question" : "What indications are associated with the use of Ropinirole?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Ropinirole'})-[:DrugHasIndication]->(i:Disorder)\nRETURN i.displayName AS Indication",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasIndication]->(dis:Disorder)\nWHERE toLower(d.displayName) = toLower('Ropinirole')\nRETURN dis.primaryDomainId AS indicationId, dis.displayName AS indicationName, dis.description AS description;",
+  "score" : {
+    "hits" : 3,
+    "lengthGold" : 3,
+    "lengthAI" : 3,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What are the common side effects observed with Clomipramine administration?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Clomipramine'})-[:DrugHasSideEffect]->(s:SideEffect)\nRETURN s.displayName AS SideEffect",
+  "aiCypher" : "MATCH (d:Drug {displayName:'Clomipramine'})\nMATCH (d)-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName",
+  "score" : {
+    "hits" : 1694,
+    "lengthGold" : 1694,
+    "lengthAI" : 1694,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What is the CAS registry number for Ribavirin?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Ribavirin'})\nRETURN d.casNumber AS CASRegistryNumber",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Ribavirin')\nRETURN d.casNumber AS casNumber, d.primaryDomainId AS drugId, d.displayName AS drugName;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What phenotypes are associated with side effects of Donepezil?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Donepezil'})-[:DrugHasSideEffect]->(s:SideEffect)-[:SideEffectSameAsPhenotype]->(p:Phenotype)\nRETURN p.displayName AS Phenotype",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Donepezil')\nMATCH (d)-[:DrugHasSideEffect]->(se:SideEffect)\nWHERE se.primaryDomainId IN ['meddra.10042788','meddra.10042796','meddra.10002757','meddra.10008674','meddra.10064557']\nMATCH (se)-[:SideEffectSameAsPhenotype]->(ph:Phenotype)\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName, se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 192,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What are the known targets of the drug Pregabalin?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasTarget]->(t:Protein)\nRETURN t.displayName AS TargetProtein",
+  "aiCypher" : "MATCH (d:Drug {primaryDomainId:'drugbank.DB00230'})-[r]->(p:Protein)\nRETURN p.primaryDomainId AS targetId, p.displayName AS targetName;",
+  "score" : {
+    "hits" : 3,
+    "lengthGold" : 3,
+    "lengthAI" : 3,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 1,
+  "previousCyphers" : [ "MATCH (d:Drug {primaryDomainId:'drugbank.DB00230'})-[:DrugHasTarget]->(p:Protein)\nRETURN p.primaryDomainId AS targetId, p.displayName AS targetName)" ],
+  "errors" : [ "Failed to query NeDRex: Received: 'Internal Server Error, status code 500' when invoking REST Client method: 'de.hamburg.university.service.nedrex.NeDRexApiClient#runQuery'" ]
+}, {
+  "category" : "Drug",
+  "question" : "List the contraindications for Paroxetine.",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Paroxetine')\nMATCH (d)-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.primaryDomainId AS contraindicationId, dis.displayName AS contraindicationName;",
+  "score" : {
+    "hits" : 6,
+    "lengthGold" : 6,
+    "lengthAI" : 6,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What are the medical indications for the drug 'Pregabalin'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.displayName AS Indication",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasIndication]->(dis:Disorder)\nWHERE toLower(d.displayName) = toLower('Pregabalin')\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 3,
+    "lengthGold" : 3,
+    "lengthAI" : 3,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What side effects are associated with the drug 'Citalopram'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Citalopram'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffect",
+  "aiCypher" : "MATCH (d:Drug {primaryDomainId:'drugbank.DB00215'}), (d)-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName;",
+  "score" : {
+    "hits" : 2795,
+    "lengthGold" : 2795,
+    "lengthAI" : 2795,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "Can you list the biological targets of 'Imatinib'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Imatinib'})-[:DrugHasTarget]->(p:Protein)\nRETURN p.displayName AS Target",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Imatinib')\nMATCH (d)-[:DrugHasTarget]->(t:Protein)\nRETURN t.primaryDomainId AS targetId, t.displayName AS targetName",
+  "score" : {
+    "hits" : 74,
+    "lengthGold" : 74,
+    "lengthAI" : 74,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "Does 'Paroxetine' have any known contraindications?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication",
+  "aiCypher" : "MATCH (d:Drug {primaryDomainId:'drugbank.DB00715'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.primaryDomainId AS contraindicationId, dis.displayName AS contraindicationName",
+  "score" : {
+    "hits" : 6,
+    "lengthGold" : 6,
+    "lengthAI" : 6,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "Can you list the side effects of Paroxetine?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffectName",
+  "aiCypher" : "MATCH (d:Drug {primaryDomainId:'drugbank.DB00715'})-[:DrugHasSideEffect]->(s:SideEffect)\nRETURN s.primaryDomainId AS sideEffectId, s.displayName AS sideEffectName",
+  "score" : {
+    "hits" : 2348,
+    "lengthGold" : 2348,
+    "lengthAI" : 2348,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What genes or proteins are targeted by Gabapentin?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Gabapentin'})-[:DrugHasTarget]->(p:Protein)-[:ProteinEncodedByGene]->(g:Gene) RETURN g.displayName AS GeneName, p.displayName AS ProteinName",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Gabapentin')\nMATCH (d)-[:DrugHasTarget]->(p:Protein)\nOPTIONAL MATCH (p)-[:ProteinEncodedByGene]->(g:Gene)\nRETURN p.primaryDomainId AS proteinId, p.displayName AS proteinName,\n       g.primaryDomainId AS geneId, g.displayName AS geneName;",
+  "score" : {
+    "hits" : 10,
+    "lengthGold" : 10,
+    "lengthAI" : 10,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What are the known indications for the drug 'Citalopram'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Citalopram'})-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.displayName AS Indication",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Citalopram')\nMATCH (d)-[:DrugHasIndication]->(dis:Disorder)\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 23,
+    "lengthGold" : 23,
+    "lengthAI" : 23,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What side effects are associated with taking 'Pregabalin'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Pregabalin'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.displayName AS SideEffect",
+  "aiCypher" : "MATCH (d:Drug {primaryDomainId:'drugbank.DB00230'})-[:DrugHasSideEffect]->(se:SideEffect)\nRETURN se.primaryDomainId AS sideEffectId, se.displayName AS sideEffectName",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 0,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "Does 'Paroxetine' have any contraindications?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Paroxetine'})-[:DrugHasContraindication]->(dis:Disorder)\nRETURN dis.displayName AS Contraindication",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasContraindication]->(dis:Disorder)\nWHERE toLower(d.displayName) = toLower('Paroxetine')\nRETURN dis.primaryDomainId AS disId, dis.displayName AS disDisplayName",
+  "score" : {
+    "hits" : 6,
+    "lengthGold" : 6,
+    "lengthAI" : 6,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Drug",
+  "question" : "What are the biological targets of the drug 'Imatinib'?",
+  "goldenCypher" : "MATCH (d:Drug {displayName: 'Imatinib'})-[:DrugHasTarget]->(p:Protein)\nRETURN p.displayName AS BiologicalTarget",
+  "aiCypher" : "MATCH (d:Drug)\nWHERE toLower(d.displayName) = toLower('Imatinib')\nMATCH (d)-[:DrugHasTarget]->(p:Protein)\nRETURN p.primaryDomainId AS targetId, p.displayName AS targetName",
+  "score" : {
+    "hits" : 74,
+    "lengthGold" : 74,
+    "lengthAI" : 74,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What genes are associated with hereditary breast carcinoma?",
+  "goldenCypher" : "MATCH (g:Gene)-[r:GeneAssociatedWithDisorder]->(d:Disorder {displayName: 'hereditary breast carcinoma'}) WHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3 RETURN g.displayName AS GeneName",
+  "aiCypher" : "MATCH (g:Gene)-[r:GeneAssociatedWithDisorder]->(dis:Disorder {primaryDomainId:'mondo.0016419'})\nWHERE r.scoreOpenTargets IS NULL OR r.scoreOpenTargets > 0.3\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName",
+  "score" : {
+    "hits" : 37,
+    "lengthGold" : 37,
+    "lengthAI" : 37,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What is the primary domain ID for cystic fibrosis?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'cystic fibrosis'}) RETURN d.primaryDomainId AS PrimaryDomainID",
+  "aiCypher" : "MATCH (dis:Disorder)\nWHERE toLower(dis.displayName) = toLower('cystic fibrosis')\nRETURN dis.primaryDomainId AS primaryDomainId, dis.displayName AS displayName;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What are the data sources for the disorder information on Li-Fraumeni syndrome?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'Li-Fraumeni syndrome'}) RETURN d.dataSources AS DataSources",
+  "aiCypher" : "MATCH (d:Disorder)\nWHERE toLower(d.displayName) = toLower('Li-Fraumeni syndrome')\nRETURN d.primaryDomainId AS disorderId, d.displayName AS disorderName, d.dataSources AS dataSources;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What are the ICD10 codes associated with Wilson disease?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'Wilson disease'}) RETURN d.icd10 AS ICD10Codes",
+  "aiCypher" : "MATCH (dis:Disorder) \nWHERE toLower(dis.displayName) = toLower('Wilson disease') \nRETURN dis.primaryDomainId AS id, dis.displayName AS name, dis.icd10 AS icd10Codes;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?",
+  "goldenCypher" : "MATCH (dis:Disorder {displayName: 'ataxia telangiectasia'})-[:DisorderHasPhenotype]->(ph:Phenotype) RETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName, ph.description AS phenotypeDescription",
+  "aiCypher" : "MATCH (dis:Disorder {primaryDomainId:'mondo.0008840'})-[:DisorderHasPhenotype]->(ph:Phenotype) RETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName, ph.description AS phenotypeDescription",
+  "score" : {
+    "hits" : 75,
+    "lengthGold" : 75,
+    "lengthAI" : 75,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What are the known subtypes of the 'neoplasm' disorder?",
+  "goldenCypher" : "MATCH (d:Disorder)-[:DisorderIsSubtypeOfDisorder]->(sd:Disorder {displayName: 'neoplasm'}) RETURN d.displayName AS SubtypeName",
+  "aiCypher" : "MATCH (parent:Disorder {primaryDomainId:'mondo.0005070'})\nMATCH (sub:Disorder)-[:DisorderIsSubtypeOfDisorder]->(parent)\nRETURN sub.primaryDomainId AS subtypeId, sub.displayName AS subtypeName",
+  "score" : {
+    "hits" : 48,
+    "lengthGold" : 48,
+    "lengthAI" : 48,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "List the phenotypes commonly observed in individuals diagnosed with 'cystic fibrosis'.",
+  "goldenCypher" : "MATCH (p:Phenotype)<-[:DisorderHasPhenotype]-(d:Disorder {displayName: 'cystic fibrosis'}) RETURN p.displayName AS Phenotype",
+  "aiCypher" : "MATCH (dis:Disorder {primaryDomainId:'mondo.0009061'})-[:DisorderHasPhenotype]->(ph:Phenotype)\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName;",
+  "score" : {
+    "hits" : 56,
+    "lengthGold" : 56,
+    "lengthAI" : 56,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What drugs have an indication for the treatment of 'type 2 diabetes mellitus'?",
+  "goldenCypher" : "MATCH (d:Drug)-[:DrugHasIndication]->(di:Disorder {displayName: 'type 2 diabetes mellitus'}) RETURN d.displayName AS DrugName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasIndication]->(dis:Disorder {primaryDomainId:'mondo.0005148'})\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName",
+  "score" : {
+    "hits" : 79,
+    "lengthGold" : 79,
+    "lengthAI" : 79,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "Are there any specific genomic variants known to be associated with 'Alzheimer disease'?",
+  "goldenCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'Alzheimer disease'}) RETURN v.primaryDomainId AS GenomicVariantName",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder {primaryDomainId:'mondo.0004975'})\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantName, v.variantType AS variantType, v.chromosome AS chromosome, v.position AS position, v.referenceSequence AS referenceSequence, v.alternativeSequence AS alternativeSequence;",
+  "score" : {
+    "hits" : 3,
+    "lengthGold" : 3,
+    "lengthAI" : 3,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What is the description and ICD-10 code for 'Alzheimer disease'?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'Alzheimer disease'}) RETURN d.description, d.icd10",
+  "aiCypher" : "MATCH (dis:Disorder) WHERE toLower(dis.displayName) = toLower('Alzheimer disease') RETURN dis.primaryDomainId AS DisorderId, dis.displayName AS Disorder, dis.description AS Description, dis.icd10 AS ICD10;",
+  "score" : {
+    "hits" : 1,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "Which phenotypes are associated with 'type 2 diabetes mellitus'?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'type 2 diabetes mellitus'})-[:DisorderHasPhenotype]->(p:Phenotype) RETURN p.displayName",
+  "aiCypher" : "MATCH (dis:Disorder {primaryDomainId:'mondo.0005148'})-[:DisorderHasPhenotype]->(ph:Phenotype)\nRETURN ph.primaryDomainId AS phenotypeId, ph.displayName AS phenotypeName",
+  "score" : {
+    "hits" : 5,
+    "lengthGold" : 5,
+    "lengthAI" : 5,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What disorders are classified as subtypes of 'neoplasm'?",
+  "goldenCypher" : "MATCH (d1:Disorder {displayName: 'neoplasm'})<-[:DisorderIsSubtypeOfDisorder]-(d2:Disorder) RETURN d2.displayName",
+  "aiCypher" : "MATCH (child:Disorder)-[:DisorderIsSubtypeOfDisorder]->(parent:Disorder)\nWHERE toLower(parent.displayName) = toLower('neoplasm')\nRETURN child.primaryDomainId AS disorderId, child.displayName AS disorderName",
+  "score" : {
+    "hits" : 48,
+    "lengthGold" : 48,
+    "lengthAI" : 48,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "Disorder",
+  "question" : "What drugs are indicated for treating 'COVID-19'?",
+  "goldenCypher" : "MATCH (d:Disorder {displayName: 'COVID-19'})<-[:DrugHasIndication]-(dr:Drug) RETURN dr.displayName",
+  "aiCypher" : "MATCH (d:Drug)-[:DrugHasIndication]->(dis:Disorder {primaryDomainId:'mondo.0100096'})\nRETURN d.primaryDomainId AS drugId, d.displayName AS drugName;",
+  "score" : {
+    "hits" : 31,
+    "lengthGold" : 31,
+    "lengthAI" : 31,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Find all genomic variants of type SNV that are associated with breast cancer.",
+  "goldenCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'breast cancer'}) WHERE v.variantType = 'Single Nucleotide Variant' RETURN v.primaryDomainId as variantType",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder {primaryDomainId:'mondo.0007254'})\nWHERE v.variantType = 'SNV'\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantName",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 1530,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.",
+  "goldenCypher" : "MATCH (v:GenomicVariant {chromosome: '7'})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'cystic fibrosis'})\nRETURN v.referenceSequence AS ReferenceSequence, v.alternativeSequence AS AlternativeSequence",
+  "aiCypher" : "MATCH (dis:Disorder {primaryDomainId:'mondo.0009061'})\nMATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis)\nMATCH (v)-[:VariantAffectsGene]->(g:Gene)\nWHERE v.chromosome = '7' AND toLower(g.displayName) = 'cftr'\nRETURN v.primaryDomainId AS variantId, v.referenceSequence AS reference, v.alternativeSequence AS alternative",
+  "score" : {
+    "hits" : 3270,
+    "lengthGold" : 3272,
+    "lengthAI" : 3270,
+    "precision" : 1.0,
+    "recall" : 0.9993887530562348,
+    "f1" : 0.9996942830938551
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "What are the different variant types observed in genomic variants associated with Parkinson's disease?",
+  "goldenCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName:     'Parkinson disease'}) RETURN DISTINCT v.primaryDomainId AS VariantType",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder {primaryDomainId:'mondo.0005180'})\nRETURN DISTINCT v.variantType AS variantType;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 8,
+    "lengthAI" : 3,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Are there any common genomic variants associated with both type 1 and type 2 diabetes?",
+  "goldenCypher" : "MATCH (v1:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {displayName: 'type 1 diabetes mellitus'}) MATCH (v2:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d2:Disorder {displayName: 'type 2 diabetes mellitus'}) RETURN v1.primaryDomainId as VariantId",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(d1:Disorder {primaryDomainId:'mondo.0005147'}), (v)-[:VariantAssociatedWithDisorder]->(d2:Disorder {primaryDomainId:'mondo.0005148'})\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantName, v.chromosome, v.position, v.alternativeSequence, v.referenceSequence, d1.displayName AS type1Disorder, d2.displayName AS type2Disorder;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 3376,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Find all genomic variants of type 'SNV' located within the BRCA1 gene.",
+  "goldenCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'BRCA1'}) WHERE v.variantType = 'Single Nucleotide Variant' RETURN v.primaryDomainId",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {primaryDomainId:'entrez.672'})\nWHERE v.variantType = 'SNV'\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName, v.primaryDomainId AS variantId, v.displayName AS variantName, v.variantType, v.position, v.chromosome, v.referenceSequence, v.alternativeSequence;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 11482,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.",
+  "goldenCypher" : "MATCH (v:GenomicVariant {chromosome: 'X', position: 30708057, alternativeSequence: 'A'})-[:VariantAffectsGene]->(g:Gene) RETURN v.alternativeSequence AS alternativeSequence, v.position as VariantPosition, g.displayName AS GeneName",
+  "aiCypher" : "MATCH (v:GenomicVariant {chromosome:'X', position:30708057, alternativeSequence:'A'})-[:VariantAffectsGene]->(g:Gene)\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 2,
+    "lengthAI" : 2,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?",
+  "goldenCypher" : "MATCH (v:GenomicVariant {chromosome: '2', position: 47475100})-[:VariantAssociatedWithDisorder]->(d:Disorder {displayName: 'colon carcinoma'}) RETURN v.referenceSequence AS ReferenceSequence, v.chromosome AS ChromosomeVariant,v.position AS VariantPosition, d.displayName as DisorderName ",
+  "aiCypher" : "MATCH (v:GenomicVariant {chromosome:'2', position:47475100})-[:VariantAssociatedWithDisorder]->(d:Disorder)\nWHERE d.primaryDomainId = 'mondo.0002032'\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantName, v.referenceSequence AS referenceSequence;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 1,
+    "lengthAI" : 1,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?",
+  "goldenCypher" : "MATCH (gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'BRCA1'}) RETURN gv.primaryDomainId AS Variant",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {primaryDomainId:'entrez.672'})\nRETURN v.primaryDomainId AS variantId,\n       v.displayName AS variantName,\n       v.chromosome AS chromosome,\n       v.position AS position,\n       v.variantType AS variantType,\n       v.referenceSequence AS referenceSequence,\n       v.alternativeSequence AS alternativeSequence;",
+  "score" : {
+    "hits" : 15101,
+    "lengthGold" : 15101,
+    "lengthAI" : 15101,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?",
+  "goldenCypher" : "MATCH (d:Disorder)<-[:VariantAssociatedWithDisorder]-(gv:GenomicVariant {chromosome: 'X'}) RETURN DISTINCT d.displayName AS disorder",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder)\nWHERE v.chromosome = 'X'\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 842,
+    "lengthGold" : 842,
+    "lengthAI" : 81809,
+    "precision" : 0.010292266132088156,
+    "recall" : 1.0,
+    "f1" : 0.020374829100676336
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Find all genomic variants that are associated with disorders and that affect the gene CFTR.\n For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",
+  "goldenCypher" : "MATCH (d:Disorder)<-[:VariantAssociatedWithDisorder]-(gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'CFTR'}) RETURN DISTINCT gv.chromosome, gv.position, gv.primaryDomainId, d.displayName AS Disorder",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {primaryDomainId:'entrez.2217'})\nMATCH (v)-[:VariantAssociatedWithDisorder]->(dis:Disorder)\nRETURN v.chromosome AS chromosome, v.position AS position, v.primaryDomainId AS variantId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 2500,
+    "lengthAI" : 26,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’",
+  "goldenCypher" : "MATCH (gv:GenomicVariant {referenceSequence: 'A', alternativeSequence: 'G'})-[:VariantAssociatedWithDisorder]->(d:Disorder) RETURN DISTINCT d.displayName AS Disorder ",
+  "aiCypher" : "MATCH (v:GenomicVariant {referenceSequence:'A', alternativeSequence:'G'})-[:VariantAssociatedWithDisorder]->(dis:Disorder)\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName",
+  "score" : {
+    "hits" : 5119,
+    "lengthGold" : 5119,
+    "lengthAI" : 97306,
+    "precision" : 0.05260723901917662,
+    "recall" : 1.0,
+    "f1" : 0.09995606541371736
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "What are the different variant types and their respective counts for genomic variants located on chromosome '17'?",
+  "goldenCypher" : "MATCH (gv:GenomicVariant {chromosome: '17'}) RETURN gv.variantType AS VariantType, count(*) AS Count",
+  "aiCypher" : "MATCH (v:GenomicVariant) WHERE v.chromosome = '17' WITH v.variantType AS variantType, count(v) AS cnt RETURN variantType, cnt;",
+  "score" : {
+    "hits" : 8,
+    "lengthGold" : 8,
+    "lengthAI" : 8,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Which genes are affected by genomic variants located on chromosome 'X'?",
+  "goldenCypher" : "MATCH (gv:GenomicVariant {chromosome: 'X'})-[:VariantAffectsGene]->(g:Gene) RETURN DISTINCT g.displayName AS GeneName",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g:Gene)\nWHERE v.chromosome = 'X'\nRETURN g.primaryDomainId AS geneId, g.displayName AS geneName",
+  "score" : {
+    "hits" : 1103,
+    "lengthGold" : 1103,
+    "lengthAI" : 203891,
+    "precision" : 0.0054097532505113025,
+    "recall" : 1.0,
+    "f1" : 0.010761290574358274
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "Which disorders are associated with genomic variants of type duplication?",
+  "goldenCypher" : "MATCH (gv:GenomicVariant {variantType: 'Duplication'})-[:VariantAssociatedWithDisorder]->(d:Disorder) RETURN DISTINCT d.displayName AS DisorderName",
+  "aiCypher" : "MATCH (v:GenomicVariant)-[:VariantAssociatedWithDisorder]->(dis:Disorder)\nWHERE v.variantType = 'duplication'\nRETURN dis.primaryDomainId AS disorderId, dis.displayName AS disorderName;",
+  "score" : {
+    "hits" : 0,
+    "lengthGold" : 3334,
+    "lengthAI" : 0,
+    "precision" : 0.0,
+    "recall" : 0.0,
+    "f1" : 0.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+}, {
+  "category" : "GenomicVariant",
+  "question" : "For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",
+  "goldenCypher" : "MATCH (gv:GenomicVariant)-[:VariantAffectsGene]->(g:Gene {approvedSymbol: 'CFTR'}) RETURN gv.alternativeSequence AS AlternativeSequence, gv.variantType AS VariantType",
+  "aiCypher" : "MATCH (g:Gene) WHERE g.approvedSymbol = 'CFTR'\nMATCH (v:GenomicVariant)-[:VariantAffectsGene]->(g)\nRETURN v.primaryDomainId AS variantId, v.displayName AS variantDisplayName, v.alternativeSequence AS alternativeSequence, v.variantType AS variantType",
+  "score" : {
+    "hits" : 5917,
+    "lengthGold" : 5917,
+    "lengthAI" : 5917,
+    "precision" : 1.0,
+    "recall" : 1.0,
+    "f1" : 1.0
+  },
+  "run" : 0,
+  "attempts" : 0,
+  "previousCyphers" : null,
+  "errors" : null
+} ]

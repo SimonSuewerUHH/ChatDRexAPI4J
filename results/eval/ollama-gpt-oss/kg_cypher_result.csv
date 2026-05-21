@@ -1,0 +1,46 @@
+run,category,question,hits,lengthGold,lengthAI,precision,recall,f1
+0,Drug,What indications are associated with the use of Ropinirole?,3,3,3,1.0,1.0,1.0
+0,Drug,What are the common side effects observed with Clomipramine administration?,1694,1694,1694,1.0,1.0,1.0
+0,Drug,What is the CAS registry number for Ribavirin?,1,1,1,1.0,1.0,1.0
+0,Drug,What phenotypes are associated with side effects of Donepezil?,0,192,0,0.0,0.0,0.0
+0,Drug,What are the known targets of the drug Pregabalin?,3,3,3,1.0,1.0,1.0
+0,Drug,List the contraindications for Paroxetine.,6,6,6,1.0,1.0,1.0
+0,Drug,What are the medical indications for the drug 'Pregabalin'?,3,3,3,1.0,1.0,1.0
+0,Drug,What side effects are associated with the drug 'Citalopram'?,2795,2795,2795,1.0,1.0,1.0
+0,Drug,Can you list the biological targets of 'Imatinib'?,74,74,74,1.0,1.0,1.0
+0,Drug,Does 'Paroxetine' have any known contraindications?,6,6,6,1.0,1.0,1.0
+0,Drug,Can you list the side effects of Paroxetine?,2348,2348,2348,1.0,1.0,1.0
+0,Drug,What genes or proteins are targeted by Gabapentin?,10,10,10,1.0,1.0,1.0
+0,Drug,What are the known indications for the drug 'Citalopram'?,23,23,23,1.0,1.0,1.0
+0,Drug,What side effects are associated with taking 'Pregabalin'?,0,0,0,0.0,0.0,0.0
+0,Drug,Does 'Paroxetine' have any contraindications?,6,6,6,1.0,1.0,1.0
+0,Drug,What are the biological targets of the drug 'Imatinib'?,74,74,74,1.0,1.0,1.0
+0,Disorder,What genes are associated with hereditary breast carcinoma?,37,37,37,1.0,1.0,1.0
+0,Disorder,What is the primary domain ID for cystic fibrosis?,1,1,1,1.0,1.0,1.0
+0,Disorder,What are the data sources for the disorder information on Li-Fraumeni syndrome?,1,1,1,1.0,1.0,1.0
+0,Disorder,What are the ICD10 codes associated with Wilson disease?,1,1,1,1.0,1.0,1.0
+0,Disorder,What are the clinical descriptions for the phenotypes associated with ataxia telangiectasia?,75,75,75,1.0,1.0,1.0
+0,Disorder,What are the known subtypes of the 'neoplasm' disorder?,48,48,48,1.0,1.0,1.0
+0,Disorder,List the phenotypes commonly observed in individuals diagnosed with 'cystic fibrosis'.,56,56,56,1.0,1.0,1.0
+0,Disorder,What drugs have an indication for the treatment of 'type 2 diabetes mellitus'?,79,79,79,1.0,1.0,1.0
+0,Disorder,Are there any specific genomic variants known to be associated with 'Alzheimer disease'?,3,3,3,1.0,1.0,1.0
+0,Disorder,What is the description and ICD-10 code for 'Alzheimer disease'?,1,1,1,1.0,1.0,1.0
+0,Disorder,Which phenotypes are associated with 'type 2 diabetes mellitus'?,5,5,5,1.0,1.0,1.0
+0,Disorder,What disorders are classified as subtypes of 'neoplasm'?,48,48,48,1.0,1.0,1.0
+0,Disorder,What drugs are indicated for treating 'COVID-19'?,31,31,31,1.0,1.0,1.0
+0,GenomicVariant,Find all genomic variants of type SNV that are associated with breast cancer.,0,1530,0,0.0,0.0,0.0
+0,GenomicVariant,Return the reference and alternative sequences for all variants associated with cystic fibrosis located on chromosome 7.,3270,3272,3270,1.0,0.9993887530562348,0.9996942830938551
+0,GenomicVariant,What are the different variant types observed in genomic variants associated with Parkinson's disease?,0,8,3,0.0,0.0,0.0
+0,GenomicVariant,Are there any common genomic variants associated with both type 1 and type 2 diabetes?,0,3376,0,0.0,0.0,0.0
+0,GenomicVariant,Find all genomic variants of type 'SNV' located within the BRCA1 gene.,0,11482,0,0.0,0.0,0.0
+0,GenomicVariant,List the genes affected by variants with an alternative sequence of 'A' at position 30708057 on chromosome X.,0,2,2,0.0,0.0,0.0
+0,GenomicVariant,What is the reference sequence for the variant at position 47475100 on chromosome 2 associated with colon carcinoma?,0,1,1,0.0,0.0,0.0
+0,GenomicVariant,Which `GenomicVariant` entries are known to `VariantAffectsGene` the gene with `approvedSymbol` 'BRCA1'?,15101,15101,15101,1.0,1.0,1.0
+0,GenomicVariant,What `Disorder` nodes are `VariantAssociatedWithDisorder` to any `GenomicVariant` located on `chromosome` 'X'?,842,842,81809,0.010292266132088156,1.0,0.020374829100676336
+0,GenomicVariant,"Find all genomic variants that are associated with disorders and that affect the gene CFTR.
+ For each such variant, return its chromosome, position, primary domain ID, and the name of the associated disorder",0,2500,26,0.0,0.0,0.0
+0,GenomicVariant,Find all disorders that are associated with the genomic variant where the reference sequence is ‘A’ and the alternative sequence is ‘G’,5119,5119,97306,0.05260723901917662,1.0,0.09995606541371736
+0,GenomicVariant,What are the different variant types and their respective counts for genomic variants located on chromosome '17'?,8,8,8,1.0,1.0,1.0
+0,GenomicVariant,Which genes are affected by genomic variants located on chromosome 'X'?,1103,1103,203891,0.0054097532505113025,1.0,0.010761290574358274
+0,GenomicVariant,Which disorders are associated with genomic variants of type duplication?,0,3334,0,0.0,0.0,0.0
+0,GenomicVariant,"For a given gene with the approved symbol 'CFTR', what are the alternative sequences and variant types of all genomic variants that affect it?",5917,5917,5917,1.0,1.0,1.0
