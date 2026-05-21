@@ -1,9 +1,9 @@
 package de.hamburg.university.api.agents;
 
-import de.hamburg.university.agent.bot.NeDRexBot;
+import de.hamburg.university.agent.bot.NetdrexBot;
 import de.hamburg.university.agent.bot.ResearchBot;
-import de.hamburg.university.agent.bot.kg.NeDRexKGGraph;
-import de.hamburg.university.agent.tool.nedrex.kg.NeDRexKGTool;
+import de.hamburg.university.agent.bot.kg.NetdrexKGGraph;
+import de.hamburg.university.agent.tool.netdrex.kg.NetdrexKGTool;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -13,22 +13,22 @@ import java.util.UUID;
 @ApplicationScoped
 public class AiAgentServiceImpl implements AIAgentService {
     @Inject
-    NeDRexBot neDRexBot;
+    NetdrexBot netdrexBot;
 
     @Inject
     ResearchBot researchBot;
 
     @Inject
-    NeDRexKGTool neDRexKGTool;
+    NetdrexKGTool netdrexKGTool;
 
     @Override
-    public String askNeDRex(String question) {
+    public String askNetdrex(String question) {
         String id = UUID.randomUUID().toString();
-        return neDRexBot.answer(id, question, "");
+        return netdrexBot.answer(id, question, "");
     }
 
     @Override
-    public List<String> getNeDRexExamples() {
+    public List<String> getNetdrexExamples() {
         return List.of(
                 "Get info for these IDs: uniprot.P04637, uniprot.Q9UBT6, drugbank.DB00001, entrez.7157",
                 "From UniProt entry uniprot.P04637, list the gene names and the primary gene symbol.",
@@ -58,19 +58,19 @@ public class AiAgentServiceImpl implements AIAgentService {
     }
 
     @Override
-    public NeDRexKGGraph splitKGQuestions(String question) {
-        return neDRexKGTool.decomposeToNodes(question);
+    public NetdrexKGGraph splitKGQuestions(String question) {
+        return netdrexKGTool.decomposeToNodes(question);
     }
 
     @Override
     public String generateCypher(String question) {
-        return neDRexKGTool.generateCypher(question);
+        return netdrexKGTool.generateCypher(question);
 
     }
 
     @Override
     public String answerKG(String question) {
-        return neDRexKGTool.answer(question);
+        return netdrexKGTool.answer(question);
     }
 
     @Override

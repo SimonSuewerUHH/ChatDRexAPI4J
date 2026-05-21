@@ -1,15 +1,15 @@
 services:
   client:
     container_name: chatdrex-ui
-    image: gitlab.cosy.bio:5050/simonsuewer/chatdrex-ui/ui:staging
+    image: ghcr.io/simonsueweruhh/chatdrexui:main
     restart: on-failure
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     ports:
-      - '8131:80'
+      - '8131:8080'
 
   api:
-    image: gitlab.cosy.bio:5050/simonsuewer/chatdrex-api/chatdrex-api:staging
+    image: ghcr.io/simonsueweruhh/chatdrexapi:main
     container_name: chatdrex-api
     ports:
       - 8132:8080

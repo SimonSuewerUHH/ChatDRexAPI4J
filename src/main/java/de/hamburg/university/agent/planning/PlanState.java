@@ -13,7 +13,7 @@ public class PlanState {
     private Long workflowId;
 
     private List<String> research = new ArrayList<>();
-    private String neDRexKgInfo = "";
+    private String netdrexKgInfo = "";
     private String digestResult = "";
     private String enhancedQueryBioInfo = "";
 

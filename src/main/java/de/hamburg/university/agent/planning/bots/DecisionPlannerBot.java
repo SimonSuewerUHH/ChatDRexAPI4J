@@ -32,7 +32,6 @@ public interface DecisionPlannerBot {
             {
               "action":  "UPDATE_NETWORK" | "FETCH_RESEARCH" | "FETCH_KG" | "FETCH_BIO_INFO" | "CALL_NEDREX_TOOL" | "CALL_DIGEST_TOOL" | "FINALIZE" | "HELP",
               "reason": "short rationale",
-              "subTaskQuestion": "single, actionable prompt for the next agent"
             }
 
             Rules for `subTaskQuestion`:
@@ -75,55 +74,49 @@ public interface DecisionPlannerBot {
             - No extra properties or text.
 
             ---
+            
             ### Examples
 
             1) Need to update network with new seeds:
             {
               "action": "UPDATE_NETWORK",
-              "reason": "User wants seed drugs highlighted in red",
-              "subTaskQuestion": "Highlight provided seed drugs in red in the current network view."
+              "reason": "User wanna have drugs red"
             }
 
             2) Fetch research:
             {
               "action": "FETCH_RESEARCH",
-              "reason": "User asked for supporting literature on TP53",
-              "subTaskQuestion": "Retrieve recent papers linking TP53 to chemoresistance in triple-negative breast cancer."
+              "reason": "User asked for supporting literature on TP53"
             }
 
             3) Fetch KG context:
             {
               "action": "FETCH_KG",
-              "reason": "Need NeDRex KG neighbors before algorithm run",
-              "subTaskQuestion": "Which genes are related to cancer."
+              "reason": "Need Netdrex KG context before algorithm run"
             }
 
             4) Fetch biological info:
             {
               "action": "FETCH_BIO_INFO",
-              "reason": "Query ambiguous, need enhanced bio info",
-              "subTaskQuestion": "Normalize gene aliases for the user-provided seed list and return HGNC-approved symbols."
+              "reason": "Query ambiguous, need enhanced bio info"
             }
 
             5) Call NeDRex tool:
             {
-              "action": "CALL_NEDREX_TOOL",
-              "reason": "DIAMOnD requested; seeds already provided",
-              "subTaskQuestion": "Run DIAMOnD with NLRP3, TYK2, TNFSF14, VDR."
+              "action": "CALL_NETDREX_TOOL",
+              "reason": "Netdrex algorithm requested with KG context available"
             }
 
             6) Call Digest tool:
             {
               "action": "CALL_DIGEST_TOOL",
-              "reason": "Perform enrichment analysis on seed set",
-              "subTaskQuestion": "Run digest set with NLRP3, TYK2, TNFSF14, VDR."
+              "reason": "Perform enrichment analysis on provided seed set"
             }
 
             7) Finalize with recommendation:
             {
               "action": "FINALIZE",
-              "reason": "All context gathered; providing summary",
-              "subTaskQuestion": "Produce final summary and next-step recommendations based on gathered results."
+              "reason": "All context gathered; providing summary"
             }
             
             ---
@@ -135,7 +128,7 @@ public interface DecisionPlannerBot {
             {{state}}
             
             ## User goal
-            Extract the overall intent from `state.userGoal` and use it to guide your decision.
+            Please extract the overall intent from `state.userGoal` and use it to guide your decision.
             
             ## Previous decisions
             Do NOT repeat any of these actions. Each action may only be taken once.
@@ -146,21 +139,23 @@ public interface DecisionPlannerBot {
             
             ## Steps left
             You have {stepsLeft} planning steps remaining.
-            Minimize steps. Finalize early if possible. If you have 1 step left, you MUST finalize.
-            
+            Try to minimize the number of steps used. You dont need to take all of them
+            Be strategic: prioritize essential missing actions first, and finalize early if all required actions are already completed.
+            Try to finalize as soon as possible.
+            If you have 1 step left, you must finalize.
             ---
+            
             ### Instructions
             - Choose **exactly one** next action.
             - Always output a single JSON object with fields:
               - `action`: the next PlanAction
               - `reason`: short, clear explanation
-              - `subTaskQuestion`: a single, atomic, concise instruction for the next agent (≤ 25 words).
             - Never output extra text or properties.
-            - If every required action is already in history, immediately return a `FINALIZE` step (with an appropriate `subTaskQuestion` to produce the final summary/recommendations).
-            - If the user asked for NeDRex tool (DIAMOnD, TrustRank, closeness) and you have seeds, call it DIRECTLY without fetching KG information.
-            - If the user asked for enrichment analysis and you have seeds, call it DIRECTLY without fetching KG information.
+            - If every required action is already in history, immediately return a `FINALIZE` step.
+            - If the user asked for Netdrex tool (diamond, trustrank, closeness) and you have seeds, call it DIRECTLY WITHOUT using kg information.
+            - If the user asked for enrichment analysis and you have seeds, call it DIRECTLY WITHOUT using kg information.
             
-            Decide the next step now.
+            Please decide the next step now.
             """)
     PlanStep decide(PlanState state, List<PlanStep> history, int stepsLeft);
 }

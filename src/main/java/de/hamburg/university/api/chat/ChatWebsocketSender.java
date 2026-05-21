@@ -52,7 +52,7 @@ public class ChatWebsocketSender {
         emitter.emit(start);
     }
 
-    protected void sendMessageToClient(ChatResponseDTO message, String clientId) {
+    private void sendMessageToClient(ChatResponseDTO message, String clientId) {
         connections.findByEndpointId(ENDPOINT_ID)
                 .stream()
                 .filter(c -> c.pathParam("clientId").equals(clientId))
