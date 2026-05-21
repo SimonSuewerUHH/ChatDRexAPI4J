@@ -6,10 +6,10 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.request.ChatRequestParameters;
 import dev.langchain4j.model.chat.request.ResponseFormat;
+import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
+import dev.langchain4j.model.googleai.GoogleAiGeminiStreamingChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
-import io.quarkiverse.langchain4j.ai.runtime.gemini.AiGeminiChatLanguageModel;
-import io.quarkiverse.langchain4j.ai.runtime.gemini.AiGeminiStreamingChatLanguageModel;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -64,19 +64,19 @@ public class LanguageModelProvider {
 
     //GOOGLE Gemini
     //https://docs.langchain4j.dev/integrations/language-models/google-ai-gemini/#multimodality
-    private static AiGeminiChatLanguageModel.Builder googleGeminiModelBuilder(UserLLMModelSetting setting) {
-        return AiGeminiChatLanguageModel.builder()
-                .key(setting.getGeminiApiKey())
-                .modelId(setting.getGeminiModel())
+    private static GoogleAiGeminiChatModel.GoogleAiGeminiChatModelBuilder googleGeminiModelBuilder(UserLLMModelSetting setting) {
+        return GoogleAiGeminiChatModel.builder()
+                .apiKey(setting.getGeminiApiKey())
+                .modelName(setting.getGeminiModel())
                 .timeout(Duration.of(50, ChronoUnit.SECONDS))
                 .logRequests(setting.isLogRequests())
                 .logResponses(setting.isLogResponses());
     }
 
-    private static AiGeminiStreamingChatLanguageModel.Builder googleGeminiStreamingBuilder(UserLLMModelSetting setting) {
-        return AiGeminiStreamingChatLanguageModel.builder()
-                .key(setting.getGeminiApiKey())
-                .modelId(setting.getGeminiModel())
+    private static GoogleAiGeminiStreamingChatModel.GoogleAiGeminiStreamingChatModelBuilder googleGeminiStreamingBuilder(UserLLMModelSetting setting) {
+        return GoogleAiGeminiStreamingChatModel.builder()
+                .apiKey(setting.getGeminiApiKey())
+                .modelName(setting.getGeminiModel())
                 .timeout(Duration.of(50, ChronoUnit.SECONDS))
                 .logRequests(setting.isLogRequests())
                 .logResponses(setting.isLogResponses());
