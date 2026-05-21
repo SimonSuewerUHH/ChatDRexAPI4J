@@ -7,10 +7,12 @@ import io.smallrye.mutiny.Multi;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.reactive.RestStreamElementType;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,7 @@ public interface NeDRexApiClient {
     @Path("open/neo4j/query")
     @Produces(MediaType.TEXT_PLAIN)
     @ClientQueryParam(name = "stream", value = "false")
+    @Retry(maxRetries = 3, delay = 1, delayUnit = ChronoUnit.SECONDS)
     String runQuery(@QueryParam("query") String cypher);
 
     @POST

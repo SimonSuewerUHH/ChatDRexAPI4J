@@ -86,8 +86,6 @@ public class LanguageModelProvider {
     public static ChatModel getJson(UserLLMModelSetting setting) {
         if (setting.getUserLLMType().equals(UserLLMType.OLLAMA)) {
             return ollamaModelBuilder(setting)
-                    .logRequests(true)
-                    .logResponses(true)
                     .responseFormat(ResponseFormat.JSON)
                     .build();
         } else if (setting.getUserLLMType().equals(UserLLMType.GEMINI)) {
@@ -118,24 +116,6 @@ public class LanguageModelProvider {
         }
     }
 
-    public static StreamingChatModel getStreamingJson(UserLLMModelSetting setting) {
-        if (setting.getUserLLMType().equals(UserLLMType.OLLAMA)) {
-            return ollamaModelStreamingBuilder(setting)
-                    .responseFormat("json_schema")
-                    .strictJsonSchema(true)
-                    .build();
-        } else if (setting.getUserLLMType().equals(UserLLMType.GEMINI)) {
-            return googleGeminiStreamingBuilder(setting)
-                    .responseFormat(ResponseFormat.JSON)
-                    .build();
-        } else {
-            return openAiModelStreamingBuilder(setting)
-                    .responseFormat("json_schema")
-                    .strictJsonSchema(true)
-                    .build();
-        }
-
-    }
 
     public static StreamingChatModel getStreamingText(UserLLMModelSetting setting) {
         if (setting.getUserLLMType().equals(UserLLMType.OLLAMA)) {

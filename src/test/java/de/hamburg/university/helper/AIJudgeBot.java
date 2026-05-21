@@ -1,5 +1,6 @@
 package de.hamburg.university.helper;
 
+import de.hamburg.university.agent.provider.supplier.ChatLanguageModelSupplier;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -8,6 +9,7 @@ import dev.langchain4j.service.UserMessage;
 
 @ApplicationScoped
 @RegisterAiService(
+        chatLanguageModelSupplier = ChatLanguageModelSupplier.class,
         chatMemoryProviderSupplier = RegisterAiService.NoChatMemoryProviderSupplier.class
 )
 public interface AIJudgeBot {

@@ -23,6 +23,7 @@ public class QuestionScore {
     private String goldenCypher;
     private String aiCypher;
     private Score score;
+    private int run;
 
 
     private int attempts;
@@ -41,14 +42,21 @@ public class QuestionScore {
         this.score = score;
     }
 
+    public QuestionScore(int run, String category, String question, String goldenCypher, AiCypher answer, Score score) {
+        this(category, question, goldenCypher, answer, score);
+        this.run = run;
+    }
+
     public static void printCsvFile(List<QuestionScore> rows, Path file) {
         try {
             Files.createDirectories(file.getParent());
             try (BufferedWriter w = Files.newBufferedWriter(file, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-                w.write("category,question,hits,lengthGold,lengthAI,precision,recall,f1\n");
+                w.write("run,category,question,hits,lengthGold,lengthAI,precision,recall,f1\n");
                 for (QuestionScore row : rows) {
                     Score s = row.getScore();
                     int hits = s.getHits(); // adapt if Score uses different accessor
+                    w.write(Integer.toString(row.getRun()));
+                    w.write(",");
                     w.write(csv(row.getCategory()));
                     w.write(",");
                     w.write(csv(row.getQuestion()));
@@ -113,6 +121,15 @@ public class QuestionScore {
     public static boolean containsQuestion(List<QuestionScore> scores, String question) {
         for (QuestionScore score : scores) {
             if (score.getQuestion().equals(question)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean containsQuestion(List<QuestionScore> scores, int run, String question) {
+        for (QuestionScore score : scores) {
+            if (score.getRun() == run && score.getQuestion().equals(question)) {
                 return true;
             }
         }

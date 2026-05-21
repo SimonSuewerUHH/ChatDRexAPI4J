@@ -18,6 +18,7 @@ public class UserLLMModelSetting {
     private boolean logRequests;
     private String chatGPTModelName;
     private String geminiModelName;
+    private String geminiApiKey;
     private UserLLMModelSettingDTO settings;
 
     public UserLLMModelSetting() {
@@ -29,41 +30,66 @@ public class UserLLMModelSetting {
         this.logRequests = configProvider.getValue("quarkus.langchain4j.openai.chat-model.log-requests", Boolean.class);
         this.chatGPTModelName = configProvider.getValue("quarkus.langchain4j.openai.chat-model.model-name", String.class);
         this.geminiModelName = configProvider.getOptionalValue("quarkus.langchain4j.ai.gemini.chat-model.model-id", String.class).orElse("gemini-2.0-flash");
+        this.geminiApiKey = configProvider.getOptionalValue("quarkus.langchain4j.ai.gemini.api-key", String.class).orElse("API_KEY_MISSING");
     }
 
 
     public String getChatGPTModelName() {
-        return Optional.ofNullable(this.settings.getChatGptModel())
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getChatGptModel)
                 .filter(StringUtils::isNotEmpty)
                 .orElse(chatGPTModelName);
     }
 
+    public String getOllamaApiKey() {
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getOllamaApiKey)
+                .filter(StringUtils::isNotEmpty)
+                .orElse(ollamaApiKey);
+    }
+
+    public String getOllamaBaseUrl() {
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getOllamaBaseUrl)
+                .filter(StringUtils::isNotEmpty)
+                .orElse(ollamaBaseUrl);
+    }
+
     public String getChatGptApiKey() {
-        return Optional.ofNullable(this.settings.getChatGptApiKey())
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getChatGptApiKey)
                 .filter(StringUtils::isNotEmpty)
                 .orElseGet(() -> {
-                    if (this.settings.getSelectedLLM() == UserLLMType.OLLAMA && this.settings.getOllamaBaseUrl().equals(ollamaBaseUrl)) {
-                        return ollamaApiKey;
+                    if (getUserLLMType() == UserLLMType.OLLAMA
+                            && Optional.ofNullable(this.settings)
+                            .map(UserLLMModelSettingDTO::getOllamaBaseUrl)
+                            .filter(getOllamaBaseUrl()::equals)
+                            .isPresent()) {
+                        return getOllamaApiKey();
                     }
-                    return "API_KEY_MISSING";
+                    return getOllamaApiKey();
                 });
     }
 
     public String getGeminiApiKey() {
-        return Optional.ofNullable(this.settings.getGeminiApiKey())
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getGeminiApiKey)
                 .filter(StringUtils::isNotEmpty)
-                .orElse("API_KEY_MISSING");
+                .orElse(geminiApiKey);
     }
 
     public String getGeminiModel() {
-        return Optional.ofNullable(this.settings.getGeminiModel())
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getGeminiModel)
                 .filter(StringUtils::isNotEmpty)
                 .orElse(geminiModelName);
     }
 
 
     public UserLLMType getUserLLMType() {
-        return Optional.ofNullable(this.settings.getSelectedLLM()).orElse(UserLLMType.OLLAMA);
+        return Optional.ofNullable(this.settings)
+                .map(UserLLMModelSettingDTO::getSelectedLLM)
+                .orElse(UserLLMType.OLLAMA);
     }
 
     public String getChatModelName() {

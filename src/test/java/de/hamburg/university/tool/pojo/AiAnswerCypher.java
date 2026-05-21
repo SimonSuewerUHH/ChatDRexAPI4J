@@ -18,6 +18,8 @@ public class AiAnswerCypher {
     private String cypher;
     private Boolean isCorrect;
     private String question;
+    private String category;
+    private int run;
     private int attempt;
     private boolean fallback;
 
@@ -33,6 +35,10 @@ public class AiAnswerCypher {
         this.answer = answer;
         this.context = context;
         this.fallback = true;
+    }
+
+    public boolean getIsCorrectOrFalse() {
+        return Boolean.TRUE.equals(isCorrect);
     }
 
     public static void printJsonFile(List<AiAnswerCypher> rows, Path file) {
